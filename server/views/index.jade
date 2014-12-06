@@ -1,0 +1,16 @@
+﻿extends includes/layout
+block main-content
+    header
+        div
+            a(href="/") Doggy World
+                div
+                    ul
+                        li
+                            a(href="#/") Home
+                        li
+                            a(href="#/sign-up") Sign Up
+                div(ng-include="'partials/account/login'")
+    section
+        div(ng-view)
+    footer
+        p.text-center &copy; Doggy World

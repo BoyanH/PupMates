@@ -1,0 +1,28 @@
+﻿.row
+    .col-md-6
+        .well
+            form.form-horizontal(name="profileForm")
+                fieldset
+                    legend Update your profile
+                    .form-group
+                        label.col-md-2(for="firstName") First Name
+                        .col-md-10
+                            input.form-control(type="text" required="required" placeholder="First Name" ng-model="user.firstName")
+                    .form-group
+                        label.col-md-2(for="lastName") Last Name
+                        .col-md-10
+                            input.form-control(type="text" required="required" placeholder="Last Name" ng-model="user.lastName")
+                    .form-group
+                        label.col-md-2(for="password") New Password
+                        .col-md-10
+                            input.form-control(type="password" id="pw1" name="pw1" ng-model="user.password" ng-required="" placeholder="New password")
+                    .form-group
+                        label.col-md-2(for="password1") Confirm Password
+                        .col-md-10
+                             input.form-control(type="password" id="pw2" name="pw2" ng-model="user.password1" ng-required="" pw-check="pw1" placeholder="Confirm new password")
+                             div.msg-block(ng-show="profileForm.$error")
+                                span.msg-error(ng-show="profileForm.pw2.$error.pwmatch" style="color:red")
+                                    | Passwords don't match.
+                    .pull-right
+                        button.btn.btn-primary(ng-disabled="profileForm.$invalid" ng-click="update(user)" style="margin-right:5px;") Update
+                        a.btn.btn-primary(href="#/") Cancel
