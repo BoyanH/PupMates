@@ -35,7 +35,12 @@ module.exports = {
         }
     },
     getAllUsers: function(req, res){
-        User.find({}).exec(function(err, collection){
+        User.find({})
+        .select("-albums")
+        .select("-pets")
+        .select("-salt")
+        .select("-hashPass")
+        .exec(function(err, collection){
             if(err){
                 console.log('Users could not be found: ' +  err);
                 return;
@@ -44,6 +49,17 @@ module.exports = {
         });
     },
     getProfPhoto: function(req, res){
-        'https://gist.github.com/aheckmann/2408370 трябва да се доизмисли как ще стане така :D'
+        // !! за сега е с username за тестващи цели
+        // !! иначе по id на user-a ще търси
+        User.find({username: req.params.id})
+        .select("profPhoto")
+        .exec(function(err, user){
+            if(err){
+                console.log("couldnt get photo: " + err.toString())
+                res.end();
+            }
+            res.contentType(user[0].profPhoto.contentType);
+            res.send(user[0].profPhoto.data);
+        });
     }
 }

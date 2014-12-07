@@ -11,6 +11,7 @@ module.exports = function (app) {
                beautify: true,
         });
     });
+    app.get('/img/profPhoto/:id', controllers.users.getProfPhoto);
     app.post('/login',auth.login);
     app.post('/logout', auth.logout);
     app.get('/api/*', function(req,res){
