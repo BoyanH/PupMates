@@ -1,10 +1,9 @@
 ﻿div(ng-controller="LoginController")
 	button(ng-click='toggleModal()') login
-	div трябва modal да се показва при натискане на бутона
-	modal-dialog(show='modalShown' width='400px' height='60%')
-		div Login
+	h2 трябва modal да се показва при натискане на бутона
+	modal-dialog.contentDialog(show='modalShown' width='400px' height='60%')
+		h2 Login
 		hr
-		br
 		form
 			div
 				label User Name:

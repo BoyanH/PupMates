@@ -55,9 +55,11 @@ module.exports.seedInitialUsers = function(){
         var salt,
             hasedPwd;
         salt = encryption.generateSalt();
+        //for testing purposes
         var imgPath = "public/img.jpg";
         var pic = fs.readFileSync(imgPath);
         console.log(pic);
+
         hasedPwd = encryption.generateHashedPassword( salt, 'pesho' );
         User.create( { username: 'pesho',
          firstName: 'Pesho', 

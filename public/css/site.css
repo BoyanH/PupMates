@@ -1,0 +1,14 @@
+h1,h2,div,a,span,table,tr,td,button,h3,section,img{
+	margin: 0;
+	padding: 0;
+}
+body{
+	background-color: #181E22;
+	color: #fff;
+}
+h1, h2, h3{
+	color: #0CA2FF;
+}
+.contentDialog{
+	color:#000;
+}
