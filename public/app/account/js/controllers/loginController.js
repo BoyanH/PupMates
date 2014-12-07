@@ -1,4 +1,9 @@
 ﻿app.controller('LoginController', function($scope, $route, $http, notifier, $location, identity, auth){
+    $scope.modalShown = false;
+    $scope.toggleModal = function() {
+        $scope.modalShown = !$scope.modalShown;
+        console.log("must open");
+    };
     $scope.identity = identity;
     $scope.login = function(user){
         auth.login(user).then(function(success){

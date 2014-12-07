@@ -1,2 +1,15 @@
-﻿button login 
-div трябва modal да се показва при натискане на бутона
+﻿div(ng-controller="LoginController")
+	button(ng-click='toggleModal()') login
+	div трябва modal да се показва при натискане на бутона
+	modal-dialog(show='modalShown' width='400px' height='60%')
+		div Login
+		hr
+		br
+		form
+			div
+				label User Name:
+				input
+			div
+				label Password:
+				input
+			input(type="submit" ng-click="")

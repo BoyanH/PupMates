@@ -1,0 +1,5 @@
+div.ng-modal(ng-show='show')
+	div.ng-modal-overlay(ng-click='hideModal()')
+		div.ng-modal-dialog(ng-style='dialogStyle')
+		div.ng-modal-close(ng-click='hideModal()') X
+		div.ng-modal-dialog-content(ng-transclude)

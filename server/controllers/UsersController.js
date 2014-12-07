@@ -51,15 +51,18 @@ module.exports = {
     getProfPhoto: function(req, res){
         // !! за сега е с username за тестващи цели
         // !! иначе по id на user-a ще търси
-        User.find({username: req.params.id})
+        User.findOne({username: req.params.id})
         .select("profPhoto")
         .exec(function(err, user){
             if(err){
                 console.log("couldnt get photo: " + err.toString())
                 res.end();
             }
-            res.contentType(user[0].profPhoto.contentType);
-            res.send(user[0].profPhoto.data);
+            res.contentType(user.profPhoto.contentType);
+            res.send(user.profPhoto.data);
         });
+    },
+    getAlbumPhoto: function(req, res){
+        // to do
     }
 }
