@@ -8,8 +8,8 @@
 		form
 			div
 				label User Name:
-				input
+				input(type="text" required="required" placeholder="User Name" ng-model="user.username")
 			div
 				label Password:
-				input
-			input(type="submit" ng-click="")
+				input(type="password" required="required" placeholder="Password" ng-model="user.password")
+			button(ng-click="login(user)") Login

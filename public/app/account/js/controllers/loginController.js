@@ -9,9 +9,10 @@
         auth.login(user).then(function(success){
             if(success){
                 notifier.success('Successful login!');
+                $scope.modalShown = !$scope.modalShown;
             }
             else{
-                notifier.error('Username or Password not matched!');
+                notifier.error('Incorrect Username or Password!');
             }
         });
     };
