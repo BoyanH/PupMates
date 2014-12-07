@@ -6,7 +6,7 @@ body{
 	background-color: #181E22;
 	color: #fff;
 }
-h1, h2, h3{
+h1, h2, h3, a{
 	color: #0CA2FF;
 }
 .contentDialog{
