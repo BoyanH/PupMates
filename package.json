@@ -4,7 +4,7 @@
   "description": "Application for dog owners",
   "main": "server.js",
   "author": {
-    "name": "Boqn and Alexander",
+    "name": "Boyan Hristov and Alexander Yordanov",
     "email": ""
   },
   "engines":{
