@@ -1,5 +1,7 @@
-﻿var usersController = require('../controllers/UsersController.js');
+﻿var usersController = require('../controllers/UsersController.js'),
+	socketioController = require('../controllers/SocketioController.js');
 
 module.exports = {
-    users: usersController
+    users: usersController,
+    socket: socketioController
 }

@@ -4,7 +4,7 @@
 
 module.exports = function(){
     passport.use(new LocalPassport(function (username, password, done) {
-        User.findOne({ username: username }).select("username firstName lastName salt hashPass _id roles").exec(function (err, user) {
+        User.findOne({ username: username }).select("username firstName lastName salt hashPass _id roles pets friends").exec(function (err, user) {
 
             if (err) {
                 console.log('Error loading user: ' + err);
@@ -15,6 +15,8 @@ module.exports = function(){
                     username: user.username,
                     firstName: user.firstName,
                     lastName: user.lastName,
+                    friends: user.friends,
+                    pets: user.pets,
                      _id: user._id
                 });
             }

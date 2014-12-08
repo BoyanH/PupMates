@@ -6,6 +6,11 @@ var userSchema = mongoose.Schema({
         firstName: {type: String, require: '{PATH} is required'},
         lastName: {type: String, require: '{PATH} is required'},
         profPhoto: {data: Buffer, contentType: String},
+        friends: [{
+
+            id:String,
+            username: String
+        }],
         pets: [{
             id:String,
             name: String,
@@ -61,6 +66,7 @@ module.exports.seedInitialUsers = function(){
         console.log(pic);
 
         hasedPwd = encryption.generateHashedPassword( salt, 'pesho' );
+       
         User.create( { username: 'pesho',
          firstName: 'Pesho', 
          lastName: 'Peshev',
@@ -68,6 +74,28 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
+         friends: [{
+            id: '548591eeeb20d060345c8f78',
+            username: 'gosho'
+         }],
+         album:[],
+         salt: salt,
+         hashPass: hasedPwd, 
+         roles: ['admin'] });
+        console.log( 'Users added to database....' );
+
+        User.create( { username: 'gosho',
+         firstName: 'Gosho', 
+         lastName: 'Goshov',
+         profPhoto: {
+            data: pic,
+            contentType: "image/jpg"
+         },
+         friends: [{
+
+            id: '54858823f89122682256f7dd',
+            username: 'pesho'
+         }],
          album:[],
          salt: salt,
          hashPass: hasedPwd, 
