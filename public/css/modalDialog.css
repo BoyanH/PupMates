@@ -28,9 +28,10 @@
 .ng-modal-dialog-content {
   padding:10px;
   text-align: left;
+  z-index: 9999;
 }
 .ng-modal-close {
-  position: fixed;;
+  position: fixed;
   top: 3px;
   right: 5px;
   padding: 5px;
