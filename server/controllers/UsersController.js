@@ -68,7 +68,7 @@ module.exports = {
    
                 for (var i = 0; i < collection.friends.length; i++) {
                     
-                    if (collection.friends[i].id == req.user.id) {
+                    if (collection.friends[i].id == req.user._id) {
 
                         sendAllInfo = true;
                         console.error('wtf');

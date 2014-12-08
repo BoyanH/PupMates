@@ -38,7 +38,7 @@ app.controller('ChatController', function($scope, identity, $routeParams){
 				from: identity.currentUser.username,
 				senderID: identity.currentUser.id,
 				message: 'ASL PLS!',
-				to: identity.currentUser.friends[0].id
+				to: '5485ba9e7e0c11702b66bebd'
 			})
     }
 

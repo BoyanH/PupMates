@@ -74,10 +74,7 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
-         friends: [{
-            id: '548591eeeb20d060345c8f78',
-            username: 'gosho'
-         }],
+         friends: [],
          album:[],
          salt: salt,
          hashPass: hasedPwd, 
@@ -91,11 +88,7 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
-         friends: [{
-
-            id: '54858823f89122682256f7dd',
-            username: 'pesho'
-         }],
+         friends: [],
          album:[],
          salt: salt,
          hashPass: hasedPwd, 
