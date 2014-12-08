@@ -14,6 +14,8 @@ app.directive('modalDialog', function() {
         scope.dialogStyle.height = attrs.height;
       scope.hideModal = function() {
         scope.show = false;
+
+        $('div.wrapper, div.content, div.right-wrapper').css('zIndex', '1');
       };
     },
     templateUrl: "partials/directives/modalDialog"

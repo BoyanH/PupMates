@@ -2,7 +2,8 @@
     $scope.modalShown = false;
     $scope.toggleModal = function() {
         $scope.modalShown = !$scope.modalShown;
-        console.log("must open");
+        
+        $('div.wrapper, div.content, div.right-wrapper').css('zIndex', '-1');
     };
     $scope.identity = identity;
     $scope.login = function(user){
