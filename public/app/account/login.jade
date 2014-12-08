@@ -1,6 +1,5 @@
 ﻿div(ng-controller="LoginController")
-	button(ng-click='toggleModal()') login
-	h2 трябва modal да се показва при натискане на бутона
+	a.btn-nav-login(href="#" ng-click='toggleModal()') Login
 	modal-dialog.contentDialog(show='modalShown' width='400px' height='60%')
 		h2 Login
 		hr
