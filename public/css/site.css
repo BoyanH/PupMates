@@ -98,6 +98,7 @@ h1, h2, h3, a{
 .wrapper{
 	height: 100%;
 	width: 100%;
+	z-index: 1;
 }
 .menu, .right-wrapper{
 	display: inline-block;
@@ -108,6 +109,7 @@ h1, h2, h3, a{
 	margin-top: 60px;
 	margin-left: 80px;
 	height: 100%;
+	z-index: -1;
 }
 .menu{
 	position: fixed;
@@ -115,9 +117,11 @@ h1, h2, h3, a{
 	margin-top: 60px;
 	height: 100%;
 	background-color: #505050;
+	z-index: -1;
 }
 .content{
 	margin: 0 auto;
 	width: 800px;
 	border: 1px solid aqua;
+	z-index: -1;
 }
