@@ -40,12 +40,53 @@ module.exports = {
         .select("-pets")
         .select("-salt")
         .select("-hashPass")
+        .select("-roles")
+        .select("_id")
         .exec(function(err, collection){
             if(err){
                 console.log('Users could not be found: ' +  err);
                 return;
             }
             res.send(collection);
+        });
+    },
+    getUserById: function(req, res){
+
+        var sendAllInfo = false,
+            collection;
+
+        User.find({username: req.params.id})
+            .exec(function(err, collection){
+
+                // Username and Id are both unique, therefore I use collection[0], only 1 possible
+                collection = collection[0];
+
+                if(err){
+                    console.log('Users could not be found: ' +  err);
+                    return;
+                }
+   
+                for (var i = 0; i < collection.friends.length; i++) {
+                    
+                    if (collection.friends[i].id == req.user.id) {
+
+                        sendAllInfo = true;
+                        console.error('wtf');
+                    }
+                };
+
+                if (sendAllInfo) {
+                    res.send(collection);
+                }
+                    else {
+
+                        //TO DO: implement public/private profile
+                        
+                        collection.album = [];
+                        collection.lastName = ''; // <-- testing purpose
+
+                        res.send(collection);
+                    }
         });
     },
     getProfPhoto: function(req, res){

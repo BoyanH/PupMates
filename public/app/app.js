@@ -30,6 +30,10 @@ app.config(function($routeProvider, $locationProvider){
             templateUrl: 'partials/account/login',
             controller: 'LoginController'
         })
+        .when('/chat/:friendId?', { // <-- OPTIONAL PARAMETER ;)
+            templateUrl: 'partials/chat/chat',
+            controller: 'ChatController'
+        })
         .when('/sign-up', {
             templateUrl: 'partials/account/signup',
             controller: 'SignUpController'

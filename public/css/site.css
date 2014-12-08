@@ -12,3 +12,14 @@ h1, h2, h3, a{
 .contentDialog{
 	color:#000;
 }
+
+.friend-item {
+	display: block;
+	padding: 20px;
+	margin: 30px;
+	border: 1px solid cyan;
+}
+
+.friend-item:hover {
+	background-color: cyan;
+}
