@@ -45,9 +45,23 @@ h1, h2, h3, a{
 	display:inline-block;
 	vertical-align: top;
 }
+.title{
+	margin: 0;
+	display: inline-block;
+	max-height:60px;
+	vertical-align: top;
+}
+.title img{
+	margin: 0;
+	height: 60px;
+	vertical-align: top;
+}
 .nav-bar-ul{
 	list-style-type: none;
 	display: inline-block;
+	vertical-align: top;
+	margin-top: 0;
+	padding-left: 21px;
 }
 .nav-bar-ul li{
 	display: inline;
