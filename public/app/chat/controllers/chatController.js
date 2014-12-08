@@ -24,6 +24,8 @@ app.controller('ChatController', function($scope, identity, $routeParams){
     	//NOTE: I THINK SOCKET ID IS DIFFERENT EACH TIME
     })
 
+    console.log(identity.currentUser.friends[0].id);
+
     socket.on('new message', function (data) {
 
     	document.body.innerHTML += '<h1>From: ' +data.from + '; Message: ' + data.message + '</h1>';
