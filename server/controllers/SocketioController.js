@@ -12,12 +12,13 @@ module.exports = {
         
         socket.emit('registered');
 	},
-	sendMessage: function (socket, data) {
+	sendMessage: function (socket, message) {
 
 		clientsList[data.to].emit('new message', {
 
-			from: data.from,
-			message: data.message
+			from: message.from,
+			content: message.content,
+			to: message.to
 		})
 	}
 }
