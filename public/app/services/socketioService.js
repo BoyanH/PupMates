@@ -1,4 +1,4 @@
-app.factory('socket', ['identity', 'rootScope'], function(identity, $rootScope) {
+app.factory('socket', function(identity, $rootScope) {
    
     var socket = io('/'),
         connected = false;

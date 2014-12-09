@@ -49,8 +49,8 @@ module.exports = {
             }
             res.send(collection);
         });
-    },
-    getUserById: function(req, res){
+    },     //By Username <-- easier when route is /profile/:userName, such roots look better to users
+    getUser: function(req, res){
 
         var sendAllInfo = false,
             collection;

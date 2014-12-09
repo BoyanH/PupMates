@@ -26,6 +26,10 @@ app.config(function($routeProvider, $locationProvider){
             controller: 'UserListController',
             resolve: routeUserCheck.adminRole
         })
+        .when('/profile/:username', {
+            templateUrl: 'partials/profile/profile',
+            controller: 'ProfileRouteController'
+        })
         .when('/login', {
             templateUrl: 'partials/account/login',
             controller: 'LoginController'

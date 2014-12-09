@@ -1,17 +1,13 @@
 'use strict';
-app.controller('ChatController', function($scope, identity, $routeParams){
+app.controller('ChatController', function($scope, identity, $routeParams, socket){
 
 	if ($routeParams.friendId) {
 		//load conversation
 	}
 
-    if(identity.currentUser) {
+    $scope.friends = identity.currentUser.friends;
 
-
-        $scope.friends = identity.currentUser.friends;
-
-        console.log(identity.currentUser.friends[0].id);
-    }
+    console.log(identity.currentUser.friends[0].id);
 
     socket.on('new message', function (data) {
 
