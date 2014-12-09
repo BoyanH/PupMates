@@ -1,30 +1,17 @@
 'use strict';
 app.controller('ChatController', function($scope, identity, $routeParams){
 
-	$scope.friends = identity.currentUser.friends;
-
 	if ($routeParams.friendId) {
 		//load conversation
 	}
 
+    if(identity.currentUser) {
 
-	var socket = io('/');
-    
-    socket.on('who are you', function () {
 
-        socket.emit('check in', {userId: identity.currentUser._id});
-    });
+        $scope.friends = identity.currentUser.friends;
 
-    socket.on('registered', function () {
-
-    	console.log('i am registered');
-
-    	//LOAD SOCKETS ON APP START, SEND MESSAGES ONLY AFTER REGISTERED
-
-    	//NOTE: I THINK SOCKET ID IS DIFFERENT EACH TIME
-    })
-
-    console.log(identity.currentUser.friends[0].id);
+        console.log(identity.currentUser.friends[0].id);
+    }
 
     socket.on('new message', function (data) {
 
