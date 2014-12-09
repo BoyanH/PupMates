@@ -1,5 +1,8 @@
 'use strict';
 app.controller('ChatController', function($scope, identity, $routeParams){
+    //set height of the left menu
+    var height = $(document).height() - $(".nav").height();
+    $(".menu").css("height", height.toString());
 
 	if ($routeParams.friendId) {
 		//load conversation
