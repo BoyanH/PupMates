@@ -29,5 +29,9 @@ app.controller("MenuController", function($scope){
     $("#cover").bind("click", function(){
         $("#left-menu-dialog").width(0);
         $("#cover").css("display", "none");
+        $('html, body').css({
+                'overflow': 'auto',
+                'height': 'auto'
+            });
     })
 });
