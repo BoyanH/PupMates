@@ -22,7 +22,8 @@
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
 
-  background-color: #fff;
+
+  background-color: #7a7a7e;
   box-shadow: 4px 4px 80px #000;
 }
 .ng-modal-dialog-content {
@@ -40,4 +41,65 @@
   display: inline-block;
   font-weight: bold;
   font-family: 'arial', 'sans-serif';
+}
+
+/* content form */
+.login-h{
+  font-weight: 900;
+}
+.line{
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #000;
+  margin-bottom: 20px;
+}
+
+.user-name-lbl{
+  display: inline-block;
+  color: #6FF42B;
+  padding-right: 5px;
+  font-weight: 900;
+  font-size: 1.2em;
+}
+.password-lbl{
+  display: inline-block;
+  color: #6FF42B;
+  padding-right: 21px;
+  font-weight: 900;
+  font-size: 1.2em;
+}
+.form-row{
+  display: block;
+  height: 40px;
+}
+.login-input{
+  border: 1px solid #6FF42B;
+  border-radius: 20px;
+  height: 28px;
+  letter-spacing: 1px;
+  color: #09ADED;
+  outline: none;
+  font-weight: 900;
+  padding-left: 8px;
+}
+.login-input:focus{
+  border-color: #09ADED;
+}
+.login-btn{
+  display: inline-block;
+  width: 60px;
+  padding: 10px;
+  margin-top: 7px;
+  color: #09ADED;
+  border: 1px solid #1D1D1D;
+  border-radius: 2px;
+  text-decoration: none;
+  text-align: right;
+  background-color: #1D1D1D;
+}
+.login-btn:hover{
+  cursor: pointer;
+  background-color: #6FF42B;
+  border-color: #6FF42B;
+  color: #181E22;
 }

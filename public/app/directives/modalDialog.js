@@ -15,7 +15,6 @@ app.directive('modalDialog', function() {
       scope.hideModal = function() {
         scope.show = false;
 
-        $('div.wrapper, div.content, div.right-wrapper').css('zIndex', '1');
       };
     },
     templateUrl: "partials/directives/modalDialog"

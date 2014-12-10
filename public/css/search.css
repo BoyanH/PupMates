@@ -3,22 +3,35 @@
 	margin:0 auto;
 }
 .search { 
-	padding:6px 15px 6px 30px;
-	margin-top: 12px; 
+	padding-top:5px;
+	padding-bottom: 8px;
+	padding-bottom: 1px;
+	padding-left: 36px;
+	margin-top: 15px; 
+	min-height: 30px;
 	width: 100%;
-	border: 1px solid #bcbcbc;
 	outline: none;
-	background: url('https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/btnSearchIcon.png') no-repeat 8px 6px;
-	background-size: 18px; 
+	border: none;
+	background: url('https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/btnSearchIcon.png') no-repeat 10px 10px;
+	background-size: 18px;
+	letter-spacing: 2px;
+	font-size: 1.1em;
+	color: #0CA2FF;
 }
 .rounded {
-	border-radius:15px; 
+	border-radius:30px; 
 	-moz-border-radius:15px; 
-	-webkit-border-radius:15px; 
+	-webkit-border-radius:15px;
+	background-color: #505050;
+}
+.search:focus{
+	border: 1px solid #6FF42B;
+	background: url("https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/btnSearchIcon2.png") no-repeat 10px 10px;
+	background-size: 18px;
 }
 .search-results{
 	background-color: #fff;
-	margin-top: -2px;
+	margin-top: 0;
 	position: fixed;
 	margin-left: 15px;
 	width: 420px;

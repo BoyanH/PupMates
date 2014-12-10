@@ -1,13 +1,13 @@
 ﻿div(ng-controller="LoginController")
 	a.btn-nav-login(ng-click='toggleModal()') Login
-	modal-dialog.contentDialog(show='modalShown' width='400px' height='40%')
-		h2 Login
-		hr
+	modal-dialog.contentDialog(show='modalShown' width='400px' height='28%')
+		h2.login-h Login
+		div.line
 		form
-			div
-				label User Name:
-				input(type="text" ng-change="change()" required="required" placeholder="User Name" ng-model="user.username")
-			div
-				label Password:
-				input(type="password" required="required" placeholder="Password" ng-model="user.password")
-			button(ng-click="login(user)") Login
+			div.form-row
+				label.user-name-lbl User Name:
+				input.login-input(type="text" ng-change="change()" required="required" placeholder="User Name" ng-model="user.username")
+			div.form-row
+				label.password-lbl Password:
+				input.login-input(type="password" required="required" placeholder="Password" ng-model="user.password")
+			button.login-btn(ng-click="login(user)") Login
