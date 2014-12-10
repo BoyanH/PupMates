@@ -123,5 +123,19 @@ h1, h2, h3, a{
 	background-color: #505050;
 	width: 80px;
 }
+.chat-btn{
+	margin-left: -40px;
+	margin-top:80px;
+	display: inline-block;
+	width: 80px;
+	height: 80px;
+	background: url("https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/chat-icon.png") 20px 20px no-repeat;
+
+}
+.chat-btn:hover{
+	cursor: pointer;
+	background: url("https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/chat-icon2.png") 20px 20px no-repeat;
+	background-color: #e1e1e1;
+}
 .content{
 }
