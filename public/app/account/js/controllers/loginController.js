@@ -9,6 +9,7 @@
             if(success){
                 notifier.success('Successful login!');
                 $scope.modalShown = !$scope.modalShown;
+
             }
             else{
                 notifier.error('Incorrect Username or Password!');

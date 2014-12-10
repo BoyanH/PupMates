@@ -56,7 +56,7 @@ module.exports = {
             collection;
 
         User.find({username: req.params.id})
-            .exec(function(err, collection){
+            .exec(function (err, collection){
 
                 // Username and Id are both unique, therefore I use collection[0], only 1 possible
                 collection = collection[0];

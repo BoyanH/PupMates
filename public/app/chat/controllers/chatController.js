@@ -1,5 +1,6 @@
 'use strict';
-app.controller('ChatController', function($scope, identity, $routeParams){
+app.controller('ChatController', function($scope, identity, $routeParams, socket){
+
     //set height of the left menu
     var height = $(document).height() - $(".nav").height();
     $(".menu").css("height", height.toString());
@@ -10,12 +11,10 @@ app.controller('ChatController', function($scope, identity, $routeParams){
 
     $scope.friends = identity.currentUser.friends;
 
-    console.log(identity.currentUser.friends[0].id);
-
     socket.on('new message', function (data) {
 
-    	document.body.innerHTML += '<h1>From: ' +data.from + '; Message: ' + data.message + '</h1>';
-    })
+    	document.body.innerHTML += '<h1>From: ' +data.from + '; Message: ' + data.content + '</h1>';
+    });
 
     function sendToOther () {
 
