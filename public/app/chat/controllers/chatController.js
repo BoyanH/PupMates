@@ -36,12 +36,23 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
         socket.on('messages chunk', function (data) {
 
- console.log(data);
+            seePrivateMessage(data.messages[2]);
+
             data.messages.forEach(function (message) {
 
 
                 document.body.innerHTML += '<h1>From: ' + message.from + '; Message: ' + message.content + '</h1>';
             })
+        })
+    }
+
+    function seePrivateMessage (message) {
+
+        socket.emit('see private message', message);
+
+        socket.on('see private message done', function (data) {
+
+            console.log(data);
         })
     }
 

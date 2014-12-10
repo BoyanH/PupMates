@@ -3,6 +3,27 @@ var clientsList = {},
 	auth = require('../config/auth.js'),
 	hat = require('hat');
 
+	function isAuthorised (socket, request) {
+
+		var authorised = false;
+
+		if(clientsList[request.from]) {
+
+			//CHECK ALL USER'S CONNECTION
+			for (var i = 0; i < clientsList[request.from].length; i++) {
+				
+				//IF THE SAME DEVICE, WHICH SENDS THE REQUEST, IS AUTHORISED
+				if (clientsList[request.from][i].authToken == request.authToken && 
+					clientsList[request.from][i].socket == socket) {
+
+					authorised = true;
+				}
+			};
+		}
+
+		return authorised;
+	}
+
 module.exports = {
 
 	askForIdentification: function (socket) {
@@ -55,19 +76,7 @@ module.exports = {
 	},
 	sendMessage: function (socket, message) {
 
-		var authorised = false;
-
-		//CHECKING ALL OF THE USER'S TOKENS (MULTIPLE DEVICES ALLOWED)
-		if(clientsList[message.from]) {
-			for (var i = 0; i < clientsList[message.from].length; i++) {
-				
-				if (clientsList[message.from][i].authToken == message.authToken) {
-
-					authorised = true;
-				}
-			};
-
-			if(authorised) {
+			if(isAuthorised(socket, message)) {
 
 				if (clientsList[message.to].length >= 1) {
 					
@@ -87,37 +96,44 @@ module.exports = {
 
 				messages.updateDiscussion(message);
 			}
-		}
 	},
 	getMessages: function (socket, request) {
 
-		var authorised = false;
-
-		//CHECKING ALL OF THE USER'S TOKENS (MULTIPLE DEVICES ALLOWED)
-		if(clientsList[request.from]) {
-			for (var i = 0; i < clientsList[request.from].length; i++) {
-				
-				//IF THE SAME DEVICE, WHICH SENDS THE REQUEST, IS AUTHORISED
-				if (clientsList[request.from][i].authToken == request.authToken && 
-					clientsList[request.from][i].socket == socket) {
-
-					authorised = true;
-				}
-			};
-
-			if(authorised) {
+			if(isAuthorised(socket, request)) {
 
 				messages.getMessages(request)
 					.then(function (data) {
 
-						socket.emit('messages chunk', {
-
-							messages: data
-						});
+						socket.emit('messages chunk', data);
 
 					});
 
 			}
-		}
+				else {
+
+					socket.emit('messages chunk', {
+
+						messages: [],
+						err: 'NOT AUTHORISED!'
+					});
+				}
+	},
+	seeMessage: function (socket, message) {
+
+			if(isAuthorised(socket, message)) {
+
+				delete message.authToken;
+
+				messages.markMessageAsSeen(message)
+					.then(function (data) {
+
+						if(data.err) {
+							
+							socket.emit('see private message done', data);
+						}
+
+					});
+
+			}
 	}
 }

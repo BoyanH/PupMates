@@ -25,6 +25,11 @@ module.exports = function(socket) {
 			controllers.socket.sendMessage(socket, data);
 		});
 
+		socket.on('see private message', function (data) {
+
+			controllers.socket.seeMessage(socket, data);
+		});
+
 
 
 		socket.on('disconnect', function() {
