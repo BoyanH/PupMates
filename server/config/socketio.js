@@ -19,6 +19,14 @@ module.exports = function(socket) {
 			controllers.socket.sendMessage(socket, data);
 		});
 
+
+
+		socket.on('disconnect', function() {
+	    	console.log('Got disconnect!');
+
+	    	controllers.socket.deleteUserConnection(socket);
+		});
+
 	});
 
 
