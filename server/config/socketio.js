@@ -30,6 +30,11 @@ module.exports = function(socket) {
 			controllers.socket.seeMessage(socket, data);
 		});
 
+		socket.on('edit private message', function (data) {
+
+			controllers.socket.editMessage(socket, data);
+		});
+
 
 
 		socket.on('disconnect', function() {

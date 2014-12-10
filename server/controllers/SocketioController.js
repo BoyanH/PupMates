@@ -9,16 +9,19 @@ var clientsList = {},
 
 		if(clientsList[request.from]) {
 
-			//CHECK ALL USER'S CONNECTION
-			for (var i = 0; i < clientsList[request.from].length; i++) {
-				
-				//IF THE SAME DEVICE, WHICH SENDS THE REQUEST, IS AUTHORISED
-				if (clientsList[request.from][i].authToken == request.authToken && 
-					clientsList[request.from][i].socket == socket) {
+			//FIND THE AUTH-TOKEN IN ALL USER CONNECTIONS
+			var elementPos = clientsList[request.from].map(function(x) {return x.authToken; }).indexOf(request.authToken),
+				objectFound = clientsList[request.from][elementPos];
 
-					authorised = true;
+			//CHECK IF THE AUTH-TOKEN IS GIVEN TO THE REQUESTER'S SOCKET
+			if(objectFound) {
+
+				if(objectFound.socket == socket) {
+
+					authorised = objectFound;
 				}
-			};
+			}
+
 		}
 
 		return authorised;
@@ -78,7 +81,8 @@ module.exports = {
 
 			if(isAuthorised(socket, message)) {
 
-				if (clientsList[message.to].length >= 1) {
+				//IF THE RECIPIENT HAS CONNECTED
+				if (clientsList[message.to]) {
 					
 					//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
 					clientsList[message.to].forEach(function (clientConnection) {
@@ -120,6 +124,12 @@ module.exports = {
 	},
 	seeMessage: function (socket, message) {
 
+			var to = message.to;
+
+			//IF DEVICE OF MESSAGE.TO (RECIPIENT) IS MARKING IT AS SEEN
+			message.to = message.from;
+			message.from = to;
+
 			if(isAuthorised(socket, message)) {
 
 				delete message.authToken;
@@ -127,10 +137,22 @@ module.exports = {
 				messages.markMessageAsSeen(message)
 					.then(function (data) {
 
-						if(data.err) {
+						socket.emit('see private message done', data);
+
+					});
+
+			}
+	},
+	editMessage: function(socket, message) {
+
+			if(isAuthorised(socket, message)) {
+
+				delete message.authToken;
+
+				messages.markMessageAsSeen(message)
+					.then(function (data) {
 							
-							socket.emit('see private message done', data);
-						}
+						socket.emit('edit private message done', data);
 
 					});
 
