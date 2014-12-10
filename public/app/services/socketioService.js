@@ -1,7 +1,8 @@
 app.factory('socket', function(identity, $rootScope) {
-   
+    
     var socket = io('/'),
-        connected = false;
+        connected = false,
+        authToken;
 
     socket.on('who are you', function() {
 
@@ -10,9 +11,10 @@ app.factory('socket', function(identity, $rootScope) {
         });
     });
 
-    socket.on('registered', function() {
+    socket.on('registered', function(data) {
 
         connected = true;
+        authToken = data.authToken;
     })
 
     return {
@@ -30,6 +32,8 @@ app.factory('socket', function(identity, $rootScope) {
         },
 
         emit: function(eventName, data, callback) {
+
+            data.authToken = authToken;
 
             socket.emit(eventName, data, function() {
                 

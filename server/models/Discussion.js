@@ -8,9 +8,9 @@ var mongoose = require('mongoose'),
             messages: [{
                 from: {type: String, require: '{PATH} is required'},
                 to: {type: String, require: '{PATH} is required'},
-                content: type: String, require: '{PATH} is required',
-                date: type: Date, require: '{PATH} is required'
+                content: {type: String, require: '{PATH} is required'},
+                date: {type: Date, require: '{PATH} is required'}
             }]
     }),
-    
+
     Discussion = mongoose.model('Discussion', discussionSchema);

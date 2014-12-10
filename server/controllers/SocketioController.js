@@ -1,4 +1,7 @@
-var clientsList = {};
+var clientsList = {},
+	messages = require('./MessagesController.js'),
+	auth = require('../config/auth.js'),
+	hat = require('hat');
 
 module.exports = {
 
@@ -8,17 +11,30 @@ module.exports = {
 	},
 	addUserConnection: function (socket, incoming) {
 
-        clientsList[incoming.userId] = socket;
+		var authToken = hat();
+
+        clientsList[incoming.userId] = {
+        	socket: socket,
+        	authToken: authToken 
+        };
         
-        socket.emit('registered');
+        socket.emit('registered', {
+        	authToken: authToken
+        });
 	},
 	sendMessage: function (socket, message) {
 
-		clientsList[data.to].emit('new message', {
+		if(message.authToken == clientsList[message.from].authToken) {
 
-			from: message.from,
-			content: message.content,
-			to: message.to
-		})
+			clientsList[message.to].socket.emit('new message', {
+
+				from: message.from,
+				content: message.content,
+				to: message.to,
+				date: new Date()
+			});
+
+			messages.updateDiscussion(message);
+		}
 	}
 }

@@ -20,7 +20,8 @@
     "express-session": "^1.0.4",
     "passport": "^0.2.0",
     "passport-local": "^1.0.0",
-    "socket.io": "^1.2.1"
+    "socket.io": "^1.2.1",
+    "hat": "0.0.3"
   },
   "devDependencies": {
     "nodemon": "^1.0.17"

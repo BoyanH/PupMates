@@ -1,6 +1,5 @@
 ﻿app.factory('identity', function($window, UsersResource){
-    var user,
-        socket;
+    var user;
 
     if($window.bootstrappedUserObject){
         user = new UsersResource();
