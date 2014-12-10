@@ -118,6 +118,7 @@ h1, h2, h3, a{
 .right-wrapper{
 }
 .menu{
+	position: fixed;
 	background-color: #505050;
 	width: 80px;
 }

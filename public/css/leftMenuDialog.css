@@ -1,3 +1,6 @@
+body{
+	overflow-x:hidden;
+}
 #left-menu-dialog{
 	display: inline-block;
 	-webkit-transition: all 0.3s ease-in-out;
@@ -6,13 +9,11 @@
   transition: all 0.3s ease-in-out;
   height:0;
   width: 0;
-  overflow: hidden;
-  background-color: aqua;
+  overflow-x: hidden;
+  background-color: #7a7a7e;
   border: none;
   outline: none;
-}
-#left-menu-dialog:hover{
-	width: 100px;
+  margin: 0;
 }
 #cover{
 	display: none;
