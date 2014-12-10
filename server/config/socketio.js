@@ -11,7 +11,13 @@ module.exports = function(socket) {
 		controllers.socket.askForIdentification(socket);
 
 		socket.on('check in', function (incoming) {
+			
 			controllers.socket.addUserConnection(socket, incoming);
+		});
+
+		socket.on('get private messages', function (request) {
+
+			controllers.socket.getMessages(socket, request);
 		});
 
 		socket.on('send private message', function (data) {
@@ -22,7 +28,6 @@ module.exports = function(socket) {
 
 
 		socket.on('disconnect', function() {
-	    	console.log('Got disconnect!');
 
 	    	controllers.socket.deleteUserConnection(socket);
 		});

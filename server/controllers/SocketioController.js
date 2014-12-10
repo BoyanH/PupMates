@@ -88,5 +88,36 @@ module.exports = {
 				messages.updateDiscussion(message);
 			}
 		}
+	},
+	getMessages: function (socket, request) {
+
+		var authorised = false;
+
+		//CHECKING ALL OF THE USER'S TOKENS (MULTIPLE DEVICES ALLOWED)
+		if(clientsList[request.from]) {
+			for (var i = 0; i < clientsList[request.from].length; i++) {
+				
+				//IF THE SAME DEVICE, WHICH SENDS THE REQUEST, IS AUTHORISED
+				if (clientsList[request.from][i].authToken == request.authToken && 
+					clientsList[request.from][i].socket == socket) {
+
+					authorised = true;
+				}
+			};
+
+			if(authorised) {
+
+				messages.getMessages(request)
+					.then(function (data) {
+
+						socket.emit('messages chunk', {
+
+							messages: data
+						});
+
+					});
+
+			}
+		}
 	}
 }

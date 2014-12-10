@@ -1,4 +1,5 @@
-var Discussion = require('mongoose').model('Discussion');
+var Discussion = require('mongoose').model('Discussion'),
+	Q = require("q");
 
 module.exports = {
 
@@ -64,6 +65,61 @@ module.exports = {
 					}
 
 			})
+	},
+	getMessages: function (request) {
+
+		var crntBetween = request.from > request.to ? request.from + '_' + request.to : request.to + '_' + request.from,
+			deffered = Q.defer();
+
+		Discussion.find({between: crntBetween})
+			.exec(function (err, collection) {
+
+				if (err) {
+
+					console.error(err);
+					deffered.resolve([]);
+				}
+					else {
+
+						var messages = collection[0].messages,
+							returnedMessages = [];
+
+						if (!request.before) {
+
+							request.before = 0;
+						}
+
+						if (!request.count) {
+
+							request.count = 30;
+						}
+
+						if (messages.length - 1 - request.before < 0) {
+
+							deffered.resolve([]);
+
+							return false;
+						}
+
+						for (var i = messages.length - 1 - request.before;
+								 i > messages.length -1 - request.before - request.count; i--) {
+
+							if (i < 0) {
+
+								break;
+							}
+							
+							returnedMessages.push(messages[i]); 
+						};
+
+						returnedMessages = returnedMessages.reverse();
+
+						deffered.resolve(returnedMessages);
+					}
+
+			});
+
+		return deffered.promise;
 	}
 
 };
