@@ -11,52 +11,67 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
     $scope.friends = identity.currentUser.friends;
 
-    socket.on('new message', function (data) {
-
-    	document.body.innerHTML += '<h1>From: ' +data.from + '; Message: ' + data.content + '</h1>';
-    });
-
-    function sendToOther () {
+    function sendMessage (toId, content) {
 
     	socket.emit('send private message', 
 			{
 				from: identity.currentUser._id,
-				content: 'ASL PLS!',
-				to: '5485ba9e7e0c11702b66bebd'
-			})
+				content: content,
+				to: toId
+    		}
+        );
     }
 
-    function getMessages () {
+    function getMessages (toId, beforeNth, count) {
 
         socket.emit('get private messages',
             {
                 from: identity.currentUser._id,
-                to: '5485ba9e7e0c11702b66bebd'
-            });
-
-        socket.on('messages chunk', function (data) {
-
-            seePrivateMessage(data.messages[2]);
-
-            data.messages.forEach(function (message) {
-
-
-                document.body.innerHTML += '<h1>From: ' + message.from + '; Message: ' + message.content + '</h1>';
-            })
-        })
+                to: toId,
+                before: beforeNth,
+                count: count
+            }
+        );     
+        
     }
 
     function seePrivateMessage (message) {
 
         socket.emit('see private message', message);
-
-        socket.on('see private message done', function (data) {
-
-            console.log(data);
-        })
+        
     }
 
-    document.getElementById('try-btn').addEventListener('click', getMessages, false);
+    function editPrivateMessage(message, newContent) {
+
+        message.content = newContent;
+
+        socket.emit('edit private message', message);
+    }
+
+    socket.on('new message', function (data) {
+
+        //DISPLAY NEW MESSAGE
+    });
+
+
+    socket.on('see private message done', function (data) {
+
+        //MARK data.message AS SEEN IN VIEW TOO
+
+        //(MESSAGE IS MARKED AS SEEN FROM THE OTHER USER, NOTIFY!)
+    });
+
+    socket.on('messages chunk', function (data) {
+
+        //HANDLE NEW MESSAGES
+    });
+
+    socket.on('edit private message done', function (data) {
+
+        //CHANGE MESSAGE IN VIEW TOO
+
+        //OR DISPLAY ERROR IN CONNECTIVITY
+    })
 
 
 });

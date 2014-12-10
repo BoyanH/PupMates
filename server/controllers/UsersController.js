@@ -62,7 +62,7 @@ module.exports = {
                 collection = collection[0];
 
                 if(err){
-                    console.log('Users could not be found: ' +  err);
+                    console.log('User could not be found: ' +  err);
                     return;
                 }
    

@@ -10,7 +10,9 @@ var mongoose = require('mongoose'),
                 to: {type: String, require: '{PATH} is required'},
                 content: {type: String, require: '{PATH} is required'},
                 date: {type: Date, require: '{PATH} is required'},
-                seen: {type: Boolean, require: '{PATH} is required'}
+                seen: {type: Boolean, require: '{PATH} is required'},
+                nth: {type: Number, require: '{PATH} is required'},
+                edited: {type: Date, require: '{PATH} is required'}
             }]
     }),
 

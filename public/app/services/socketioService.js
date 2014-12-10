@@ -15,6 +15,8 @@ app.factory('socket', function(identity, $rootScope) {
 
         connected = true;
         authToken = data.authToken;
+
+        console.log('registered: ' + data.authToken);
     })
 
     return {
@@ -34,7 +36,6 @@ app.factory('socket', function(identity, $rootScope) {
         emit: function(eventName, data, callback) {
 
             data.authToken = authToken;
-            console.log(data);
 
             socket.emit(eventName, data, function() {
                 

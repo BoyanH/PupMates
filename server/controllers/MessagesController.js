@@ -1,5 +1,5 @@
-var Discussion = require('mongoose').model('Discussion'),
-	Q = require("q");
+var Q = require("q"),
+	Discussion = require('mongoose').model('Discussion');
 
 module.exports = {
 
@@ -15,16 +15,11 @@ module.exports = {
 					to: message.to,
 					content: message.content,
 					date: new Date(),
-					seen: false
+					seen: false,
+					nth: 0
 				}
 			]
 		};
-
-		Discussion.find({})
-    	.exec(function (err, collection) {
-
-    		console.log(collection);
-    	})
 
 		Discussion.create(newDiscussion, function(err, discussion){
             if(err){
@@ -40,10 +35,9 @@ module.exports = {
 		Discussion.find({between: crntBetween})
 			.exec(function (err, collection) {
 
-				if (err) {
-
-					console.error(err);
-					this.createDiscussion(message);
+				if (err || !collection[0]) {
+					
+					module.exports.createDiscussion(message);
 				}
 					else {
 
@@ -53,7 +47,8 @@ module.exports = {
 							to: message.to,
 							content: message.content,
 							date: new Date(),
-							seen: false
+							seen: false,
+							nth: collection[0].messages.length
 						};
 
 						collection[0].messages.push(newMessage);
@@ -61,8 +56,9 @@ module.exports = {
 						Discussion.update({between: crntBetween}, collection[0], function (err) {
 
 							if (err) {
-								console.error(err);
+								console.error('Error updating discussion: ' + err);
 							}
+
 						});
 					}
 
@@ -76,13 +72,12 @@ module.exports = {
 		Discussion.find({between: crntBetween})
 			.exec(function (err, collection) {
 
-				if (err) {
+				if (err || !collection[0]) {
 
-					console.error(err);
 					deffered.resolve({
 
 						messages: [],
-						err: err
+						err: 'NO MESSAGES'
 
 					});
 				}
@@ -106,7 +101,7 @@ module.exports = {
 							deffered.resolve({
 
 								messages: [],
-								err: err
+								err: 'NO MORE MESSAGES'
 
 							});
 
@@ -147,7 +142,7 @@ module.exports = {
 			Discussion.find({between: crntBetween})
 			.exec(function (err, collection) {
 
-				if (err) {
+				if (err || collection.length <= 0) {
 
 					deffered.resolve({
 						err: err,
@@ -156,19 +151,11 @@ module.exports = {
 				}
 					else {
 
-						var messages = collection[0].messages;
+						if (collection[0].messages[message.nth]._id == message._id) {
 
-						for (var i = 0; i < messages.length; i++) {
-							
-							//MARK AS SEEN, SUCESSS
-							if (messages[i]._id == message._id) {
-
-								collection[0].messages[i].seen = true;
-								success = true;
-
-								break;
-							}
-						};
+							success = true;
+							collection[0].messages[message.nth].seen = true;
+						}
 
 						if (success) {
 							Discussion.update({between: crntBetween}, collection[0], function (err) {
@@ -177,14 +164,14 @@ module.exports = {
 									
 									deffered.resolve({
 										err: err,
-										message: collection[0].messages[i]
+										message: collection[0].messages[message.nth]
 									});
 								}
 									else {
 
 										deffered.resolve({
 											err: false,
-											message: collection[0].messages[i]
+											message: collection[0].messages[message.nth]
 										});
 									}
 							});
@@ -192,10 +179,68 @@ module.exports = {
 							else {
 								
 								deffered.resolve({
-									err: 'NOT FOUND!',
+									err: 'NOT FOUND OR CORRUPTED!',
 									message: message
 								});
+
+							}
+					}
+
+			});
+
+			return deffered.promise;
+	},
+	editMessage: function (message) {
+
+		var crntBetween = message.from > message.to ? message.from + '_' + message.to : message.to + '_' + message.from,
+			deffered = Q.defer(),
+			success = false;
+
+			Discussion.find({between: crntBetween})
+			.exec(function (err, collection) {
+
+				if (err || collection.length <= 0) {
+
+					deffered.resolve({
+						err: err,
+						message: message
+					});
+				}
+					else {
+
+						if (collection[0].messages[message.nth]._id == message._id) {
+
+							success = true;
+							collection[0].messages[message.nth].content = message.content;
+							collection[0].messages[message.nth].edited = new Date();
+						}
+
+						if (success) {
+							Discussion.update({between: crntBetween}, collection[0], function (err) {
+
+								if (err) {
+									
+									deffered.resolve({
+										err: err,
+										message: collection[0].messages[message.nth]
+									});
+								}
+									else {
+
+										deffered.resolve({
+											err: false,
+											message: collection[0].messages[message.nth]
+										});
+									}
+							});
+						}
+							else {
 								
+								deffered.resolve({
+									err: 'NOT FOUND OR CORRUPTED!',
+									message: message
+								});
+
 							}
 					}
 
