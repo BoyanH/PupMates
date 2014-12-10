@@ -116,6 +116,7 @@ h1, h2, h3, a{
 	vertical-align: top;
 }
 .right-wrapper{
+	margin-left: 80px;
 }
 .menu{
 	position: fixed;

@@ -12,6 +12,7 @@ app.controller("MenuController", function($scope){
                 'overflow': 'auto',
                 'height': 'auto'
             });
+
     	}
     	else{
             window.scrollTo(0, 0);
@@ -19,6 +20,7 @@ app.controller("MenuController", function($scope){
                 'overflow': 'hidden',
                 'height': '100%'
             });
+            $(".right-wrapper").css("margin-left", "0");
     		var p = $(".nav").position();
     		p.left += $(".menu").width() + 380;
     		p.top += $(".nav").height();
