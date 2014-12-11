@@ -9,7 +9,7 @@
             if(success){
                 notifier.success('Successful login!');
                 $scope.modalShown = !$scope.modalShown;
-
+                $location.path('/home');
             }
             else{
                 notifier.error('Incorrect Username or Password!');

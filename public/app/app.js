@@ -18,8 +18,13 @@ app.config(function($routeProvider, $locationProvider){
 
     $routeProvider
         .when('/', {
+            templateUrl: 'partials/main/front-page',
+            controller: 'FrontPageController'
+        })
+        .when('/home', {
             templateUrl : '/partials/main/home',
-            controller: 'MainController'
+            controller: 'MainController',
+            resolve: routeUserCheck.authenticated
         })
         .when('/admin/users', {
             templateUrl: 'partials/admin/users-list',
@@ -36,7 +41,8 @@ app.config(function($routeProvider, $locationProvider){
         })
         .when('/chat/:friendId?', { // <-- OPTIONAL PARAMETER ;)
             templateUrl: 'partials/chat/chat',
-            controller: 'ChatController'
+            controller: 'ChatController',
+            resolve: routeUserCheck.authenticated
         })
         .when('/sign-up', {
             templateUrl: 'partials/account/signup',

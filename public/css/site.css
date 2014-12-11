@@ -7,7 +7,7 @@ html{
 	min-height: 100%;
 }
 body{
-	background-color: #181E22;
+	background-color: #01a3e8;
 	color: #fff;
 	height: 100%;
 	min-height: 100%;
@@ -115,12 +115,25 @@ h1, h2, h3, a{
 	display: inline-block;
 	vertical-align: top;
 }
-.right-wrapper{
-}
 .menu{
 	position: fixed;
-	background-color: #505050;
+	background-color: #4d4d4f;
 	width: 80px;
 }
-.content{
+.chat-btn{
+	margin-left: -40px;
+	margin-top:80px;
+	display: inline-block;
+	width: 80px;
+	height: 80px;
+	background: url("https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/chat-icon.png") 20px 20px no-repeat;
+	text-align: center;
+	color: #6FF42B;
+	border-bottom: 1px solid #e1e1e1;
+}
+.chat-btn:hover{
+	cursor: pointer;
+	background: url("https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/chat-icon2.png") 20px 20px no-repeat;
+	background-color: #e1e1e1;
+	color: #09ADED;
 }

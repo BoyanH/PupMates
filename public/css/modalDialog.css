@@ -24,7 +24,7 @@
   background-color: #7a7a7e;
 }
 .ng-modal-dialog-content {
-  padding:10px;
+  padding:10px 40px;
   text-align: left;
   z-index: 9999;
 }
@@ -84,14 +84,16 @@
 }
 .login-btn{
   display: inline-block;
-  width: 60px;
-  padding: 10px;
+  width: 100%;
+  padding: 5px;
   margin-top: 7px;
   color: #09ADED;
   border: 1px solid #1D1D1D;
   border-radius: 2px;
   text-decoration: none;
-  text-align: right;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 900;
   background-color: #1D1D1D;
 }
 .login-btn:hover{

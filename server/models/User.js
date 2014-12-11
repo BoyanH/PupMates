@@ -44,7 +44,7 @@ module.exports.seedInitialUsers = function(){
         else{
             console.log("all users removed");
         }
-    })*/
+    });*/
     /*User.find({}).exec(function(err, collection){
             if(err){console.log(err)}
             else{
@@ -61,7 +61,7 @@ module.exports.seedInitialUsers = function(){
             hasedPwd;
         salt = encryption.generateSalt();
         //for testing purposes
-        var imgPath = "public/img.jpg";
+        var imgPath = "public/img1.jpg";
         var pic = fs.readFileSync(imgPath);
         console.log(pic);
 
