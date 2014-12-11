@@ -6,8 +6,13 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
     $(".menu").css("height", height.toString());
 
 	if ($routeParams.friendId) {
-		//load conversation
+		
+        getMessages($routeParams.friendId);
 	}
+    else if($scope.friendId){
+
+        getMessages($scope.friendId);
+    }
 
     $scope.friends = identity.currentUser.friends;
 
