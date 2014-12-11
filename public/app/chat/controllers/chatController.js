@@ -71,7 +71,6 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
         //CHANGE MESSAGE IN VIEW TOO
 
         //OR DISPLAY ERROR IN CONNECTIVITY
-    })
-
+    });
 
 });

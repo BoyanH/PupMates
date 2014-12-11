@@ -1,4 +1,7 @@
-﻿var passport = require('passport');
+﻿var passport = require('passport'),
+    events = require('events'),
+    eventEmitter = new events.EventEmitter();
+
 module.exports = {
     login: function ( req, res, next ) {
         var auth = passport.authenticate( 'local', function ( err, user ) {
@@ -14,6 +17,7 @@ module.exports = {
                 if ( err ) {
                     return next( err );
                 }
+
                 res.send( { success: true, user: user });
             });
         });
@@ -42,5 +46,6 @@ module.exports = {
                 res.end();
             }
         }
-    }
+    },
+    eventEmitter: eventEmitter
 }
