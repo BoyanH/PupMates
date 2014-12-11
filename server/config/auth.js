@@ -17,6 +17,9 @@ module.exports = {
                 if ( err ) {
                     return next( err );
                 }
+                    else { //emmit to user with session \/ <-- userId
+                        eventEmitter.emit(req.sessionID, user._id);
+                    }
 
                 res.send( { success: true, user: user });
             });

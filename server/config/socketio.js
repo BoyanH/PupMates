@@ -1,10 +1,9 @@
-var controllers = require('../controllers');
-auth = require('./auth.js');
-
-var express = require('express'),
-    cookieParser = require('cookie-parser');
-
-var parseCookie = express.cookieParser('grannysbushes');
+var controllers = require('../controllers'),
+	auth = require('./auth.js'),
+	eventEmitter = auth.eventEmitter,
+	express = require('express'),
+    cookieParser = require('cookie-parser'),
+	parseCookie = express.cookieParser('grannysbushes');
 
 module.exports = function(io, sessionStore) {
 
@@ -24,6 +23,8 @@ module.exports = function(io, sessionStore) {
                         callback('Session not found.', false);
                     } else {
 
+                        // save the session data and accept the connection
+                        handshake.session = new express.session.Session(handshake, session);
                         callback(null, true);
                     }
                 });
@@ -33,34 +34,23 @@ module.exports = function(io, sessionStore) {
         }
     });
 
-    // io.on('connection', function (socket) { 
-
-    // //!^@!*^&$!@&$!@$      MAGIC!        !@$&*(!@$&!*(@$&!*(&$ )))
-
-    // auth.eventEmitter.on('login', function () {
-
-    // 	controllers.socket.askForIdentification(socket);
-    // });
-
-    // //!@^$!@%$^&!%      END OF MY MAGIC!   **!&@$!@^&*^#%&^!$!@*$^&
-
-    // socket.on('check in', function (incoming) {
-
-    // 	controllers.socket.addUserConnection(socket, incoming);
-    // });
-
-    io.sockets.on('connection', function(socket) {
+    io.sockets.on('connection', function (socket) {
 
         var hs = socket.request;
 
-        console.log(hs.session.passport);
-        console.log('A socket with sessionID ' + hs.sessionID + ' connected!');
+        if (hs.session.passport.user) {
 
-        socket.on('disconnect', function() {
-            console.log('A socket with sessionID ' + hs.sessionID + ' disconnected!');
+        	controllers.socket.addUserConnection(socket);
+        }
+        	else {
 
-        });
+        		eventEmitter.on(hs.sessionID, function(userId) {
 
+        			socket.request.session.passport.user = userId;
+        			console.log(userId);
+        			controllers.socket.addUserConnection(socket);
+        		});
+        	}
 
         socket.on('get private messages', function(request) {
 
@@ -84,10 +74,10 @@ module.exports = function(io, sessionStore) {
 
 
 
-        // io.on('disconnect', function() {
+        io.on('disconnect', function() {
 
-        //    	controllers.socket.deleteUserConnection(socket);
-        // });
+           	controllers.socket.deleteUserConnection(socket);
+        });
 
     });
 

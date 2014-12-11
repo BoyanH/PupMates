@@ -1,23 +1,6 @@
 app.factory('socket', function(identity, $rootScope) {
     
-    var socket = io('/'),
-        connected = false,
-        authToken;
-
-    socket.on('who are you', function() {
-
-        socket.emit('check in', {
-            userId: identity.currentUser._id
-        });
-    });
-
-    socket.on('registered', function(data) {
-
-        connected = true;
-        authToken = data.authToken;
-
-        console.log('registered: ' + data.authToken);
-    })
+    var socket = io('/');
 
     return {
         on: function(eventName, callback) {

@@ -63,6 +63,7 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
     socket.on('messages chunk', function (data) {
 
+        console.log(data);
         //HANDLE NEW MESSAGES
     });
 
@@ -71,6 +72,11 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
         //CHANGE MESSAGE IN VIEW TOO
 
         //OR DISPLAY ERROR IN CONNECTIVITY
+    });
+
+    socket.on('disconnect', function () {
+        
+        //HANDLE DISCONNECT
     });
 
 });
