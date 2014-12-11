@@ -1,98 +1,95 @@
 var controllers = require('../controllers');
-    auth = require('./auth.js');
+auth = require('./auth.js');
 
-var express = require( 'express' ),
-	cookieParser = require( 'cookie-parser' );
+var express = require('express'),
+    cookieParser = require('cookie-parser');
 
-	var parseCookie = express.cookieParser('grannysbushes');
+var parseCookie = express.cookieParser('grannysbushes');
 
 module.exports = function(io, sessionStore) {
 
-	io.set('authorization', function(handshake, callback) {
-	  if (handshake.headers.cookie) {
-	    // pass a req, res, and next as if it were middleware
-	    parseCookie(handshake, null, function(err) {
-	      handshake.sessionID = handshake.signedCookies['express.sid'];
-	      // or if you don't have signed cookies
-	      handshake.sessionID = handshake.cookies['express.sid'];
+    io.set('authorization', function(handshake, callback) {
+        if (handshake.headers.cookie) {
+            // pass a req, res, and next as if it were middleware
+            parseCookie(handshake, null, function(err) {
+                handshake.sessionID = handshake.signedCookies['express.sid'];
 
-	      sessionStore.get(handshake.sessionID, function (err, session) {
-	        if (err || !session) {
-	          // if we cannot grab a session, turn down the connection
-	          callback('Session not found.', false);
-	        } else {
-	          // save the session data and accept the connection
-	          handshake.session = session;
-	          callback(null, true);
-	        }
-	      });
-	    });
-	  } else {
-	    return callback('No session.', false);
-	  }
-	  callback(null, true);
-	});
+                //make handshake.session a sessionStore to save data there
+                //so it is accessible in socket.handshake.session in the on-connect function
+                handshake.session = sessionStore;
 
-	// io.on('connection', function (socket) { 
+                sessionStore.get(handshake.sessionID, function(err, session) {
+                    if (err || !session) {
+                        // if we cannot grab a session, turn down the connection
+                        callback('Session not found.', false);
+                    } else {
 
-		// //!^@!*^&$!@&$!@$      MAGIC!        !@$&*(!@$&!*(@$&!*(&$ )))
+                        callback(null, true);
+                    }
+                });
+            });
+        } else {
+            return callback('No session.', false);
+        }
+    });
 
-		// auth.eventEmitter.on('login', function () {
+    // io.on('connection', function (socket) { 
 
-		// 	controllers.socket.askForIdentification(socket);
-		// });
+    // //!^@!*^&$!@&$!@$      MAGIC!        !@$&*(!@$&!*(@$&!*(&$ )))
 
-		// //!@^$!@%$^&!%      END OF MY MAGIC!   **!&@$!@^&*^#%&^!$!@*$^&
+    // auth.eventEmitter.on('login', function () {
 
-		// socket.on('check in', function (incoming) {
-			
-		// 	controllers.socket.addUserConnection(socket, incoming);
-		// });
+    // 	controllers.socket.askForIdentification(socket);
+    // });
 
-	io.sockets.on('connection', function (socket) {
-		   
-	    var hs = socket.handshake;
+    // //!@^$!@%$^&!%      END OF MY MAGIC!   **!&@$!@^&*^#%&^!$!@*$^&
 
-	    console.log(hs.session);
+    // socket.on('check in', function (incoming) {
 
-	    console.log('A socket with sessionID ' + hs.sessionID 
-	        + ' connected!');
+    // 	controllers.socket.addUserConnection(socket, incoming);
+    // });
 
-	    socket.on('disconnect', function () {
-	        console.log('A socket with sessionID ' + hs.sessionID 
-	            + ' disconnected!');
+    io.sockets.on('connection', function(socket) {
 
-	    });
+        var hs = socket.request;
+
+        console.log(hs.session.passport);
+        console.log('A socket with sessionID ' + hs.sessionID + ' connected!');
+
+        socket.on('disconnect', function() {
+            console.log('A socket with sessionID ' + hs.sessionID + ' disconnected!');
+
+        });
 
 
-		socket.on('get private messages', function (request) {
+        socket.on('get private messages', function(request) {
 
-			controllers.socket.getMessages(socket, request);
-		});
+            controllers.socket.getMessages(socket, request);
+        });
 
-		socket.on('send private message', function (data) {
+        socket.on('send private message', function(data) {
 
-			controllers.socket.sendMessage(socket, data);
-		});
+            controllers.socket.sendMessage(socket, data);
+        });
 
-		socket.on('see private message', function (data) {
+        socket.on('see private message', function(data) {
 
-			controllers.socket.seeMessage(socket, data);
-		});
+            controllers.socket.seeMessage(socket, data);
+        });
 
-		socket.on('edit private message', function (data) {
+        socket.on('edit private message', function(data) {
 
-			controllers.socket.editMessage(socket, data);
-		});
+            controllers.socket.editMessage(socket, data);
+        });
 
 
 
-		// io.on('disconnect', function() {
+        // io.on('disconnect', function() {
 
-	 //    	controllers.socket.deleteUserConnection(socket);
-		// });
+        //    	controllers.socket.deleteUserConnection(socket);
+        // });
 
-	});
+    });
 
 
 };

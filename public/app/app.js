@@ -41,8 +41,8 @@ app.config(function($routeProvider, $locationProvider){
         })
         .when('/chat/:friendId?', { // <-- OPTIONAL PARAMETER ;)
             templateUrl: 'partials/chat/chat',
-            controller: 'ChatController',
-            resolve: routeUserCheck.authenticated
+            controller: 'ChatController' //,
+            //resolve: routeUserCheck.authenticated
         })
         .when('/sign-up', {
             templateUrl: 'partials/account/signup',
