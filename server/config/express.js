@@ -4,15 +4,16 @@
     passport = require('passport'),
     methodOverride = require('method-override');
 
-module.exports = function ( app, config, sessionStore,  myCookieParser) {
+module.exports = function ( app, config) {
     app.set( 'view engine', 'jade' );
     app.set( 'views', config.rootPath + '/server/views' );
-    app.use( myCookieParser );
+    app.use( express.cookieParser('grannysbushes') );
+    app.sessionStore = new express.session.MemoryStore()
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use( session(
         {
-            store: sessionStore,
+            store: app.sessionStore,
             secret: 'grannysbushes',
             resave: true,
             saveUninitialized: true,
