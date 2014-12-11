@@ -6,11 +6,11 @@ var clientsList = {},
 	function isAuthorised (socket, request) {
 
 		var authorised = false;
-
-		if(clientsList[request.from]) {
+		
+		if(clientsList[request.from] && request.from == socket.request.session.passport.user) {
 
 			//FIND THE AUTH-TOKEN IN ALL USER CONNECTIONS
-			var elementPos = clientsList[request.from].map(function(x) {return x.authToken; }).indexOf(request.authToken),
+			var elementPos = clientsList[request.from].map(function(x) {return x.sessionID; }).indexOf(socket.request.sessionID),
 				objectFound = clientsList[request.from][elementPos];
 
 			//CHECK IF THE AUTH-TOKEN IS GIVEN TO THE REQUESTER'S SOCKET
@@ -29,33 +29,28 @@ var clientsList = {},
 
 module.exports = {
 
-	askForIdentification: function (socket) {
+	addUserConnection: function (socket) {
 
-		socket.emit('who are you');
-	},
-	addUserConnection: function (socket, incoming) {
-
-		var authToken = hat();
+		var session = socket.request.session,
+			
+			userId = session.passport.user,
+			sessionID = socket.request.sessionID
 
 		//MULTIPLE TOKENS PER USER AVAILABLE
-		if (!clientsList[incoming.userId]) {
+		if (!clientsList[userId]) {
 
-			clientsList[incoming.userId] = [{
+			clientsList[userId] = [{
 	        	socket: socket,
-	        	authToken: authToken 
+	        	sessionID: sessionID 
 	        }];
 		}
 			else {
 
-				clientsList[incoming.userId].push({
+				clientsList[userId].push({
 					socket: socket,
-		        	authToken: authToken	
+		        	sessionID: sessionID	
 				});
 			}
-        
-        socket.emit('registered', {
-        	authToken: authToken
-        });
 	},
 	deleteUserConnection : function (socket) {
 
@@ -132,13 +127,10 @@ module.exports = {
 
 			if(isAuthorised(socket, message)) {
 
-				delete message.authToken;
-
 				messages.markMessageAsSeen(message)
 					.then(function (data) {
 
 						socket.emit('see private message done', data);
-
 					});
 
 			}
@@ -147,13 +139,10 @@ module.exports = {
 
 			if(isAuthorised(socket, message)) {
 
-				delete message.authToken;
-
-				messages.markMessageAsSeen(message)
+				messages.editMessage(message)
 					.then(function (data) {
 							
 						socket.emit('edit private message done', data);
-
 					});
 
 			}
