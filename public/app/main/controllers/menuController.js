@@ -1,16 +1,21 @@
-app.controller("MenuController", function($scope){
+app.controller("MenuController", function($scope, $timeout){
 	$("#left-menu-dialog").height($(document).height()-$(".nav").height());
     $scope.chatBtnShow = false;
     $scope.newDogBtn = false;
-    function close(){
+    var targetN = "";
+    function close(c){
         $("#left-menu-dialog").width(0);
-        $("#cover").css("display", "none");
-        $("body").css("overflow-y", "scroll");
+        if(!c){
+            $("#cover").width($("#cover").width - $(".menu").width);
+        }
+        else{
+            $("#cover").css("display", "none");
+            $('body').css({
+                'overflow': 'auto',
+                'height': 'auto'
+            });
+        }
         window.scrollTo(0, 0);
-        $('html, body').css({
-            'overflow': 'auto',
-            'height': 'auto'
-        });
         $(".new-dog-btn").css("background-color", "#4d4d4f");
         $(".chat-btn").css("background-color", "#4d4d4f");
     }
@@ -30,10 +35,30 @@ app.controller("MenuController", function($scope){
     $scope.showDialog = function(e){
         var clName = e.target.className;
     	var wd = $("#left-menu-dialog").width();
-    	if(wd == 380){
-    		close();
+    	if(wd > 0){
+            if(targetN == clName){
+    		  close(true);
+              targetN = "";
+            }else{
+                close(false);
+                targetN = e.target.className;
+                if(clName == "chat-btn"){
+                    $(".chat-btn").css("background-color", "#e1e1e1");
+                    $scope.chatBtnShow = true;
+
+                }
+                else if(clName == "new-dog-btn"){
+                    $(".new-dog-btn").css("background-color", "#e1e1e1");
+                    $scope.newDogBtn = true;
+
+                }
+                setTimeout(open, 300);
+                
+            }
     	}
     	else{
+            targetN = clName;
+            console.log("dasdas");
             if(clName == "chat-btn"){
                 $(".chat-btn").css("background-color", "#e1e1e1");
                 $scope.chatBtnShow = true;
@@ -47,5 +72,5 @@ app.controller("MenuController", function($scope){
             open();
     	}
 	}
-    $("#cover").bind("click", close)
+    $("#cover").bind("click", close);
 });
