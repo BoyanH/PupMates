@@ -2,17 +2,26 @@ h1,h2,div,a,span,table,tr,td,button,h3,section,img,html,body{
 	margin: 0;
 	padding: 0;
 }
-html{
-	height: 100%;
-	min-height: 100%;
-}
 body{
 	background-color: #01a3e8;
 	color: #fff;
-	height: 100%;
-	min-height: 100%;
 	font-family: Century Gothic, sans-serif;
 }
+::-webkit-scrollbar {  
+    width: 10px;
+
+}  
+::-webkit-scrollbar-track {  
+    background-color: #eaeaea;  
+    border-left: 1px solid #ccc;  
+}  
+::-webkit-scrollbar-thumb {  
+    background-color: #7ccc31;
+    border-radius: 30px; 
+}  
+::-webkit-scrollbar-thumb:hover {  
+    background-color: #424345;  
+}  
 h1, h2, h3, a{
 	color: #0CA2FF;
 }
@@ -85,8 +94,8 @@ h1, h2, h3, a{
 }
 .btn-nav-login:hover{
 	cursor: pointer;
-	background-color: #6FF42B;
-	border-color: #6FF42B;
+	background-color: #7ccc31;
+	border-color: #7ccc31;
 	color: #181E22;
 }
 .btn-signup{
@@ -110,10 +119,16 @@ h1, h2, h3, a{
 }
 .wrapper{
 	padding-top: 70px;
+	overflow: hidden;
+	width: 100%;
+	white-space:nowrap;
 }
 .menu, .right-wrapper{
 	display: inline-block;
 	vertical-align: top;
+}
+.menu-list{
+	list-style-type: none;
 }
 .menu{
 	position: fixed;
@@ -128,7 +143,7 @@ h1, h2, h3, a{
 	height: 80px;
 	background: url("https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/chat-icon.png") 20px 20px no-repeat;
 	text-align: center;
-	color: #6FF42B;
+	color: #7ccc31;
 	border-bottom: 1px solid #e1e1e1;
 }
 .chat-btn:hover{

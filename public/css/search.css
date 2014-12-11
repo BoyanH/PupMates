@@ -25,7 +25,7 @@
 	background-color: #505050;
 }
 .search:focus{
-	border: 1px solid #6FF42B;
+	border: 1px solid #7ccc31;
 	background: url("https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/btnSearchIcon2.png") no-repeat 10px 10px;
 	background-size: 18px;
 }
