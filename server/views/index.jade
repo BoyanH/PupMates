@@ -14,9 +14,7 @@ block main-content
     div.wrapper
         div.menu(ng-include="'partials/main/menu'")
         div(id="left-menu-dialog")
-            div(id="left-dialog-content")
-                ul
-                    li dassa
+            div(id="left-dialog-content" ng-include="'partials/main/dialog'")
         div(id="cover")
         div.right-wrapper
             div.content(ng-view)
