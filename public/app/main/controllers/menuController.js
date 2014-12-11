@@ -10,7 +10,7 @@ app.controller("MenuController", function($scope, $timeout){
         }
         else{
             $("#cover").css("display", "none");
-            $('body').css({
+            $('html, body').css({
                 'overflow': 'auto',
                 'height': 'auto'
             });
