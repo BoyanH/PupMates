@@ -1,4 +1,4 @@
-app.controller("MenuController", function($scope, $timeout){
+app.controller("MenuController", function($scope, $timeout, $rootScope){
 	$("#left-menu-dialog").height($(document).height()-$(".nav").height());
     $scope.chatBtnShow = false;
     $scope.newDogBtn = false;
@@ -10,7 +10,7 @@ app.controller("MenuController", function($scope, $timeout){
         }
         else{
             $("#cover").css("display", "none");
-            $('body').css({
+            $('html, body').css({
                 'overflow': 'auto',
                 'height': 'auto'
             });
@@ -19,7 +19,14 @@ app.controller("MenuController", function($scope, $timeout){
         $(".new-dog-btn").css("background-color", "#4d4d4f");
         $(".chat-btn").css("background-color", "#4d4d4f");
     }
-    function open(){
+    function open(clName){
+        if(clName == "chat-btn"){
+            $rootScope.dirName = "chat";
+        }
+        if(clName == "new-dog-btn"){
+            $rootScope.dirName = "newDog";
+        }
+
         window.scrollTo(0, 0);
         $('html, body').css({
             'overflow': 'hidden',
@@ -45,20 +52,18 @@ app.controller("MenuController", function($scope, $timeout){
                 if(clName == "chat-btn"){
                     $(".chat-btn").css("background-color", "#e1e1e1");
                     $scope.chatBtnShow = true;
-
                 }
                 else if(clName == "new-dog-btn"){
                     $(".new-dog-btn").css("background-color", "#e1e1e1");
                     $scope.newDogBtn = true;
 
                 }
-                setTimeout(open, 300);
+                setTimeout(function(){open(clName)}, 300);
                 
             }
     	}
     	else{
             targetN = clName;
-            console.log("dasdas");
             if(clName == "chat-btn"){
                 $(".chat-btn").css("background-color", "#e1e1e1");
                 $scope.chatBtnShow = true;
@@ -69,7 +74,7 @@ app.controller("MenuController", function($scope, $timeout){
                 $scope.newDogBtn = true;
 
             }
-            open();
+            open(clName);
     	}
 	}
     $("#cover").bind("click", close);
