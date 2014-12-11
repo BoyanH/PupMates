@@ -92,7 +92,7 @@ module.exports = {
     getProfPhoto: function(req, res){
         // !! за сега е с username за тестващи цели
         // !! иначе по id на user-a ще търси
-        User.findOne({username: req.params.id})
+        User.findOne({_id: req.params.id})
         .select("profPhoto")
         .exec(function(err, user){
             if(err){

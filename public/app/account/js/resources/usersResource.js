@@ -5,3 +5,13 @@
     }
     return UsersResource;
 });
+
+/*app.factory('UserPhotos', function($http, $q){
+
+
+	return {
+		getProfPhotoById: function(id){
+			var 
+		}
+	}
+});*/
