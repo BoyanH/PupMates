@@ -1,14 +1,14 @@
 ﻿var express = require( 'express' ),
     bodyParser = require( 'body-parser' ),
+    cookieParser = require( 'cookie-parser' ),
     session = require( 'express-session' ),
-    passport = require('passport'),
-    methodOverride = require('method-override');
+    passport = require('passport');
 
 module.exports = function ( app, config) {
     app.set( 'view engine', 'jade' );
     app.set( 'views', config.rootPath + '/server/views' );
-    app.use( express.cookieParser('grannysbushes') );
-    app.sessionStore = new express.session.MemoryStore()
+    app.use( cookieParser('grannysbushes') );
+    app.sessionStore = new session.MemoryStore()
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use( session(
@@ -21,7 +21,6 @@ module.exports = function ( app, config) {
         }
         ) );
     app.use(passport.initialize());
-    app.use(methodOverride());
     app.use(passport.session());
     app.use( express.static( config.rootPath + '/public' ) );
 }

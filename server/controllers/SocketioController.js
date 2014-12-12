@@ -1,7 +1,6 @@
 var clientsList = {},
 	messages = require('./MessagesController.js'),
-	auth = require('../config/auth.js'),
-	hat = require('hat');
+	auth = require('../config/auth.js');
 
 	function isAuthorised (socket, request) {
 

@@ -1,14 +1,15 @@
 ﻿var http = require('http'),
     express = require('express'),
-    cookieParser = require( 'cookie-parser' ),
     env = process.env.NODE_ENV || 'development',
     config = require('./server/config/config.js')[env],
-	app = express();
+	app = express(),
+	params = require('express-params');
 
 require('./server/config/express.js')(app, config);
 require('./server/config/mongoose.js')(config);
 require('./server/config/passport.js')();
 require('./server/config/routes.js')(app);
+params.extend(app);
 
 var	server = http.createServer(app),
 	socketio = require('socket.io'),

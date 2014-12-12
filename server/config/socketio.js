@@ -3,7 +3,7 @@ var controllers = require('../controllers'),
 	eventEmitter = auth.eventEmitter,
 	express = require('express'),
     cookieParser = require('cookie-parser'),
-	parseCookie = express.cookieParser('grannysbushes');
+	parseCookie = cookieParser('grannysbushes');
 
 module.exports = function(io, sessionStore) {
 
