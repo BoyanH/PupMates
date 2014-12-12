@@ -8,7 +8,7 @@ module.exports = function ( app, config) {
     app.set( 'view engine', 'jade' );
     app.set( 'views', config.rootPath + '/server/views' );
     app.use( cookieParser('grannysbushes') );
-    app.sessionStore = new session.MemoryStore()
+    app.sessionStore = new session.MemoryStore();
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use( session(

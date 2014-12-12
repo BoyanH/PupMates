@@ -24,7 +24,7 @@ module.exports = function(io, sessionStore) {
                     } else {
 
                         // save the session data and accept the connection
-                        handshake.session = new express.session.Session(handshake, session);
+                        handshake.session = session);
                         callback(null, true);
                     }
                 });
