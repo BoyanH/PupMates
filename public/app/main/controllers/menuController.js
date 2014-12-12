@@ -1,7 +1,7 @@
 app.controller("MenuController", function($scope, $timeout, $rootScope){
 	$("#left-menu-dialog").height($(document).height()-$(".nav").height());
-    $scope.chatBtnShow = false;
-    $scope.newDogBtn = false;
+    //$scope.chatBtnShow = false;
+    //$scope.newDogBtn = false;
     var targetN = "";
     function close(c){
         $("#left-menu-dialog").width(0);
@@ -20,11 +20,14 @@ app.controller("MenuController", function($scope, $timeout, $rootScope){
         $(".chat-btn").css("background-color", "#4d4d4f");
     }
     function open(clName){
+        console.log("class Name: " + clName);
         if(clName == "chat-btn"){
             $rootScope.dirName = "chat";
+            $rootScope.reloadDataDialog();
         }
-        if(clName == "new-dog-btn"){
+        else if(clName == "new-dog-btn"){
             $rootScope.dirName = "newDog";
+            $rootScope.reloadDataDialog();
         }
 
         window.scrollTo(0, 0);
@@ -58,7 +61,12 @@ app.controller("MenuController", function($scope, $timeout, $rootScope){
                     $scope.newDogBtn = true;
 
                 }
-                setTimeout(function(){open(clName)}, 300);
+                //with this works the changing method
+                open(clName);
+
+
+                //with this doesnt work the changing method
+                //setTimeout(function(){open(clName)}, 300);
                 
             }
     	}
