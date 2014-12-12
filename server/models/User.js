@@ -14,7 +14,7 @@ var userSchema = mongoose.Schema({
         pets: [{
             id:String,
             name: String,
-            age: Number,
+            age: String, //we will hold the age in str because it can be 3 months for example
             breed: String,
             profPhoto: {data: Buffer, contentType: String, description: String} // contentType should be 'image/png' or 'image/jpg'
         }],
@@ -79,7 +79,6 @@ module.exports.seedInitialUsers = function(){
          salt: salt,
          hashPass: hasedPwd, 
          roles: ['admin'] });
-        console.log( 'Users added to database....' );
 
         User.create( { username: 'gosho',
          firstName: 'Gosho', 

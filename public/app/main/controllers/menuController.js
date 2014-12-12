@@ -1,4 +1,4 @@
-app.controller("MenuController", function($scope, $timeout, $rootScope){
+app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout){
 	$("#left-menu-dialog").height($(document).height()-$(".nav").height());
     //$scope.chatBtnShow = false;
     //$scope.newDogBtn = false;
@@ -20,7 +20,8 @@ app.controller("MenuController", function($scope, $timeout, $rootScope){
         $(".chat-btn").css("background-color", "#4d4d4f");
     }
     function open(clName){
-        console.log("class Name: " + clName);
+        //console.log("class Name: " + clName);
+        //console.log("root: " + $rootScope);
         if(clName == "chat-btn"){
             $rootScope.dirName = "chat";
             $rootScope.reloadDataDialog();
@@ -50,7 +51,7 @@ app.controller("MenuController", function($scope, $timeout, $rootScope){
     		  close(true);
               targetN = "";
             }else{
-                close(false);
+                close(false, clName);
                 targetN = e.target.className;
                 if(clName == "chat-btn"){
                     $(".chat-btn").css("background-color", "#e1e1e1");
@@ -61,12 +62,7 @@ app.controller("MenuController", function($scope, $timeout, $rootScope){
                     $scope.newDogBtn = true;
 
                 }
-                //with this works the changing method
-                open(clName);
-
-
-                //with this doesnt work the changing method
-                //setTimeout(function(){open(clName)}, 300);
+                $timeout(function(){open(clName)}, 300);
                 
             }
     	}
