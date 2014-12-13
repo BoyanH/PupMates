@@ -111,9 +111,13 @@ module.exports = {
     createDog: function(req, res){
         var dog = req.body;
         var userId = req.params.userId;
-        var b64string = dog.profPhoto;
+        var b64string = dog.profPhoto.data;
         var buf = new Buffer(b64string, 'base64');
-        dog.profPhoto = buf;
+        var profPhoto = {};
+        profPhoto.data = buf;
+        profPhoto.contentType = dog.profPhoto.contentType;
+        profPhoto.description = dog.profPhoto.description;
+        dog.profPhoto = profPhoto;
         dog.id = shortId.generate();
 
         User.findOne({_id: userId}).select("dogs").exec(function(err, user){
@@ -128,13 +132,27 @@ module.exports = {
                         res.end("errr");
                     }
                     console.log("dog added");
-                    User.findOne({_id: userId}).exec(function(err, user2){
+
+                    //test to see the database
+                    /*User.findOne({_id: userId}).exec(function(err, user2){
                         console.log("updated user");
-                        console.log(user2);
-                    })
+                        console.log(user2.dogs[0]);
+                    })*/
                     res.send({success: true});
                 });
             }
         })
+    },
+    getDogPhoto: function(req, res){
+        var dogId = req.params.id;
+        var username = req.params.user;
+        User.findOne({username: username}).select("dogs").exec(function(err, dogs){
+            for(var i=0;i < dogs.length; i++){
+                if(dogs[i].id == dogId){
+                    res.contentType(dog.profPhoto.contentType);
+                    res.send(dog.profPhoto.data);
+                }
+            }
+        });
     }
 }

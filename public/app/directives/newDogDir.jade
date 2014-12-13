@@ -7,9 +7,12 @@ div
 		input.input-dog-field(type="text" require="required" id="date-picker" placeholder="BIRTH DATE" name="age" ng-model="dog.age")
 		div.titleFieldDog BREED
 		input.input-dog-field(type="text" require="required" placeholder="BREED" name="breed" ng-model="dog.breed")
-		div.titleFieldDog Photo
+		div.titleFieldDog DESCRIPTION (optional)
+		input.input-dog-field(type="text" placeholder="DESCRIPTION" name="description" ng-model="dog.description")
+		div.titleFieldDog PHOTO
 		input.input-upload-dog-photo(multiple="multiple" require="required" ng-file-select="onFileSelect($files)" name="photo" type="file")
 		div
-			progress(value="{{progress}}")
+			progress.progress-photo(value="{{progress}}")
+
 		div
 			button.button-new-dog(ng-click="addDog(dog)" ng-disable="newDogForm.$invalid") ADD DOG
