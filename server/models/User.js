@@ -18,7 +18,7 @@ var userSchema = mongoose.Schema({
             breed: String,
             profPhoto: {data: Buffer, contentType: String, description: String} // contentType should be 'image/png' or 'image/jpg'
         }],
-        albums:[{
+        album:[{
             data: Buffer, 
             contentType: String,
             description: String
@@ -74,6 +74,7 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
+         dogs:[],
          friends: [],
          album:[],
          salt: salt,
@@ -87,6 +88,7 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
+         dogs: [],
          friends: [],
          album:[],
          salt: salt,
