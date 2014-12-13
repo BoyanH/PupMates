@@ -1,5 +1,8 @@
 ﻿var User = require('mongoose').model('User'),
-    encryption = require('../utilities/encryption.js');
+    encryption = require('../utilities/encryption.js'),
+    formidable = require('formidable'),
+    util = require('util');
+
 module.exports = {
     createUser: function(req, res, next){
         var newUserData = req.body;
@@ -105,5 +108,20 @@ module.exports = {
     },
     getAlbumPhoto: function(req, res){
         // to do
+    },
+    uploadDoggyPhoto: function(req, res){
+        var form = new formidable.IncomingForm();
+        form.keepExtensions = true;
+        form.onPart = function(part){
+            console.log(part.transferBuffer);
+            form.handlePart(part);
+            return;
+        }
+        form.parse(req, function(err, fields, files) {
+            res.writeHead(200, {'content-type': 'text/plain'});
+            res.write('received upload:\n\n');
+            res.end(util.inspect({fields: fields, files: files}));
+            res.end();
+        });
     }
 }

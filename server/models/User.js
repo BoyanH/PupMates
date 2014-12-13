@@ -11,14 +11,14 @@ var userSchema = mongoose.Schema({
             id:String,
             username: String
         }],
-        pets: [{
+        dogs: [{
             id:String,
             name: String,
             age: String, //we will hold the age in str because it can be 3 months for example
             breed: String,
             profPhoto: {data: Buffer, contentType: String, description: String} // contentType should be 'image/png' or 'image/jpg'
         }],
-        album:[{
+        albums:[{
             data: Buffer, 
             contentType: String,
             description: String

@@ -1,3 +1,4 @@
-app.controller("NewDogController", function($scope){
+app.controller("NewDogController", function($scope, identity){
+	$( "#date-picker" ).datepicker();
 	
 });

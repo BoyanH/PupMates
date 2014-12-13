@@ -1,0 +1,24 @@
+.ui-datepicker{
+	width: 210px;
+	height: auto;
+	font-family: Century Gothic, sans-serif;
+}
+.ui-datepicker table {  
+    width: 100%;
+}
+.ui-datepicker-header{
+	color: #09ADED;
+	background: #4d4d4f;
+}
+.ui-datepicker-title {  
+    text-align: center;  
+}
+.ui-datepicker tbody td{
+	background-color: #7ccc31;
+}
+.ui-datepicker-calendar .ui-state-hover {  
+    background: #09ADED;
+} 
+.ui-datepicker-calendar .ui-state-active{
+	background: #09ADED;
+}

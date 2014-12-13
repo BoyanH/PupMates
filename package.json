@@ -23,7 +23,9 @@
     "socket.io": "^1.2.1",
     "q": "^1.1.2",
     "cookies": "^0.5.0",
-    "express-params": "0.0.3"
+    "express-params": "0.0.3",
+    "formidable": "^1.0.15",
+    "util": "^0.10.3"
   },
   "devDependencies": {
     "nodemon": "^1.0.17"
