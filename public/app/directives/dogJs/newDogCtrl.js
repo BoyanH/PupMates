@@ -22,26 +22,6 @@ app.controller("NewDogController", function($scope, identity, FileReaderAng, Dog
     	profPhoto.contentType = contentType;
     	profPhoto.description = dog.description;
     	dog.profPhoto = profPhoto;
-    	console.log(dog);
     	DogService.createDog(dog).then(function(){console.log("success?");});
     }
-
-
-
-
-
-
-	/*$scope.readImage = function(input) {
-    	if ( input.files && input.files[0] ) {
-        	var FR= new FileReader();
-        	FR.onload = function(e) {
-             	//$('#img').attr( "src", e.target.result );
-             	//$('#base').text( e.target.result );
-             	console.log(e);
-        	};       
-        	FR.readAsDataURL( input.files[0] );
-    	}
-	}*/
-
-	
 });

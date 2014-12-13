@@ -1,4 +1,4 @@
-app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout){
+app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout, identity){
 	$("#left-menu-dialog").height($(document).height()-$(".nav").height());
     //$scope.chatBtnShow = false;
     //$scope.newDogBtn = false;
@@ -43,7 +43,9 @@ app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout
         $("#left-menu-dialog").width(380).css("margin-left", "80px");
         $("#cover").css("display", "inline-block").css("left", p.left.toString()).css("top", p.top.toString()).width("100%").height($(".menu").height());
     }
-    $scope.showDialog = function(e){
+
+$scope.showDialog = function(e){
+        if(identity.currentUser){
         var clName = e.target.className;
     	var wd = $("#left-menu-dialog").width();
     	if(wd > 0){
@@ -81,5 +83,9 @@ app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout
             open(clName);
     	}
 	}
+    else{
+        alert("Please login first :)")
+    }
+}
     $("#cover").bind("click", close);
 });

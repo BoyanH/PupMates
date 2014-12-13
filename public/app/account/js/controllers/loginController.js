@@ -16,7 +16,7 @@
             }
         });
     };
-    $scope.logout = function(){
+    $scope.signout = function(){
         auth.logout().then(function(){
             notifier.success('Successfully logout!');
             if($scope.user){
