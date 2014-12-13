@@ -1,13 +1,18 @@
 div
 	h2.titleNewDog ADD NEW DOGGY
-	form.form-new-dog(action="/{{userId}}/newdog/img" enctype="multipart/form-data" method="post")
+	form.form-new-dog(name="newDogForm")
 		div.titleFieldDog NAME
-		input.input-dog-field(type="text" ng-change="change()" placeholder="NAME" name="name" ng-model="dog.name")
+		input.input-dog-field(type="text" require="required" ng-change="change()" placeholder="NAME" name="name" ng-model="dog.name")
 		div.titleFieldDog BIRTH DATE
-		input.input-dog-field(type="text" id="date-picker" placeholder="BIRTH DATE" name="age" ng-model="dog.age")
+		input.input-dog-field(type="text" require="required" id="date-picker" placeholder="BIRTH DATE" name="age" ng-model="dog.age")
 		div.titleFieldDog BREED
-		input.input-dog-field(type="text" placeholder="BREED" name="breed" ng-model="dog.breed")
-		div.titleFieldDog Photo
-		input.input-upload-dog-photo(multiple="multiple" name="photo" type="file")
+		input.input-dog-field(type="text" require="required" placeholder="BREED" name="breed" ng-model="dog.breed")
+		div.titleFieldDog DESCRIPTION (optional)
+		input.input-dog-field(type="text" placeholder="DESCRIPTION" name="description" ng-model="dog.description")
+		div.titleFieldDog PHOTO
+		input.input-upload-dog-photo(multiple="multiple" require="required" ng-file-select="onFileSelect($files)" name="photo" type="file")
 		div
-			input.button-new-dog(type="submit" value="ADD DOG")
+			progress.progress-photo(value="{{progress}}")
+
+		div
+			button.button-new-dog(ng-click="addDog(dog)" ng-disable="newDogForm.$invalid") ADD DOG

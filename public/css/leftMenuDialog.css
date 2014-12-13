@@ -30,7 +30,7 @@ body{
 }
 .titleNewDog{
   text-align: center;
-  margin-top: 50px;
+  margin-top: 10px;
   margin-bottom: 10px;
   padding-bottom: 5px;
   border-bottom: 1px solid #424345;
@@ -80,4 +80,11 @@ body{
   color: #09ADED;
   font-size: 1.1em;
   padding: 5px;
+}
+.progress-photo{
+  width: 100%;
+  height: 25px;
+}
+.progress-photo[value]{
+  background: #7ccc31;
 }

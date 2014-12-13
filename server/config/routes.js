@@ -12,8 +12,9 @@ module.exports = function (app) {
                beautify: true,
         });
     });
-    app.post('/:userId/newdog/img', auth.isAuthenticated, controllers.users.uploadDoggyPhoto);
+    app.post('/:userId/newdog', auth.isAuthenticated, controllers.users.createDog);
     app.get('/img/profPhoto/:id', auth.isAuthenticated, controllers.users.getProfPhoto);
+    app.get('/:user/imgdog/:id', controllers.users.getDogPhoto);
     app.post('/login',auth.login);
     app.post('/logout', auth.logout);
     app.get('/api/*', function(req,res){

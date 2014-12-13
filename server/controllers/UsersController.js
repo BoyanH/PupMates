@@ -1,7 +1,6 @@
 ﻿var User = require('mongoose').model('User'),
     encryption = require('../utilities/encryption.js'),
-    formidable = require('formidable'),
-    util = require('util');
+    shortId = require('shortid');
 
 module.exports = {
     createUser: function(req, res, next){
@@ -109,19 +108,51 @@ module.exports = {
     getAlbumPhoto: function(req, res){
         // to do
     },
-    uploadDoggyPhoto: function(req, res){
-        var form = new formidable.IncomingForm();
-        form.keepExtensions = true;
-        form.onPart = function(part){
-            console.log(part.transferBuffer);
-            form.handlePart(part);
-            return;
-        }
-        form.parse(req, function(err, fields, files) {
-            res.writeHead(200, {'content-type': 'text/plain'});
-            res.write('received upload:\n\n');
-            res.end(util.inspect({fields: fields, files: files}));
-            res.end();
+    createDog: function(req, res){
+        var dog = req.body;
+        var userId = req.params.userId;
+        var b64string = dog.profPhoto.data;
+        var buf = new Buffer(b64string, 'base64');
+        var profPhoto = {};
+        profPhoto.data = buf;
+        profPhoto.contentType = dog.profPhoto.contentType;
+        profPhoto.description = dog.profPhoto.description;
+        dog.profPhoto = profPhoto;
+        dog.id = shortId.generate();
+
+        User.findOne({_id: userId}).select("dogs").exec(function(err, user){
+            if(err){
+                console.log("smth went wrong: " + err);
+                res.end();
+            }
+            else{
+                user.dogs.push(dog);
+                User.update({_id: userId}, user, function(err){
+                    if(err){
+                        res.end("errr");
+                    }
+                    console.log("dog added");
+
+                    //test to see the database
+                    /*User.findOne({_id: userId}).exec(function(err, user2){
+                        console.log("updated user");
+                        console.log(user2.dogs[0]);
+                    })*/
+                    res.send({success: true});
+                });
+            }
+        })
+    },
+    getDogPhoto: function(req, res){
+        var dogId = req.params.id;
+        var username = req.params.user;
+        User.findOne({username: username}).select("dogs").exec(function(err, dogs){
+            for(var i=0;i < dogs.length; i++){
+                if(dogs[i].id == dogId){
+                    res.contentType(dog.profPhoto.contentType);
+                    res.send(dog.profPhoto.data);
+                }
+            }
         });
     }
 }

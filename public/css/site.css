@@ -111,11 +111,25 @@ h1, h2, h3, a{
 	text-decoration: none;
 	background-color: #1D1D1D;
 }
-.btn-signup:hover{
+.btn-signup:hover, .btn-signout:hover{
 	cursor: pointer;
 	background-color: #0CA2FF;
 	border-color: #0CA2FF;
 	color: #181E22;
+}
+.btn-signout{
+	display: inline-block;
+	width: 90px;
+	padding: 12px;
+	margin-top: 12px;
+	margin-right: 10px;
+	color: #09ADED;
+	border: 1px solid #1D1D1D;
+	border-radius: 20px;
+	text-decoration: none;
+	font-weight: 700;
+	outline: none;
+	background-color: #1D1D1D;
 }
 .wrapper{
 	padding-top: 70px;
@@ -134,6 +148,7 @@ h1, h2, h3, a{
 	position: fixed;
 	background-color: #4d4d4f;
 	width: 80px;
+	height: 700px;
 }
 .chat-btn{
 	margin-left: -40px;

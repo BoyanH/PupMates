@@ -1,5 +1,9 @@
 ﻿div(ng-controller="LoginController")
-	a.btn-nav-login(ng-click='toggleModal()') Login
+	div(ng-show="!identity.currentUser")
+		a.btn-nav-login(ng-click='toggleModal()') Login
+		a.btn-signup(href="#/sign-up") Sign Up
+	div(ng-hide="!identity.currentUser")
+		button.btn-signout(ng-click="signout()") Sign out
 	modal-dialog.contentDialog(show='modalShown' width='400px' height='32%')
 		h2.login-h Login
 		div.line
