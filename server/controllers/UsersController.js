@@ -55,7 +55,8 @@ module.exports = {
     getUser: function(req, res){
 
         var sendAllInfo = false,
-            collection;
+            collection,
+            userIP = req.headers['x-forwarded-for'];
 
         User.find({username: req.params.id})
             .exec(function (err, collection){
@@ -67,6 +68,21 @@ module.exports = {
                     console.log('User could not be found: ' +  err);
                     return;
                 }
+                    else {
+
+                        if(collection.seenFrom.indexOf(userIP) <= -1) {
+
+                            collection.seenFrom.push(userIP);
+
+                            User.update({username: req.params.id}, collection, function(err){
+                                
+                                if(err) {
+                                    console.error(err);
+                                }
+                            });
+
+                        }
+                    }
    
                 for (var i = 0; i < collection.friends.length; i++) {
                     
@@ -154,5 +170,63 @@ module.exports = {
                 }
             }
         });
+    },
+    searchDynamically: function(req, res) {
+
+        var searchString =  'Pesho Peshev' //req.params.searchContent,
+            searchArray = searchString.split(' ');
+
+        for (var i = 0; i < searchArray.length; i++) {
+            
+            searchArray[i] = searchArray[i].toLowerCase();
+        };
+
+        var lastWord = searchArray.pop();
+
+
+        function checkIfContains() {
+
+            var firstNameArray = this.firstName.split(' '),
+                lastNameArray = this.lastName.split(' '),
+                namesArray = [];
+
+            for (var ln in lastNameArray) {
+
+                namesArray.push(ln.toLowerCase());
+            }
+
+            for (var fn in firstNameArray) {
+
+                namesArray.push(fn.toLowerCase());
+            }
+
+            namesArray.sort();
+
+            for (var word in searchArray) {
+
+                if (namesArray.indexOf(word) <= -1) {
+
+                    return false;
+                }
+            }
+
+            if (namesArray.join(' ').indexOf(lastWord) <= -1) {
+
+                return false;
+            }
+
+            return true;
+        }
+
+        // User.find( { $where: checkIfContains } )
+        //     .exec(function (err, collection) {
+
+        //         if (err) {
+
+        //             console.error(err);
+        //         }
+
+        //         console.log(collection);
+        //     });
     }
 }

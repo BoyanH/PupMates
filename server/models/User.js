@@ -26,6 +26,7 @@ var userSchema = mongoose.Schema({
         salt: String,
         hashPass: String,
         roles: [String],
+        seenFrom: [String] //Ip adresses of users (one String per ip => not too many per user)
 });
 userSchema.method({
     authenticate: function(password){

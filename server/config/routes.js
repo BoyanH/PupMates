@@ -1,6 +1,8 @@
 ﻿var controllers = require('../controllers');
     auth = require('./auth.js');
 
+    controllers.users.searchDynamically();
+
 var User = require('mongoose').model('User');
 module.exports = function (app) {
     app.get('/api/users', auth.isInRole('admin'),controllers.users.getAllUsers );
