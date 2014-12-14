@@ -9,7 +9,7 @@ app.controller("NewDogController", function($scope, identity, FileReaderAng, Dog
         $scope.progress = 0;
         FileReaderAng.readAsDataUrl($scope.file, $scope)
                       .then(function(result) {
-                          data = result;
+                          data = result.slice(result.indexOf(",") +1, result.length);
                           contentType = result.slice(result.indexOf(":") + 1, result.indexOf(";base64"))
                       });
     };
@@ -20,8 +20,7 @@ app.controller("NewDogController", function($scope, identity, FileReaderAng, Dog
     $scope.addDog = function(dog){
     	profPhoto.data = data;
     	profPhoto.contentType = contentType;
-    	profPhoto.description = dog.description;
     	dog.profPhoto = profPhoto;
-    	DogService.createDog(dog).then(function(){console.log("success?");});
+    	DogService.createDog(dog).then(function(success){if(success)console.log("success?");});
     }
 });

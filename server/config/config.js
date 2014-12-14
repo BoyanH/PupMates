@@ -9,7 +9,7 @@ module.exports = {
     },
     production: {
         rootPath: rootPath,
-        db: 'mongodb://admin:fdsjfslkfdmskafvgjdsfdhbaufdhsa@ds063160.mongolab.com:63160/doggyworld', //connect to mongolab
+        db: 'mongodb://admin:fdsjfslkfdmskafvgjdsfdhbaufdhsa@ds053390.mongolab.com:53390/doggyworld', //connect to mongolab
         port: process.env.PORT || 1234
     }
 }

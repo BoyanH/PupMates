@@ -71,24 +71,24 @@ module.exports = {
                 }
                     else {
 
-                        // if(collection.seenFrom) {
-                        //     if(collection.seenFrom.indexOf(userIP) <= -1) {
+                        if(collection.seenFrom) {
+                            if(collection.seenFrom.indexOf(userIP) <= -1) {
 
-                        //         collection.seenFrom.push(userIP);
+                                collection.seenFrom.push(userIP);
 
-                        //     }
-                        // }
-                        //     else {
+                            }
+                        }
+                            else {
 
-                        //         collection.seenFrom = [userIP];
-                        //     }
+                                collection.seenFrom = [userIP];
+                            }
 
-                        // User.update({username: req.params.id}, collection, function(err){
+                        User.update({username: req.params.id}, collection, function(err){
                                     
-                        //         if(err) {
-                        //             console.error(err);
-                        //         }
-                        //     });
+                                if(err) {
+                                    console.error(err);
+                                }
+                            });
                     }
    
                 for (var i = 0; i < collection.friends.length; i++) {
@@ -135,11 +135,12 @@ module.exports = {
         var dog = req.body;
         var userId = req.params.userId;
         var b64string = dog.profPhoto.data;
+        console.log("b64string: " + b64string);
         var buf = new Buffer(b64string, 'base64');
         var profPhoto = {};
         profPhoto.data = buf;
-        profPhoto.contentType = dog.profPhoto.contentType;
-        profPhoto.description = dog.profPhoto.description;
+        //profPhoto.contentType = dog.profPhoto.contentType;
+        profPhoto.contentType = "image/jpg";
         dog.profPhoto = profPhoto;
         dog.id = shortId.generate();
 
@@ -149,6 +150,8 @@ module.exports = {
                 res.end();
             }
             else{
+                //console.log('dog');
+                //console.log(dog);
                 user.dogs.push(dog);
                 User.update({_id: userId}, user, function(err){
                     if(err){
@@ -168,12 +171,15 @@ module.exports = {
     },
     getDogPhoto: function(req, res){
         var dogId = req.params.id;
-        var username = req.params.user;
-        User.findOne({username: username}).select("dogs").exec(function(err, dogs){
-            for(var i=0;i < dogs.length; i++){
-                if(dogs[i].id == dogId){
-                    res.contentType(dog.profPhoto.contentType);
-                    res.send(dog.profPhoto.data);
+        console.log("dogId: " + dogId);
+        var userId = req.params.userId;
+        User.findOne({_id: userId}).select("dogs").exec(function(err, user){
+            for(var i=0;i < user.dogs.length; i++){
+                //console.log("user: ");
+                //console.log(user);
+                if(user.dogs[i].id == dogId){
+                    res.contentType(user.dogs[i].profPhoto.contentType);
+                    res.send(user.dogs[i].profPhoto.data);
                 }
             }
         });

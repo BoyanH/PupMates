@@ -1,6 +1,8 @@
 ﻿var mongoose = require('mongoose');
 var encryption = require('../utilities/encryption.js'); 
 var fs = require('fs');
+var shortId = require('shortid');
+
 var userSchema = mongoose.Schema({
         username: {type: String, require: '{PATH} is required', unique: true},
         firstName: {type: String, require: '{PATH} is required'},
@@ -13,10 +15,11 @@ var userSchema = mongoose.Schema({
         }],
         dogs: [{
             id:String,
+            description:String,
             name: String,
             age: String, //we will hold the age in str because it can be 3 months for example
             breed: String,
-            profPhoto: {data: Buffer, contentType: String, description: String} // contentType should be 'image/png' or 'image/jpg'
+            profPhoto: {data: Buffer, contentType: String} // contentType should be 'image/png' or 'image/jpg'
         }],
         album:[{
             data: Buffer, 
@@ -64,7 +67,11 @@ module.exports.seedInitialUsers = function(){
         //for testing purposes
         var imgPath = "public/img1.jpg";
         var pic = fs.readFileSync(imgPath);
+        var imgPath2 = "public/husky.jpg";
+        var pic2 = fs.readFileSync(imgPath2);
+        var idDog = shortId.generate();
         console.log(pic);
+        console.log(pic2);
 
         hasedPwd = encryption.generateHashedPassword( salt, 'pesho' );
        
@@ -75,6 +82,7 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
+<<<<<<< HEAD
          dogs:[
              {
                 name: 'pencho penkin'
@@ -84,6 +92,19 @@ module.exports.seedInitialUsers = function(){
                 name: 'asd dasd'
              }
          ],
+=======
+         dogs:[{
+            description: "My first dog :)",
+            name:"Muncho",
+            age: "14/12/2014",
+            breed: "husky",
+            id: idDog,
+            profPhoto:{
+                data: pic2,
+                contentType: 'image/jpg',
+            }
+         }],
+>>>>>>> af66eac2274d814a10c60d1c0cdf66b62bc75cec
          friends: [],
          album:[],
          salt: salt,
@@ -104,6 +125,14 @@ module.exports.seedInitialUsers = function(){
          hashPass: hasedPwd, 
          roles: ['admin'] });
         console.log( 'Users added to database....' );
+    }
+    else{
+        for(var i=0;i < collection.length;i++){
+            for(var j=0;j<collection[i].dogs.length;j++){
+                console.log(collection[i].dogs[j].profPhoto.contentType);
+                console.log(collection[i].dogs[j].profPhoto.data);
+            }
+        }
     }
     });
 }
