@@ -24,7 +24,7 @@
 .profPhotoContainer{
 	display: inline-block;
 	overflow: hidden;
-	background-color: #f0f0f0;
+	background-color: #fff;
 	padding: 5px;
 	width: 150px;
 	height: auto;
@@ -47,7 +47,7 @@
 	background-color: #f0f0f0;
 	border-radius: 2px;
 	color: #424345;
-	min-height: 1000px;
+	min-height: 500px;
 
 }
 .user-names{
@@ -62,4 +62,35 @@
 .user-names a:hover{
 	color: #0CA2FF;
 	cursor: pointer;
+}
+.dog-container{
+	display: inline-block;
+	max-width: 200px;
+	margin-right: 10px;
+	padding: 10px;
+	background-color: #fcfcfc;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+}
+.description-pic-container{
+	text-align: center;
+}
+.pic-container{
+	padding: 5px;
+	margin: 3px;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
+	background: #fff;
+}
+.pic-container img{
+	width: 100%;
+}
+.name-container{
+	text-align: center;
+}
+.dog-name{
+	text-decoration: none;
+	color: inherit;
+	font-size: 1.1em;
+	font-weight: 600;
 }
