@@ -15,8 +15,8 @@ module.exports = function (app) {
         });
     });
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.users.createDog);
-    app.get('/img/profPhoto/:id', auth.isAuthenticated, controllers.users.getProfPhoto);
-    app.get('/:user/imgdog/:id', controllers.users.getDogPhoto);
+    app.get('/img/profPhoto/:id', controllers.users.getProfPhoto);
+    app.get('/:userId/imgdog/:id', controllers.users.getDogPhoto);
     app.post('/login',auth.login);
     app.post('/logout', auth.logout);
     app.get('/api/*', function(req,res){

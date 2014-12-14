@@ -1,5 +1,16 @@
 ﻿.col-1
-    div.profPhotoContainer
-        img.profPhoto(src="{{profPhoto}}")
+	div.profPhotoContainer
+		img.profPhoto(src="{{profPhoto}}")
 .col-2
-    div.content-home
+	div.content-home
+		h2.user-names
+			a(href="#/profile/{{username}}") {{user.firstName}} {{user.lastName}}
+		div
+			| My pets:
+		div.pet-wrapper
+			div(ng-repeat="dog in dogs")
+				div.dog-name {{dog.name}}
+				div Birthdate: {{dog.age}} {{dog.url}}
+				div.dog-pic-container
+					img(src="{{dog.url}}")
+					div {{dog.description}}
