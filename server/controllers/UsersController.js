@@ -1,6 +1,7 @@
 ﻿var User = require('mongoose').model('User'),
     encryption = require('../utilities/encryption.js'),
-    shortId = require('shortid');
+    shortId = require('shortid'),
+    Q = require('q');
 
 module.exports = {
     createUser: function(req, res, next){
@@ -39,7 +40,7 @@ module.exports = {
     getAllUsers: function(req, res){
         User.find({})
         .select("-albums")
-        .select("-pets")
+        .select("-dogs")
         .select("-salt")
         .select("-hashPass")
         .select("-roles")
@@ -62,7 +63,7 @@ module.exports = {
             .exec(function (err, collection){
 
                 // Username and Id are both unique, therefore I use collection[0], only 1 possible
-                collection = collection[0];
+                var collection = collection[0];
 
                 if(err){
                     console.log('User could not be found: ' +  err);
@@ -70,18 +71,24 @@ module.exports = {
                 }
                     else {
 
-                        if(collection.seenFrom.indexOf(userIP) <= -1) {
+                        // if(collection.seenFrom) {
+                        //     if(collection.seenFrom.indexOf(userIP) <= -1) {
 
-                            collection.seenFrom.push(userIP);
+                        //         collection.seenFrom.push(userIP);
 
-                            User.update({username: req.params.id}, collection, function(err){
-                                
-                                if(err) {
-                                    console.error(err);
-                                }
-                            });
+                        //     }
+                        // }
+                        //     else {
 
-                        }
+                        //         collection.seenFrom = [userIP];
+                        //     }
+
+                        // User.update({username: req.params.id}, collection, function(err){
+                                    
+                        //         if(err) {
+                        //             console.error(err);
+                        //         }
+                        //     });
                     }
    
                 for (var i = 0; i < collection.friends.length; i++) {
@@ -100,8 +107,8 @@ module.exports = {
 
                         //TO DO: implement public/private profile
                         
-                        collection.album = [];
-                        collection.lastName = ''; // <-- testing purpose
+                        // collection.album = [];
+                        // collection.lastName = ''; // <-- testing purpose
 
                         res.send(collection);
                     }
@@ -171,10 +178,12 @@ module.exports = {
             }
         });
     },
-    searchDynamically: function(req, res) {
+    searchUserDynamically: function(req, res) {
 
-        var searchString =  'Pesho Peshev' //req.params.searchContent,
-            searchArray = searchString.split(' ');
+        var searchString =  req.params.searchContent,
+            searchArray = searchString.split(' '),
+            deferred = Q.defer(),
+            limit = req.params.limit || '';
 
         for (var i = 0; i < searchArray.length; i++) {
             
@@ -183,31 +192,34 @@ module.exports = {
 
         var lastWord = searchArray.pop();
 
-
-        function checkIfContains() {
+        function whereFunction() {
 
             var firstNameArray = this.firstName.split(' '),
                 lastNameArray = this.lastName.split(' '),
-                namesArray = [];
+                namesArray = [],
+                query = true;
 
             for (var ln in lastNameArray) {
 
-                namesArray.push(ln.toLowerCase());
+                namesArray.push(lastNameArray[ln].toLowerCase());
             }
 
             for (var fn in firstNameArray) {
 
-                namesArray.push(fn.toLowerCase());
+                namesArray.push(firstNameArray[fn].toLowerCase());
             }
 
             namesArray.sort();
 
             for (var word in searchArray) {
 
-                if (namesArray.indexOf(word) <= -1) {
+                if (namesArray.indexOf(searchArray[word]) <= -1) {
 
                     return false;
                 }
+                    else {
+                        delete namesArray[namesArray.indexOf(searchArray[word])];
+                    }
             }
 
             if (namesArray.join(' ').indexOf(lastWord) <= -1) {
@@ -218,15 +230,146 @@ module.exports = {
             return true;
         }
 
-        // User.find( { $where: checkIfContains } )
-        //     .exec(function (err, collection) {
+        var stringifiedWhere = whereFunction + '',
+            addPos = stringifiedWhere.indexOf('() {') + 5,
+            addElement = 'var searchArray = ' + JSON.stringify(searchArray) +
+            ', lastWord = ' + JSON.stringify(lastWord) + ';';
 
-        //         if (err) {
+        stringifiedWhere = [stringifiedWhere.slice(0, addPos), addElement, stringifiedWhere.slice(addPos)].join('');
 
-        //             console.error(err);
-        //         }
+        User.find( { $where: stringifiedWhere }, 
+            ['username', 'firstName', 'lastName', 'profPhoto'], 
+            function (err, collection) {
 
-        //         console.log(collection);
-        //     });
+            if (err) {
+
+                console.error(err);
+            }
+
+            deferred.resolve(collection);
+
+        }).limit(limit);
+
+        return deferred.promise;
+    },
+    searchDogDynamically: function (req, res) {
+
+        var searchString =  req.params.searchContent,
+            searchArray = searchString.split(' '),
+            deferred = Q.defer(),
+            limit = req.params.limit || '';
+
+        for (var i = 0; i < searchArray.length; i++) {
+            
+            searchArray[i] = searchArray[i].toLowerCase();
+        };
+
+        var lastWord = searchArray.pop();
+
+        function whereFunction () {
+
+            var returnIndexes = [];
+
+            for (var dog = 0; dog < this.dogs.length; dog++) {
+
+                var returnCrntDog = true;
+
+                var namesArray = this.dogs[dog].name.toLowerCase().split(' ');
+
+                for (var word in searchArray) {
+
+                    if (namesArray.indexOf(searchArray[word]) <= -1) {
+
+                        returnCrntDog = false;
+
+                        break;
+                    }
+                        else {
+                            delete namesArray[namesArray.indexOf(searchArray[word])];
+                        }
+                }
+
+                if (namesArray.join(' ').indexOf(lastWord) <= -1) {
+
+                    returnCrntDog = false;
+                }
+
+                if (returnCrntDog) {
+
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
+        var stringifiedWhere = whereFunction + '',
+            addPos = stringifiedWhere.indexOf('() {') + 5,
+            addElement = 'var searchArray = ' + JSON.stringify(searchArray) +
+            ', lastWord = ' + JSON.stringify(lastWord) + ';';
+
+        stringifiedWhere = [stringifiedWhere.slice(0, addPos), addElement, stringifiedWhere.slice(addPos)].join('');
+
+        User.find( { $where: stringifiedWhere }, 'dogs', function (err, collection) {
+
+            if (err) {
+
+                console.error(err);
+            }
+            else if (collection.length) {
+
+                var returnedArray = [];
+
+                for (var i = 0; i < collection.length; i++) {
+
+                    var dogs = collection[i].dogs;
+
+                    for (var i = 0; i < dogs.length; i++) {
+                        
+                        var namesArray = dogs[i].name.toLowerCase().split(' '),
+                            query = true;
+
+                        for (var word in searchArray) {
+
+                            if (namesArray.indexOf(searchArray[word]) <= -1) {
+
+                                query = false;
+                            }
+                                else {
+                                    delete namesArray[namesArray.indexOf(searchArray[word])];
+                                }
+                        }
+
+                        if (namesArray.join(' ').indexOf(lastWord) <= -1) {
+
+                            query = false;
+                        }
+
+                        if (query) {
+
+                            returnedArray.push(dogs[i]);
+                        }
+                    };
+                    
+                };      
+
+                console.log(returnedArray);
+                deferred.resolve(returnedArray);
+            }
+
+        }).limit(limit);
+
+        return deferred.promise;
+    },
+    dynamicSearch: function (req, res) {
+
+        var people = searchUserDynamically(req, res),
+            dogs = searchDogDynamically(req, res);
+
+        res.send({
+            people: people,
+            dogs: dogs
+        });
     }
 }

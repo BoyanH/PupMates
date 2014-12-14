@@ -75,7 +75,15 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
-         dogs:[],
+         dogs:[
+             {
+                name: 'pencho penkin'
+             },
+
+             {
+                name: 'asd dasd'
+             }
+         ],
          friends: [],
          album:[],
          salt: salt,
