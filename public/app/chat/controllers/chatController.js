@@ -16,6 +16,12 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
     $scope.friends = identity.currentUser.friends;
 
+    setTimeout(function () {
+
+        // sendMessage('548ee72d085a6bf01c5bf6f3', 'aslPLS!');
+        getMessages('548ee72d085a6bf01c5bf6f3', 3, 10);
+    }, 3000);
+
     function sendMessage (toId, content) {
 
     	socket.emit('send private message', 

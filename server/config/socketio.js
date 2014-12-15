@@ -8,6 +8,7 @@ var controllers = require('../controllers'),
 module.exports = function(io, sessionStore) {
 
     io.set('authorization', function(handshake, callback) {
+
         if (handshake.headers.cookie) {
             // pass a req, res, and next as if it were middleware
             parseCookie(handshake, null, function(err) {
@@ -47,7 +48,6 @@ module.exports = function(io, sessionStore) {
         		eventEmitter.on(hs.sessionID, function(userId) {
 
         			socket.request.session.passport.user = userId;
-        			console.log(userId);
         			controllers.socket.addUserConnection(socket);
         		});
         	}

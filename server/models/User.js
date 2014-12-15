@@ -40,20 +40,7 @@ userSchema.method({
 })
 var User = mongoose.model('User', userSchema);
 module.exports.seedInitialUsers = function(){
-    /*User.remove({}).exec(function(err){
-        if(err){
-            console.log("couldnt remove users");
-        }
-        else{
-            console.log("all users removed");
-        }
-    });*/
-    /*User.find({}).exec(function(err, collection){
-            if(err){console.log(err)}
-            else{
-            console.log(collection[0]);
-            }
-        })*/
+
     User.find({}).exec(function (err, collection) {
     if (err) {
         console.log('Cant find users ' + err)

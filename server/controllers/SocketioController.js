@@ -5,17 +5,17 @@ var clientsList = {},
 	function isAuthorised (socket, request) {
 
 		var authorised = false;
-		
+
 		if(clientsList[request.from] && request.from == socket.request.session.passport.user) {
 
 			//FIND THE AUTH-TOKEN IN ALL USER CONNECTIONS
-			var elementPos = clientsList[request.from].map(function(x) {return x.sessionID; }).indexOf(socket.request.sessionID),
+			var elementPos = clientsList[request.from].map(function(x) {return x.socket; }).indexOf(socket),
 				objectFound = clientsList[request.from][elementPos];
 
 			//CHECK IF THE AUTH-TOKEN IS GIVEN TO THE REQUESTER'S SOCKET
 			if(objectFound) {
 
-				if(objectFound.socket == socket) {
+				if(objectFound.sessionID == socket.request.sessionID) {
 
 					authorised = objectFound;
 				}

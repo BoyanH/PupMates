@@ -165,11 +165,6 @@ module.exports = {
                     }
                     console.log("dog added");
 
-                    //test to see the database
-                    /*User.findOne({_id: userId}).exec(function(err, user2){
-                        console.log("updated user");
-                        console.log(user2.dogs[0]);
-                    })*/
                     res.send({success: true});
                 });
             }
@@ -177,12 +172,10 @@ module.exports = {
     },
     getDogPhoto: function(req, res){
         var dogId = req.params.id;
-        console.log("dogId: " + dogId);
         var userId = req.params.userId;
         User.findOne({_id: userId}).select("dogs").exec(function(err, user){
             for(var i=0;i < user.dogs.length; i++){
-                //console.log("user: ");
-                //console.log(user);
+
                 if(user.dogs[i]._id == dogId){
 
                     if(user.dogs[i].profPhoto.contentType) {
@@ -215,12 +208,12 @@ module.exports = {
                 namesArray = [],
                 query = true;
 
-            for (var ln in lastNameArray) {
+            for (var ln = 0; ln < lastNameArray.length; ln++) {
 
                 namesArray.push(lastNameArray[ln].toLowerCase());
             }
 
-            for (var fn in firstNameArray) {
+            for (var fn = 0; fn < firstNameArray.length; fn++) {
 
                 namesArray.push(firstNameArray[fn].toLowerCase());
             }
@@ -296,7 +289,7 @@ module.exports = {
 
                 var namesArray = this.dogs[dog].name.toLowerCase().split(' ');
 
-                for (var word in searchArray) {
+                for (var word = 0; word < searchArray.length; word++) {
 
                     if (namesArray.indexOf(searchArray[word]) <= -1) {
 
@@ -350,7 +343,7 @@ module.exports = {
                         var namesArray = dogs[i].name.toLowerCase().split(' '),
                             query = true;
 
-                        for (var word in searchArray) {
+                        for (var word = 0; word < searchArray.length; word++) {
 
                             if (namesArray.indexOf(searchArray[word]) <= -1) {
 

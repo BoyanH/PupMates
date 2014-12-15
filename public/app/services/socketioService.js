@@ -18,8 +18,6 @@ app.factory('socket', function(identity, $rootScope) {
 
         emit: function(eventName, data, callback) {
 
-            data.authToken = authToken;
-
             socket.emit(eventName, data, function() {
                 
                 var args = arguments;
@@ -33,8 +31,6 @@ app.factory('socket', function(identity, $rootScope) {
 
                 });
             })
-        },
-
-        isConnected: connected
+        }
     };
 });
