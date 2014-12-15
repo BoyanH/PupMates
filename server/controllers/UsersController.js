@@ -388,5 +388,17 @@ module.exports = {
                     })
             })
         
+    },
+    befriend: function (req, res) {
+
+        User.find({_id: req.body.userId}, function (collection) {
+
+            var user = collection[0],
+                newFriend = {
+                    
+                }
+
+            user.friends.push(newFriend);
+        })
     }
 }
