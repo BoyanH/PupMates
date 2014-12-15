@@ -15,7 +15,7 @@ module.exports = function(){
                 for(var i=0;i<user.dogs.length;i++){
                     dogs.push({
                         description: user.dogs[i].description,
-                        url: "/"+user._id+"/imgdog/"+user.dogs[i].id,
+                        url: "/"+user._id+"/imgdog/"+user.dogs[i]._id,
                         name: user.dogs[i].name,
                         age: user.dogs[i].age,
                         breed: user.dogs[i].breed
@@ -51,10 +51,10 @@ module.exports = function(){
             if (user) {
                 var dogs = [];
                 for(var i=0;i<user.dogs.length;i++){
-                    console.log(user.dogs[i].profPhoto);
+
                     dogs.push({
                         description: user.dogs[i].description,
-                        url: "/"+user._id+"/imgdog/"+user.dogs[i].id,
+                        url: "/"+user._id+"/imgdog/"+user.dogs[i]._id,
                         name: user.dogs[i].name,
                         age: user.dogs[i].age,
                         breed: user.dogs[i].breed

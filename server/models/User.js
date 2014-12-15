@@ -14,7 +14,6 @@ var userSchema = mongoose.Schema({
             username: String
         }],
         dogs: [{
-            id:String,
             description:String,
             name: String,
             age: String, //we will hold the age in str because it can be 3 months for example
@@ -69,9 +68,6 @@ module.exports.seedInitialUsers = function(){
         var pic = fs.readFileSync(imgPath);
         var imgPath2 = "public/husky.jpg";
         var pic2 = fs.readFileSync(imgPath2);
-        var idDog = shortId.generate();
-        console.log(pic);
-        console.log(pic2);
 
         hasedPwd = encryption.generateHashedPassword( salt, 'pesho' );
        
@@ -87,7 +83,6 @@ module.exports.seedInitialUsers = function(){
             name:"Muncho",
             age: "14/12/2014",
             breed: "husky",
-            id: idDog,
             profPhoto:{
                 data: pic2,
                 contentType: 'image/jpg',
@@ -118,12 +113,12 @@ module.exports.seedInitialUsers = function(){
         console.log( 'Users added to database....' );
     }
     else{
-        for(var i=0;i < collection.length;i++){
-            for(var j=0;j<collection[i].dogs.length;j++){
-                // console.log(collection[i].dogs[j].profPhoto.contentType);    //removed weird UNDEFINEDs in console
-                // console.log(collection[i].dogs[j].profPhoto.data);           //was too confusing
-            }
-        }
+        // for(var i=0;i < collection.length;i++){
+        //     for(var j=0;j<collection[i].dogs.length;j++){
+        //         // console.log(collection[i].dogs[j].profPhoto.contentType);    //removed weird UNDEFINEDs in console
+        //         // console.log(collection[i].dogs[j].profPhoto.data);           //was too confusing
+        //     }
+        // }
     }
     });
 }

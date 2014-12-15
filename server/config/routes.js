@@ -14,6 +14,7 @@ module.exports = function (app) {
         });
     });
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.users.createDog);
+    app.post('/befriendMate', auth.isAuthenticated, controllers.users.befriend);
     app.get('/img/profPhoto/:id', controllers.users.getProfPhoto);
     app.get('/:userId/imgdog/:id', controllers.users.getDogPhoto);
     app.post('/login',auth.login);

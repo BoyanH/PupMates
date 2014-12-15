@@ -1,7 +1,8 @@
 ﻿var User = require('mongoose').model('User'),
     encryption = require('../utilities/encryption.js'),
     shortId = require('shortid'),
-    Q = require('q');
+    Q = require('q'),
+    ip = require('ip');
 
 module.exports = {
     createUser: function(req, res, next){
@@ -57,7 +58,7 @@ module.exports = {
 
         var sendAllInfo = false,
             collection,
-            userIP = req.headers['x-forwarded-for'];
+            userIP = ip.address();
 
         User.find({username: req.params.id})
             .exec(function (err, collection){
@@ -133,16 +134,22 @@ module.exports = {
     },
     createDog: function(req, res){
         var dog = req.body;
-        var userId = req.params.userId;
-        var b64string = dog.profPhoto.data;
-        console.log("b64string: " + b64string);
-        var buf = new Buffer(b64string, 'base64');
-        var profPhoto = {};
-        profPhoto.data = buf;
-        //profPhoto.contentType = dog.profPhoto.contentType;
-        profPhoto.contentType = "image/jpg";
-        dog.profPhoto = profPhoto;
-        dog.id = shortId.generate();
+        var userId = req.session.passport.user;
+
+        if(dog.profPhoto) {
+            var b64string = dog.profPhoto.data;
+            var buf = new Buffer(b64string, 'base64');
+
+            var profPhoto = {};
+            profPhoto.data = buf;
+            //profPhoto.contentType = dog.profPhoto.contentType;
+            profPhoto.contentType = "image/jpg";
+            dog.profPhoto = profPhoto;
+        }
+            else {
+
+                delete dog[profPhoto];
+            }
 
         User.findOne({_id: userId}).select("dogs").exec(function(err, user){
             if(err){
@@ -176,8 +183,12 @@ module.exports = {
             for(var i=0;i < user.dogs.length; i++){
                 //console.log("user: ");
                 //console.log(user);
-                if(user.dogs[i].id == dogId){
-                    res.contentType(user.dogs[i].profPhoto.contentType);
+                if(user.dogs[i]._id == dogId){
+
+                    if(user.dogs[i].profPhoto.contentType) {
+                        res.contentType(user.dogs[i].profPhoto.contentType);
+                    }
+
                     res.send(user.dogs[i].profPhoto.data);
                 }
             }
@@ -391,14 +402,26 @@ module.exports = {
     },
     befriend: function (req, res) {
 
-        User.find({_id: req.body.userId}, function (collection) {
+        var userID = req.session.passport.user;
+
+        User.find({_id: userID}, function (collection) {
 
             var user = collection[0],
                 newFriend = {
-                    
-                }
+                    id: req.body.friendID,
+                    username: req.body.friendUsername
+                };
 
             user.friends.push(newFriend);
+
+            User.update({_id: userID}, user, function(err){
+                    if(err){
+                        res.end("err: " + err);
+                    }
+                    
+                    res.send({success: true});
+                });
+
         })
     }
 }
