@@ -203,3 +203,9 @@ h1, h2, h3, a{
 	color: #09ADED;
 }
 
+.styleless-list {
+
+	list-style-type: none;
+	margin-left: -20px;
+}
+

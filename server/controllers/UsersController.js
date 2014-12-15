@@ -65,7 +65,7 @@ module.exports = {
                 // Username and Id are both unique, therefore I use collection[0], only 1 possible
                 var collection = collection[0];
 
-                if(err){
+                if(err || !collection){
                     console.log('User could not be found: ' +  err);
                     return;
                 }
