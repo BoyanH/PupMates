@@ -3,10 +3,11 @@ div(ng-controller="SearchController")
 		span
 			input.search.rounded(type="text" class="" placeholder="Search..." ng-model="srch" ng-change="search(srch)")
 		div.search-results(ng-show="results")
-			ul
-				li *still developing*
-				li fdnajkfdsnkfdjsakjf
-				li mdskfdsmqfkmds
-				li sdadsad
-				li dsadsadas
-				li dsadsa
+			div(ng-show="people") People
+				ul
+					li(ng-repeat="person in people")
+						| {{person.firstName}} {{person.lastName}}
+			div(ng-show="dogs") Dogs
+				ul
+					li(ng-repeat="dog in dogs")
+						| {{dog.name}}

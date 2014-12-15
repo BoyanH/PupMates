@@ -150,8 +150,7 @@ module.exports = {
                 res.end();
             }
             else{
-                //console.log('dog');
-                //console.log(dog);
+
                 user.dogs.push(dog);
                 User.update({_id: userId}, user, function(err){
                     if(err){
@@ -243,8 +242,7 @@ module.exports = {
 
         stringifiedWhere = [stringifiedWhere.slice(0, addPos), addElement, stringifiedWhere.slice(addPos)].join('');
 
-        User.find( { $where: stringifiedWhere }, 
-            ['username', 'firstName', 'lastName', 'profPhoto'], 
+        User.find( { $where: stringifiedWhere },  
             function (err, collection) {
 
             if (err) {
@@ -254,7 +252,12 @@ module.exports = {
 
             deferred.resolve(collection);
 
-        }).limit(limit);
+        })
+        .select('firstName')
+        .select('lastName')
+        .select('username')
+        .select('profPhoto')
+        .sort( { seenFrom: -1 } ).limit(limit);
 
         return deferred.promise;
     },
@@ -360,22 +363,30 @@ module.exports = {
                     
                 };      
 
-                console.log(returnedArray);
                 deferred.resolve(returnedArray);
             }
+                else {
+                    deferred.resolve([]);
+                }
 
-        }).limit(limit);
+        }).sort( { seenFrom: -1 } ).limit(limit);
 
         return deferred.promise;
     },
     dynamicSearch: function (req, res) {
 
-        var people = searchUserDynamically(req, res),
-            dogs = searchDogDynamically(req, res);
+        module.exports.searchUserDynamically(req, res)
+            .then(function (users) {
 
-        res.send({
-            people: people,
-            dogs: dogs
-        });
+                module.exports.searchDogDynamically(req, res)
+                    .then(function (dogs) {
+
+                        res.send({
+                            people: users,
+                            dogs: dogs
+                        });
+                    })
+            })
+        
     }
 }

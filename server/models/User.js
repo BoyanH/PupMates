@@ -82,17 +82,6 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
-<<<<<<< HEAD
-         dogs:[
-             {
-                name: 'pencho penkin'
-             },
-
-             {
-                name: 'asd dasd'
-             }
-         ],
-=======
          dogs:[{
             description: "My first dog :)",
             name:"Muncho",
@@ -103,8 +92,10 @@ module.exports.seedInitialUsers = function(){
                 data: pic2,
                 contentType: 'image/jpg',
             }
+         },
+         {
+            name: 'asd dasd'
          }],
->>>>>>> af66eac2274d814a10c60d1c0cdf66b62bc75cec
          friends: [],
          album:[],
          salt: salt,
@@ -129,8 +120,8 @@ module.exports.seedInitialUsers = function(){
     else{
         for(var i=0;i < collection.length;i++){
             for(var j=0;j<collection[i].dogs.length;j++){
-                console.log(collection[i].dogs[j].profPhoto.contentType);
-                console.log(collection[i].dogs[j].profPhoto.data);
+                // console.log(collection[i].dogs[j].profPhoto.contentType);    //removed weird UNDEFINEDs in console
+                // console.log(collection[i].dogs[j].profPhoto.data);           //was too confusing
             }
         }
     }
