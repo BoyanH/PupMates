@@ -94,6 +94,16 @@ module.exports = {
 
 				messages.updateDiscussion(message);
 			}
+				else {
+
+					socket.emit('send message error', {
+
+								from: message.from,
+								content: message.content,
+								to: message.to,
+								err: 'NOT AUTHORISED, NOT SENT'
+							});
+				}
 	},
 	getMessages: function (socket, request) {
 
@@ -133,6 +143,9 @@ module.exports = {
 					});
 
 			}
+				else {
+					socket.emit('see private message done', {message: message ,err: 'NOT AUTHORISED'});
+				}
 	},
 	editMessage: function(socket, message) {
 
@@ -145,5 +158,8 @@ module.exports = {
 					});
 
 			}
+				else {
+					socket.emit('edit private message done', {message: message ,err: 'NOT AUTHORISED'});
+				}
 	}
 }
