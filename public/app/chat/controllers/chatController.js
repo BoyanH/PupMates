@@ -14,7 +14,7 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
         getMessages($scope.friendId);
     }
 
-    $scope.friends = identity.currentUser.friends;
+    // $scope.friends = identity.currentUser.friends;
 
     function sendMessage (toId, content) {
 

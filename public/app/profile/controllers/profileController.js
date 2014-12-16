@@ -14,5 +14,5 @@ app.controller('ProfileRouteController', function($scope, identity, $routeParams
 
             console.log(data);
         });
-   } 
+   }
 });

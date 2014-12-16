@@ -209,3 +209,9 @@ h1, h2, h3, a{
 	margin-left: -20px;
 }
 
+.chat-window {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+
