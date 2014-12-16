@@ -4,7 +4,6 @@ app.factory('requester', function(identity, $rootScope, $q) {
 
         getProfile: function (username) {
 
-            console.log('here');
             var deferred = $q.defer();
 
             $.ajax({
@@ -12,7 +11,27 @@ app.factory('requester', function(identity, $rootScope, $q) {
                 url: "/api/users/" + username
             }).done(function(data) {
                 
-                console.log(data);
+                deferred.resolve(data);
+            }).fail(function(err) {
+
+                deferred.reject(err);
+            });
+
+            return deferred.promise;
+        },
+        addFriend: function (friendID, friendUsername) {
+
+             var deferred = $q.defer();
+
+            $.ajax({
+                type: 'POST',
+                url: "/befriendMate",
+                data: {
+                    friendID: friendID,
+                    friendUsername: friendUsername
+                }
+            }).done(function(data) {
+
                 deferred.resolve(data);
             }).fail(function(err) {
 

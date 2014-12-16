@@ -60,31 +60,27 @@ module.exports = {
             collection,
             userIP = ip.address();
 
-        User.find({username: req.params.id})
-            .exec(function (err, collection){
+        User.findOne({username: req.params.id}, function (err, user) {
 
-                // Username and Id are both unique, therefore I use collection[0], only 1 possible
-                var collection = collection[0];
-
-                if(err || !collection){
+                if(err || !user){
                     console.log('User could not be found: ' +  err);
                     return;
                 }
                     else {
 
-                        if(collection.seenFrom) {
-                            if(collection.seenFrom.indexOf(userIP) <= -1) {
+                        if(user.seenFrom) {
+                            if(user.seenFrom.indexOf(userIP) <= -1) {
 
-                                collection.seenFrom.push(userIP);
+                                user.seenFrom.push(userIP);
 
                             }
                         }
                             else {
 
-                                collection.seenFrom = [userIP];
+                                user.seenFrom = [userIP];
                             }
 
-                        User.update({username: req.params.id}, collection, function(err){
+                        User.update({username: req.params.id}, user, function(err){
                                     
                                 if(err) {
                                     console.error(err);
@@ -92,17 +88,20 @@ module.exports = {
                             });
                     }
    
-                for (var i = 0; i < collection.friends.length; i++) {
+                for (var i = 0; i < user.friends.length; i++) {
                     
-                    if (collection.friends[i].id == req.user._id) {
+                    if(req.session.passport.user) {
+                        if (user.friends[i]._id == req.session.passport.user) {
 
-                        sendAllInfo = true;
-                        console.error('wtf');
+                            sendAllInfo = true;
+
+                            //if user is in profile's frineds, send all info
+                        }
                     }
                 };
 
                 if (sendAllInfo) {
-                    res.send(collection);
+                    res.send(user);
                 }
                     else {
 
@@ -111,7 +110,7 @@ module.exports = {
                         // collection.album = [];
                         // collection.lastName = ''; // <-- testing purpose
 
-                        res.send(collection);
+                        res.send(user);
                     }
         });
     },
@@ -134,7 +133,7 @@ module.exports = {
     },
     createDog: function(req, res){
         var dog = req.body;
-        var userId = req.session.passport.user;
+        var userId = req.user._id;
 
         if(dog.profPhoto) {
             var b64string = dog.profPhoto.data;
@@ -395,17 +394,37 @@ module.exports = {
     },
     befriend: function (req, res) {
 
-        var userID = req.session.passport.user;
+        var userID = req.user._id;
 
-        User.find({_id: userID}, function (collection) {
+        User.findOne({_id: userID}, function (err, user) {
 
-            var user = collection[0],
-                newFriend = {
+            if(err || !user) {
+
+                res.send({success: false});
+            }
+
+            var newFriend = {
                     id: req.body.friendID,
                     username: req.body.friendUsername
                 };
 
-            user.friends.push(newFriend);
+            if(userID == newFriend.id || req.user.username == newFriend.username) {
+
+                res.end('can\'t befriend yourself');
+                return;
+            }
+
+        //  if user doesn't already exist in anotherUser.friends
+            if(user.friends.map(function(x) {return x.id; }).indexOf(req.body.friendID) == -1 &&
+                user.friends.map(function(x) {return x.username; }).indexOf(req.body.friendUsername) == -1) {
+            
+                user.friends.push(newFriend);
+            }
+                else {
+
+                    res.end('already exists');
+                    return;
+                }
 
             User.update({_id: userID}, user, function(err){
                     if(err){

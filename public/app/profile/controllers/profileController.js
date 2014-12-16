@@ -1,12 +1,18 @@
 'use strict';
 app.controller('ProfileRouteController', function($scope, identity, $routeParams, requester){
 
-	console.log('gosho!!!');
-
 	requester.getProfile($routeParams.username)
-            .then(function (profile) {
+        .then(function (profile) {
 
-                $scope.profile = profile;
-                console.log('got profile?');
-            })
+            $scope.profile = profile;
+        });
+
+   $scope.befriendMate = function () {
+
+   		requester.addFriend($scope.profile._id, $scope.profile.username)
+        .then(function (data) {
+
+            console.log(data);
+        });
+   } 
 });

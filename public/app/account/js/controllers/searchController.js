@@ -1,6 +1,17 @@
-app.controller("SearchController", function($scope){
+app.controller("SearchController", function($scope, $location){
+	
+	var location = $location.path();
+
 	$scope.results = false;
 	$scope.focus = false;
+
+	$scope.removeFocus = function (path) {
+
+		$scope.$on('$routeChangeStart', function(next, current) { 
+		   
+			$scope.focus = false;
+		});
+	}
 
 	$scope.search = function(srch){
 
