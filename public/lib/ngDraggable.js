@@ -10,6 +10,8 @@ angular.module("ngDraggable", [])
                     scope.value = attrs.ngDrag;
 
                     var noReset = attrs.noReset;
+
+                    var useParent = attrs.useParent;
                   //  return;
                     var offset,_centerAnchor=false,_mx,_my,_tx,_ty,_mrx,_mry;
                     var _hasTouch = ('ontouchstart' in document.documentElement);
@@ -164,7 +166,7 @@ angular.module("ngDraggable", [])
                         });
                     }
                     var reset = function() {
-                        element.css({ position:'', 'z-index':'', margin: ''});
+                        element.css({  'z-index':'', margin: ''});
 
                         if (!noReset) {
 
@@ -172,7 +174,12 @@ angular.module("ngDraggable", [])
                         }
                     }
                     var moveElement = function(x,y) {
-                        element.css({left:x,top:y, position:'fixed', 'z-index':99999, margin: '0'});
+                        if (useParent) {
+                            element.parent().css({left:x,top:y, position:'fixed', 'z-index':99999, margin: '0'});
+                        }
+                            else {
+                                element.css({left:x,top:y, position:'fixed', 'z-index':99999, margin: '0'});
+                            }
                     }
                     initialize();
                 }
