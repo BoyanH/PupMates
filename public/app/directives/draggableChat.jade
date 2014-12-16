@@ -1,4 +1,4 @@
 div.chat-window(ng-repeat="discussion in discussions" id="{{'chat-window-' + discussion.recipient._id}}" ng-drag="true" 
-ng-drag-success=" onDragComplete($data,$event)") 
+ng-drag-success="onDragComplete($event)" no-reset="true") 
 	div.chat-window-header {{discussion.recipient.firstName}}
 	div(ng-controller="ChatController")
