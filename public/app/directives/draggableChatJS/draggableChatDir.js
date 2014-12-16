@@ -4,7 +4,7 @@ app.directive("draggableChatDir", function(){
 		replace: true,
 		transclude: true,
 		templateUrl: "partials/directives/draggableChat",
-		controller: 'draggableChatController',
+		controller: 'ChatDirController',
 		link: function (scope) {
 
 			scope.discussions = [];

@@ -10,7 +10,7 @@ block main-content
         div.right-nav
             div.float-right
                 div.nav-login(ng-include="'partials/account/login'")
-    div.wrapper(ng-drop="true" ng-drop-success="onDropComplete($data,$event)" ng-controller="draggableChatController")
+    div.wrapper(ng-drop="true" ng-drop-success="onDropComplete($data,$event)" ng-controller="ChatDirController")
         draggable-chat-dir
         div.menu(ng-include="'partials/main/menu'")
         div(id="left-menu-dialog")
