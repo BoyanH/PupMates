@@ -7,8 +7,7 @@ div(ng-controller="SearchController")
 			div(ng-show="people")
 				h3.search-result-title Dog Owners
 				ul.styleless-list
-					a.search-result-link(ng-repeat="person in people" href="#/profile/{{person.username}}"
-						ng-click="goTo('#/profile/{{person.username}}')")
+					a.search-result-link(ng-repeat="person in people" href="#/profile/{{person.username}}")
 						li 
 							h2.search-result-name {{person.firstName}} {{person.lastName}}
 							div.search-result.dog(ng-show="person.dogs.length") Owner of: 

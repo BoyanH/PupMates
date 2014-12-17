@@ -18,12 +18,18 @@ app.controller("ChatDirController", function($scope, $timeout){
 		}
 		if (event.ty + event.element.parent().height() > (window.innerHeight || document.documentElement.clientHeight)) {
 
-			event.element.parent().css({top: (window.innerHeight || document.documentElement.clientHeight) - event.element.parent().height()})
+			event.element.parent().css({
+				top: (window.innerHeight || document.documentElement.clientHeight) - event.element.parent().height()
+			});
+
+			//TO DO: IMPLEMENT FANCY STACKING TO A 'TASKBAR' ON THE BOTTOM
 		}
 
 		if (event.tx + event.element.parent().width() > (window.innerWidth || document.documentElement.clientWidth)) {
 
-			event.element.parent().css({left: (window.innerWidth || document.documentElement.clientWidth) - event.element.parent().width() - 10})
+			event.element.parent().css({
+				left: (window.innerWidth || document.documentElement.clientWidth) - event.element.parent().width() - 10
+			});
 		}
 		
 

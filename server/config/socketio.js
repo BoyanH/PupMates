@@ -3,7 +3,8 @@ var controllers = require('../controllers'),
 	eventEmitter = auth.eventEmitter,
 	express = require('express'),
     cookieParser = require('cookie-parser'),
-	parseCookie = cookieParser('grannysbushes');
+	parseCookie = cookieParser('grannysbushes'),
+    addedListeners = [];
 
 module.exports = function(io, sessionStore) {
 
@@ -43,14 +44,18 @@ module.exports = function(io, sessionStore) {
 
         	controllers.socket.addUserConnection(socket);
         }
-        	else {
+    	else if(addedListeners.indexOf(hs.sessionID) == -1) {
 
-        		eventEmitter.on(hs.sessionID, function(userId) {
+    		eventEmitter.on(hs.sessionID, function(userId) {
 
-        			socket.request.session.passport.user = userId;
-        			controllers.socket.addUserConnection(socket);
-        		});
-        	}
+    			socket.request.session.passport.user = userId;
+    			controllers.socket.addUserConnection(socket);
+
+                eventEmitter.removeAllListeners(hs.sessionID);
+    		});
+
+            addedListeners.push(hs.sessionID);
+    	}
 
         socket.on('get private messages', function(request) {
 

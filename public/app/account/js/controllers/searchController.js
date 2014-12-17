@@ -1,4 +1,4 @@
-app.controller("SearchController", function($scope, $location){
+app.controller("SearchController", function($scope, $location, $routeParams){
 	
 	var location = $location.path();
 
@@ -7,6 +7,7 @@ app.controller("SearchController", function($scope, $location){
 
 	$scope.removeFocus = function (path) {
 
+		console.log('here');
 		$scope.$on('$routeChangeStart', function(next, current) { 
 		   
 			$scope.focus = false;
@@ -22,11 +23,17 @@ app.controller("SearchController", function($scope, $location){
 			  data: { searchContent: srch, limit: 5 }
 			})
 			  .done(function( data ) {
-			    
-			    console.log(data);
 
 			    $scope.people = data.people;
 			    $scope.dogs = data.dogs;
+
+			    for (var i = 0; i < $scope.people.length; i++) {
+			    	
+			    	if ($scope.people[i].username == $routeParams.username) {
+
+			    		delete $scope.people[i];
+			    	}
+			    };
 
 			    if($scope.people.length > 0 || $scope.dogs.length > 0) {
 
