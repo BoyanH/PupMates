@@ -1,4 +1,4 @@
-app.controller("SearchController", function($scope, $location, $routeParams){
+app.controller("SearchController", function($scope, $location, $timeout){
 	
 	var location = $location.path();
 
@@ -7,11 +7,10 @@ app.controller("SearchController", function($scope, $location, $routeParams){
 
 	$scope.removeFocus = function (path) {
 
-		console.log('here');
-		$scope.$on('$routeChangeStart', function(next, current) { 
-		   
+		$timeout(function () {
+
 			$scope.focus = false;
-		});
+		}, 100);
 	}
 
 	$scope.search = function(srch){
