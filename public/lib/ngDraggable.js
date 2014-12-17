@@ -8,23 +8,6 @@ angular.module("ngDraggable", [])
                 restrict: 'A',
                 link: function (scope, element, attrs) {
 
-                    function isElementInViewport (el) {
-
-                        //special bonus for those using jQuery
-                        if (typeof jQuery === "function" && el instanceof jQuery) {
-                            el = el[0];
-                        }
-
-                        var rect = el.getBoundingClientRect();
-
-                        return (
-                            rect.top -20 >= 0 &&
-                            rect.left - 20 >= 0 &&
-                            rect.bottom + 10 <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
-                            rect.right + 10 <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
-                        );
-                    }
-
                     scope.value = attrs.ngDrag;
 
                     var noReset = attrs.noReset;
@@ -154,6 +137,21 @@ angular.module("ngDraggable", [])
                         _mx = (evt.pageX || evt.originalEvent.touches[0].pageX);
                         _my = (evt.pageY || evt.originalEvent.touches[0].pageY);
 
+                        if(_my > (window.innerHeight || document.documentElement.clientHeight)) {
+
+                            _my = (window.innerHeight || document.documentElement.clientHeight);
+                        }
+                        else if(_my < 0) {
+                            _my = 0;
+                        }
+                        else if(_mx > (window.innerWidth || document.documentElement.clientWidth) - 10) {
+
+                            _mx = (window.innerWidth || document.documentElement.clientWidth) - 10;
+                        }
+                        else if(_mx < 0) {
+                            _mx = 0;
+                        }
+
                          if (_centerAnchor) {
                             _tx = _mx - element.centerX - $window.scrollLeft();
                             _ty = _my - element.centerY - $window.scrollTop();
@@ -162,19 +160,7 @@ angular.module("ngDraggable", [])
                             _ty = _my - _mry - $window.scrollTop();
                         }
 
-                        if(useParent) {
-
-                            if(isElementInViewport(element.parent())) {
-
-                                moveElement(_tx, _ty);
-                            }
-                        }
-                            else {
-                                if(isElementInViewport(element)) {
-
-                                    moveElement(_tx, _ty);
-                                }
-                            }
+                        moveElement(_tx, _ty);
 
                         $rootScope.$broadcast('draggable:move', {x:_mx, y:_my, tx:_tx, ty:_ty, event:evt, element:element, data:_data});
 
