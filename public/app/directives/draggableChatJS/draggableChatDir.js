@@ -32,6 +32,11 @@ app.directive("draggableChatDir", function(){
 				}
 
 			}
+
+			scope.closeDiscussion = function (discussion) {
+
+				scope.discussions.splice(scope.discussions.indexOf(discussion), 1);
+			}
 		}
 			
 	}

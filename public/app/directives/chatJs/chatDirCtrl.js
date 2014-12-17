@@ -5,6 +5,11 @@ app.controller("ChatDirController", function($scope, $timeout){
 		$scope.addNewDiscussion(recipient);	
 	}
 
+	$scope.closeDiscussion = function (discussion) {
+
+		$scope.closeDiscussion(discussion);
+	}
+
 	$scope.onDragComplete = function (event) {
 
 		if(event.ty < 70) {

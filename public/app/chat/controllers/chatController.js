@@ -2,6 +2,7 @@
 app.controller('ChatController', function($scope, identity, $routeParams, socket){
 
     //set height of the left menu
+    $scope.content = 'Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content ';
     var height = $(document).height() - $(".nav").height();
     $(".menu").css("height", height.toString());
 
