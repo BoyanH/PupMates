@@ -7,6 +7,24 @@ angular.module("ngDraggable", [])
             return {
                 restrict: 'A',
                 link: function (scope, element, attrs) {
+
+                    function isElementInViewport (el) {
+
+                        //special bonus for those using jQuery
+                        if (typeof jQuery === "function" && el instanceof jQuery) {
+                            el = el[0];
+                        }
+
+                        var rect = el.getBoundingClientRect();
+
+                        return (
+                            rect.top -20 >= 0 &&
+                            rect.left - 20 >= 0 &&
+                            rect.bottom + 10 <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+                            rect.right + 10 <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+                        );
+                    }
+
                     scope.value = attrs.ngDrag;
 
                     var noReset = attrs.noReset;
@@ -129,6 +147,7 @@ angular.module("ngDraggable", [])
 
                     }
                     var onmove = function(evt) {
+
                         if(! _dragEnabled)return;
                         evt.preventDefault();
 
@@ -143,7 +162,19 @@ angular.module("ngDraggable", [])
                             _ty = _my - _mry - $window.scrollTop();
                         }
 
-                        moveElement(_tx, _ty);
+                        if(useParent) {
+
+                            if(isElementInViewport(element.parent())) {
+
+                                moveElement(_tx, _ty);
+                            }
+                        }
+                            else {
+                                if(isElementInViewport(element)) {
+
+                                    moveElement(_tx, _ty);
+                                }
+                            }
 
                         $rootScope.$broadcast('draggable:move', {x:_mx, y:_my, tx:_tx, ty:_ty, event:evt, element:element, data:_data});
 
