@@ -1,4 +1,4 @@
-app.controller("SearchController", function($scope, $location, $timeout){
+app.controller("SearchController", function($scope, $location, $timeout, $routeParams){
 	
 	var location = $location.path();
 
