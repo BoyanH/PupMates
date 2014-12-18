@@ -2,7 +2,6 @@
 app.controller('ChatController', function($scope, identity, $routeParams, socket){
 
     //set height of the left menu
-    $scope.content = 'Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content Some content ';
     var height = $(document).height() - $(".nav").height();
     $(".menu").css("height", height.toString());
 
@@ -10,25 +9,23 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 		
         getMessages($routeParams.friendId);
 	}
-    else if($scope.friendId){
 
-        getMessages($scope.friendId);
+    $scope.messages = [];
+
+    $scope.sendMessage = function (toId, content) {
+
+        var newMessage = {
+            from: identity.currentUser._id,
+            content: content,
+            to: toId
+        };
+    	
+        socket.emit('send private message', newMessage);
+
+        $scope.messages.push(newMessage);
     }
 
-    // $scope.friends = identity.currentUser.friends;
-
-    function sendMessage (toId, content) {
-
-    	socket.emit('send private message', 
-			{
-				from: identity.currentUser._id,
-				content: content,
-				to: toId
-    		}
-        );
-    }
-
-    function getMessages (toId, beforeNth, count) {
+    $scope.getMessages = function (toId, beforeNth, count) {
 
         socket.emit('get private messages',
             {
@@ -41,43 +38,66 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
         
     }
 
-    function seePrivateMessage (message) {
+    $scope.seeLastMessage = function () {
 
-        socket.emit('see private message', message);
+        $scope.seePrivateMessage($scope.messages[$scope.messages.length - 1]);
+    }
+
+    $scope.seePrivateMessage = function (message) {
+
+        if(message.to == identity.currentUser._id && message.seen == false) {
+
+            socket.emit('see private message', message);
+            $scope.messages[$scope.messages.indexOf(message)].seen = true;
+        }
         
     }
 
-    function editPrivateMessage(message, newContent) {
+    $scope.editPrivateMessage = function (message, newContent) {
 
         message.content = newContent;
 
         socket.emit('edit private message', message);
     }
 
-    socket.on('new message', function (data) {
+    socket.on('new message', function (message) {
 
-        //DISPLAY NEW MESSAGE
+        $scope.messages.push(message);
     });
 
 
-    socket.on('see private message done', function (data) {
+    socket.on('see private message done', function (message) {
 
-        //MARK data.message AS SEEN IN VIEW TOO
+        $scope.messages.forEach(function (message) {
 
-        //(MESSAGE IS MARKED AS SEEN FROM THE OTHER USER, NOTIFY!)
+            if(message._id == message._id) {
+
+                message.seen = true;
+            }
+        });
+    });
+
+    socket.on('see private message error', function (message) {
+
+        console.log(message);
     });
 
     socket.on('messages chunk', function (data) {
 
-        console.log(data);
-        //HANDLE NEW MESSAGES
+        Array.prototype.unshift.apply($scope.messages, data.messages);
+
+        $scope.messages.forEach(function (message) {
+
+            if(message.seen == false && message.to == identity.currentUser._id) {
+                
+                $scope.seePrivateMessage(message);
+            }
+        })
     });
 
     socket.on('edit private message done', function (data) {
 
-        //CHANGE MESSAGE IN VIEW TOO
-
-        //OR DISPLAY ERROR IN CONNECTIVITY
+        $scope.messages[$scope.messages.indexOf(data.message)].content = data.content;
     });
 
     socket.on('send message error', function (data) {
@@ -86,7 +106,6 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
     });
 
     socket.on('disconnect', function () {
-        
         //HANDLE DISCONNECT
     });
 

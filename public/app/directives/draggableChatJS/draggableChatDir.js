@@ -35,7 +35,10 @@ app.directive("draggableChatDir", function(){
 
 			scope.closeDiscussion = function (discussion) {
 
-				scope.discussions.splice(scope.discussions.indexOf(discussion), 1);
+				var discussionIndex = scope.discussions.indexOf(discussion);
+
+				if(discussionIndex !== -1)
+				scope.discussions.splice(discussionIndex, 1);
 			}
 		}
 			

@@ -149,10 +149,12 @@ module.exports = {
 				}
 					else {
 
-						if (discussion.messages[message.nth]._id == message._id) {
+						if(discussion.messages[message.nth]) {
+							if (discussion.messages[message.nth]._id == message._id) {
 
-							success = true;
-							discussion.messages[message.nth].seen = true;
+								success = true;
+								discussion.messages[message.nth].seen = true;
+							}
 						}
 
 						if (success) {

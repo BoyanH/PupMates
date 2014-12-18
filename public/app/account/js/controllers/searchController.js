@@ -26,13 +26,13 @@ app.controller("SearchController", function($scope, $location, $timeout, $routeP
 			    $scope.people = data.people;
 			    $scope.dogs = data.dogs;
 
-			    for (var i = 0; i < $scope.people.length; i++) {
+			    // for (var i = 0; i < $scope.people.length; i++) {
 			    	
-			    	if ($scope.people[i].username == $routeParams.username) {
+			    // 	if ($scope.people[i].username == $routeParams.username) { //not find profile you're into
 
-			    		delete $scope.people[i];
-			    	}
-			    };
+			    // 		delete $scope.people[i];
+			    // 	}
+			    // };
 
 			    if($scope.people.length > 0 || $scope.dogs.length > 0) {
 

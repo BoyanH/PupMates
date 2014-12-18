@@ -140,11 +140,21 @@ module.exports = {
 					.then(function (data) {
 
 						socket.emit('see private message done', data);
+
+						if (clientsList[message.to] && !data.err) {
+					
+							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
+							clientsList[message.to].forEach(function (clientConnection) {
+
+									clientConnection.socket.emit('see private message done', data.message);
+								}
+							);
+						}
 					});
 
 			}
 				else {
-					socket.emit('see private message done', {message: message ,err: 'NOT AUTHORISED'});
+					socket.emit('see private message error', {message: message ,err: 'NOT AUTHORISED'});
 				}
 	},
 	editMessage: function(socket, message) {
@@ -155,11 +165,21 @@ module.exports = {
 					.then(function (data) {
 							
 						socket.emit('edit private message done', data);
+
+						if (clientsList[message.to] && !data.err) {
+					
+							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
+							clientsList[message.to].forEach(function (clientConnection) {
+
+									clientConnection.socket.emit('edit private message done', data.message);
+								}
+							);
+						}
 					});
 
 			}
 				else {
-					socket.emit('edit private message done', {message: message ,err: 'NOT AUTHORISED'});
+					socket.emit('edit private message error', {message: message ,err: 'NOT AUTHORISED'});
 				}
 	}
 }
