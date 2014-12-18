@@ -11,6 +11,28 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 	}
 
     $scope.messages = [];
+    $scope.allowSend = true;
+
+    $scope.allowSendMaybe = function(event) {
+
+        if(event.keyCode == 16) {
+
+            $scope.allowSend = true;
+        }
+    }
+
+    $scope.trySendMessage = function (toId, content, event) {
+
+        if(event.keyCode == 16) {
+
+            $scope.allowSend = false;
+        }
+
+        if(event.keyCode == 13 && $scope.allowSend) {
+
+            $scope.sendMessage(toId, content);
+        }
+    }
 
     $scope.sendMessage = function (toId, content) {
 
@@ -23,6 +45,8 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
         socket.emit('send private message', newMessage);
 
         $scope.messages.push(newMessage);
+
+        $scope.messageContent = '';
     }
 
     $scope.getMessages = function (toId, beforeNth, count) {
@@ -47,6 +71,7 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
         if(message.to == identity.currentUser._id && message.seen == false) {
 
+            alert('from-last');
             socket.emit('see private message', message);
             $scope.messages[$scope.messages.indexOf(message)].seen = true;
         }
@@ -77,7 +102,7 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
         });
     });
 
-    socket.on('see private message error', function (message) {
+    socket.on('send message error', function (message) {
 
         console.log(message);
     });
@@ -88,8 +113,9 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
         $scope.messages.forEach(function (message) {
 
-            if(message.seen == false && message.to == identity.currentUser._id) {
+            if(message.seen == false && message.to === identity.currentUser._id) {
                 
+                alert('see-request');
                 $scope.seePrivateMessage(message);
             }
         })

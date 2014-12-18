@@ -98,11 +98,11 @@ module.exports = {
 
 					socket.emit('send message error', {
 
-								from: message.from,
-								content: message.content,
-								to: message.to,
-								err: 'NOT AUTHORISED, NOT SENT'
-							});
+						from: message.from,
+						content: message.content,
+						to: message.to,
+						err: 'NOT AUTHORISED, NOT SENT'
+					});
 				}
 	},
 	getMessages: function (socket, request) {

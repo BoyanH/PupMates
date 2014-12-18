@@ -2,11 +2,12 @@ div.chat-window(ng-repeat="discussion in discussions" ng-controller="ChatControl
 	div.chat-window-header(ng-drag="true" ng-drag-success="onDragComplete($event)" 
 	no-reset="true"  use-parent="true") {{discussion.recipient.firstName}}
 	div.chat-window-close(ng-click="closeDiscussion(discussion)") X
-	div.chat-window-content(ng-init="getMessages(discussion.recipient._id)" scroll-glue)
-		div.message(ng-class="" ng-repeat="message in messages")
+	div.chat-window-content(ng-init="getMessages(discussion.recipient._id)" scroll-glue="true")
+		div.message(ng-class="{'message-alt': message.to == discussion.recipient._id}" ng-repeat="message in messages")
 			div(ng-show="message.firstOfQuery") {{message.date}} 
 			div {{message.content}}
 			div(ng-show="message.seen && $last && message.from != discussion.recipient._id") Seen
 	div.chat-footer
-		input.chat-text-input(type="text" ng-model="messageContent" ng-keyup="$event.keyCode == 13 && sendMessage(discussion.recipient._id, messageContent)" ng-focus="seeLastMessage()")
+		textarea.chat-text-input(type="text" ng-model="messageContent" 
+		ng-keydown="trySendMessage(discussion.recipient._id, messageContent, $event)" ng-keyup="allowSendMaybe($event)" ng-focus="seeLastMessage()")
 		button.chat-submit-btn(ng-click="sendMessage(discussion.recipient._id, messageContent)") Send

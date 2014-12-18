@@ -59,7 +59,7 @@
 
 .chat-window > .chat-window-content > .message:last-of-type {
 
-	height: 100px;
+	margin-bottom: 100px;
 }
 
 .chat-footer {
@@ -68,6 +68,104 @@
 	margin-top: 30px;
 }
 
+.chat-text-input {
+
+	position: relative;
+	bottom: -10px;
+	margin-left: 5px;
+	margin-bottom: -13px;
+	width: 180px; /*230(width of content-box) - 40(width of button) - 2xMargin5px*/
+	height: 50px;
+}
+
 .chat-submit-btn {
-	
+	margin-left: 5px;
+	width: 40px;
+	height: 55px;
+}
+
+.message {
+	/*padding:15px;
+	margin-bottom: 10px;
+	color:#fff;
+	background: rgba(7, 86, 152, .3); /* default background for browsers without gradient support */
+	/* css3 */
+	/*background:-webkit-gradient(linear, 0 0, 0 100%, from(rgba(46, 136, 196, .03)), to(rgba(7, 86, 152, 1)));
+	background:-moz-linear-gradient(rgba(46, 136, 196, 1), rgba(7, 86, 152, .03));
+	background:-o-linear-gradient(rgba(46, 136, 196, 1), rgba(7, 86, 152, .03));
+	background:linear-gradient(rgba(46, 136, 196, 1), rgba(7, 86, 152, .03));
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;*/
+
+	box-sizing: border-box;
+	float: left;
+	width: auto;
+	max-width: 80%;
+	position: relative;
+	clear: both;
+
+	background: #95c2fd;
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.15, #bee2ff), color-stop(1, #95c2fd));
+	background-image: -webkit-linear-gradient(bottom, #bee2ff 15%, #95c2fd 100%);
+	background-image: -moz-linear-gradient(bottom, #bee2ff 15%, #95c2fd 100%);
+	background-image: -ms-linear-gradient(bottom, #bee2ff 15%, #95c2fd 100%);
+	background-image: -o-linear-gradient(bottom, #bee2ff 15%, #95c2fd 100%);
+	background-image: linear-gradient(bottom, #bee2ff 15%, #95c2fd 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#95c2fd', endColorstr='#bee2ff');
+
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+
+	-webkit-box-shadow: inset 0 8px 5px rgba(255,255,255,0.65), 0 1px 2px rgba(0,0,0,0.2);
+	-moz-box-shadow: inset 0 8px 5px rgba(255,255,255,0.65), 0 1px 2px rgba(0,0,0,0.2);
+	box-shadow: inset 0 8px 5px rgba(255,255,255,0.65), 0 1px 2px rgba(0,0,0,0.2);
+	margin-bottom: 20px;
+	padding: 6px 20px;
+	color: #000;
+	text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+	word-wrap: break-word;
+}
+
+.message:before, .message:after {
+	border-radius: 20px / 5px;
+	content: '';
+	display: block;
+	position: absolute;
+}
+.message:before {
+	border: 10px solid transparent;
+	border-bottom-color: rgba(0,0,0,0.5);
+	bottom: 0px;
+	left: -7px;
+	z-index: -2;
+}
+.message:after {
+	border: 8px solid transparent;
+	border-bottom-color: #bee2ff; /* arrow color */
+	bottom: 1px;
+	left: -5px;
+}
+
+.message-alt {
+	float: right;
+
+	background: #7CCC31;
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.15, #ABE872), color-stop(1, #7CCC31));
+	background-image: -webkit-linear-gradient(bottom, #ABE872 15%, #7CCC31 100%);
+	background-image: -moz-linear-gradient(bottom, #ABE872 15%, #7CCC31 100%);
+	background-image: -ms-linear-gradient(bottom, #ABE872 15%, #7CCC31 100%);
+	background-image: -o-linear-gradient(bottom, #ABE872 15%, #7CCC31 100%);
+	background-image: linear-gradient(bottom, #ABE872 15%, #7CCC31 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#7CCC31', endColorstr='#ABE872');
+}
+.message-alt:before {
+	left: auto;
+	right: -7px;
+}
+.message-alt:after {
+	left: auto;
+	right: -5px;
+	border-bottom-color: #ABE872; /* arrow color */
 }
