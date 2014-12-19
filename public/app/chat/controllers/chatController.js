@@ -5,30 +5,47 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
     var height = $(document).height() - $(".nav").height();
     $(".menu").css("height", height.toString());
 
-	if ($routeParams.friendId) {
-		
-        getMessages($routeParams.friendId);
-	}
+    function findIndexOfDiscussion (recipientID) {
 
-    $scope.messages = [];
-    $scope.allowSend = true;
+        for (var discussion = 0; discussion < $scope.discussions.length; discussion++) {
 
-    $scope.allowSendMaybe = function(event) {
+            if ($scope.discussions[discussion].recipient._id == recipientID) {
+
+                return discussion;
+            }
+        };
+    }
+
+    $scope.allowSendMaybe = function(event, discussion) {
+
+        var discussionIndex = $scope.discussions.indexOf(discussion);
 
         if(event.keyCode == 16) {
 
-            $scope.allowSend = true;
+            $scope.discussions[discussionIndex].allowSend = true;
         }
     }
 
-    $scope.trySendMessage = function (toId, content, event) {
+    $scope.handleTyping = function (discussion) {
+
+        if (discussion.messageContent.length > 0) {
+
+            socket.emit('typing to', discussion.recipient._id);
+        }
+            else {
+
+                scoket.emit('typing finished', discussion.recipient._id);
+            }
+    }
+
+    $scope.trySendMessage = function (toId, content, event, discussion) {
 
         if(event.keyCode == 16) {
 
-            $scope.allowSend = false;
+            discussion.allowSend = false;
         }
 
-        if(event.keyCode == 13 && $scope.allowSend) {
+        if(event.keyCode == 13 && discussion.allowSend) {
 
             $scope.sendMessage(toId, content);
         }
@@ -44,9 +61,11 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
     	
         socket.emit('send private message', newMessage);
 
-        $scope.messages.push(newMessage);
+        var discussionIndex = findIndexOfDiscussion(toId);
 
-        $scope.messageContent = '';
+        $scope.discussions[discussionIndex].messages.push(newMessage);
+
+        $scope.discussions[discussionIndex].messageContent = '';
     }
 
     $scope.getMessages = function (toId, beforeNth, count) {
@@ -62,18 +81,30 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
         
     }
 
-    $scope.seeLastMessage = function () {
+    $scope.seeMessages = function (discussion) {
 
-        $scope.seePrivateMessage($scope.messages[$scope.messages.length - 1]);
+        var indexOfDiscussion = $scope.discussions.indexOf(discussion);
+     
+        $scope.discussions[indexOfDiscussion].messages.forEach(function (message) {
+
+            if(!message.seen && message.to == identity.currentUser._id) {
+
+                $scope.seePrivateMessage(message);
+            }
+        });
+
+        $scope.discussions[indexOfDiscussion].seeNewMessage = true;
     }
 
     $scope.seePrivateMessage = function (message) {
 
+        var indexOfDiscussion = findIndexOfDiscussion(message.from),
+            indexOfMessage = $scope.discussions[indexOfDiscussion].messages.indexOf(message);
+
         if(message.to == identity.currentUser._id && message.seen == false) {
 
-            alert('from-last');
             socket.emit('see private message', message);
-            $scope.messages[$scope.messages.indexOf(message)].seen = true;
+            $scope.discussions[indexOfDiscussion].messages[indexOfMessage].seen = true;
         }
         
     }
@@ -87,48 +118,99 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
     socket.on('new message', function (message) {
 
-        $scope.messages.push(message);
+        var discussionIndex = findIndexOfDiscussion(message.from);
+
+        $scope.discussions[discussionIndex].messages.push(message);
+
+        if ($scope.discussions[discussionIndex].seeNewMessage) {
+
+            $scope.seePrivateMessage(message);
+        }
     });
 
 
-    socket.on('see private message done', function (message) {
+    socket.on('see private message done', function (data) {
 
-        $scope.messages.forEach(function (message) {
+        var discussionIndex = findIndexOfDiscussion(data.message.to);
 
-            if(message._id == message._id) {
+        for (var message = 0; message < $scope.discussions[discussionIndex].messages.length; message++) {
+        
+            if ($scope.discussions[discussionIndex].messages[message]._id == data.message._id) {
 
-                message.seen = true;
+                $scope.discussions[discussionIndex].messages[message].seen = true;
+                break;
             }
-        });
+        };
+
     });
 
     socket.on('send message error', function (message) {
 
-        console.log(message);
+        var discussionIndex = findIndexOfDiscussion(message.to);
+
+        for (var message = 0; message < $scope.discussions[discussionIndex].messages.length; message++) {
+        
+            if (scope.discussions[discussionIndex].messages[message]._id == message._id) {
+
+                scope.discussions[discussionIndex].messages[message].notSent = true;
+                break;
+            }
+        };
     });
 
     socket.on('messages chunk', function (data) {
 
-        Array.prototype.unshift.apply($scope.messages, data.messages);
+        var discussionIndex;
 
-        $scope.messages.forEach(function (message) {
+        data.messages[0].firstOfQuery = true;
 
-            if(message.seen == false && message.to === identity.currentUser._id) {
-                
-                alert('see-request');
-                $scope.seePrivateMessage(message);
+        if(data.messages[0].from == identity.currentUser._id) {
+
+            discussionIndex = findIndexOfDiscussion(data.messages[0].to);
+        }
+            else {
+
+                discussionIndex = findIndexOfDiscussion(data.messages[0].from);
             }
-        })
+
+        Array.prototype.unshift.apply($scope.discussions[discussionIndex].messages, data.messages);
+
     });
 
-    socket.on('edit private message done', function (data) {
+    socket.on('beingTypedTo', function (fromId) {
 
-        $scope.messages[$scope.messages.indexOf(data.message)].content = data.content;
+        $scope.discussions.forEach(function (discussion) {
+
+            if (discussion.recipient._id == fromId) {
+
+                discussion.recipientTyping = true;
+            }
+        });
     });
 
-    socket.on('send message error', function (data) {
+    socket.on('beingTypedTo finished', function (fromId) {
 
-        //HANDLE MESSAGE SEND-ERROR
+        $scope.discussions.forEach(function (discussion) {
+
+            if (discussion.recipient._id == fromId) {
+
+                discussion.recipientTyping = false;
+            }
+        });
+    });
+
+    socket.on('edit private message done', function (message) {
+
+        var discussionIndex = findIndexOfDiscussion(message.from);
+
+        for (var message = 0; message < $scope.discussions[discussionIndex].messages.length; message++) {
+        
+            if (scope.discussions[discussionIndex].messages[message]._id == message._id) {
+
+                scope.discussions[discussionIndex].messages[message].content = message.content;
+                break;
+            }
+        };
     });
 
     socket.on('disconnect', function () {

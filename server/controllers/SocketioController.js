@@ -146,6 +146,9 @@ module.exports = {
 							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
 							clientsList[message.to].forEach(function (clientConnection) {
 
+									data.message.from = message.to;
+									data.message.to = to;
+									
 									clientConnection.socket.emit('see private message done', data.message);
 								}
 							);
