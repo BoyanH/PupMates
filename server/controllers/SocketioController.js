@@ -141,13 +141,10 @@ module.exports = {
 
 						socket.emit('see private message done', data);
 
-						if (clientsList[message.to] && !data.err) {
+						if (clientsList[data.to] && !data.err) {
 					
 							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-							clientsList[message.to].forEach(function (clientConnection) {
-
-									data.message.from = message.to;
-									data.message.to = to;
+							clientsList[data.to].forEach(function (clientConnection) {
 									
 									clientConnection.socket.emit('see private message done', data.message);
 								}

@@ -105,6 +105,10 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
             socket.emit('see private message', message);
             $scope.discussions[indexOfDiscussion].messages[indexOfMessage].seen = true;
+
+            console.log('see MSG');
+            console.log(message);
+            console.log('see MSG');
         }
         
     }
@@ -118,6 +122,7 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
     socket.on('new message', function (message) {
 
+alert(message.content);
         var discussionIndex = findIndexOfDiscussion(message.from);
 
         $scope.discussions[discussionIndex].messages.push(message);
@@ -131,16 +136,20 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
     socket.on('see private message done', function (data) {
 
-        var discussionIndex = findIndexOfDiscussion(data.message.to);
+        if(!data.err && data.message) {
 
-        for (var message = 0; message < $scope.discussions[discussionIndex].messages.length; message++) {
-        
-            if ($scope.discussions[discussionIndex].messages[message]._id == data.message._id) {
+            alert('recieving the seen notification');
+            var discussionIndex = findIndexOfDiscussion(data.message.to);
 
-                $scope.discussions[discussionIndex].messages[message].seen = true;
-                break;
-            }
-        };
+            for (var z = 0; z < $scope.discussions[discussionIndex].messages.length; z++) {
+            
+                if ($scope.discussions[discussionIndex].messages[z]._id == data.message._id) {
+
+                    $scope.discussions[discussionIndex].messages[z].seen = true;
+                    break;
+                }
+            };
+        }
 
     });
 
