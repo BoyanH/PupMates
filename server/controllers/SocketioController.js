@@ -70,31 +70,26 @@ module.exports = {
 				}
 			};
 		}
-
-        console.log("client disconnected");
 	},
 	sendMessage: function (socket, message) {
 
 			if(isAuthorised(socket, message)) {
 
-				//IF THE RECIPIENT HAS CONNECTED
-				if (clientsList[message.to]) {
-					
-					//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-					clientsList[message.to].forEach(function (clientConnection) {
 
-							clientConnection.socket.emit('new message', {
+				messages.updateDiscussion(message)
+					.then(function (data) {
 
-								from: message.from,
-								content: message.content,
-								to: message.to,
-								date: new Date()
-							});
+						//IF THE RECIPIENT HAS CONNECTED
+						if (clientsList[data.to]) {
+							
+							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
+							clientsList[data.to].forEach(function (clientConnection) {
+
+									clientConnection.socket.emit('new message', data);
+								}
+							);
 						}
-					);
-				}
-
-				messages.updateDiscussion(message);
+					})
 			}
 				else {
 
@@ -141,10 +136,10 @@ module.exports = {
 				messages.markMessageAsSeen(message)
 					.then(function (data) {
 
-						if (clientsList[data.from] && !data.err) {
+						if (clientsList[data.message.from] && !data.err) {
 					
 							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-							clientsList[data.from].forEach(function (clientConnection) {
+							clientsList[data.message.from].forEach(function (clientConnection) {
 									
 									clientConnection.socket.emit('see private message done', data.message);
 								}

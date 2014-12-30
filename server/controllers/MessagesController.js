@@ -30,7 +30,8 @@ module.exports = {
 	},
 	updateDiscussion: function (message) {
 
-		var crntBetween = message.from > message.to ? message.from + '_' + message.to : message.to + '_' + message.from;
+		var crntBetween = message.from > message.to ? message.from + '_' + message.to : message.to + '_' + message.from,
+			deffered = Q.defer();
 
 		Discussion.findOne({between: crntBetween}, function (err, discussion) {
 
@@ -54,15 +55,24 @@ module.exports = {
 
 					discussion.messages.push(newMessage);
 
-					Discussion.update({between: crntBetween}, discussion, function (err) {
+					Discussion.update({between: crntBetween}, discussion, function (err, discussion) {
 
 						if (err) {
 							console.error('Error updating discussion: ' + err);
+
+							deffered.reject(err);
 						}
+
+						Discussion.findOne({between: crntBetween}, function (err, discussion) {
+
+							deffered.resolve(discussion.messages[discussion.messages.length - 1]);
+						});
 
 					});
 				}
 		});
+
+		return deffered.promise;
 	},
 	getMessages: function (request) {
 
