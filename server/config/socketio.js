@@ -79,7 +79,7 @@ module.exports = function(io, sessionStore) {
 
 
 
-        io.on('disconnect', function() {
+        socket.on('disconnect', function() {
 
            	controllers.socket.deleteUserConnection(socket);
         });

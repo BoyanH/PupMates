@@ -136,6 +136,7 @@ alert(message.content);
 
     socket.on('see private message done', function (data) {
 
+        alert(data.content)
         if(!data.err && data.message) {
 
             alert('recieving the seen notification');

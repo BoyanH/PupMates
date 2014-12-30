@@ -61,7 +61,7 @@ module.exports = {
 				
 				if (client[i].socket == socket) {
 
-					client.splice(i, 1);
+					client = client.splice(i, 1);
 
 					if (client.length <= 0) {
 
@@ -70,6 +70,8 @@ module.exports = {
 				}
 			};
 		}
+
+        console.log("client disconnected");
 	},
 	sendMessage: function (socket, message) {
 
@@ -139,12 +141,10 @@ module.exports = {
 				messages.markMessageAsSeen(message)
 					.then(function (data) {
 
-						socket.emit('see private message done', data);
-
-						if (clientsList[data.to] && !data.err) {
+						if (clientsList[data.from] && !data.err) {
 					
 							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-							clientsList[data.to].forEach(function (clientConnection) {
+							clientsList[data.from].forEach(function (clientConnection) {
 									
 									clientConnection.socket.emit('see private message done', data.message);
 								}
