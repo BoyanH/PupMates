@@ -92,7 +92,7 @@ box-shadow: 0px 0px 5px 5px rgba(0,123,194,1);
 	width: 30%;
 	float: right;
 	background: #7CCC31;
-	color: #0CA2FF;
+	color: #181E22;
 	font-weight: 700;
 	border-radius: 5px;
 	border: none;
@@ -100,7 +100,6 @@ box-shadow: 0px 0px 5px 5px rgba(0,123,194,1);
 }
 .chat-submit-btn:active{
 	background: #0CA2FF;
-	color: #7CCC31;
 }
 .message-seen {
 
