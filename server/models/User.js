@@ -74,9 +74,6 @@ module.exports.seedInitialUsers = function(){
                 data: pic2,
                 contentType: 'image/jpg',
             }
-         },
-         {
-            name: 'asd dasd'
          }],
          friends: [],
          album:[],
