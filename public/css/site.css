@@ -79,6 +79,9 @@ h1, h2, h3, a{
 .float-right{
 	float: right;
 }
+.float-left{
+	float: left;
+}
 .btn-nav-login{
 	display: inline-block;
 	width: 60px;
@@ -208,4 +211,42 @@ h1, h2, h3, a{
 	list-style-type: none;
 	margin-left: -20px;
 }
+.notif{
+	margin-top: 17px;
+	width: 22px;
+	height: 22px;
+}
+.notif > img{
+	width: 100%;
+	margin: 0;
+}
+.notif-box-wrapper{
+	margin: 0;
+	display: block;
+	height: 300px;
+	width: 270px;
+	background: transparent;
+	padding-top: 10px;
+}
+.notif-box{
+	margin-top: -3px;
+	background: #f0edcc;
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	color: #181E22;
 
+
+}
+.arrow{
+	margin-top: -12px;
+	width: 0; 
+	height: 0; 
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid #f0edcc;
+}
