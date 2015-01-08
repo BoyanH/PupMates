@@ -1,5 +1,5 @@
 div(ng-controller="SearchController")
-	form.form-search
+	div.search-box
 		span
 			input.search.rounded(type="text" class="" placeholder="Search..." ng-model="srch" ng-change="search(srch)"
 				ng-focus="focus = true;" ng-blur="removeFocus()")
@@ -7,9 +7,9 @@ div(ng-controller="SearchController")
 			div(ng-show="people")
 				h3.search-result-title Dog Owners
 				ul.styleless-list
-					a.search-result-link(ng-repeat="person in people" href="#/profile/{{person.username}}")
 						li 
-							h2.search-result-name {{person.firstName}} {{person.lastName}}
+							a.search-result-link(ng-repeat="person in people" href="#/profile/{{person.username}}")
+								h2.search-result-name {{person.firstName}} {{person.lastName}}
 							div.search-result.dog(ng-show="person.dogs.length") Owner of: 
 								span(ng-show="$index != 0 && dog.breed.length") , 
 								span(ng-repeat="dog in person.dogs" ng-show="dog.breed.length >= 2") {{dog.breed}} 

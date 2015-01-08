@@ -378,6 +378,11 @@ module.exports = {
     },
     dynamicSearch: function (req, res) {
 
+        if(req.params.searchContent.length < 3) {
+
+            res.end("Must search for at least 3 characters in a name!");
+        }
+
         module.exports.searchUserDynamically(req, res)
             .then(function (users) {
 

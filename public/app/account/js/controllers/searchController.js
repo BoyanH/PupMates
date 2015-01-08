@@ -15,7 +15,7 @@ app.controller("SearchController", function($scope, $location, $timeout, $routeP
 
 	$scope.search = function(srch){
 
-		if(srch) {
+		if(srch.length >= 3) {
 			$.ajax({
 			  type: "GET",
 			  url: "/api/dynamicSearch/" + srch +'/5',
@@ -23,26 +23,29 @@ app.controller("SearchController", function($scope, $location, $timeout, $routeP
 			})
 			  .done(function( data ) {
 
-			    $scope.people = data.people;
-			    $scope.dogs = data.dogs;
+			  	if(data.people || data.dogs) {
+				    
+				    $scope.people = data.people;
+				    $scope.dogs = data.dogs;
 
-			    // for (var i = 0; i < $scope.people.length; i++) {
-			    	
-			    // 	if ($scope.people[i].username == $routeParams.username) { //not find profile you're into
+				    // for (var i = 0; i < $scope.people.length; i++) {
+				    	
+				    // 	if ($scope.people[i].username == $routeParams.username) { //not find profile you're into
 
-			    // 		delete $scope.people[i];
-			    // 	}
-			    // };
+				    // 		delete $scope.people[i];
+				    // 	}
+				    // };
 
-			    if($scope.people.length > 0 || $scope.dogs.length > 0) {
+				    if($scope.people.length > 0 || $scope.dogs.length > 0) {
 
-			    	$scope.results = true;
-			    }
-			    	else {
-			    		$scope.results = false;
-			    	}
+				    	$scope.results = true;
+				    }
+				    	else {
+				    		$scope.results = false;
+				    	}
 
-			    $scope.$apply();
+				    $scope.$apply();
+				}
 			  });
 
 			if(srch == "") {
@@ -51,10 +54,12 @@ app.controller("SearchController", function($scope, $location, $timeout, $routeP
 
 			}
 		}
+			
 			else {
 
 				$scope.people = '';
 				$scope.dogs = '';
+				$scope.results = false;
 			}
 	}
 });
