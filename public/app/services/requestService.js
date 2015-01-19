@@ -1,44 +1,63 @@
 app.factory('requester', function(identity, $rootScope, $q) {
 
+    function getData(dataURl) {
+
+        var deferred = $q.defer();
+
+        $.ajax({
+            type: 'GET',
+            url: dataURl
+        }).done(function(friends) {
+            
+            deferred.resolve(friends);
+        }).fail(function(err) {
+
+            deferred.reject(err);
+        });
+
+        return deferred.promise;        
+    }
+
+    function postData (dataURL, data) {
+
+        var deferred = $q.defer();
+
+            $.ajax({
+                type: 'POST',
+                url: dataURL,
+                data: data
+            }).done(function(data) {
+
+                deferred.resolve(data);
+            }).fail(function(err) {
+
+                deferred.reject(err);
+            });
+
+            return deferred.promise;
+    }
+
     return {
 
         getProfile: function (username) {
 
-            var deferred = $q.defer();
-
-            $.ajax({
-                type: 'GET',
-                url: "/api/users/" + username
-            }).done(function(data) {
-                
-                deferred.resolve(data);
-            }).fail(function(err) {
-
-                deferred.reject(err);
-            });
-
-            return deferred.promise;
+            return getData('/api/users/' + username);
         },
         addFriend: function (friendID, friendUsername) {
 
-             var deferred = $q.defer();
-
-            $.ajax({
-                type: 'POST',
-                url: "/befriendMate",
-                data: {
+             return postData('/befriendMate', 
+                {
                     friendID: friendID,
                     friendUsername: friendUsername
-                }
-            }).done(function(data) {
+                });
+        },
+        getFriends: function() {
 
-                deferred.resolve(data);
-            }).fail(function(err) {
+            return getData('/friends');
+        },
+        getDiscussions: function () {
 
-                deferred.reject(err);
-            });
-
-            return deferred.promise;
+            return getData('/discussions');
         }
     };
 });

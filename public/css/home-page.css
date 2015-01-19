@@ -65,8 +65,10 @@
 }
 .dog-container{
 	display: inline-block;
-	max-width: 200px;
+	width: 200px;
+	height: 250px;
 	margin-right: 10px;
+	margin-top: 10px;
 	padding: 10px;
 	background-color: #fcfcfc;
 	border: 1px solid #e0e0e0;

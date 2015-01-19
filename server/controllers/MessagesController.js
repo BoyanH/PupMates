@@ -255,6 +255,24 @@ module.exports = {
 			});
 
 			return deffered.promise;
+	},
+	getUsersDiscussions: function(req, res) {
+
+		function whereFunction(userID) {
+
+			return this.between.split('_').indexOf(userID) > -1
+		}
+
+		Discussion.find({where: whereFunction(req.user._id)}, function (err, collection) {
+
+			if (err || !collection) {
+
+				console.log('No discussions found!');
+				return;
+			}
+
+			res.send(collection);
+		})
 	}
 
 };

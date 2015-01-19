@@ -1,4 +1,10 @@
-app.controller("ChatDirController", function($scope, $timeout, identity){
+app.controller("ChatDirController", function($scope, $timeout, identity, requester, socket){
+
+	socket.on('status change', function (data) {
+
+		console.log('here');
+		console.log(data);
+	});
 	
 	$scope.openDiscussion = function (recipient) {
 

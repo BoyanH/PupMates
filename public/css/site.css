@@ -120,6 +120,17 @@ h1, h2, h3, a{
 	border-color: #0CA2FF;
 	color: #181E22;
 }
+
+.logged-in-items {
+
+	margin-right: 50px;
+}
+
+.logged-in-items > .user-menu {
+
+	margin-right: 10px;
+}
+
 .btn-signout{
 	display: inline-block;
 	width: 90px;

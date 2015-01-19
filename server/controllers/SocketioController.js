@@ -1,5 +1,6 @@
 var clientsList = {},
 	messages = require('./MessagesController.js'),
+	users = require('./UsersController.js'),
 	auth = require('../config/auth.js');
 
 	function isAuthorised (socket, request) {
@@ -9,8 +10,8 @@ var clientsList = {},
 		if(clientsList[request.from] && request.from == socket.request.session.passport.user) {
 
 			//FIND THE AUTH-TOKEN IN ALL USER CONNECTIONS
-			var elementPos = clientsList[request.from].map(function(x) {return x.socket; }).indexOf(socket),
-				objectFound = clientsList[request.from][elementPos];
+			var elementPos = clientsList[request.from].identity.map(function(x) {return x.socket; }).indexOf(socket),
+				objectFound = clientsList[request.from].identity[elementPos];
 
 			//CHECK IF THE AUTH-TOKEN IS GIVEN TO THE REQUESTER'S SOCKET
 			if(objectFound) {
@@ -33,38 +34,77 @@ module.exports = {
 		var session = socket.request.session,
 			
 			userId = session.passport.user,
-			sessionID = socket.request.sessionID
+			sessionID = socket.request.sessionID,
 
-		//MULTIPLE TOKENS PER USER AVAILABLE
-		if (!clientsList[userId]) {
+			friends = [];
 
-			clientsList[userId] = [{
-	        	socket: socket,
-	        	sessionID: sessionID 
-	        }];
-		}
-			else {
+			users.getFriendIDs(userId)
+			.then(function (collection) {
 
-				clientsList[userId].push({
-					socket: socket,
-		        	sessionID: sessionID	
+				collection.forEach(function (friend) {
+
+					friends.push({
+						id: friend.id,
+						online: !!clientsList[friend.id]
+					});
 				});
-			}
+
+				//MULTIPLE TOKENS PER USER AVAILABLE
+				if (!clientsList[userId]) {
+
+					clientsList[userId] = {
+						identity: [
+							{
+					        	socket: socket,
+					        	sessionID: sessionID
+					        }
+				        ],
+				        friends: friends
+				    };
+				}
+					else {
+
+						clientsList[userId].identity.push({
+							socket: socket,
+				        	sessionID: sessionID
+						});
+					}
+
+				socket.emit('status change', clientsList[userId].friends);
+
+				clientsList[userId].friends.forEach(function (friend) {
+
+					clientsList[friend.id].identity.forEach(function (clientConnection) {
+
+						clientConnection.socket.emit('status change', [{id: userId, online: true}]);
+					});
+				});			})
 	},
 	deleteUserConnection : function (socket) {
 
 		for (var client in clientsList) {
 
-			for (var i = 0; i < client.length; i++) {
-				
+			for (var i = 0; i < clientsList[client].identity.length; i++) {
 				//client[i] = nth connection of each client
 				
-				if (client[i].socket == socket) {
+				if (clientsList[client].identity[i].socket == socket) {
 
-					client = client.splice(i, 1);
 
-					if (client.length <= 0) {
+					if(clientsList[client].identity.length == 1) {
 
+						clientsList[client].friends.forEach(function (friend) {
+
+							clientsList[friend.id].identity.forEach(function (clientConnection) {
+
+								clientConnection.socket.emit('status change', [{id: client, online: false}]);
+							});
+						});
+					}
+
+					clientsList[client].identity = clientsList[client].identity.splice(i, 1);
+
+					if (clientsList[client].identity.length <= 0) {
+						
 						delete clientsList[client];
 					}
 				}
@@ -83,7 +123,7 @@ module.exports = {
 						if (clientsList[data.to]) {
 							
 							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-							clientsList[data.to].forEach(function (clientConnection) {
+							clientsList[data.to].identity.forEach(function (clientConnection) {
 
 									clientConnection.socket.emit('new message', data);
 								}
@@ -139,7 +179,7 @@ module.exports = {
 						if (clientsList[data.message.from] && !data.err) {
 					
 							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-							clientsList[data.message.from].forEach(function (clientConnection) {
+							clientsList[data.message.from].identity.forEach(function (clientConnection) {
 									
 									clientConnection.socket.emit('see private message done', data.message);
 								}
@@ -164,7 +204,7 @@ module.exports = {
 						if (clientsList[message.to] && !data.err) {
 					
 							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-							clientsList[message.to].forEach(function (clientConnection) {
+							clientsList[message.to].identity.forEach(function (clientConnection) {
 
 									clientConnection.socket.emit('edit private message done', data.message);
 								}

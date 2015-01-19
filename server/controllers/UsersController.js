@@ -440,5 +440,36 @@ module.exports = {
                 });
 
         })
+    },
+    getFriends: function(req, res) {
+
+        User.find({_id: req.user._id}, function (err, collection) {
+
+            if(err || !collection) {
+
+                console.log('No friends found!');
+                return;
+            }
+
+            res.send(collection);
+        });
+    },
+    getFriendIDs: function (userID) {
+
+        var deferred = Q.defer();
+
+        //search not for _id (mongodb item id) but id of friends
+        User.findOne({_id: userID}, function (err, user) {
+
+            if(err || !user) {
+
+                console.log('No friends found!');
+                deferred.resolve([]);
+            }
+
+            deferred.resolve(user.friends);
+        });
+
+        return deferred.promise;
     }
 }

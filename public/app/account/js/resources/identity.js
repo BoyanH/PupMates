@@ -1,9 +1,11 @@
-﻿app.factory('identity', function($window, UsersResource){
+﻿app.factory('identity', function($window, $rootScope, UsersResource){
     var user;
 
     if($window.bootstrappedUserObject){
         user = new UsersResource();
         angular.extend(user, $window.bootstrappedUserObject);
+
+        $rootScope.user = user;
     }
 
     return{
