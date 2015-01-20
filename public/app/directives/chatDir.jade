@@ -1,2 +1,3 @@
 div
-	| chat is here dsaa
+	div(ng-repeat="friend in friends")
+		button(ng-click="openDiscussion(friend)") {{friend.username}}

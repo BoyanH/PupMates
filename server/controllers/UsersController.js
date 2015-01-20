@@ -443,15 +443,24 @@ module.exports = {
     },
     getFriends: function(req, res) {
 
-        User.find({_id: req.user._id}, function (err, collection) {
+        User.findOne({_id: req.user._id}, function (err, user) {
 
-            if(err || !collection) {
+            if(err || !user) {
 
-                console.log('No friends found!');
+                console.log('Get Friends Error: ' + err);
                 return;
             }
 
-            res.send(collection);
+            User.find({'_id': {'$in' : user.friends.map(function (x) { return x.id } ) } }, function (err, collection) {
+
+                if(err) {
+
+                    console.log("Friend not found. Err: " + err);
+                }
+
+                res.send(collection);
+            });
+
         });
     },
     getFriendIDs: function (userID) {
