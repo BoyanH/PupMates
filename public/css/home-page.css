@@ -9,7 +9,6 @@
 	margin: 0 auto;
 	margin-top: 30px;
 	width: 100%;
-	height: auto;
 }
 .col-1, .col-2{
 	display: inline-block;
@@ -63,16 +62,26 @@
 	color: #0CA2FF;
 	cursor: pointer;
 }
+.pet-wrapper{
+	height: auto;
+	overflow:auto;
+	width: 100%;
+	white-space: nowrap;
+}
 .dog-container{
+	float: left;
 	display: inline-block;
-	width: 200px;
-	height: 250px;
-	margin-right: 10px;
+	width: 24%;
+	height: auto;
+	min-height: 150px;
+	margin-right: 3%;
+	margin-left: 3%;
 	margin-top: 10px;
 	padding: 10px;
 	background-color: #fcfcfc;
 	border: 1px solid #e0e0e0;
 	border-radius: 4px;
+	vertical-align: top;
 }
 .description-pic-container{
 	text-align: center;
@@ -86,6 +95,7 @@
 }
 .pic-container img{
 	width: 100%;
+	max-height: 150px;
 }
 .name-container{
 	text-align: center;

@@ -13,6 +13,9 @@ module.exports = function (app) {
                beautify: true,
         });
     });
+    app.get('/img/:img', function(req, res){
+        res.send('../../public/img/' + req.params.img);
+    });
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.users.createDog);
     app.post('/befriendMate', auth.isAuthenticated, controllers.users.befriend);
     app.get('/friends', auth.isAuthenticated, controllers.messages.getUsersDiscussions);
