@@ -1,4 +1,4 @@
-﻿app.controller('LoginController', function($scope, $route, $http, notifier, $location, identity, auth){
+﻿app.controller('LoginController', function($scope, $route, $http, notifier, $location, identity, auth, socket){
     $scope.modalShown = false;
     $scope.toggleModal = function() {
         $scope.modalShown = !$scope.modalShown;
@@ -23,6 +23,7 @@
                 $scope.user.username = '';
                 $scope.user.password = '';
             }
+
             $location.path('/');
             location.reload();
         });

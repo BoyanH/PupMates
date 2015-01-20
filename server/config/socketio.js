@@ -52,6 +52,7 @@ module.exports = function(io, sessionStore) {
     			controllers.socket.addUserConnection(socket);
 
                 eventEmitter.removeAllListeners(hs.sessionID);
+                addedListeners.splice(addedListeners.indexOf(hs.sessionID), 1);
     		});
 
             addedListeners.push(hs.sessionID);

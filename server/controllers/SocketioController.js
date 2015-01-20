@@ -104,12 +104,14 @@ module.exports = {
 						});
 					}
 
-					clientsList[client].identity = clientsList[client].identity.splice(i, 1);
+					clientsList[client].identity.splice(i, 1);
 
-					if (clientsList[client].identity.length <= 0) {
+					if (clientsList[client].identity.length == 0) {
 						
 						delete clientsList[client];
 					}
+
+					break;
 				}
 			};
 		}

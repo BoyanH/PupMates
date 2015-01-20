@@ -152,11 +152,15 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
     socket.on('messages chunk', function (data) {
 
-        if(isAboutCrntDiscussion(data.messages[0].from, data.messages[0].to)) {
+        console.log(data);
+        if(data.messages.length > 0) {
          
-            Array.prototype.unshift.apply($scope.messages, data.messages);
+            if(isAboutCrntDiscussion(data.messages[0].from, data.messages[0].to)) {
+             
+                Array.prototype.unshift.apply($scope.messages, data.messages);
 
-            $scope.seeAllMessages();
+                $scope.seeAllMessages();
+            }
         }
     });
 
