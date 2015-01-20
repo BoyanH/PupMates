@@ -15,8 +15,8 @@ module.exports = function (app) {
     });
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.users.createDog);
     app.post('/befriendMate', auth.isAuthenticated, controllers.users.befriend);
-    app.get('/friends', auth.isAuthenticated, controllers.messages.getUsersDiscussions);
-    app.get('/discussions', auth.isAuthenticated, controllers.users.getFriends);
+    app.get('/friends', auth.isAuthenticated, controllers.users.getFriends);
+    app.get('/discussions', auth.isAuthenticated, controllers.messages.getUsersDiscussions);
     app.get('/img/profPhoto/:id', controllers.users.getProfPhoto);
     app.get('/:userId/imgdog/:id', controllers.users.getDogPhoto);
     app.post('/login',auth.login);

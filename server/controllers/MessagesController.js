@@ -263,7 +263,13 @@ module.exports = {
 			return this.between.split('_').indexOf(userID) > -1
 		}
 
-		Discussion.find({where: whereFunction(req.user._id)}, function (err, collection) {
+		var stringifiedWhere = whereFunction + '',
+            addPos = stringifiedWhere.indexOf('() {') + 5,
+            addElement = 'var userID = ' + req.user._id + ';';
+
+        stringifiedWhere = [stringifiedWhere.slice(0, addPos), addElement, stringifiedWhere.slice(addPos)].join('');
+
+		Discussion.find({where: stringifiedWhere}, function (err, collection) {
 
 			if (err || !collection) {
 

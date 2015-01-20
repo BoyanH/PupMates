@@ -11,7 +11,7 @@ block main-content
             div.float-left(ng-include="'partials/notifications/notifications'")
             div.float-right
                 div.nav-login(ng-include="'partials/account/login'")
-    div.wrapper#the-wrapper(ng-drop="true" ng-drop-success="onDropComplete($data,$event)" ng-controller="ChatDirController")
+    div.wrapper#the-wrapper
         div(draggable-chat-dir)
         div.menu(ng-include="'partials/main/menu'")
         div(id="left-menu-dialog")
