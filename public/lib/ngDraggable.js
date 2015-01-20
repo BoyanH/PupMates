@@ -174,6 +174,31 @@ angular.module("ngDraggable", [])
                         $document.off(_moveEvents, onmove);
                         $document.off(_releaseEvents, onrelease);
 
+                        if(_ty < 70) {
+
+                            element.parent().css({top: '70px'});
+                        }
+
+                        if(_tx < 80) {
+
+                            element.parent().css({left: '80px'})
+                        }
+                        if (_ty + element.parent().height() > (window.innerHeight || document.documentElement.clientHeight)) {
+
+                            element.parent().css({
+                                top: (window.innerHeight || document.documentElement.clientHeight) - element.parent().height()
+                            });
+
+                            //TO DO: IMPLEMENT FANCY STACKING TO A 'TASKBAR' ON THE BOTTOM
+                        }
+
+                        if (_tx + element.parent().width() > (window.innerWidth || document.documentElement.clientWidth)) {
+
+                            element.parent().css({
+                                left: (window.innerWidth || document.documentElement.clientWidth) - element.parent().width() - 10
+                            });
+                        }
+
                     }
                     var onDragComplete = function(evt) {
                         if(! onDragSuccessCallback)return;

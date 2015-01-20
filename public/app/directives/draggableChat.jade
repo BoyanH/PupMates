@@ -1,6 +1,5 @@
 div.chat-window(ng-repeat="discussion in discussions" ng-controller="ChatController" ng-init="initChat(discussion.recipient._id)") 
-	div.chat-window-header(ng-drag="true" ng-drag-success="onDragComplete($event)" 
-	no-reset="true"  use-parent="true") {{discussion.recipient.firstName}}
+	div.chat-window-header(ng-drag="true" no-reset="true"  use-parent="true") {{discussion.recipient.firstName}}
 	div.chat-window-close(ng-click="closeDiscussion(discussion)") X
 	div.chat-window-content(ng-init="getMessages(discussion.recipient._id)" scroll-glue="true")
 		div.message(ng-repeat="message in messages")

@@ -12,7 +12,6 @@ app.directive("draggableChatDir", function(){
 			scope.addNewDiscussion = function (recipient) {
 
 				var newDiscussion = {
-						messages: [],
 						recipient: recipient
 					},
 					exists = false;

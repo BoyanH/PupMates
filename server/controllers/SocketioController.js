@@ -94,10 +94,13 @@ module.exports = {
 
 						clientsList[client].friends.forEach(function (friend) {
 
-							clientsList[friend.id].identity.forEach(function (clientConnection) {
+							if(clientsList[friend.id]) {
+								
+								clientsList[friend.id].identity.forEach(function (clientConnection) {
 
-								clientConnection.socket.emit('status change', [{id: client, online: false}]);
-							});
+									clientConnection.socket.emit('status change', [{id: client, online: false}]);
+								});
+							}
 						});
 					}
 
