@@ -1,5 +1,5 @@
-div.notif(ng-controller="NotificationsController" ng-show="user")
-	img( ng-click="showHideNotif()" src="https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/bell.png")
-	div.notif-box-wrapper(ng-show="notifShow")
-		div.arrow
-		div.notif-box dsadsa
+div(ng-controller="NotificationsController")
+	div.notif(ng-show="identity.currentUser")
+		img( ng-click="showHideNotif()" src="https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/bell.png")
+		div.notif-box-wrapper(ng-show="notifShow")
+			div.popup notifications here

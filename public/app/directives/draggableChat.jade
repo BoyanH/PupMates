@@ -1,12 +1,13 @@
-div.chat-window(ng-repeat="discussion in discussions" ng-controller="ChatController" ng-init="initChat(discussion.recipient._id)") 
-	div.chat-window-header(ng-drag="true" no-reset="true"  use-parent="true") {{discussion.recipient.firstName}}
-	div.chat-window-close(ng-click="closeDiscussion(discussion)") X
-	div.chat-window-content(ng-init="getMessages(discussion.recipient._id)" scroll-glue="true")
-		div.message(ng-repeat="message in messages")
-			div.message-date(ng-show="message.firstOfQuery") {{message.date}} 
-			div.message-content(ng-class="{'message-alt': message.to == discussion.recipient._id}") {{message.content}}
-			div.message-seen(ng-show="message.seen && $last && message.from != discussion.recipient._id") Seen
-	div.chat-footer
-		textarea.chat-text-input(type="text" ng-model="messageContent" 
-		ng-keydown="trySendMessage(discussion.recipient._id, messageContent, $event)" ng-keyup="allowSendMaybe($event)" ng-focus="seeFutureMessages()" ng-blur="missFutureMessages()")
-		button.chat-submit-btn(ng-click="sendMessage(discussion.recipient._id, messageContent)") Send
+div(ng-controller="ChatController")
+	div.chat-window(ng-repeat="(Dindex, discussion) in discussions" ng-init="initChat(discussion.recipient._id)") 
+		div.chat-window-header(ng-drag="true" no-reset="true"  use-parent="true") {{discussion.recipient.firstName}}
+		div.chat-window-close(ng-click="closeDiscussion(discussion)") X
+		div.chat-window-content(ng-init="getMessages(discussion.recipient._id)" scroll-glue="true")
+			div.message(ng-repeat="message in messages")
+				div.message-date(ng-show="message.firstOfQuery") {{message.date}} 
+				div.message-content(ng-class="{'message-alt': message.to == discussion.recipient._id}") {{message.content}}
+				div.message-seen(ng-show="message.seen && $last && message.from != discussion.recipient._id") Seen
+		div.chat-footer
+			textarea.chat-text-input(type="text" name="content{{Dindex}}"
+			ng-keydown="trySendMessage(discussion.recipient._id, Dindex, $event)" ng-keyup="allowSendMaybe($event)" ng-focus="seeFutureMessages()" ng-blur="missFutureMessages()")
+			button.chat-submit-btn(ng-click="sendMessage(discussion.recipient._id, Dindex)") Send

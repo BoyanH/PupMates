@@ -34,6 +34,7 @@
 .profPhoto{
 	display: inline-block;
 	width: 100%;
+	max-height: 200px;
 	border-radius: 2px;
 }
 .profPhotoContainer:hover{
@@ -68,14 +69,19 @@
 	width: 100%;
 	white-space: nowrap;
 }
+.dog-name, .birthdate, .description{
+	word-break: break-all;
+	white-space: pre-wrap;
+	text-align: center;
+}
 .dog-container{
 	float: left;
 	display: inline-block;
-	width: 24%;
+	width: 25%;
 	height: auto;
 	min-height: 150px;
-	margin-right: 3%;
-	margin-left: 3%;
+	margin-right: 2%;
+	margin-left: 2%;
 	margin-top: 10px;
 	padding: 10px;
 	background-color: #fcfcfc;

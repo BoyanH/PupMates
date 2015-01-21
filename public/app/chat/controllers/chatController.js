@@ -46,7 +46,7 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
         }
     }
 
-    $scope.trySendMessage = function (toId, content, event) {
+    $scope.trySendMessage = function (toId, index, event) {
 
         if(event.keyCode == 16) {
 
@@ -55,12 +55,13 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
         if(event.keyCode == 13 && $scope.allowSend) {
 
-            $scope.sendMessage(toId, content);
+            $scope.sendMessage(toId, index);
         }
     }
 
-    $scope.sendMessage = function (toId, content) {
+    $scope.sendMessage = function (toId, index) {
 
+        var content = $("textarea[name='content" + index + "']").val()
         var newMessage = {
             from: identity.currentUser._id,
             content: content,
@@ -71,7 +72,8 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
         $scope.messages.push(newMessage);
 
-        $scope.messageContent = '';
+        //clear textarea
+        $("textarea[name='content" + index + "']").val('');
     }
 
     $scope.getMessages = function (toId, beforeNth, count) {

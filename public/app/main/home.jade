@@ -11,8 +11,8 @@
 			div.dog-container(ng-repeat="dog in dogs")
 				div.name-container
 					a.dog-name(href="#") {{dog.name}}
-				div Birthdate: {{dog.age}}
+				div.birthdate Birthdate: {{dog.age}}
 				div.description-pic-container
 					div.pic-container
 						img(src="{{dog.url}}")
-					div {{dog.description}}
+					div.description {{dog.description}}
