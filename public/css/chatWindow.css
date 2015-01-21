@@ -197,3 +197,29 @@ box-shadow: 0px 0px 5px 5px rgba(0,123,194,1);
 	right: -5px;
 	border-bottom-color: #ABE872; /* arrow color */
 }
+
+.sidebar-chat .friend-box {
+
+	height: 50px;
+}
+
+.sidebar-chat .friend-box:hover {
+
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+.sidebar-chat .friend-box span.user-names {
+
+	text-decoration: none;
+	line-height: 100%;
+	vertical-align: middle;
+}
+
+.sidebar-chat > .friend-box > img {
+
+	display: inline-block;
+	height: 100%;
+	margin: auto 0;
+	float: right;
+}

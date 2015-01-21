@@ -1,3 +1,5 @@
-div
-	div(ng-repeat="friend in friends")
-		button(ng-click="openDiscussion(friend)") {{friend.username}}
+div.sidebar-chat
+	div.friend-box(ng-repeat="friend in friends" ng-click="openDiscussion(friend)")
+		span.user-names
+			{{friend.firstName}} {{friend.lastName}}
+		img(src="/img/profPhoto/{{friend._id}}")

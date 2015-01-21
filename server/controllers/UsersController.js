@@ -451,7 +451,14 @@ module.exports = {
                 return;
             }
 
-            User.find({'_id': {'$in' : user.friends.map(function (x) { return x.id } ) } }, function (err, collection) {
+            User.find({'_id': {'$in' : user.friends.map(function (x) { return x.id } ) } })
+            .select("-albums")
+            .select("-dogs")
+            .select("-salt")
+            .select("-hashPass")
+            .select("-roles")
+            .select("-profPhoto")
+            .exec(function (err, collection) {
 
                 if(err) {
 

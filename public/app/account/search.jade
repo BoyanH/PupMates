@@ -6,7 +6,7 @@ div(ng-controller="SearchController")
 		div.search-results(ng-show="results && focus")
 			div(ng-show="people")
 				h3.search-result-title Dog Owners
-				ul.styleless-list
+				ul.styleless-list( ng-click="focus = false")
 						li 
 							a.search-result-link(ng-repeat="person in people" href="#/profile/{{person.username}}")
 								h2.search-result-name {{person.firstName}} {{person.lastName}}
