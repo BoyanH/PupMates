@@ -55,7 +55,9 @@ app.controller("DiscussionController", function($scope, $timeout, identity, requ
 			if(identity.currentUser.username != recipient.username) {
 
 				var newDiscussion = {
-						recipient: recipient
+						recipient: recipient,
+						messages: [],
+						errors: []
 					},
 					exists = false;
 
