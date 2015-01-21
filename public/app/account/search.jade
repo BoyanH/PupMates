@@ -1,8 +1,8 @@
 div(ng-controller="SearchController")
-	div.search-box
+	div.search-box(off-click="focus = false")
 		span
 			input.search.rounded(type="text" class="" placeholder="Search..." ng-model="srch" ng-change="search(srch)"
-				ng-focus="focus = true;" ng-blur="removeFocus()")
+				ng-focus="focus = true;")
 		div.search-results(ng-show="results && focus")
 			div(ng-show="people")
 				h3.search-result-title Dog Owners

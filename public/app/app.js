@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ngResource', 'ngRoute','ngDraggable', 'luegg.directives']).value('toastr', toastr);
+﻿var app = angular.module('app', ['ngResource', 'ngRoute','ngDraggable', 'luegg.directives', 'offClick']).value('toastr', toastr);
 
 app.config(function($routeProvider, $locationProvider){
     //$locationProvider.html5Mode(true);

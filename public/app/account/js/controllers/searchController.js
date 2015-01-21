@@ -5,14 +5,6 @@ app.controller("SearchController", function($scope, $location, $timeout, $routeP
 	$scope.results = false;
 	$scope.focus = false;
 
-	$scope.removeFocus = function (path) {
-
-		$timeout(function () {
-
-			$scope.focus = false;
-		}, 100);
-	}
-
 	$scope.search = function(srch){
 
 		if(srch.length >= 3) {
