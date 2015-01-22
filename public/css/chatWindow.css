@@ -28,6 +28,12 @@
 	background:linear-gradient(#505050, #1D1D1D);
 }
 
+.chat-window > .chat-window-header > .online-status {
+
+	line-height: 10px;
+	vertical-align: -5px;
+}
+
 .chat-window > .chat-window-content {
 
     background: #f0edcc;
@@ -240,14 +246,19 @@
 	color: #7CCC31;
 }
 
-.sidebar-chat .friend-box span.online-status {
+.sidebar-chat .friend-box:hover span.user-names {
 
 	color: #01A3E8;
+}
+
+.friend-box span.online-status, .online-status {
+
+	color: gray;
 	font-size: 30px;
 	margin-top: -5px;
 }
 
-.sidebar-chat .friend-box span.online-status.online{
+span.online-status.online{
 
 	color: #7CCC31;
 }
@@ -277,11 +288,6 @@
 .sidebar-chat .friend-box span.online-status:hover + span.online-status-text{
 
 	opacity: 1;
-}
-
-.sidebar-chat .friend-box:hover span.user-names {
-
-	color: #01A3E8;
 }
 
 .sidebar-chat > .chat-friends > .friend-box > img {

@@ -1,6 +1,8 @@
 div(ng-controller="ChatController")
 	div.chat-window(ng-repeat="(Dindex, discussion) in discussions") 
-		div.chat-window-header(ng-drag="true" no-reset="true"  use-parent="true") {{discussion.recipient.firstName}}
+		div.chat-window-header(ng-drag="true" no-reset="true"  use-parent="true") 
+			span.online-status(ng-class="{online: discussion.recipient.online }") &bull;
+			| {{discussion.recipient.firstName}}
 		div.chat-window-close(ng-click="closeDiscussion(discussion)") X
 		div.chat-window-content(ng-init="getMessages(discussion.recipient._id)" scroll-glue="true")
 			div.message(ng-repeat="message in discussion.messages track by $index")
