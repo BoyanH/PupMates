@@ -29,7 +29,6 @@ app.controller("DiscussionController", function($scope, $timeout, identity, requ
 			});
 		}
 			else{
-
 				$scope.updateFriends(data);
 			}
 	});

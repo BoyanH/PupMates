@@ -3,6 +3,8 @@ div.sidebar-chat
 		h2 Chat with friends
 	div.chat-friends
 		div.friend-box(ng-repeat="friend in friends" ng-click="openDiscussion(friend);")
+			span.online-status(ng-class="{online: friend.online}") &bull;
+			span.online-status-text {{friend.online == true | iif : "online" : "offline"}}
 			span.user-names
-				{{friend.firstName}} {{friend.lastName}}
+				| {{friend.firstName}} {{friend.lastName}}
 			img(src="/img/profPhoto/{{friend._id}}")

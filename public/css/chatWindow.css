@@ -230,7 +230,7 @@
 	background-color: #505050;
 }
 
-.sidebar-chat .friend-box span.user-names {
+.sidebar-chat .friend-box span {
 
 	display: inline-block;
 	border: none;
@@ -238,6 +238,45 @@
 	line-height: 50px;
 	vertical-align: middle;
 	color: #7CCC31;
+}
+
+.sidebar-chat .friend-box span.online-status {
+
+	color: #01A3E8;
+	font-size: 30px;
+	margin-top: -5px;
+}
+
+.sidebar-chat .friend-box span.online-status.online{
+
+	color: #7CCC31;
+}
+
+.sidebar-chat .friend-box span.online-status-text {
+
+	display: inline-block;
+	color: #000;
+	background-color: #fff;
+	width: 50px;
+	height: 5px;
+	margin-left: -50px;
+	margin-top: -30px;
+	border: 1px solid black;
+
+	position: relative;
+	bottom: 10px;
+	left: 50px;
+	line-height: 5px;
+	vertical-align: middle;
+
+	padding: 5px;
+
+	opacity: 0;
+}
+
+.sidebar-chat .friend-box span.online-status:hover + span.online-status-text{
+
+	opacity: 1;
 }
 
 .sidebar-chat .friend-box:hover span.user-names {

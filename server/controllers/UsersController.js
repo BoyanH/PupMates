@@ -115,12 +115,12 @@ module.exports = {
         });
     },
     getProfPhoto: function(req, res){
-        // !! за сега е с username за тестващи цели
-        // !! иначе по id на user-a ще търси
+        
         User.findOne({_id: req.params.id})
         .select("profPhoto")
-        .exec(function(err, user){
-            if(err){
+        .exec(function (err, user){
+           
+            if(err || !user){
                 console.log("couldnt get photo: " + err.toString())
                 res.end();
             }
