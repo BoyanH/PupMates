@@ -5,6 +5,6 @@ app.directive("draggableChatDir", function(){
 		replace: true,
 		transclude: true,
 		templateUrl: "partials/directives/draggableChat",
-		controller: 'DiscussionController'	
+		controller: 'ChatController'	
 	}
 })

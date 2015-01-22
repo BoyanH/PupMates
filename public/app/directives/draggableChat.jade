@@ -1,4 +1,4 @@
-div(ng-controller="ChatController")
+div(ng-controller="DiscussionController")
 	div.chat-window(ng-repeat="(Dindex, discussion) in discussions") 
 		div.chat-window-header(ng-drag="true" no-reset="true"  use-parent="true") 
 			span.online-status(ng-class="{online: discussion.recipient.online }") &bull;
