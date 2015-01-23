@@ -175,17 +175,20 @@ module.exports = {
                 console.log("couldnt get photo: " + err.toString())
                 
                 res.status(404);
-                return res.send({reason: err});
+                res.send({reason: err});
+                res.end();
             }
             else if(!user) {
 
                 res.status(404);
-                return res.send({reason: 'no such user'});
+                res.send({reason: 'no such user'});
+                res.end();
             }
             else if(!user.profPhoto) {
 
                 res.status(404);
-                return res.send({reason: 'No profile photo'});
+                res.send({reason: 'No profile photo'});
+                res.end();
             }
 
             res.contentType(user.profPhoto.contentType);
