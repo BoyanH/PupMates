@@ -8,6 +8,7 @@ var userSchema = mongoose.Schema({
         firstName: {type: String, require: '{PATH} is required'},
         lastName: {type: String, require: '{PATH} is required'},
         profPhoto: {data: Buffer, contentType: String},
+        email: {type: String, require: '{PATH} is required', unique: true},
         friends: [{
 
             id:String,
@@ -68,7 +69,7 @@ module.exports.seedInitialUsers = function(){
          dogs:[{
             description: "My first dog :)",
             name:"Muncho",
-            age: "14/12/2014",
+            age: "12/14/2014",
             breed: "husky",
             profPhoto:{
                 data: pic2,

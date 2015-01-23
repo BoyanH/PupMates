@@ -1,1 +1,32 @@
-﻿h2 Sign up to pup mates
+﻿h1.route-header Create a new dog owner's account
+form#signup-form(ng-submit="signup()")
+	.form-field
+		label.label(for="fName") First Name
+		input.field(type="text", name="fName", ng-model="user.firstName", required)
+	.form-field
+		label.label(for='l-name') Last Name             
+		input.field(type='text', name='l-name', ng-model="user.lastName", required) 
+	.form-field
+		label.label(for="username") Username
+		input.field(type='text', name='username', ng-model="user.username", required)
+		span.error-field(ng-class="{'failed': fails.username }") Username too short 
+		span.error-field(ng-class="{'failed': fails.usernameExists }") Username Exists   
+	.form-field
+		label.label(for='email') Email
+		input.field(type='email', name='pEmail', ng-model="user.email", required)
+		span.error-field(ng-class="{'failed': fails.email }") Invalid Email
+	.form-field
+		label.label(for='confirm_email') Confirm Email
+		input#confirm_email.field(type='email', name='pEmail2', ng-model="user.confirmedEmail", required)
+		span.error-field(ng-class="{'failed': fails.confirmedEmail }") Email Does not Match
+	.form-field
+		label.label(for='password') Password
+		input#password.field(type='password', name='pPassword', maxlength='41', ng-model="user.password", required)
+		span.error-field(ng-class="{'failed': fails.password }") Your password is too short.
+		.instruct At least 6 characters
+	.form-field
+		label.label(for='confirm_password') Confirm Password
+		input#confirm_password.field(type='password', name='pPassword2', maxlength='41', ng-model="user.confirmedPassword", required)
+		span.error-field(ng-class="{'failed': fails.confirmedPassword }") Password does not match
+	.form-field
+		input.btn_signup(type='submit', name='create', value='Sign up')
