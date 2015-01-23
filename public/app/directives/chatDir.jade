@@ -2,7 +2,7 @@ div.sidebar-chat
 	div.chat-heading
 		h2 Chat with friends
 	div.chat-friends
-		div.friend-box(ng-repeat="friend in friends" ng-click="openDiscussion(friend);")
+		div.friend-box(ng-repeat="friend in friends" ng-click="openDiscussion(friend); hideModal();")
 			span.online-status(ng-class="{online: friend.online}") &bull;
 			span.online-status-text {{friend.online == true | iif : "online" : "offline"}}
 			span.user-names
