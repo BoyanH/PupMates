@@ -169,17 +169,17 @@ module.exports = {
     getProfPhoto: function(req, res){
         
         User.findOne({_id: req.params.id})
+        .select('profPhoto')
         .exec(function (err, user){
            
             if(err){
                 console.log("couldnt get photo: " + err.toString())
                 
                 res.status(404);
-                res.send({reason: err});
+                return res.send({reason: err});
                 res.end();
             }
             else if(!user) {
-
                 res.status(404);
                 res.send({reason: 'no such user'});
                 res.end();
