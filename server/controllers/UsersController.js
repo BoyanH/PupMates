@@ -173,7 +173,9 @@ module.exports = {
            
             if(err){
                 console.log("couldnt get photo: " + err.toString())
-                res.end();
+                
+                res.status(404);
+                res.send({reason: err});
             }
             else if(!user) {
 
