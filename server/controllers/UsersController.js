@@ -175,7 +175,7 @@ module.exports = {
                 console.log("couldnt get photo: " + err.toString())
                 
                 res.status(404);
-                res.send({reason: err});
+                return res.send({reason: err});
             }
             else if(!user) {
 
