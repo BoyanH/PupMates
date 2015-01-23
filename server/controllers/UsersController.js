@@ -177,22 +177,28 @@ module.exports = {
                 
                 res.status(404);
                 return res.send({reason: err});
-                res.end();
             }
             else if(!user) {
                 res.status(404);
                 res.send({reason: 'no such user'});
-                res.end();
             }
             else if(!user.profPhoto) {
 
                 res.status(404);
                 res.send({reason: 'No profile photo'});
-                res.end();
+            }
+            else if(!user.profPhoto.contentType) {
+
+                res.status(404);
+                res.send({reason: 'No profile photo'});
             }
 
-            res.contentType(user.profPhoto.contentType);
-            res.send(user.profPhoto.data);
+            else {
+                res.contentType(user.profPhoto.contentType);
+                res.send(user.profPhoto.data);
+            }
+
+            res.end();
         });
     },
     getAlbumPhoto: function(req, res){
