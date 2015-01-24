@@ -34,19 +34,22 @@ app.controller("DiscussionController", function($scope, $timeout, identity, requ
 	});
 	
 
-	function findMatchingIdx (friend) {
-	    
-	    var matchingDiscussion;
-	    
-	    $scope.discussions.some(function (disc) {
-	        if (disc.recipient._id === friend._id) {
-	            matchingDiscussion = friend;
-	            return true;
-	        }
-	        return false;
-	    });
-	    
-	    return $scope.discussions.indexOf(matchingDiscussion);
+	$scope.findMatchingFriend = function (discussion) {
+	
+		var matchingFriend;
+
+		$scope.friends.some(function (friend) {
+		
+			if (friend._id === discussion.recipient._id) {
+
+			  matchingFriend = friend;
+			  return true;
+			}
+
+			return false;
+		});
+
+		return matchingFriend;
 	};
 
 	$scope.updateFriends = function (data) {
@@ -58,11 +61,6 @@ app.controller("DiscussionController", function($scope, $timeout, identity, requ
 				if(data[i].id == $scope.friends[z]._id) {
 
 					$scope.friends[z].online = data[i].online;
-
-					var discIdx = findMatchingIdx($scope.friends[z]);
-					if(discIdx != -1) {
-						$scope.discussions[discIdx].recipient.online = data[i].online;
-					}
 				}
 			};
 		};

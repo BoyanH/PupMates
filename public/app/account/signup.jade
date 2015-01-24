@@ -29,4 +29,6 @@ form#signup-form(ng-submit="signup()")
 		input#confirm_password.field(type='password', name='pPassword2', maxlength='41', ng-model="user.confirmedPassword", required)
 		span.error-field(ng-class="{'failed': fails.confirmedPassword }") Password does not match
 	.form-field
+		
+	.form-field
 		input.btn_signup(type='submit', name='create', value='Sign up')
