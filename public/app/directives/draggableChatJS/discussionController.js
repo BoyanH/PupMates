@@ -29,10 +29,28 @@ app.controller("DiscussionController", function($scope, $timeout, identity, requ
 			});
 		}
 			else{
-
 				$scope.updateFriends(data);
 			}
 	});
+	
+
+	$scope.findMatchingFriend = function (discussion) {
+	
+		var matchingFriend;
+
+		$scope.friends.some(function (friend) {
+		
+			if (friend._id === discussion.recipient._id) {
+
+			  matchingFriend = friend;
+			  return true;
+			}
+
+			return false;
+		});
+
+		return matchingFriend;
+	};
 
 	$scope.updateFriends = function (data) {
 
@@ -55,7 +73,9 @@ app.controller("DiscussionController", function($scope, $timeout, identity, requ
 			if(identity.currentUser.username != recipient.username) {
 
 				var newDiscussion = {
-						recipient: recipient
+						recipient: recipient,
+						messages: [],
+						errors: []
 					},
 					exists = false;
 

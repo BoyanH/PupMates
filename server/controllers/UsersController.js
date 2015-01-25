@@ -4,15 +4,67 @@
     Q = require('q'),
     ip = require('ip');
 
+    function validateEmail(email) { 
+
+        var re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        return re.test(email);
+    }
+
+    function userVerification(newUserData) {
+
+        var failedFields = []; 
+
+        if(newUserData.password.length < 6) {
+
+            failedFields.push('password');
+        }
+
+        if(newUserData.password !== newUserData.confirmedPassword) {
+
+            failedFields.push('confirmedPassword');
+        }
+
+        if(!validateEmail(newUserData.email)) {
+
+            failedFields.push('email');
+        }
+
+        if(newUserData.email !== newUserData.confirmedEmail) {
+
+            failedFields.push('confirmedEmail');
+        }
+
+        if(newUserData.username.length < 6) {
+
+            failedFields.push('username');
+        }
+
+        return failedFields;
+    }
+
 module.exports = {
-    createUser: function(req, res, next){
+    createUser: function(req, res, next){        
+
         var newUserData = req.body;
+
+        var failedFields = userVerification(newUserData);
+
+
+        if(failedFields.length > 0) {
+
+            res.status(400);
+            return res.send({failedFields: failedFields});
+        }
+
         newUserData.salt = encryption.generateSalt();
         newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
         User.create(newUserData, function(err, user){
             if(err){
                 console.log('Fell to register new user: ' + err);
-                return;
+                
+                res.status(400);
+                return res.send({failedFields: ['usernameExists']});
             }
             req.logIn(user, function(err){
                 if(err){
@@ -115,17 +167,38 @@ module.exports = {
         });
     },
     getProfPhoto: function(req, res){
-        // !! за сега е с username за тестващи цели
-        // !! иначе по id на user-a ще търси
+        
         User.findOne({_id: req.params.id})
-        .select("profPhoto")
-        .exec(function(err, user){
+        .select('profPhoto')
+        .exec(function (err, user){
+           
             if(err){
                 console.log("couldnt get photo: " + err.toString())
-                res.end();
+                
+                res.status(404);
+                return res.send({reason: err});
             }
-            res.contentType(user.profPhoto.contentType);
-            res.send(user.profPhoto.data);
+            else if(!user) {
+                res.status(404);
+                res.send({reason: 'no such user'});
+            }
+            else if(!user.profPhoto) {
+
+                res.status(404);
+                res.send({reason: 'No profile photo'});
+            }
+            else if(!user.profPhoto.contentType) {
+
+                res.status(404);
+                res.send({reason: 'No profile photo'});
+            }
+
+            else {
+                res.contentType(user.profPhoto.contentType);
+                res.send(user.profPhoto.data);
+            }
+
+            res.end();
         });
     },
     getAlbumPhoto: function(req, res){

@@ -78,7 +78,8 @@ module.exports = {
 
 						clientConnection.socket.emit('status change', [{id: userId, online: true}]);
 					});
-				});			})
+				});			
+			});
 	},
 	deleteUserConnection : function (socket) {
 

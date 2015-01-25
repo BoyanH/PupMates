@@ -1,0 +1,91 @@
+.route-header {
+	display: block;
+	width: 700px;
+	font-size: 36px;
+	font-family: tahoma;
+	color: #2e2e2e;
+	margin: 0 auto;
+}
+
+form#signup-form {
+
+	width: 700px;
+	height: 600px;
+	padding: 20px;
+	margin: 50px auto;
+	background-color: #F0F0F0;
+}
+
+form .form-field {
+	float: left;
+	margin-bottom: 20px;
+	width: 550px;
+}
+
+form .form-field .label {
+	
+	float: left;
+	width: 200px;
+	font-family: "Source Sans Pro Black";
+	text-transform: uppercase;
+	color: #7d7c77;
+	font-size: 12px;
+	position: relative;
+	top: 25px;
+	letter-spacing: 0.14em;
+}
+
+form .form-field input {
+	
+	float: left;
+	padding: 10px;
+	width: 250px;
+	height: 20px;
+	border: 1px solid #d6d7d2;
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+}
+
+form .form-field .error-field, form .form-field .instruct {
+
+	display: none;
+	color: #a12121;
+	font-family: tahoma;
+	width: 100px;
+}
+
+form .form-field .error-field.failed {
+
+	display: inline;
+}
+
+input[type="submit"]:hover, .btn:hover {
+	background: #b2cf36 url('/img/btnHover.jpg') 0 0 no-repeat;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+
+form .form-field input[type="submit"], input[type="submit"] {
+	display: block;
+	height: 50px;
+	width: 270px;
+	background-color: #00adee;
+	text-transform: none;
+	padding: 10px;
+	text-align: center;
+	color: #fff;
+	font-family: "league_gothicregular";
+	font-size: 28px;
+	line-height: 36px;
+	border: none;
+	margin-top: 5px;
+	cursor: pointer;
+	cursor: hand;
+}
+
+form .form-field input[type="submit"] {
+
+	margin-left: 200px;
+}
