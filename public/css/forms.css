@@ -25,13 +25,13 @@ form .form-field {
 form .form-field .label {
 	
 	float: left;
-	width: 200px;
+	width: 250px;
 	font-family: "Source Sans Pro Black";
 	text-transform: uppercase;
 	color: #7d7c77;
-	font-size: 12px;
+	font-size: 1.2em;
 	position: relative;
-	top: 25px;
+	top: 15px;
 	letter-spacing: 0.14em;
 }
 
@@ -46,6 +46,7 @@ form .form-field input {
 	-moz-transition: all 0.4s ease-in-out;
 	-o-transition: all 0.4s ease-in-out;
 	transition: all 0.4s ease-in-out;
+	line-height: 1.5em;
 }
 
 form .form-field .error-field, form .form-field .instruct {
@@ -87,5 +88,5 @@ form .form-field input[type="submit"], input[type="submit"] {
 
 form .form-field input[type="submit"] {
 
-	margin-left: 200px;
+	margin-left: 250px;
 }

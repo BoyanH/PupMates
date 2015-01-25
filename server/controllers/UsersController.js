@@ -226,7 +226,7 @@ module.exports = {
         User.findOne({_id: userId}).select("dogs").exec(function(err, user){
             if(err){
                 console.log("smth went wrong: " + err);
-                res.end();
+                res.send({success:false});
             }
             else{
 

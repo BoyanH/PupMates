@@ -19,6 +19,7 @@ app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout
         $(".new-dog-btn").css("background-color", "#4d4d4f");
         $(".chat-btn").css("background-color", "#4d4d4f");
     }
+    $rootScope.close = close;
     function open(clName){
         //console.log("class Name: " + clName);
         //console.log("root: " + $rootScope);
