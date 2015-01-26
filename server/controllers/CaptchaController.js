@@ -43,7 +43,7 @@ module.exports =  {
 
 
         // We have to send the frontend data to use on POST.
-        res.send( 200, visualCaptcha.getFrontendData() );
+        res.status(200).send( visualCaptcha.getFrontendData() );
     },
 
     _trySubmission: function( req, res, next ) {

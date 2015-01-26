@@ -57,7 +57,7 @@
         imgPath: '/lib/visualcaptcha.angular/img/',
         captcha: {
             // backend root url for captcha routes 
-            url: 'http://localhost:1234/captcha',
+            url: '/captcha',
             // number of generated images
             numberOfImages: 6
         },
