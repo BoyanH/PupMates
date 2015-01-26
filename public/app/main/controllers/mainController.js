@@ -5,6 +5,6 @@ app.controller('MainController', function($scope, identity){
 
 	$scope.user = identity.currentUser;
 	console.log($scope.user);
-	$scope.dogs = $scope.user.dogs;
+	$scope.dogs = identity.currentUser.dogs;
 	$scope.profPhoto = "/img/profPhoto/" + identity.currentUser._id;
 });

@@ -1,4 +1,5 @@
-app.controller("NewDogController", function($scope, identity, FileReaderAng, DogService){
+app.controller("NewDogController", function($scope, identity,
+ notifier, FileReaderAng, DogService, LoadingService, $rootScope){
 	$( "#date-picker" ).datepicker();
 	var userId = (!!identity.currentUser)? identity.currentUser._id: "no-user";
 	var profPhoto = {};
@@ -18,9 +19,21 @@ app.controller("NewDogController", function($scope, identity, FileReaderAng, Dog
     });
 
     $scope.addDog = function(dog){
+    	LoadingService.start();
     	profPhoto.data = data;
     	profPhoto.contentType = contentType;
     	dog.profPhoto = profPhoto;
-    	DogService.createDog(dog).then(function(success){if(success)console.log("success?");});
+    	DogService.createDog(dog).then(function(success){
+    		if(success) {
+    			LoadingService.stop();
+    			notifier.success("Dog added!");
+                $('#newDogForm')[0].reset();
+    			identity.update();
+    		}
+    		else{
+    			notifier.error("There was trouble with adding the dog.");
+    		}
+    	});
+
     }
 });
