@@ -8,7 +8,7 @@
 
         if(!cData.valid) {
 
-            //present error to user
+            $scope.captchaErrorType = "Human verification";
             return;
         }
 
@@ -30,7 +30,6 @@
                     default: $scope.captchaErrorType = 'Anti-spam check'; break;
                 }
 
-                $scope.captchaErrorType = responseCaptcha.type;
             }
                 else {
 
