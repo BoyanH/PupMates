@@ -48,6 +48,10 @@ app.config(function($routeProvider, $locationProvider){
             templateUrl: 'partials/account/signup',
             controller: 'SignUpController'
         })
+        .when('/dog/:id', {
+            templateUrl: 'partials/dog/dog',
+            controller: 'DogController'
+        })
         .otherwise({ redirectTo: '/' });
 
 });

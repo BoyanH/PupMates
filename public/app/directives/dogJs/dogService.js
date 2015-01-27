@@ -11,8 +11,21 @@ app.factory("DogService", function($q, $http, identity){
 			});
 		return deferred.promise;
 	}
+	function getDog(id){
+		var deferred = $q.defer();
+
+		$http.get('/dog/'+id).success(function(response){
+			if(response.success){
+				deferred.resolve(true);
+			}
+			else deferred.resolve(false);
+		});
+
+		return deferred.promise;
+	}
 
 	return{
-		createDog: createDog
+		createDog: createDog,
+		getDogById: getDog
 	}
 });
