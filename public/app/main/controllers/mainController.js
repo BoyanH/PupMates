@@ -10,18 +10,12 @@ app.controller('MainController', function($scope, identity){
 
 	$scope.closeDogDialog = function (dog) {
 
-		$scope.dogs.forEach(function (scopeDog) {
-
-			dog.showModal = false;
-
-			if(scopeDog.url == dog.url) {
-
-				scopeDog.showModal = false;
-				dog.showModal = false;
-				$scope.$apply();
-			}
-		});
+		$scope.dogs[$scope.dogs.indexOf(dog)].showModal = false;
+		$scope.$apply();
 
 		alert('Closes and then reopens! ;/');
 	}
+
+	
+	console.log(identity.currentUser);
 });
