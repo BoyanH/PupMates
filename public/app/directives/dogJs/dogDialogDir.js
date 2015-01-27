@@ -5,7 +5,8 @@ app.directive('dogDir', function () {
         templateUrl: 'partials/directives/dogDialog',
         controller: 'DogDialogController',
         scope: {
-            data: '=data'
+            'dog': '=dog',
+            'close': '&onClose'
         },
     }
 });
