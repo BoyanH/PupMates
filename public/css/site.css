@@ -279,3 +279,49 @@ h1, h2, h3, a{
     margin-left:-3px;
     z-index:-100;
 }
+.dog-dialog-container{
+	display: block;
+}
+.dog-dialog{
+	position: fixed;
+	color: black;
+	width: 700px;
+	height: 500px;
+	z-index: 9999;
+	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	margin-left: -350px;
+  	margin-top: -250px;
+  	border: 1px solid #eaeaea;
+  	border-radius: 5px;
+  	-webkit-box-shadow: 0px 0px 5px 3px rgba(9,172,237,1);
+	-moz-box-shadow: 0px 0px 5px 3px rgba(9,172,237,1);
+	box-shadow: 0px 0px 5px 3px rgba(9,172,237,1);
+	padding: 0;
+	background: #ffffff;
+	cursor: default;
+}
+.dog-dialog-header{
+	display: block;
+	background: #eaeaea;
+	height: 30px;
+	width: 100%;
+}
+.dog-dialog-header div{
+	display: inline-block;
+	width: 45%;
+}
+.dog-dialog-header-right{
+	float: right;
+	padding-top: 2px;
+	padding-right: 5px;
+	text-align: right;
+	text-decoration: bold;
+	font-weight: 800;
+	font-size: 1.2em;
+	cursor: pointer;
+}
+.dog-dialog-content{
+	padding: 10px;
+}

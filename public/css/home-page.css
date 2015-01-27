@@ -73,12 +73,13 @@
 	word-break: break-all;
 	white-space: pre-wrap;
 	text-align: center;
+	overflow: hidden;
 }
 .dog-container{
 	float: left;
 	display: inline-block;
 	width: 25%;
-	height: auto;
+	height: 250px;
 	min-height: 150px;
 	margin-right: 2%;
 	margin-left: 2%;
@@ -88,6 +89,10 @@
 	border: 1px solid #e0e0e0;
 	border-radius: 4px;
 	vertical-align: top;
+	overflow: hidden;
+}
+.dog-container:hover{
+	cursor: pointer;
 }
 .description-pic-container{
 	text-align: center;

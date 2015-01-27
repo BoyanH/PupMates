@@ -8,7 +8,7 @@
 		div
 			| My pets:
 		div.pet-wrapper
-			div.dog-container(ng-repeat="dog in dogs")
+			div.dog-container(ng-repeat="(dogInd, dog) in dogs" ng-click="openDogDialog(dogInd)")
 				div.name-container
 					a.dog-name(href="#") {{dog.name}}
 				div.birthdate Birthdate: {{dog.age}}
@@ -16,3 +16,14 @@
 					div.pic-container
 						img(src="{{dog.url}}")
 					div.description {{dog.description}}
+				div.dog-dialog(ng-show="dogDialog{{dogInd}}")
+					div.dog-dialog-header
+						div.dog-dialog-header-left {{dog.name}}
+						div.dog-dialog-header-right(ng-click='closeDogDialog(dogInd)') X
+					div.dog-dialog-content
+						div.dog-dialog-left leeeft
+							div
+								label SET TIME FOR WALK
+									
+								Lable SET TIME FOR FOOD
+						div.dog-dialog-right riiiiight
