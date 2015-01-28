@@ -58,7 +58,7 @@ module.exports.seedInitialDogs = function(){
 			User.findOne({username:'pesho'})
 			.select('_id')
 			.exec(function(err, pesho){
-				Dog.find({owners:pesho._id}).exec(function(err, d){console.log(d);})
+				Dog.find({}).exec(function(err, d){console.log(d);})
 			})
 		}
 	})

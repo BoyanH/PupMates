@@ -17,12 +17,13 @@ module.exports = function (app) {
     app.get('/img/:img', function(req, res){
         res.send('../../public/img/' + req.params.img);
     });
-    app.post('/:userId/newdog', auth.isAuthenticated, controllers.users.createDog);
+    app.post('/:userId/newdog', auth.isAuthenticated, controllers.dogs.createDog);
+    app.get('/dogs/:userId', controllers.dogs.getDogsOfUser)
     app.post('/befriendMate', auth.isAuthenticated, controllers.users.befriend);
     app.get('/friends', auth.isAuthenticated, controllers.users.getFriends);
     app.get('/discussions', auth.isAuthenticated, controllers.messages.getUsersDiscussions);
     app.get('/img/profPhoto/:id', controllers.users.getProfPhoto);
-    app.get('/:userId/imgdog/:id', controllers.users.getDogPhoto);
+    app.get('/:userId/imgdog/:dogId', controllers.dogs.getDogProfPhoto);
     app.post('/login',auth.login);
     app.post('/logout', auth.logout);
     app.get('/api/*', function(req,res){

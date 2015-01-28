@@ -30,15 +30,21 @@ app.controller("NewDogController", function($scope, identity,
     	profPhoto.data = data;
     	profPhoto.contentType = contentType;
     	dog.profPhoto = profPhoto;
-    	DogService.createDog(dog).then(function(success){
-    		if(success) {
+        /*var owners = [];
+        owners.push(identity.currentUser._id);
+        dog.owners = owners;*/
+    	DogService.createDog(dog).then(function(dog){
+    		if(!!dog) {
     			LoadingService.stop();
+                console.log("dooooooog");
+                console.log(dog);
     			notifier.success("Dog added!");
                 $('#newDogForm')[0].reset();
     			identity.update();
     		}
     		else{
-    			notifier.error("There was trouble with adding the dog.");
+    			notifier.error("There was trouble with adding the dog. Try again later.");
+                LoadingService.stop();
     		}
     	});
 

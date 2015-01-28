@@ -11,7 +11,7 @@
 			div.dog-container(ng-repeat="dog in dogs" ng-click="dog.showModal = true;")
 				div.name-container
 					a.dog-name(href="#") {{dog.name}} {{dog.showModal}}
-				div.birthdate Birthdate: {{dog.age}}
+				div.birthdate Birthdate: {{dog.birthDate}}
 				div.description-pic-container
 					div.pic-container
 						img(src="{{dog.url}}")

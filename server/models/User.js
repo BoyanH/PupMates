@@ -35,7 +35,7 @@ userSchema.method({
         }
         return false
     }
-})
+});
 var User = mongoose.model('User', userSchema);
 module.exports.seedInitialUsers = function(){
 

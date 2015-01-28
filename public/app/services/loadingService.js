@@ -5,7 +5,6 @@ app.factory("LoadingService", function($route, $rootScope, $location, $window){
 	function start(){
 		window.scrollTo(0, 0);
 		$("#loading").css("display", "block").width(w).height(h);
-		alert(w + "; " + h);
 	}
 	function stop(){
 		$("#loading").css("display", "none").width(0).height(0);

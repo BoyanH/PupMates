@@ -201,64 +201,6 @@ module.exports = {
             res.end();
         });
     },
-    getAlbumPhoto: function(req, res){
-        // to do
-    },
-    createDog: function(req, res){
-        var dog = req.body;
-        var userId = req.user._id;
-
-        if(dog.profPhoto) {
-            var b64string = dog.profPhoto.data;
-            var buf = new Buffer(b64string, 'base64');
-
-            var profPhoto = {};
-            profPhoto.data = buf;
-            //profPhoto.contentType = dog.profPhoto.contentType;
-            profPhoto.contentType = "image/jpg";
-            dog.profPhoto = profPhoto;
-        }
-            else {
-
-                delete dog[profPhoto];
-            }
-
-        User.findOne({_id: userId}).select("dogs").exec(function(err, user){
-            if(err){
-                console.log("smth went wrong: " + err);
-                res.send({success:false});
-            }
-            else{
-
-                user.dogs.push(dog);
-                User.update({_id: userId}, user, function(err){
-                    if(err){
-                        res.end("errr");
-                    }
-                    console.log("dog added");
-
-                    res.send({success: true});
-                });
-            }
-        })
-    },
-    getDogPhoto: function(req, res){
-        var dogId = req.params.id;
-        var userId = req.params.userId;
-        User.findOne({_id: userId}).select("dogs").exec(function(err, user){
-            for(var i=0;i < user.dogs.length; i++){
-
-                if(user.dogs[i]._id == dogId){
-
-                    if(user.dogs[i].profPhoto.contentType) {
-                        res.contentType(user.dogs[i].profPhoto.contentType);
-                    }
-
-                    res.send(user.dogs[i].profPhoto.data);
-                }
-            }
-        });
-    },
     searchUserDynamically: function(req, res) {
 
         var searchString =  req.params.searchContent,
