@@ -33,7 +33,7 @@ module.exports = {
 
 		var session = socket.request.session,
 			
-			userId = session.passport.user,
+			userId = socket.request.session.passport.user,
 			sessionID = socket.request.sessionID,
 
 			friends = [];
@@ -70,6 +70,16 @@ module.exports = {
 						});
 					}
 
+				//SEND FIRENDS DATA ON LOGIN
+				users.getFriends(userId)
+                .then(function (data) {
+
+                	console.log('sending new friends data ' + data);
+                    socket.emit('new friends', data);
+                }, function (err) {
+
+                	console.log(err);
+                });
 				socket.emit('status change', clientsList[userId].friends);
 
 				clientsList[userId].friends.forEach(function (friend) {
@@ -79,6 +89,8 @@ module.exports = {
 						clientConnection.socket.emit('status change', [{id: userId, online: true}]);
 					});
 				});			
+
+				//END OF ON LOGIN DATA SENDING
 			});
 	},
 	deleteUserConnection : function (socket) {

@@ -4,33 +4,27 @@ app.controller("DiscussionController", function($scope, $timeout, identity, requ
 	$scope.friends = $scope.friends || [];
 	$scope.discussions = $scope.discussions || [];
 
+	socket.on('new friends', function (friends) {
+
+		friends.forEach(function (newFriend) {
+
+			var newFrObj = {};
+
+			for (var prop in newFriend) {
+
+				if(newFriend.hasOwnProperty(prop)) {
+		
+					newFrObj[prop] = newFriend[prop];
+				}
+			}
+
+			$scope.friends.push(newFrObj);
+		});
+	});
+
 	socket.on('status change', function (data) {
 
-		if($scope.friends.length == 0) {
-
-			requester.getFriends()
-			.then(function (friends) {
-
-				friends.forEach(function (newFriend) {
-
-					var newObj = {};
-
-					for (var prop in newFriend) {
-
-						if(newFriend.hasOwnProperty(prop)) {
-							newObj[prop] = newFriend[prop];
-						}
-					}
-
-					$scope.friends.push(newObj);
-				});
-
-				$scope.updateFriends(data);
-			});
-		}
-			else{
-				$scope.updateFriends(data);
-			}
+		$scope.updateFriends(data);
 	});
 	
 

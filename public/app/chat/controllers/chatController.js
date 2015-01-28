@@ -147,6 +147,8 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
     socket.on('messages chunk', function (data) {
 
+        console.log(data);
+
         if(!data.messages) {
             return;
         }

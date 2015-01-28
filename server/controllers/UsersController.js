@@ -458,7 +458,19 @@ module.exports = {
     },
     getFriends: function(req, res) {
 
-        User.findOne({_id: req.user._id}, function (err, user) {
+        var deferred = Q.defer(),
+            userId;
+
+        if(res) {
+
+            userId = req.user._id;
+        }
+            else {
+
+                userId = req;
+            }
+
+        User.findOne({_id: userId}, function (err, user) {
 
             if(err || !user) {
 
@@ -477,13 +489,24 @@ module.exports = {
 
                 if(err) {
 
-                    console.log("Friend not found. Err: " + err);
+                    if(res) {
+
+                        res.end("Friends not found. Err: " + err);
+                    }
+
+                    deferred.reject("Friends not found. Err: " + err);
                 }
 
-                res.send(collection);
+                if(res) {
+
+                    res.send(collection);
+                }
+                deferred.resolve(collection);
             });
 
         });
+
+        return deferred.promise;
     },
     getFriendIDs: function (userID) {
 

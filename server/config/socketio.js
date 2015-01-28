@@ -97,7 +97,6 @@ module.exports = function(io, sessionStore) {
 
         //------------------END OF NOTIFICATION SYSTEM----------------------
 
-
         socket.on('disconnect', function() {
 
            	controllers.socket.deleteUserConnection(socket);
