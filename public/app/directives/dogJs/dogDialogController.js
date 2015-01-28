@@ -1,4 +1,4 @@
-app.controller("DogDialogController", function($scope){
+app.controller("DogDialogController", function($scope, DogService){
 
 	$scope.closeModal = function () {
 

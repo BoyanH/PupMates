@@ -11,20 +11,20 @@ var userSchema = mongoose.Schema({
         email: {type: String, require: '{PATH} is required', unique: true},
         friends: [{
 
-            id:String,
+            id: [mongoose.Schema.ObjectId],
             username: String
         }],
-        dogs: [{
-            description:String,
-            name: String,
-            age: String, //we will hold the age in str because it can be 3 months for example
-            breed: String,
-            profPhoto: {data: Buffer, contentType: String} // contentType should be 'image/png' or 'image/jpg'
-        }],
-        album:[{
-            data: Buffer, 
-            contentType: String,
-            description: String
+        dogs: [mongoose.Schema.ObjectId],
+        notifications: [{
+
+            type: String,
+            seen: Boolean,
+            createdTime: Date,
+            from: {
+                name: String,
+                username: String,
+                id: [mongoose.Schema.ObjectId]
+            }
         }],
         salt: String,
         hashPass: String,
@@ -54,8 +54,6 @@ module.exports.seedInitialUsers = function(){
         //for testing purposes
         var imgPath = "public/img1.jpg";
         var pic = fs.readFileSync(imgPath);
-        var imgPath2 = "public/husky.jpg";
-        var pic2 = fs.readFileSync(imgPath2);
 
         hasedPwd = encryption.generateHashedPassword( salt, 'pesho' );
        
@@ -66,16 +64,6 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
-         dogs:[{
-            description: "My first dog :)",
-            name:"Muncho",
-            age: "12/14/2014",
-            breed: "husky",
-            profPhoto:{
-                data: pic2,
-                contentType: 'image/jpg',
-            }
-         }],
          friends: [],
          album:[],
          salt: salt,

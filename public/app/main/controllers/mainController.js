@@ -15,7 +15,4 @@ app.controller('MainController', function($scope, identity){
 
 		alert('Closes and then reopens! ;/');
 	}
-
-	
-	console.log(identity.currentUser);
 });

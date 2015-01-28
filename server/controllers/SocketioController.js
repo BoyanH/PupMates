@@ -119,108 +119,161 @@ module.exports = {
 	},
 	sendMessage: function (socket, message) {
 
-			if(isAuthorised(socket, message)) {
+		if(isAuthorised(socket, message)) {
 
 
-				messages.updateDiscussion(message)
-					.then(function (data) {
+			messages.updateDiscussion(message)
+				.then(function (data) {
 
-						//IF THE RECIPIENT HAS CONNECTED
-						if (clientsList[data.to]) {
-							
-							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-							clientsList[data.to].identity.forEach(function (clientConnection) {
+					//IF THE RECIPIENT HAS CONNECTED
+					if (clientsList[data.to]) {
+						
+						//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
+						clientsList[data.to].identity.forEach(function (clientConnection) {
 
-									clientConnection.socket.emit('new message', data);
-								}
-							);
-						}
-					})
+								clientConnection.socket.emit('new message', data);
+							}
+						);
+					}
+				})
+		}
+			else {
+
+				socket.emit('send message error', {
+
+					from: message.from,
+					content: message.content,
+					to: message.to,
+					err: 'NOT AUTHORISED, NOT SENT'
+				});
 			}
-				else {
-
-					socket.emit('send message error', {
-
-						from: message.from,
-						content: message.content,
-						to: message.to,
-						err: 'NOT AUTHORISED, NOT SENT'
-					});
-				}
 	},
 	getMessages: function (socket, request) {
 
-			if(isAuthorised(socket, request)) {
+		if(isAuthorised(socket, request)) {
 
-				messages.getMessages(request)
-					.then(function (data) {
+			messages.getMessages(request)
+				.then(function (data) {
 
-						socket.emit('messages chunk', data);
+					socket.emit('messages chunk', data);
 
-					});
+				});
 
+		}
+			else {
+
+				socket.emit('messages chunk', {
+
+					messages: [],
+					err: 'NOT AUTHORISED!'
+				});
 			}
-				else {
-
-					socket.emit('messages chunk', {
-
-						messages: [],
-						err: 'NOT AUTHORISED!'
-					});
-				}
 	},
 	seeMessage: function (socket, message) {
 
-			var to = message.to;
+		var to = message.to;
 
-			//IF DEVICE OF MESSAGE.TO (RECIPIENT) IS MARKING IT AS SEEN
-			message.to = message.from;
-			message.from = to;
+		//IF DEVICE OF MESSAGE.TO (RECIPIENT) IS MARKING IT AS SEEN
+		message.to = message.from;
+		message.from = to;
 
-			if(isAuthorised(socket, message)) {
+		if(isAuthorised(socket, message)) {
 
-				messages.markMessageAsSeen(message)
-					.then(function (data) {
+			messages.markMessageAsSeen(message)
+				.then(function (data) {
 
-						if (clientsList[data.message.from] && !data.err) {
-					
-							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-							clientsList[data.message.from].identity.forEach(function (clientConnection) {
-									
-									clientConnection.socket.emit('see private message done', data.message);
-								}
-							);
-						}
-					});
+					if (clientsList[data.message.from] && !data.err) {
+				
+						//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
+						clientsList[data.message.from].identity.forEach(function (clientConnection) {
+								
+								clientConnection.socket.emit('see private message done', data.message);
+							}
+						);
+					}
+				});
 
+		}
+			else {
+				socket.emit('see private message error', {message: message ,err: 'NOT AUTHORISED'});
 			}
-				else {
-					socket.emit('see private message error', {message: message ,err: 'NOT AUTHORISED'});
-				}
 	},
 	editMessage: function(socket, message) {
 
-			if(isAuthorised(socket, message)) {
+		if(isAuthorised(socket, message)) {
 
-				messages.editMessage(message)
-					.then(function (data) {
-							
-						socket.emit('edit private message done', data);
+			messages.editMessage(message)
+				.then(function (data) {
+						
+					socket.emit('edit private message done', data);
 
-						if (clientsList[message.to] && !data.err) {
-					
-							//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-							clientsList[message.to].identity.forEach(function (clientConnection) {
+					if (clientsList[message.to] && !data.err) {
+				
+						//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
+						clientsList[message.to].identity.forEach(function (clientConnection) {
 
-									clientConnection.socket.emit('edit private message done', data.message);
-								}
-							);
-						}
-					});
+								clientConnection.socket.emit('edit private message done', data.message);
+							}
+						);
+					}
+				});
 
+		}
+			else {
+				socket.emit('edit private message error', {message: message ,err: 'NOT AUTHORISED'});
 			}
-				else {
-					socket.emit('edit private message error', {message: message ,err: 'NOT AUTHORISED'});
-				}
+	},
+	pushNotification: function(socket, notification) {
+
+		if(isAuthorised(socket, notification)) {
+
+			controllers.notifications.addNotification(notification)
+				.then(function (data) {
+
+					if (clientsList[notification.to] && !data.err) {
+				
+						//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
+						clientsList[notification.to].identity.forEach(function (clientConnection) {
+
+								clientConnection.socket.emit('push notification done', data.notification);
+							}
+						);
+					}
+					else if(data.err) {
+
+						socket.emit('push notification error', {notification: notification, err: data.err});
+					}
+				})
+		}
+			else {
+				socket.emit('push notification error', {notification: notification, err: 'NOT AUTHORISED'});
+			}
+	},
+	seeNotification: function(socket, notification) {
+
+		var to = notification.to;
+
+		//IF DEVICE OF NOTIFICATION.TO (RECIPIENT) IS MARKING IT AS SEEN
+		notification.to = notification.from;
+		notification.from = to;
+
+		if(isAuthorised(socket, notification)) {
+
+			controllers.notifications.remvoeNotification(notification)
+				.then(function (data) {
+
+					if(!data.err) {
+
+						socket.emit('see notification done', {notification: notification, success: true});
+					}
+						else {
+
+							socket.emit('see notification error', {notification: notification, err: data.err});
+						}	
+				})
+		}
+			else {
+				socket.emit('see notification error', {notification: notification, err: 'NOT AUTHORISED'});
+			}
 	}
 }
