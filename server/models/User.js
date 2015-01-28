@@ -14,6 +14,7 @@ var userSchema = mongoose.Schema({
             id: [mongoose.Schema.ObjectId],
             username: String
         }],
+<<<<<<< HEAD
         dogs: [mongoose.Schema.ObjectId],
         notifications: [{
 
@@ -26,6 +27,8 @@ var userSchema = mongoose.Schema({
                 id: [mongoose.Schema.ObjectId]
             }
         }],
+=======
+>>>>>>> 4a6675d661a74b297e0bf39cc36e4754b31f7b6f
         salt: String,
         hashPass: String,
         roles: [String],
@@ -65,7 +68,6 @@ module.exports.seedInitialUsers = function(){
             contentType: "image/jpg"
          },
          friends: [],
-         album:[],
          salt: salt,
          hashPass: hasedPwd, 
          roles: ['admin'] });
@@ -77,9 +79,7 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
-         dogs: [],
          friends: [],
-         album:[],
          salt: salt,
          hashPass: hasedPwd, 
          roles: ['admin'] });

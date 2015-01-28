@@ -1,5 +1,6 @@
 ﻿var usersController = require('../controllers/UsersController.js'),
 	socketioController = require('../controllers/SocketioController.js'),
+	dogsController = require("../controllers/DogsController.js"),
 	messagesController = require('../controllers/MessagesController.js'),
 	CaptchaController = require('../controllers/CaptchaController.js'),
 	notificationsController = require('../controllers/NotificationsController.js');
@@ -9,5 +10,6 @@ module.exports = {
     socket: socketioController,
     messages: messagesController,
     notifications: notificationsController,
-    captcha: CaptchaController
+    captcha: CaptchaController,
+    dogs: dogsController
 }
