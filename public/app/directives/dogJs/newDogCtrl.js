@@ -5,6 +5,13 @@ app.controller("NewDogController", function($scope, identity,
 	var profPhoto = {};
 	var data;
 	var contentType;
+    $scope.options = {
+        format: 'yyyy-mm-dd', // ISO formatted date
+        onClose: function(e) {
+            // do something when the picker closes   
+        }
+    }
+
 
 	$scope.getFile = function () {
         $scope.progress = 0;

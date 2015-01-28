@@ -10,14 +10,10 @@ var userSchema = mongoose.Schema({
         profPhoto: {data: Buffer, contentType: String},
         email: {type: String, require: '{PATH} is required', unique: true},
         friends: [{
-
             id: [mongoose.Schema.ObjectId],
             username: String
         }],
-<<<<<<< HEAD
-        dogs: [mongoose.Schema.ObjectId],
         notifications: [{
-
             type: String,
             seen: Boolean,
             createdTime: Date,
@@ -27,8 +23,6 @@ var userSchema = mongoose.Schema({
                 id: [mongoose.Schema.ObjectId]
             }
         }],
-=======
->>>>>>> 4a6675d661a74b297e0bf39cc36e4754b31f7b6f
         salt: String,
         hashPass: String,
         roles: [String],
