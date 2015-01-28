@@ -55,11 +55,11 @@ module.exports.seedInitialDogs = function(){
 			});
 		}
 		else{
-			User.findOne({username:'pesho'})
-			.select('_id')
-			.exec(function(err, pesho){
-				Dog.find({}).exec(function(err, d){console.log(d);})
-			})
+			// User.findOne({username:'pesho'})
+			// .select('_id')
+			// .exec(function(err, pesho){
+			// 	Dog.find({}).exec(function(err, d){console.log(d);})
+			// })
 		}
 	})
 }

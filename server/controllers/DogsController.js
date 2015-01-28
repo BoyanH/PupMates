@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
 	Dog = mongoose.model('Dog'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	Q = require('Q');
 
 module.exports = {
 	createDog: function(req, res, next){
@@ -78,5 +79,65 @@ module.exports = {
 	},
 	updateDog: function(req, res, next){
 		// TO DO
+	},
+	searchDogsDynamically: function (req, res) {
+
+		var searchString =  req.params.searchContent,
+            searchArray = searchString.split(' '),
+            deferred = Q.defer(),
+            limit = req.params.limit || '';
+
+        for (var i = 0; i < searchArray.length; i++) {
+            
+            searchArray[i] = searchArray[i].toLowerCase();
+        };
+
+        var lastWord = searchArray.pop();
+
+        function whereFunction () {
+
+            var returnCrntDog = true,
+				namesArray = this.name.toLowerCase().split(' ');
+
+            for (var word = 0; word < searchArray.length; word++) {
+
+                if (this.name.indexOf(searchArray[word]) <= -1) {
+
+                    returnCrntDog = false;
+
+                    break;
+                }
+                    else {
+                        delete namesArray[namesArray.indexOf(searchArray[word])];
+                    }
+            }
+
+            if (namesArray.join(' ').indexOf(lastWord) <= -1) {
+
+                returnCrntDog = false;
+            }
+
+            return returnCrntDog;
+		}
+
+        var stringifiedWhere = whereFunction + '',
+            addPos = stringifiedWhere.indexOf('() {') + 5,
+            addElement = 'var searchArray = ' + JSON.stringify(searchArray) +
+            ', lastWord = ' + JSON.stringify(lastWord) + ';';
+
+        stringifiedWhere = [stringifiedWhere.slice(0, addPos), addElement, stringifiedWhere.slice(addPos)].join('');
+
+        Dog.find( { $where: stringifiedWhere }, function (err, collection) {
+
+            if (err) {
+
+                deferred.reject(err);
+            }     
+
+                deferred.resolve(collection);
+
+        }).sort( { seenFrom: -1 } ).limit(limit);
+
+        return deferred.promise;
 	}
 }

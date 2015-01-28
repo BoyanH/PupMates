@@ -3,7 +3,8 @@
 	dogsController = require("../controllers/DogsController.js"),
 	messagesController = require('../controllers/MessagesController.js'),
 	CaptchaController = require('../controllers/CaptchaController.js'),
-	notificationsController = require('../controllers/NotificationsController.js');
+	notificationsController = require('../controllers/NotificationsController.js'),
+    searchController = require('../controllers/SearchController.js');
 
 module.exports = {
     users: usersController,
@@ -11,5 +12,6 @@ module.exports = {
     messages: messagesController,
     notifications: notificationsController,
     captcha: CaptchaController,
-    dogs: dogsController
+    dogs: dogsController,
+    search: searchController
 }

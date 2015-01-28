@@ -201,7 +201,7 @@ module.exports = {
             res.end();
         });
     },
-    searchUserDynamically: function(req, res) {
+    searchUsersDynamically: function(req, res) {
 
         var searchString =  req.params.searchContent,
             searchArray = searchString.split(' '),
@@ -278,139 +278,6 @@ module.exports = {
         .sort( { seenFrom: -1 } ).limit(limit);
 
         return deferred.promise;
-    },
-    searchDogDynamically: function (req, res) {
-
-        var searchString =  req.params.searchContent,
-            searchArray = searchString.split(' '),
-            deferred = Q.defer(),
-            limit = req.params.limit || '';
-
-        for (var i = 0; i < searchArray.length; i++) {
-            
-            searchArray[i] = searchArray[i].toLowerCase();
-        };
-
-        var lastWord = searchArray.pop();
-
-        function whereFunction () {
-
-            var returnIndexes = [];
-
-            for (var dog = 0; dog < this.dogs.length; dog++) {
-
-                var returnCrntDog = true;
-
-                var namesArray = this.dogs[dog].name.toLowerCase().split(' ');
-
-                for (var word = 0; word < searchArray.length; word++) {
-
-                    if (namesArray.indexOf(searchArray[word]) <= -1) {
-
-                        returnCrntDog = false;
-
-                        break;
-                    }
-                        else {
-                            delete namesArray[namesArray.indexOf(searchArray[word])];
-                        }
-                }
-
-                if (namesArray.join(' ').indexOf(lastWord) <= -1) {
-
-                    returnCrntDog = false;
-                }
-
-                if (returnCrntDog) {
-
-                    return true;
-                }
-
-            }
-
-            return false;
-        }
-
-        var stringifiedWhere = whereFunction + '',
-            addPos = stringifiedWhere.indexOf('() {') + 5,
-            addElement = 'var searchArray = ' + JSON.stringify(searchArray) +
-            ', lastWord = ' + JSON.stringify(lastWord) + ';';
-
-        stringifiedWhere = [stringifiedWhere.slice(0, addPos), addElement, stringifiedWhere.slice(addPos)].join('');
-
-        User.find( { $where: stringifiedWhere }, 'dogs', function (err, collection) {
-
-            if (err) {
-
-                console.error(err);
-            }
-            else if (collection.length) {
-
-                var returnedArray = [];
-
-                for (var i = 0; i < collection.length; i++) {
-
-                    var dogs = collection[i].dogs;
-
-                    for (var i = 0; i < dogs.length; i++) {
-                        
-                        var namesArray = dogs[i].name.toLowerCase().split(' '),
-                            query = true;
-
-                        for (var word = 0; word < searchArray.length; word++) {
-
-                            if (namesArray.indexOf(searchArray[word]) <= -1) {
-
-                                query = false;
-                            }
-                                else {
-                                    delete namesArray[namesArray.indexOf(searchArray[word])];
-                                }
-                        }
-
-                        if (namesArray.join(' ').indexOf(lastWord) <= -1) {
-
-                            query = false;
-                        }
-
-                        if (query) {
-
-                            returnedArray.push(dogs[i]);
-                        }
-                    };
-                    
-                };      
-
-                deferred.resolve(returnedArray);
-            }
-                else {
-                    deferred.resolve([]);
-                }
-
-        }).sort( { seenFrom: -1 } ).limit(limit);
-
-        return deferred.promise;
-    },
-    dynamicSearch: function (req, res) {
-
-        if(req.params.searchContent.length < 3) {
-
-            res.end("Must search for at least 3 characters in a name!");
-        }
-
-        module.exports.searchUserDynamically(req, res)
-            .then(function (users) {
-
-                module.exports.searchDogDynamically(req, res)
-                    .then(function (dogs) {
-
-                        res.send({
-                            people: users,
-                            dogs: dogs
-                        });
-                    })
-            })
-        
     },
     befriend: function (req, res) {
 
