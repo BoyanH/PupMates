@@ -14,7 +14,6 @@ var userSchema = mongoose.Schema({
             id:String,
             username: String
         }],
-        dogs: [mongoose.Schema.ObjectId],
         salt: String,
         hashPass: String,
         roles: [String],
@@ -54,7 +53,6 @@ module.exports.seedInitialUsers = function(){
             contentType: "image/jpg"
          },
          friends: [],
-         album:[],
          salt: salt,
          hashPass: hasedPwd, 
          roles: ['admin'] });
@@ -66,9 +64,7 @@ module.exports.seedInitialUsers = function(){
             data: pic,
             contentType: "image/jpg"
          },
-         dogs: [],
          friends: [],
-         album:[],
          salt: salt,
          hashPass: hasedPwd, 
          roles: ['admin'] });
