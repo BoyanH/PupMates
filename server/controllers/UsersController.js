@@ -1,52 +1,47 @@
-﻿var User = require('mongoose').model('User'),
-    encryption = require('../utilities/encryption.js'),
-    shortId = require('shortid'),
-    Q = require('q'),
-    ip = require('ip'),
-    socketioController = require('./SocketioController.js'),
-    notificationsController = require('./NotificationsController.js');
+﻿var exportsObj = {};
 
-    function validateEmail(email) { 
+function validateEmail(email) { 
 
-        var re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-        return re.test(email);
+    return re.test(email);
+}
+
+function userVerification(newUserData) {
+
+    var failedFields = []; 
+
+    if(newUserData.password.length < 6) {
+
+        failedFields.push('password');
     }
 
-    function userVerification(newUserData) {
+    if(newUserData.password !== newUserData.confirmedPassword) {
 
-        var failedFields = []; 
-
-        if(newUserData.password.length < 6) {
-
-            failedFields.push('password');
-        }
-
-        if(newUserData.password !== newUserData.confirmedPassword) {
-
-            failedFields.push('confirmedPassword');
-        }
-
-        if(!validateEmail(newUserData.email)) {
-
-            failedFields.push('email');
-        }
-
-        if(newUserData.email !== newUserData.confirmedEmail) {
-
-            failedFields.push('confirmedEmail');
-        }
-
-        if(newUserData.username.length < 6) {
-
-            failedFields.push('username');
-        }
-
-        return failedFields;
+        failedFields.push('confirmedPassword');
     }
 
-module.exports = {
-    createUser: function(req, res, next){        
+    if(!validateEmail(newUserData.email)) {
+
+        failedFields.push('email');
+    }
+
+    if(newUserData.email !== newUserData.confirmedEmail) {
+
+        failedFields.push('confirmedEmail');
+    }
+
+    if(newUserData.username.length < 6) {
+
+        failedFields.push('username');
+    }
+
+    return failedFields;
+}
+
+module.exports = exportsObj;
+
+    exportsObj.createUser = function(req, res, next){        
 
         var newUserData = req.body;
 
@@ -76,8 +71,9 @@ module.exports = {
                 res.send(user);
             });
         });
-    },
-    updateUser: function(req, res, next){
+    };
+
+    exportsObj.updateUser = function(req, res, next){
         if(req.body._id == req.user._id || req.user.roles.indexOf('admin') > -1){
             var updatedUserData = req.body;
             if(updatedUserData.password && updatedUserData.password.length > 0){
@@ -91,8 +87,9 @@ module.exports = {
         else{
             res.send({reason: 'You do not have permissions!'});
         }
-    },
-    getAllUsers: function(req, res){
+    };
+
+    exportsObj.getAllUsers = function(req, res){
         User.find({})
         .select("-albums")
         .select("-dogs")
@@ -107,8 +104,10 @@ module.exports = {
             }
             res.send(collection);
         });
-    },     //By Username <-- easier when route is /profile/:userName, such roots look better to users
-    getUser: function(req, res){
+    };     //By Username <-- easier when route is /profile/:userName, such roots look better to users
+
+
+    exportsObj.getUser = function(req, res){
 
         var sendAllInfo = false,
             collection,
@@ -167,8 +166,9 @@ module.exports = {
                         res.send(user);
                     }
         });
-    },
-    getProfPhoto: function(req, res){
+    };
+
+    exportsObj.getProfPhoto = function(req, res){
         
         User.findOne({_id: req.params.id})
         .select('profPhoto')
@@ -202,8 +202,9 @@ module.exports = {
 
             res.end();
         });
-    },
-    searchUsersDynamically: function(req, res) {
+    };
+
+    exportsObj.searchUsersDynamically = function(req, res) {
 
         var searchString =  req.params.searchContent,
             searchArray = searchString.split(' '),
@@ -280,8 +281,9 @@ module.exports = {
         .sort( { seenFrom: -1 } ).limit(limit);
 
         return deferred.promise;
-    },
-    befriend: function (req, res) {
+    };
+
+    exportsObj.befriend = function (req, res) {
 
         var userID = req.user._id;
 
@@ -348,8 +350,9 @@ module.exports = {
                 }
 
         });
-    },
-    getFriends: function(req, res) {
+    };
+
+    exportsObj.getFriends = function(req, res) {
 
         var deferred = Q.defer(),
             userId;
@@ -400,8 +403,9 @@ module.exports = {
         });
 
         return deferred.promise;
-    },
-    getFriendIDs: function (userID) {
+    };
+
+    exportsObj.getFriendIDs = function (userID) {
 
         var deferred = Q.defer();
 
@@ -418,5 +422,11 @@ module.exports = {
         });
 
         return deferred.promise;
-    }
-};
+    };
+
+var User = require('mongoose').model('User'),
+    encryption = require('../utilities/encryption.js'),
+    shortId = require('shortid'),
+    Q = require('q'),
+    ip = require('ip'),
+    notificationsController = require('./NotificationsController.js');

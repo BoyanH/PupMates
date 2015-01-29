@@ -240,58 +240,5 @@ module.exports = {
 			else {
 				socket.emit('edit private message error', {message: message ,err: 'NOT AUTHORISED'});
 			}
-	},
-	pushNotification: function(socket, notification) {
-
-		if(isAuthorised(socket, notification)) {
-
-			controllers.notifications.addNotification(notification)
-				.then(function (data) {
-
-					if (clientsList[notification.to] && !data.err) {
-				
-						//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-						clientsList[notification.to].identity.forEach(function (clientConnection) {
-
-								clientConnection.socket.emit('push notification done', data.notification);
-							}
-						);
-					}
-					else if(data.err) {
-
-						socket.emit('push notification error', {notification: notification, err: data.err});
-					}
-				})
-		}
-			else {
-				socket.emit('push notification error', {notification: notification, err: 'NOT AUTHORISED'});
-			}
-	},
-	seeNotification: function(socket, notification) {
-
-		var to = notification.to;
-
-		//IF DEVICE OF NOTIFICATION.TO (RECIPIENT) IS MARKING IT AS SEEN
-		notification.to = notification.from;
-		notification.from = to;
-
-		if(isAuthorised(socket, notification)) {
-
-			controllers.notifications.remvoeNotification(notification)
-				.then(function (data) {
-
-					if(!data.err) {
-
-						socket.emit('see notification done', {notification: notification, success: true});
-					}
-						else {
-
-							socket.emit('see notification error', {notification: notification, err: data.err});
-						}	
-				})
-		}
-			else {
-				socket.emit('see notification error', {notification: notification, err: 'NOT AUTHORISED'});
-			}
 	}
 }
