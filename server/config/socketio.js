@@ -82,21 +82,6 @@ module.exports = function(io, sessionStore) {
 
         //------------------END OF MESSAGING SYSTEM-------------------------
 
-
-        //------------------NOTIFICATION SYSTEM-----------------------------
-
-        socket.on('push notification', function (data) {
-
-            controllers.socket.pushNotification(socket, data);
-        });
-
-        socket.on('see notification', function (data) {
-
-            controllers.socket.seeNotification(socket, data);
-        })
-
-        //------------------END OF NOTIFICATION SYSTEM----------------------
-
         socket.on('disconnect', function() {
 
            	controllers.socket.deleteUserConnection(socket);

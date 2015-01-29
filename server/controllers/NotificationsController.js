@@ -1,11 +1,12 @@
 var User = require('mongoose').model('User'),
-    Q = require('q');
+    Q = require('q'),
+    socketioController = require('./SocketioController.js');
 
 module.exports = {
 
 	addNotification: function (notification) {
 
-		var deffered = Q.defer(),
+		var deferred = Q.defer(),
 			notifObj = {
 
 				type: notification.type,
@@ -31,25 +32,34 @@ module.exports = {
                 
                 if(err) {
 
-                	deffered.reject({err: err});
+                	deferred.reject({err: err});
                 }
 
-                deferred.resolve(notifObj);
+                //Push new notification to recipient
+                socketioController.clientsList[notification.to].identity.forEach(function (clientConnection) {
+
+                	clientConnection.socket.emit('new notification', data.notifications.map(function (x) { 
+                		if(x.createdTime == notifObj.createdTime) {
+                			return x;
+            			}  
+                	}));
+                });
+
+                //Tell sender everything went alrgiht
+                deferred.resolve(data);
             });
 
 		});
 
-		return deffered.promise;
+		return deferred.promise;
 	},
-	seeNotification: function(notification) {
+	seeNotification: function(req, res) {
 
-		var deffered = Q.defer();
-
-		User.findOne({_id: notification.to}, function (err, user) {
+		User.findOne({_id: req.user._id}, function (err, user) {
 
 			if(err || !user) {
 
-				deferred.reject({err: 'User not found!'});
+				res.status(404).end('ERR: User not found!');
 			}
 
 			try {
@@ -57,21 +67,19 @@ module.exports = {
 			}
 			catch(err) {
 
-				deferred.reject({err: err});
+				res.status(500).end('ERR: ' + err);
 			}
 
-			User.update({_id: notification.to}, user, function(err, data){
+			User.update({_id: req.user._id}, user, function(err, data){
                 
                 if(err) {
 
-                	deffered.reject({err: err});
+                	res.end('ERR: ' + err);
                 }
 
-                deferred.resolve(notification);
+                res.status(200).end();
             });
 
 		});
-
-		return deffered.promise;
 	}
 };

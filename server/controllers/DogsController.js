@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
 	Dog = mongoose.model('Dog'),
 	User = mongoose.model('User'),
-	Q = require('Q');
+	Q = require('q');
 
 module.exports = {
 	createDog: function(req, res, next){

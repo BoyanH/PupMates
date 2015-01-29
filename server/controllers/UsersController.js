@@ -2,7 +2,9 @@
     encryption = require('../utilities/encryption.js'),
     shortId = require('shortid'),
     Q = require('q'),
-    ip = require('ip');
+    ip = require('ip'),
+    socketioController = require('./SocketioController.js'),
+    notificationsController = require('./NotificationsController.js');
 
     function validateEmail(email) { 
 
@@ -290,38 +292,62 @@ module.exports = {
                 res.send({success: false});
             }
 
-            var newFriend = {
+            //If the requester recieved a friend request from the one he wants to add as friend
+            if(user.notifications.map(function (x) { if(x.type == 'friendRequest' && x.from == req.body.friendID) { return x} }).length > 0) {
+
+                var newFriend = {
                     id: req.body.friendID,
                     username: req.body.friendUsername
                 };
 
-            if(userID == newFriend.id || req.user.username == newFriend.username) {
+                if(userID == newFriend.id || req.user.username == newFriend.username) {
 
-                res.end('can\'t befriend yourself');
-                return;
-            }
-
-        //  if user doesn't already exist in anotherUser.friends
-            if(user.friends.map(function(x) {return x.id; }).indexOf(req.body.friendID) == -1 &&
-                user.friends.map(function(x) {return x.username; }).indexOf(req.body.friendUsername) == -1) {
-            
-                user.friends.push(newFriend);
-            }
-                else {
-
-                    res.end('already exists');
+                    res.end('can\'t befriend yourself');
                     return;
                 }
 
-            User.update({_id: userID}, user, function(err){
+                //If the requester doesn't already have the one he wants to add as friend in friends
+                if(user.friends.map(function(x) {return x.id; }).indexOf(req.body.friendID) == -1 &&
+                    user.friends.map(function(x) {return x.username; }).indexOf(req.body.friendUsername) == -1) {
+                
+                    user.friends.push(newFriend);
+                }
+                    else {
+
+                        res.end('already exists');
+                        return;
+                    }
+
+                User.update({_id: userID}, user, function(err){
                     if(err){
                         res.end("err: " + err);
                     }
                     
-                    res.send({success: true});
+                    res.status(200).send({success: true});
                 });
+            }
+                //If no request was recieved, send one
+                else {
 
-        })
+                    var newNotification = {
+
+                        from: user,
+                        to: req.body.friendID,
+                        type: 'friendRequest'
+
+                    };
+
+                    notificationsController.addNotification(newNotification)
+                    .then(function (data) {
+
+                        res.status(200).end();
+                    }, function (err) {
+
+                        res.status(500).end();
+                    });
+                }
+
+        });
     },
     getFriends: function(req, res) {
 
@@ -393,4 +419,4 @@ module.exports = {
 
         return deferred.promise;
     }
-}
+};

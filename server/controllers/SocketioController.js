@@ -27,8 +27,33 @@ var clientsList = {},
 		return authorised;
 	}
 
+	function sendOnLoginData(socket, userId) {
+
+		//SENDING ALL FRIENDS TO THE USER
+		users.getFriends(userId)
+        .then(function (data) {
+
+            socket.emit('new friends', data);
+        }, function (err) {
+
+        	console.log(err);
+        });
+
+        //SENDING THEIR ONLINE STATUSES, NOTIFYING THEM USER IS ONLINE
+		socket.emit('status change', clientsList[userId].friends);
+
+		clientsList[userId].friends.forEach(function (friend) {
+
+			clientsList[friend.id].identity.forEach(function (clientConnection) {
+
+				clientConnection.socket.emit('status change', [{id: userId, online: true}]);
+			});
+		});			
+	}
+
 module.exports = {
 
+	clientsList: clientsList,
 	addUserConnection: function (socket) {
 
 		var session = socket.request.session,
@@ -70,27 +95,8 @@ module.exports = {
 						});
 					}
 
-				//SEND FIRENDS DATA ON LOGIN
-				users.getFriends(userId)
-                .then(function (data) {
-
-                	console.log('sending new friends data ' + data);
-                    socket.emit('new friends', data);
-                }, function (err) {
-
-                	console.log(err);
-                });
-				socket.emit('status change', clientsList[userId].friends);
-
-				clientsList[userId].friends.forEach(function (friend) {
-
-					clientsList[friend.id].identity.forEach(function (clientConnection) {
-
-						clientConnection.socket.emit('status change', [{id: userId, online: true}]);
-					});
-				});			
-
-				//END OF ON LOGIN DATA SENDING
+					//Data sent on Login, saves client-side requests
+					sendOnLoginData(socket, userId);
 			});
 	},
 	deleteUserConnection : function (socket) {
