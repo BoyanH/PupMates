@@ -10,6 +10,7 @@ module.exports = {
 			notifObj = {
 
 				type: notification.type,
+				story: notification.story
 				seen: false,
 				createdTime: new Date(),
 				from: {
@@ -91,5 +92,52 @@ module.exports = {
             });
 
 		});
+	},
+	addNewFriendship: function (userOne, userTwo) {
+
+		var deferred = Q.defer();
+
+		try {
+
+			var userOneAsFrined = {
+
+					id: userOne._id,
+					online: !!socketioController.clientsList[userOne._id]
+				},
+				userTwoAsFriend = {
+
+					id: userTwo._id,
+					online: !!socketioController.clientsList[userTwo._id]
+				}
+
+			if(socketioController.clientsList[userOne._id]) {
+
+				socketioController.clientsList[userOne._id].friends.push(userTwoAsFriend);
+
+				socketioController.clientsList[userOne._id].identity.forEach(function (userOneConnection) {
+
+					userOneConnection.socket.emit('new friends', [userTwo]);
+					userOneConnection.socket.emit('status change', [userTwoAsFriend]);
+				});
+			}
+
+			if(socketioController.clientsList[userTwo._id]) {
+				socketioController.clientsList[userTwo._id].friends.push(userOneAsFrined);
+
+				socketioController.clientsList[userTwo._id].identity.forEach(function (userTwoConnection) {
+
+					userOneConnection.socket.emit('new friends', [userOne]);
+					userTwoConnection.socket.emit('status change', [userOneAsFrined]);
+				});
+			}
+
+			deferred.resolve(true);
+		}
+			catch(err) {
+
+				deferred.reject(err);
+			}
+
+		return deferred.promise;
 	}
 };

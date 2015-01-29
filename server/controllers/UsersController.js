@@ -338,15 +338,26 @@ exportsObj.befriend = function (req, res) {
                             res.end("err: " + err); //If this push fails, user.friends won't be updated too; primitive transaction ;)
                         }
                     });
-                });
 
-                User.update({_id: userID}, user, function(err){
-                    if(err){
-                        res.end("err: " + err);
-                    }
+                    User.update({_id: userID}, user, function(err){
+                        if(err){
+                            res.end("err: " + err);
+                        }
+                    });
 
-                    req.body.notification = frRequestFromUser[0];
-                    notificationsController.deleteNotification(req, res);
+
+                        req.body.notification = frRequestFromUser[0];
+                        notificationsController.deleteNotification(req, res);
+
+                        notificationsController.addNewFriendship(user, friend)
+                        .then(function (data) {
+
+                            res.status(200).end();
+                        }, function (err) {
+
+                            console.log('New friendship err: ' + err);
+                            res.status(500).end('Err: ' + err);
+                        });
                 });
             }
 
@@ -378,7 +389,13 @@ exportsObj.befriend = function (req, res) {
                 return;
             }
 
-    });
+    })
+    .select("-albums")
+    .select("-dogs")
+    .select("-salt")
+    .select("-hashPass")
+    .select("-roles")
+    .select("-profPhoto");
 };
 
 exportsObj.getFriends = function(req, res) {
