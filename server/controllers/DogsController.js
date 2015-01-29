@@ -19,7 +19,6 @@ module.exports = {
 			console.log(data.birthDate);
 			dog.owners = owners;
 			dog.profPhoto = data.profPhoto;
-
         	if(dog.profPhoto) {
             	var b64string = dog.profPhoto.data;
             	var buf = new Buffer(b64string, 'base64');
@@ -34,10 +33,12 @@ module.exports = {
 			Dog.create(dog, function(err, d){
 				if(err){
 					console.log("failed to create dog: " + err);
-					res.end({success: false});
+					//res.end({success: false});
+					res.end();
 				}
 				else{
-					res.end({success: true});
+					//res.end({success: true});
+					res.end();
 					console.log("dog created!");
 				}
 			});
