@@ -111,8 +111,7 @@ exportsObj.getAllUsers = function(req, res){
         }
         res.send(collection);
     });
-};     //By Username <-- easier when route is /profile/:userName, such roots look better to users
-
+};     
 
 exportsObj.getUser = function(req, res){
 
@@ -120,6 +119,7 @@ exportsObj.getUser = function(req, res){
         collection,
         userIP = ip.address();
 
+    //By Username <-- easier when route is /profile/:userName, such roots look better to users
     User.findOne({username: req.params.id}, function (err, user) {
 
             if(err || !user){
@@ -301,7 +301,16 @@ exportsObj.befriend = function (req, res) {
             res.send({success: false});
         }
 
-        var frRequestFromUser = user.notifications.map(function (x) { if(x.type == 'friendRequest' && x.from.id == req.body.friendID) { return x;} });
+        var frRequestFromUser;
+
+        for (var i = 0, len = user.notifications.length; i < len; i += 1) {
+            
+            if(user.notifications[i].type == 'friendRequest' && x.from.id == req.body.friendID) {
+                
+                frRequestFromUser = user.notifications[i];
+                break;
+            }   
+        };
 
         //If the requester doesn't already have the one he wants to add as friend in friends
         if(user.friends.map(function(x) {return x.id; }).indexOf(req.body.friendID) == -1 &&
@@ -319,8 +328,7 @@ exportsObj.befriend = function (req, res) {
             }
 
             //If the requester recieved a friend request (notification) from the one he wants to add as friend
-            console.log(frRequestFromUser);
-            if(frRequestFromUser.length > 0) {
+            if(frRequestFromUser) {
             
                 user.friends.push(newFriend);
 
@@ -346,7 +354,7 @@ exportsObj.befriend = function (req, res) {
                     });
 
 
-                        req.body.notification = frRequestFromUser[0];
+                        req.body.notification = frRequestFromUser;
                         notificationsController.deleteNotification(req, res);
 
                         notificationsController.addNewFriendship(user, friend)

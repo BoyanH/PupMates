@@ -10,7 +10,7 @@ module.exports = {
 			notifObj = {
 
 				type: notification.type,
-				story: notification.story
+				story: notification.story,
 				seen: false,
 				createdTime: new Date(),
 				from: {
@@ -27,10 +27,22 @@ module.exports = {
 				deferred.reject({err: 'User not found!'});
 			}
 
+			var requestExists = false;
+
+			for (var i = 0, len = user.notifications.length; i < len; i += 1) {
+				
+				if(user.notifications[i].type == 'friendRequest' && user.notifications[i].from.id == notification.from._id) {
+
+					requestExists = true;
+					break;
+				}
+			};
+
+
 			//If user didn't already recieve a friend request from the same person
-			if( user.notifications.map(function (x) { if(x.type == 'friendRequest' && x.from.id == notification.from.id) { return x} }).length == 0 ) {
+			if( !requestExists ) {
 					
-				user.notifications.push(notifObj);
+				user.notifications.push(JSON.stringify(notifObj));
 
 				User.update({_id: notification.to}, user, function(err, data){
 	                
@@ -44,11 +56,7 @@ module.exports = {
 	                if(socketioController.clientsList[notification.to]) {
 		                socketioController.clientsList[notification.to].identity.forEach(function (clientConnection) {
 
-		                	clientConnection.socket.emit('new notification', data.notifications.map(function (x) { 
-		                		if(x.createdTime == notifObj.createdTime) {
-		                			return x;
-		            			}  
-		                	}));
+		                	clientConnection.socket.emit('new notifications', data);
 		                });
 		            }
 

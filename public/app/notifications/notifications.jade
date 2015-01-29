@@ -4,4 +4,4 @@ div(ng-controller="NotificationsController"  off-click="hideNotif()")
 		div.notif-box-wrapper(ng-show="notifShow")
 			div.popup
 				div(ng-repeat="notification in notifications")
-					{{notification.type}}
+					| {{notification.type}}
