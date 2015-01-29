@@ -10,7 +10,7 @@ var userSchema = mongoose.Schema({
         profPhoto: {data: Buffer, contentType: String},
         email: {type: String, require: '{PATH} is required', unique: true},
         friends: [{
-            id: [mongoose.Schema.ObjectId],
+            id: mongoose.Schema.ObjectId,
             username: String
         }],
         notifications: [{
@@ -20,7 +20,7 @@ var userSchema = mongoose.Schema({
             from: {
                 name: String,
                 username: String,
-                id: [mongoose.Schema.ObjectId]
+                id: mongoose.Schema.ObjectId
             }
         }],
         salt: String,

@@ -160,7 +160,7 @@ exportsObj.getUser = function(req, res){
                 }
             };
 
-            if (sendAllInfo) {
+            if (sendAllInfo || req.session.passport.user == req.params.id) {
                 res.send(user);
             }
                 else {
@@ -169,7 +169,7 @@ exportsObj.getUser = function(req, res){
                     
                     // collection.album = [];
                     // collection.lastName = ''; // <-- testing purpose
-
+                    
                     res.send(user);
                 }
     });
@@ -301,8 +301,11 @@ exportsObj.befriend = function (req, res) {
             res.send({success: false});
         }
 
-        //If the requester recieved a friend request from the one he wants to add as friend
-        if(user.notifications.map(function (x) { if(x.type == 'friendRequest' && x.from == req.body.friendID) { return x} }).length > 0) {
+        var frRequestFromUser = user.notifications.map(function (x) { if(x.type == 'friendRequest' && x.from.id == req.body.friendID) { return x;} });
+
+        //If the requester doesn't already have the one he wants to add as friend in friends
+        if(user.friends.map(function(x) {return x.id; }).indexOf(req.body.friendID) == -1 &&
+            user.friends.map(function(x) {return x.username; }).indexOf(req.body.friendUsername) == -1) {
 
             var newFriend = {
                 id: req.body.friendID,
@@ -315,27 +318,39 @@ exportsObj.befriend = function (req, res) {
                 return;
             }
 
-            //If the requester doesn't already have the one he wants to add as friend in friends
-            if(user.friends.map(function(x) {return x.id; }).indexOf(req.body.friendID) == -1 &&
-                user.friends.map(function(x) {return x.username; }).indexOf(req.body.friendUsername) == -1) {
+            //If the requester recieved a friend request (notification) from the one he wants to add as friend
+            console.log(frRequestFromUser);
+            if(frRequestFromUser.length > 0) {
             
                 user.friends.push(newFriend);
+
+                User.findOne({_id: req.body.friendID}, function (err, friend) {
+
+                    friend.friends.push({
+                        id: userID,
+                        username: user.username
+                    });
+                    
+                    User.update({_id: req.body.friendID}, friend, function (err) {
+
+                        if(err) {
+
+                            res.end("err: " + err); //If this push fails, user.friends won't be updated too; primitive transaction ;)
+                        }
+                    });
+                });
+
+                User.update({_id: userID}, user, function(err){
+                    if(err){
+                        res.end("err: " + err);
+                    }
+
+                    req.body.notification = frRequestFromUser[0];
+                    notificationsController.deleteNotification(req, res);
+                });
             }
-                else {
 
-                    res.end('already exists');
-                    return;
-                }
-
-            User.update({_id: userID}, user, function(err){
-                if(err){
-                    res.end("err: " + err);
-                }
-                
-                res.status(200).send({success: true});
-            });
-        }
-            //If no request was recieved, send one
+            //If no request was recieved, send one (notification)
             else {
 
                 var newNotification = {
@@ -352,8 +367,15 @@ exportsObj.befriend = function (req, res) {
                     res.status(200).end();
                 }, function (err) {
 
-                    res.status(500).end();
+                    console.log(err);
+                    res.status(500).end('err: ' + err);
                 });
+            }
+        }
+            else {
+
+                res.end('already exists');
+                return;
             }
 
     });
