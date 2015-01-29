@@ -1,0 +1,12 @@
+.wrapper-dog{
+	display: block;
+	margin: 0 auto;
+	width: 700px;
+	border-radius: 2px solid #eaeaea;
+	background: #eaeaea;
+	color: #424345;
+	min-height: 400px;
+	height: auto;
+	padding: 10px;
+
+}

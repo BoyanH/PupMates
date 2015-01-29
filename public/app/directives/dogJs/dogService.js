@@ -52,11 +52,29 @@ app.factory("DogService", function($q, $http, identity){
 
 		return deferred.promise;
 	}
+	function currentUserOwnDog(dogId){
+		if(identity.currentUser && identity.currentUser.dogs){
+			for(var i=0;i<identity.currentUser.dogs.length;i++){
+				var d = identity.currentUser.dogs[i];
+				if(d._id == dogId){
+					//current user owns this dog
+					return true;
+				}
+			}
+			//didnt find dog
+			return false;
+		}
+		else{
+			//alert("no dogs")
+			return false;
+		}
+	}
 
 	return{
 		createDog: createDog,
 		getDogById: getDog,
 		getDogsOfUser: getDogsOfUser,
-		updateDogsOfCurrentUser: updateDogsOfCurrentUser
+		updateDogsOfCurrentUser: updateDogsOfCurrentUser,
+		currentUserOwnDog: currentUserOwnDog
 	}
 });

@@ -1,8 +1,9 @@
 ﻿'use strict';
-app.controller('MainController', function($scope, identity, DogService){
+app.controller('MainController', function($scope, identity, DogService, $location){
 	var height = $(document).height() - $(".nav").height();
 	$(".menu").css("height", height.toString());
 
+	$scope.$location = $location
 	$scope.user = identity.currentUser;
 	console.log($scope.user);
 	$scope.profPhoto = "/img/profPhoto/" + identity.currentUser._id;
@@ -15,9 +16,9 @@ app.controller('MainController', function($scope, identity, DogService){
 		alert('Closes and then reopens! ;/');
 	}
 	DogService.updateDogsOfCurrentUser()
-		.then(function(dogs){
-			if(dogs){
-				
+		.then(function(success){
+			if(success){
+				//console.log("got the dogs of the user");
 			}
 			else{
 				console.log("couldnt get dogs");
