@@ -8,7 +8,7 @@
 		div
 			| My pets:
 		div.pet-wrapper
-			div.dog-container(ng-repeat="dog in dogs" ng-click="dog.showModal = true;")
+			div.dog-container(ng-repeat="dog in user.dogs" ng-click="dog.showModal = true;")
 				div.name-container
 					a.dog-name(href="#") {{dog.name}} {{dog.showModal}}
 				div.birthdate Birthdate: {{dog.birthDate}}

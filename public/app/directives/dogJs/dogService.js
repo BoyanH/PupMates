@@ -35,10 +35,28 @@ app.factory("DogService", function($q, $http, identity){
 
 		return deferred.promise;
 	}
+	function updateDogsOfCurrentUser(){
+		var deferred = $q.defer();
+
+		$http.get('/dogs/'+identity.currentUser._id).success(function(dogs){
+			if(dogs){
+				for(var i=0;i<dogs.length;i++){
+                    dogs[i].url = "/"+identity.currentUser._id+"/imgdog/"+dogs[i]._id,
+                    console.log("url: " + dogs[i].url);
+				}
+				identity.currentUser.dogs = dogs;
+				deferred.resolve(true);
+			}
+			else deferred.resolve(false);
+		})
+
+		return deferred.promise;
+	}
 
 	return{
 		createDog: createDog,
 		getDogById: getDog,
-		getDogsOfUser: getDogsOfUser
+		getDogsOfUser: getDogsOfUser,
+		updateDogsOfCurrentUser: updateDogsOfCurrentUser
 	}
 });

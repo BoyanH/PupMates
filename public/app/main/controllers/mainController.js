@@ -14,16 +14,10 @@ app.controller('MainController', function($scope, identity, DogService){
 
 		alert('Closes and then reopens! ;/');
 	}
-	DogService.getDogsOfUser(identity.currentUser._id)
+	DogService.updateDogsOfCurrentUser()
 		.then(function(dogs){
 			if(dogs){
-				console.log(dogs);
-				for(var i=0;i<dogs.length;i++){
-                        dogs[i].url = "/"+$scope.user._id+"/imgdog/"+dogs[i]._id,
-                        console.log("url: " + dogs[i].url);
-				}
-				identity.currentUser.dogs = dogs;
-				$scope.dogs = identity.currentUser.dogs;
+				
 			}
 			else{
 				console.log("couldnt get dogs");

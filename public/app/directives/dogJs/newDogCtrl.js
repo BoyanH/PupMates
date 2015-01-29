@@ -90,9 +90,13 @@ app.controller("NewDogController", function($scope, identity,
         console.log(dog);
     	DogService.createDog(dog).then(function(){
 			LoadingService.stop();
-			notifier.success("Dog added!");
+			
             $('#newDogForm')[0].reset();
-			identity.update();
+			DogService.updateDogsOfCurrentUser().then(function(success){
+                if(success){
+                    notifier.success("Dog added!");
+                }
+            })
 
     	});
 
