@@ -1,18 +1,29 @@
 div
 	h2.titleNewDog ADD NEW DOGGY
-	form.form-new-dog(name="newDogForm" id="newDogForm")
+	form.form-new-dog(name="newdogform" id="newDogForm")
 		div.titleFieldDog NAME
-		input.input-dog-field(type="text" required require="required" ng-change="change()" placeholder="NAME" name="name" ng-model="dog.name")
+		input.input-dog-field(type="text" required ng-change="change()" placeholder="NAME" name="name" ng-model="dog.name")
+		div.warning(ng-show="warningName") please write a name
 		div.titleFieldDog BIRTH DATE
-		input.input-dog-field(type="text" required require="required" id="date-picker" placeholder="BIRTH DATE" name="birthDate" ng-model="dog.birthDate")
+		div
+			label.label-date-selector.titleFieldDog DAY
+			label.label-date-selector.titleFieldDog Month
+			label.label-date-selector.titleFieldDog Year
+		div.date-selector-container
+			select.date-selector(ng-model="dog.day" ng-options="opt as opt.label for opt in optionsDay")
+			select.date-selector(ng-model="dog.month" ng-options="opt as opt.label for opt in optionsMonth")
+			select.date-selector(ng-model="dog.year" ng-options="opt as opt.label for opt in optionsYear")
+		div.warning(ng-show="warningBirthDate") incorrect date
 		div.titleFieldDog BREED
-		input.input-dog-field(type="text" required require="required" placeholder="BREED" name="breed" ng-model="dog.breed")
+		input.input-dog-field(type="text" required placeholder="BREED" name="breed" ng-model="dog.breed")
+		div.warning(ng-show="warningBreed") please write a breed
 		div.titleFieldDog DESCRIPTION (optional)
 		input.input-dog-field(type="text" placeholder="DESCRIPTION" name="description" ng-model="dog.description")
 		div.titleFieldDog PHOTO
-		input.input-upload-dog-photo(multiple="multiple" required require="required" ng-file-select="onFileSelect($files)" name="photo" type="file")
+		input.input-upload-dog-photo(multiple="multiple" required ng-file-select="onFileSelect($files)" name="photo" type="file")
+		div.warning(ng-show="warningProfPhoto") please choose a photo
 		div
 			progress.progress-photo(value="{{progress}}")
 
 		div
-			button.button-new-dog(ng-click="addDog(dog)" ng-disable="newDogForm.$invalid") ADD DOG
+			button.button-new-dog(ng-click="addDog(dog)") ADD DOG
