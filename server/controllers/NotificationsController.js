@@ -13,7 +13,7 @@ module.exports = {
 				seen: false,
 				createdTime: new Date(),
 				from: {
-					name: notification.from.firstName + ' ' + notification.from.lastName,
+					name: notification.from.firstName + " " + notification.from.lastName,
 					username: notification.from.username,
 					id: notification.from._id
 				}
@@ -26,34 +26,44 @@ module.exports = {
 				deferred.reject({err: 'User not found!'});
 			}
 
-			user.notifications.push(notifObj);
+			//If user didn't already recieve a friend request from the same person
+			if( user.notifications.map(function (x) { if(x.type == 'friendRequest' && x.from.id == notification.from.id) { return x} }).length == 0 ) {
+					
+				user.notifications.push(notifObj);
 
-			User.update({_id: notification.to}, user, function(err, data){
-                
-                if(err) {
+				User.update({_id: notification.to}, user, function(err, data){
+	                
+	                if(err) {
 
-                	deferred.reject({err: err});
-                }
+	                	deferred.reject({err: err});
+	                }
 
-                //Push new notification to recipient
-                socketioController.clientsList[notification.to].identity.forEach(function (clientConnection) {
+	                //Push new notification to recipient, if such
 
-                	clientConnection.socket.emit('new notification', data.notifications.map(function (x) { 
-                		if(x.createdTime == notifObj.createdTime) {
-                			return x;
-            			}  
-                	}));
-                });
+	                if(socketioController.clientsList[notification.to]) {
+		                socketioController.clientsList[notification.to].identity.forEach(function (clientConnection) {
 
-                //Tell sender everything went alrgiht
-                deferred.resolve(data);
-            });
+		                	clientConnection.socket.emit('new notification', data.notifications.map(function (x) { 
+		                		if(x.createdTime == notifObj.createdTime) {
+		                			return x;
+		            			}  
+		                	}));
+		                });
+		            }
+
+	                //Tell sender everything went alrgiht
+	                deferred.resolve(data);
+	            });
+			}
+				else {
+					deferred.reject({err: 'Request/Notification already exists!'});
+				}
 
 		});
 
 		return deferred.promise;
 	},
-	seeNotification: function(req, res) {
+	deleteNotification: function(req, res) {
 
 		User.findOne({_id: req.user._id}, function (err, user) {
 
@@ -63,7 +73,7 @@ module.exports = {
 			}
 
 			try {
-				user.notifications.splice(user.notifications.indexOf(notification), 1);
+				user.notifications.splice(user.notifications.indexOf(req.body.notification), 1);
 			}
 			catch(err) {
 

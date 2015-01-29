@@ -16,9 +16,6 @@ module.exports = {
 
                 dogs.searchDogsDynamically(req, res)
                     .then(function (dogsCollection) {
-
-                    	console.log(usersCollection);
-                    	console.log(dogsCollection);
                     	
                         res.send({
                             people: usersCollection,

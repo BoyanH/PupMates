@@ -89,4 +89,6 @@ $scope.showDialog = function(e){
     }
 }
     $("#cover").bind("click", close);
+
+    console.log(identity.currentUser);
 });
