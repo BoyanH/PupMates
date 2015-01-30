@@ -7,19 +7,19 @@ div.wrapper-dog
 			h2.dog-name {{dog.name}}
 			div.dog-change-content(ng-show="showChangeName")
 				input.dog-input-field(type="text" placeholder="Change Name" ng-model="name")
-				div.btn-change-dog-field(ng-click="changeName(name)") Change
+				div.btn-change-dog-field(ng-click="changeField('Name')") Change
 		div.dog-group 
 			div.dog-birthdate Birth Date: {{dog.birthDate}}
 			div.dog-change-content(ng-show="showChangeBirthDate")
 				select.dog-date-selector(ng-model="dog.day" ng-options="opt as opt.label for opt in optionsDay")
 				select.dog-date-selector(ng-model="dog.month" ng-options="opt as opt.label for opt in optionsMonth")
 				select.dog-date-selector(ng-model="dog.year" ng-options="opt as opt.label for opt in optionsYear")
-				div.btn-change-dog-field(ng-click="changeBirthDate()") Change
+				div.btn-change-dog-field(ng-click="changeField('BirthDate')") Change
 		div.dog-group
 			div.dog-breed Breed: {{dog.breed}}
 			div.dog-change-content(ng-show="showChangeBreed")
 				input.dog-input-field(type="text" placeholder="Change Breed" ng-model="breed")
-				div.btn-change-dog-field(ng-click="changeBreed(breed)") Change
+				div.btn-change-dog-field(ng-click="changeField('Breed')") Change
 		div.dog-group
 			div.dog-food food: 
 				span(ng-repeat="f in dog.food") {{f}} 

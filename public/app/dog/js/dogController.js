@@ -58,6 +58,10 @@ app.controller("DogController", function($scope, $routeParams, DogService, $loca
 		}
 	});
 	$scope.changeTrigger = function(field){
-		$scope["showChange" + field] = true;
+		$scope["showChange" + field] = !$scope["showChange" + field];
+	}
+	$scope.changeField = function(field){
+		// TO DO: get data and update
+		$scope.changeTrigger(field);
 	}
 });
