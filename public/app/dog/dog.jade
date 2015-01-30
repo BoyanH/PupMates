@@ -1,5 +1,32 @@
 div.wrapper-dog
+	div.dog-left
+		div.dog-pic-container
+			img(src="{{dog.url}}")
+	div.dog-mid
+		div 
+			h2.dog-name {{dog.name}}
+			div.dog-change-content
+				input.dog-input-field(type="text" placeholder="Change Name" ng-model="name")
+				div.btn-change-dog-field(ng-click="changeName(name)") Change
+		div 
+			div.dog-birthdate Birth Date: {{dog.birthDate}}
+			div.dog-change-content
+				select.dog-date-selector(ng-model="dog.day" ng-options="opt as opt.label for opt in optionsDay")
+				select.dog-date-selector(ng-model="dog.month" ng-options="opt as opt.label for opt in optionsMonth")
+				select.dog-date-selector(ng-model="dog.year" ng-options="opt as opt.label for opt in optionsYear")
+				div.btn-change-dog-field(ng-click="changeBirthDate()") Change
+		div
+			div.dog-breed Breed: {{dog.breed}}
+			div.dog-change-content
+				input.dog-input-field(type="text" placeholder="Change Breed" ng-model="breed")
+				div.btn-change-dog-field(ng-click="changeBreed(breed)") Change
+		div.dog-food food: 
+			span(ng-repeat="f in dog.food") {{f}} 
+		div.dog-walk walks: 
+			span(ng-repeat="w in dog.walk") {{w}} 
+		hr
+		div.dog-description {{dog.description}} 
+	div.dog-right
+		div(ng-click="changeNameTrigger()")
 	div(ng-hide="{{isUserDog}}")
-		| doge here when it's not user's
 	div(ng-show="{{isUserDog}}")
-		| user's dog

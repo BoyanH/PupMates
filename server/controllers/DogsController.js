@@ -58,7 +58,7 @@ module.exports = {
 		})
 	},
 	getDogById: function(req, res, next){
-		var dogId = req.body._id;
+		var dogId = req.params.id;
 		Dog.findOne({_id:dogId}).select("-profPhoto")
 		.exec(function(err, dog){
 			if(err){

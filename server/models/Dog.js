@@ -8,7 +8,10 @@ var dogSchema = mongoose.Schema({
 	breed: String,
 	profPhoto: {data: Buffer, contentType: String},
 	description: String,
-	birthDate: String
+	birthDate: String,
+	food: [String],
+	walk: [String],
+	visitedPlaces: [String]
 })
 var Dog = mongoose.model("Dog", dogSchema);
 
@@ -48,7 +51,9 @@ module.exports.seedInitialDogs = function(){
 						breed: 'Husky',
 						profPhoto: {data: pic, contentType: 'image/jpg'},
 						description: "My first dog :)",
-						birthDate: my_curr_date()
+						birthDate: my_curr_date(),
+						food: ['9', "19:30"],
+						walk: ["6:30", "17:45"]
 					})
 					console.log("Dog added to database!");
 				})

@@ -19,6 +19,7 @@ module.exports = function (app) {
     });
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.dogs.createDog);
     app.get('/dogs/:userId', controllers.dogs.getDogsOfUser)
+    app.get('/dog/:id', controllers.dogs.getDogById)
     app.post('/befriendMate', auth.isAuthenticated, controllers.users.befriend);
     app.get('/friends', auth.isAuthenticated, controllers.users.getFriends);
     app.get('/discussions', auth.isAuthenticated, controllers.messages.getUsersDiscussions);

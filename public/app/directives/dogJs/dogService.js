@@ -16,6 +16,7 @@ app.factory("DogService", function($q, $http, identity){
 
 		$http.get('/dog/'+id).success(function(dog){
 			if(dog){
+                dog.url = "/"+dog.owners[0]._id+"/imgdog/"+dog._id
 				deferred.resolve(dog);
 			}
 			else deferred.resolve(false);

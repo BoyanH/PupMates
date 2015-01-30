@@ -7,6 +7,82 @@
 	color: #424345;
 	min-height: 400px;
 	height: auto;
+	vertical-align: top;
+}
+.dog-left, .dog-mid, .dog-right{
+	display: inline-block;
+	vertical-align: top;
+}
+.dog-left{
+	width: 20%;
+	min-height: 400px;
+	height: auto;
+	background: #fefefe;
+}
+.dog-mid{
+	width: 60%;
 	padding: 10px;
-
+}
+.dog-right{
+	width: 20%;
+	background: yellow;
+}
+/*.dog-birthdate, .dog-breed, .dog-food, .dog-walk, .dog-description, .dog-name{
+	width: 100%;
+}*/
+.dog-pic-container{
+	margin: 2px;
+	padding: 5px;
+	background: #ffffff;
+	border-radius: 2px;
+}
+.dog-pic-container img{
+	width: 100%;
+	border-radius: 2px;
+}
+.dog-change-content{
+	display: inline-block;
+}
+.dog-change-content div{
+	float: right;
+}
+.dog-birthdate, .dog-name, .dog-breed{
+	width: 40%;
+	display: inline-block;
+}
+.dog-change-content{
+	width: 60%;
+}
+.btn-change-dog-field{
+	padding: 3px;
+	font-size: 0.7em;
+	color: #09ADED;
+	border: 1px solid #1D1D1D;
+	text-decoration: none;
+	background-color: #1D1D1D;
+	border-radius: 3px;
+	margin-bottom: 2px;
+}
+.btn-change-dog-field:hover{
+	cursor: pointer;
+	background-color: #7ccc31;
+	border-color: #7ccc31;
+	color: #181E22;
+}
+.dog-input-field{
+	color: #09ADED;
+	border: 1px solid #09ADED;
+	border-radius: 3px;
+	outline: none;
+	padding: 3px;
+}
+.dog-date-selector{
+	outline: none;
+	margin-right: 7px;
+	border: 1px solid #09ADED;
+}
+.dog-date-selector:focus{
+	-webkit-box-shadow: 0px 0px 2px 1px rgba(9,172,237,1);
+	-moz-box-shadow: 0px 0px 2px 1px rgba(9,172,237,1);
+	box-shadow: 0px 0px 2px 1px rgba(9,172,237,1);
 }
