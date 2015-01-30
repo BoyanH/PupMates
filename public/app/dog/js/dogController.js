@@ -1,10 +1,17 @@
-app.controller("DogController", function($scope, $routeParams, DogService, $location){
+app.controller("DogController", function($scope, $routeParams, DogService, $location, identity, $timeout, $rootScope){
 	var dogId = $routeParams.id;
-	$scope.isUserDog = false;
-	//alert(DogService.currentUserOwnDog(dogId));
-	if(DogService.currentUserOwnDog(dogId)){
-		$scope.isUserDog = true;
-	}
+
+
+    if(identity.currentUser){
+        DogService.updateDogsOfCurrentUser().then(function(){
+            if(DogService.currentUserOwnDog(dogId)){
+                $(".dog-right").css({
+                    display:"inline-block"
+                });
+            }
+        });
+    }
+    $timeout(function(){console.log($scope.isUserDog);}, 2000)
 
 	$scope.showChangeName = false;
 	$scope.showChangeBreed = false;
@@ -63,10 +70,12 @@ app.controller("DogController", function($scope, $routeParams, DogService, $loca
 	$scope.changeField = function(field){
 		$scope.changeTrigger(field);
         field = field.toLowerCase();
+        console.log($scope.dog);
         if(field == "birthdate") field = "birthDate";
         $scope.dog[field] = $scope[field];
         DogService.updateDog($scope.dog).then(function(res){
             console.log(res);
+            $scope[field] = "";
         })
 	}
 });

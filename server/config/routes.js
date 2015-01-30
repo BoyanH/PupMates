@@ -18,7 +18,7 @@ module.exports = function (app) {
         res.send('../../public/img/' + req.params.img);
     });
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.dogs.createDog);
-    app.post('/updateDog/:userId/:dogId', auth.isAuthenticated, controllers.dogs.updateDog);
+    app.put('/updateDog/:userId/:dogId', auth.isAuthenticated, controllers.dogs.updateDog);
     app.get('/dogs/:userId', controllers.dogs.getDogsOfUser)
     app.get('/dog/:id', controllers.dogs.getDogById)
     app.post('/befriendMate', auth.isAuthenticated, controllers.users.befriend);

@@ -27,11 +27,9 @@ div.wrapper-dog
 			div.dog-walk walks: 
 				span(ng-repeat="w in dog.walk") {{w}} 
 		div.dog-description {{dog.description}} 
-	div.dog-right
+	div.dog-right()
 		div.btn-change-dog-field(ng-click="changeTrigger('Name')") Change
 		div.btn-change-dog-field(ng-click="changeTrigger('BirthDate')") Change
 		div.btn-change-dog-field(ng-click="changeTrigger('Breed')") Change
 		div.btn-change-dog-field(ng-click="changeTrigger('Food')") Change
 		div.btn-change-dog-field(ng-click="changeTrigger('Walk')") Change
-	div(ng-hide="{{isUserDog}}")
-	div(ng-show="{{isUserDog}}")

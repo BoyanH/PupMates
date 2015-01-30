@@ -14,7 +14,7 @@ app.factory("DogService", function($q, $http, identity){
 	function updateDog(dog){
 		var deferred = $q.defer();
 
-		$http.post('/updateDog/'+identity.currentUser._id+"/"+dog._id, dog)
+		$http.put('/updateDog/'+identity.currentUser._id+"/"+dog._id, dog)
 			.success(function(response){
 				deferred.resolve(true);
 			}).error(function(err){
@@ -48,6 +48,17 @@ app.factory("DogService", function($q, $http, identity){
 
 		return deferred.promise;
 	}
+	function updateDogsOfCurrentUserSync(){
+		$http.get('/dogs/'+identity.currentUser._id).success(function(dogs){
+			if(dogs){
+				for(var i=0;i<dogs.length;i++){
+                    dogs[i].url = "/"+identity.currentUser._id+"/imgdog/"+dogs[i]._id,
+                    console.log("url: " + dogs[i].url);
+				}
+				identity.currentUser.dogs = dogs;
+			}
+		})
+	}
 	function updateDogsOfCurrentUser(){
 		var deferred = $q.defer();
 
@@ -66,6 +77,8 @@ app.factory("DogService", function($q, $http, identity){
 		return deferred.promise;
 	}
 	function currentUserOwnDog(dogId){
+		console.log("-----identity-------");
+		console.log(identity);
 		if(identity.currentUser && identity.currentUser.dogs){
 			for(var i=0;i<identity.currentUser.dogs.length;i++){
 				var d = identity.currentUser.dogs[i];
@@ -88,6 +101,7 @@ app.factory("DogService", function($q, $http, identity){
 		getDogById: getDog,
 		getDogsOfUser: getDogsOfUser,
 		updateDogsOfCurrentUser: updateDogsOfCurrentUser,
+		updateDogsOfCurrentUserSync: updateDogsOfCurrentUserSync,
 		currentUserOwnDog: currentUserOwnDog,
 		updateDog: updateDog
 	}

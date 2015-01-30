@@ -2,8 +2,7 @@
 	display: block;
 	margin: 0 auto;
 	width: 700px;
-	border-radius: 2px solid #eaeaea;
-	background: #eaeaea;
+	background: transparent;
 	color: #424345;
 	min-height: 400px;
 	height: auto;
@@ -22,12 +21,16 @@
 .dog-mid{
 	width: 60%;
 	padding: 10px;
+	background: #eaeaea;
+	min-height: 380px;
+	height: auto;
 }
 .dog-right{
 	width: 20%;
 	background: #505050;
 	min-height: 400px;
 	height: auto;
+	display: none;
 }
 /*.dog-birthdate, .dog-breed, .dog-food, .dog-walk, .dog-description, .dog-name{
 	width: 100%;
