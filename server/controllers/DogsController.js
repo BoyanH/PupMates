@@ -79,7 +79,24 @@ module.exports = {
 		});
 	},
 	updateDog: function(req, res, next){
-		// TO DO
+		var userId = req.params.userId,
+			dogId = req.params.dogId;
+		var dog = req.body;
+		if(userId == req.user._id || req.user.roles.indexOf('admin') > -1){
+			Dog.update({_id: dogId}, dog).exec(function(err){
+				if(err){
+					console.log("Failed to update dog:");
+					console.log(err);
+				}
+				else{
+					res.end();
+				}
+			})
+		}
+		else{
+			res.status(405);
+			res.end({reason: 'You do not have permissions!'});
+		}
 	},
 	searchDogsDynamically: function (req, res) {
 

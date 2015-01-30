@@ -61,7 +61,12 @@ app.controller("DogController", function($scope, $routeParams, DogService, $loca
 		$scope["showChange" + field] = !$scope["showChange" + field];
 	}
 	$scope.changeField = function(field){
-		// TO DO: get data and update
 		$scope.changeTrigger(field);
+        field = field.toLowerCase();
+        if(field == "birthdate") field = "birthDate";
+        $scope.dog[field] = $scope[field];
+        DogService.updateDog($scope.dog).then(function(res){
+            console.log(res);
+        })
 	}
 });

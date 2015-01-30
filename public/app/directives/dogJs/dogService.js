@@ -11,6 +11,18 @@ app.factory("DogService", function($q, $http, identity){
 			});
 		return deferred.promise;
 	}
+	function updateDog(dog){
+		var deferred = $q.defer();
+
+		$http.post('/updateDog/'+identity.currentUser._id+"/"+dog._id, dog)
+			.success(function(response){
+				deferred.resolve(true);
+			}).error(function(err){
+				alert(err);
+				deferred.resolve(false);
+			});
+		return deferred.promise;
+	}
 	function getDog(id){
 		var deferred = $q.defer();
 
@@ -76,6 +88,7 @@ app.factory("DogService", function($q, $http, identity){
 		getDogById: getDog,
 		getDogsOfUser: getDogsOfUser,
 		updateDogsOfCurrentUser: updateDogsOfCurrentUser,
-		currentUserOwnDog: currentUserOwnDog
+		currentUserOwnDog: currentUserOwnDog,
+		updateDog: updateDog
 	}
 });
