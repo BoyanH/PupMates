@@ -25,7 +25,9 @@
 }
 .dog-right{
 	width: 20%;
-	background: yellow;
+	background: #505050;
+	min-height: 400px;
+	height: auto;
 }
 /*.dog-birthdate, .dog-breed, .dog-food, .dog-walk, .dog-description, .dog-name{
 	width: 100%;
@@ -39,6 +41,10 @@
 .dog-pic-container img{
 	width: 100%;
 	border-radius: 2px;
+}
+.dog-group{
+	margin: 10px 0;
+	border-bottom: 1px solid #424345;
 }
 .dog-change-content{
 	display: inline-block;
@@ -85,4 +91,9 @@
 	-webkit-box-shadow: 0px 0px 2px 1px rgba(9,172,237,1);
 	-moz-box-shadow: 0px 0px 2px 1px rgba(9,172,237,1);
 	box-shadow: 0px 0px 2px 1px rgba(9,172,237,1);
+}
+.dog-right > .btn-change-dog-field{
+	margin: 11px 0;
+	padding: 3px 0;
+	text-align: center;
 }

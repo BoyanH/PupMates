@@ -5,10 +5,16 @@ app.controller("DogController", function($scope, $routeParams, DogService, $loca
 	if(DogService.currentUserOwnDog(dogId)){
 		$scope.isUserDog = true;
 	}
+
+	$scope.showChangeName = false;
+	$scope.showChangeBreed = false;
+	$scope.showChangeBirthDate = false;
+	$scope.showChangeFood = false;
+	$scope.showChangeWalk = false;
+
 	DogService.getDogById(dogId).then(function(dog){
 		if(dog){
 			$scope.dog = dog;
-
     		var today = new Date();
     		var dd = today.getDate();
     		var mm = today.getMonth()+1; //January is 0!
@@ -17,11 +23,7 @@ app.controller("DogController", function($scope, $routeParams, DogService, $loca
         		var timestamp=Date.parse(strDate);
         		if (isNaN(timestamp)==false)return true;
         		else return false;
-    		}		
-    		$scope.warningName = false;
-    		$scope.warningBreed = false;
-    		$scope.warningBirthDate = false;
-    		$scope.warningProfPhoto = false;
+    		}
 
     		$scope.optionsYear = [];
     		for(var i=0;i<100;i++){
@@ -54,5 +56,8 @@ app.controller("DogController", function($scope, $routeParams, DogService, $loca
 		else{
 			$location.path('/home');
 		}
-	})
+	});
+	$scope.changeTrigger = function(field){
+		$scope["showChange" + field] = true;
+	}
 });
