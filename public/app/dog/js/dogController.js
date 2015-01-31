@@ -71,6 +71,7 @@ app.controller("DogController", function($scope, $routeParams, DogService, $loca
         field = field.toLowerCase();
         console.log($scope.dog);
         if(field == "birthdate") field = "birthDate";
+        if($scope[field]=="" || $scope[field]==undefined) return;
         $scope.dog[field] = $scope[field];
         DogService.updateDog($scope.dog).then(function(res){
             if(res) $scope[field] = "";

@@ -1,6 +1,7 @@
 ﻿var mongoose = require('mongoose'),
     user = require('../models/User.js'),
     dog = require('../models/Dog.js'),
+    place = require('../models/Place.js'),
     discussion = require('../models/Discussion.js');
 
 module.exports = function(config){
@@ -17,4 +18,5 @@ module.exports = function(config){
 
     user.seedInitialUsers();
     dog.seedInitialDogs();
+    place.seedInitialPlaces();
 }
