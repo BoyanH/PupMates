@@ -20,7 +20,7 @@ div
 		div.titleFieldDog DESCRIPTION (optional)
 		input.input-dog-field(type="text" placeholder="DESCRIPTION" name="description" ng-model="dog.description")
 		div.titleFieldDog PHOTO
-		input.input-upload-dog-photo(multiple="multiple" required ng-file-select="onFileSelect($files)" name="photo" type="file")
+		input.input-upload-dog-photo(required ng-file-select="onFileSelect($files)" name="photo" type="file")
 		div.warning(ng-show="warningProfPhoto") please choose a photo
 		div
 			progress.progress-photo(value="{{progress}}")

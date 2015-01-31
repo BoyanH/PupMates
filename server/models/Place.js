@@ -50,7 +50,7 @@ module.exports.seedInitialPlaces = function(){
 					console.log("Failed to find places: " + err);
 					return;
 				}
-				console.log(places);
+				//console.log(places);
 			})
 		}
 

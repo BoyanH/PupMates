@@ -82,6 +82,17 @@ module.exports = {
 		var userId = req.params.userId,
 			dogId = req.params.dogId;
 		var dog = req.body;
+
+		if(dog.profPhoto) {
+        	var b64string = dog.profPhoto.data;
+        	var buf = new Buffer(b64string, 'base64');
+
+        	var profPhoto = {};
+        	profPhoto.data = buf;
+        	profPhoto.contentType = dog.profPhoto.contentType;
+        	dog.profPhoto = profPhoto;
+    	}
+    	console.log(profPhoto);
 		if(userId == req.user._id || req.user.roles.indexOf('admin') > -1){
 			Dog.update({_id: dogId}, dog).exec(function(err){
 				if(err){

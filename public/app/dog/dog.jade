@@ -1,7 +1,11 @@
 div.wrapper-dog
 	div.dog-left
 		div.dog-pic-container
-			img(src="{{dog.url}}")
+			img#dog-img-change(src="{{dog.url}}")
+		div#change-btn-pic.btn-change-dog-field(ng-click="changeTrigger('ProfPhoto')" ng-hide="showChangeProfPhoto") Change
+		div(ng-show="showChangeProfPhoto")
+			input#dog-change-photo.btn-change-dog-field(required ng-file-select="onFileSelect($files)" name="photo" type="file" Value="Change")
+			div.btn-change-dog-field(ng-show="showChangeProfPhoto" ng-click="changeField('ProfPhoto')") Save Change
 	div.dog-mid
 		div.dog-group
 			h2.dog-name {{dog.name}}

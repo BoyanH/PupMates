@@ -71,15 +71,16 @@
 }
 .dog-name, .birthdate, .description, .breed{
 	word-break: break-all;
-	white-space: pre-wrap;
+	white-space: nowrap;
 	text-align: center;
 	overflow: hidden;
+    text-overflow: ellipsis;
 }
 .dog-container{
 	float: left;
 	display: inline-block;
-	width: 25%;
-	height: 250px;
+	width: 30%;
+	height: 280px;
 	min-height: 150px;
 	margin-right: 2%;
 	margin-left: 2%;
