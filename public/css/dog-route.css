@@ -55,6 +55,7 @@
 }
 .dog-change-content{
 	display: inline-block;
+	vertical-align: top;
 }
 .dog-change-content div{
 	float: right;
@@ -67,7 +68,7 @@
 	width: 60%;
 }
 .btn-change-dog-field{
-	padding: 3px;
+	padding: 1px 3px;
 	font-size: 0.7em;
 	color: #09ADED;
 	border: 1px solid #1D1D1D;
@@ -106,4 +107,16 @@
 	margin: 15px 0;
 	padding: 3px 0;
 	text-align: center;
+}
+#description-change{
+	padding: 5px;
+	width: 300px;
+	height: 50px;
+	resize:none;
+}
+#textarea-btn{
+	margin-left: 2px;
+	padding: 20px 10px;
+	vertical-align: top;
+	font-size: 0.8em;
 }

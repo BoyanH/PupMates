@@ -11,7 +11,6 @@ app.controller("DogController", function($scope, $routeParams, DogService, $loca
             }
         });
     }
-    $timeout(function(){console.log($scope.isUserDog);}, 2000)
 
 	$scope.showChangeName = false;
 	$scope.showChangeBreed = false;
@@ -74,8 +73,8 @@ app.controller("DogController", function($scope, $routeParams, DogService, $loca
         if(field == "birthdate") field = "birthDate";
         $scope.dog[field] = $scope[field];
         DogService.updateDog($scope.dog).then(function(res){
-            console.log(res);
-            $scope[field] = "";
+            if(res) $scope[field] = "";
+            else alert("Couldnt update dog, please login or refresh.");
         })
 	}
 });

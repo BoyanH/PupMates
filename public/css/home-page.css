@@ -69,7 +69,7 @@
 	width: 100%;
 	white-space: nowrap;
 }
-.dog-name, .birthdate, .description{
+.dog-name, .birthdate, .description, .breed{
 	word-break: break-all;
 	white-space: pre-wrap;
 	text-align: center;

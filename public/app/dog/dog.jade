@@ -5,31 +5,37 @@ div.wrapper-dog
 	div.dog-mid
 		div.dog-group
 			h2.dog-name {{dog.name}}
-			div.dog-change-content(ng-show="showChangeName")
+			form.dog-change-content(ng-show="showChangeName")
 				input.dog-input-field(type="text" placeholder="Change Name" ng-model="name")
-				div.btn-change-dog-field(ng-click="changeField('Name')") Change
+				input.btn-change-dog-field(type="submit" value="Change" ng-click="changeField('Name')")
 		div.dog-group 
 			div.dog-birthdate Birth Date: {{dog.birthDate}}
-			div.dog-change-content(ng-show="showChangeBirthDate")
+			form.dog-change-content(ng-show="showChangeBirthDate")
 				select.dog-date-selector(ng-model="dog.day" ng-options="opt as opt.label for opt in optionsDay")
 				select.dog-date-selector(ng-model="dog.month" ng-options="opt as opt.label for opt in optionsMonth")
 				select.dog-date-selector(ng-model="dog.year" ng-options="opt as opt.label for opt in optionsYear")
-				div.btn-change-dog-field(ng-click="changeField('BirthDate')") Change
+				input.btn-change-dog-field(type="submit" value="Change" ng-click="changeField('BirthDate')")
 		div.dog-group
 			div.dog-breed Breed: {{dog.breed}}
-			div.dog-change-content(ng-show="showChangeBreed")
+			form.dog-change-content(ng-show="showChangeBreed")
 				input.dog-input-field(type="text" placeholder="Change Breed" ng-model="breed")
-				div.btn-change-dog-field(ng-click="changeField('Breed')") Change
+				input.btn-change-dog-field(type="submit" value="Change" ng-click="changeField('Breed')")
 		div.dog-group
 			div.dog-food food: 
 				span(ng-repeat="f in dog.food") {{f}} 
 		div.dog-group
 			div.dog-walk walks: 
 				span(ng-repeat="w in dog.walk") {{w}} 
-		div.dog-description {{dog.description}} 
+		div.dog-description 
+			div {{dog.description}}
+			div.dog-change-content(ng-show="showChangeDescription")
+				textarea#description-change(ng-model="description")
+				button#textarea-btn.btn-change-dog-field(ng-click="changeField('Description')") Change
+
 	div.dog-right()
 		div.btn-change-dog-field(ng-click="changeTrigger('Name')") Change
 		div.btn-change-dog-field(ng-click="changeTrigger('BirthDate')") Change
 		div.btn-change-dog-field(ng-click="changeTrigger('Breed')") Change
 		div.btn-change-dog-field(ng-click="changeTrigger('Food')") Change
 		div.btn-change-dog-field(ng-click="changeTrigger('Walk')") Change
+		div.btn-change-dog-field(ng-click="changeTrigger('Description')") Change

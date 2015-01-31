@@ -18,7 +18,6 @@ app.factory("DogService", function($q, $http, identity){
 			.success(function(response){
 				deferred.resolve(true);
 			}).error(function(err){
-				alert(err);
 				deferred.resolve(false);
 			});
 		return deferred.promise;

@@ -62,13 +62,13 @@ form .form-field .error-field.failed {
 	display: inline;
 }
 
-input[type="submit"]:hover, .btn:hover {
+#signup-form input[type="submit"]:hover, .btn:hover {
 	background: #b2cf36 url('/img/btnHover.jpg') 0 0 no-repeat;
 	-webkit-background-size: cover;
 	background-size: cover;
 }
 
-form .form-field input[type="submit"], input[type="submit"] {
+#signup-form .form-field input[type="submit"], #signup-form input[type="submit"] {
 	display: block;
 	height: 50px;
 	width: 270px;
