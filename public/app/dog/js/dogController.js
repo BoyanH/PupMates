@@ -1,4 +1,4 @@
-app.controller("DogController", function($scope, $routeParams, FileReaderAng, DogService, $location, identity){
+app.controller("DogController", function($scope, $routeParams, FileReaderAng, DogService, $location, identity, notifier){
 	var dogId = $routeParams.id,
         data = "",
         contentType = "";
@@ -89,8 +89,11 @@ app.controller("DogController", function($scope, $routeParams, FileReaderAng, Do
             console.log("-----"+contentType);
         }
         DogService.updateDog($scope.dog).then(function(res){
-            if(res) $scope[field] = "";
-            else alert("Couldnt update dog, please login or refresh.");
+            if(res) {
+                $scope[field] = "";
+                notifier.success("The photo has been changed!")
+            }
+            else notifier.error("Couldnt update dog, please login or refresh.");
         })
 	}
     $scope.getFile = function () {
