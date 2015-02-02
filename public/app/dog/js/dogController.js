@@ -1,9 +1,9 @@
-app.controller("DogController", function($scope, $routeParams, FileReaderAng, DogService, $location, identity, notifier){
+app.controller("DogController", function($scope, $routeParams, LoadingService, FileReaderAng, DogService, $location, identity, notifier){
 	var dogId = $routeParams.id,
         data = "",
         contentType = "";
 
-
+    //display the "change buttons"
     if(identity.currentUser){
         DogService.updateDogsOfCurrentUser().then(function(){
             if(DogService.currentUserOwnDog(dogId)){
@@ -35,7 +35,7 @@ app.controller("DogController", function($scope, $routeParams, FileReaderAng, Do
         		if (isNaN(timestamp)==false)return true;
         		else return false;
     		}
-
+            //fill the dates
     		$scope.optionsYear = [];
     		for(var i=0;i<100;i++){
         		var obj = {};
@@ -71,6 +71,9 @@ app.controller("DogController", function($scope, $routeParams, FileReaderAng, Do
 	$scope.changeTrigger = function(field){
 		$scope["showChange" + field] = !$scope["showChange" + field];
 	}
+    $scope.browsePhotoTrigger = function(){
+        $('#input-browse-photo').trigger('click');
+    }
 	$scope.changeField = function(field){
 		$scope.changeTrigger(field);
         field = field.toLowerCase();
@@ -82,16 +85,24 @@ app.controller("DogController", function($scope, $routeParams, FileReaderAng, Do
         $scope.dog[field] = $scope[field];
 
         if(field == "profphoto"){
+            //creating the new profphoto object
             var profPhoto = {};
             profPhoto.data = data;
             profPhoto.contentType = contentType;
             $scope.dog.profPhoto = profPhoto;
             console.log("-----"+contentType);
+            LoadingService.start();
         }
+
+        //updateing the dog to the datebase
         DogService.updateDog($scope.dog).then(function(res){
             if(res) {
                 $scope[field] = "";
-                notifier.success("The photo has been changed!")
+                if(field == "profphoto"){
+                    LoadingService.stop();
+                    field = "photo";
+                }
+                notifier.success("The " + field + " has been changed!");
             }
             else notifier.error("Couldnt update dog, please login or refresh.");
         })
