@@ -1,4 +1,4 @@
-app.controller("DogController", function($scope, $routeParams, LoadingService, FileReaderAng, DogService, $location, identity, notifier){
+app.controller("DogController", function($scope, $timeout, $routeParams, LoadingService, FileReaderAng, DogService, $location, identity, notifier){
 	var dogId = $routeParams.id,
         data = "",
         contentType = "";
@@ -26,8 +26,12 @@ app.controller("DogController", function($scope, $routeParams, LoadingService, F
 	DogService.getDogById(dogId).then(function(dog){
 		if(dog){
 			$scope.dog = dog;
-            $scope.dog.foods = dog.food;
-            $scope.dog.walks = dog.walk;
+
+            $scope.name = dog.name;
+            $scope.breed = dog.breed;
+            $scope.description = dog.description;
+
+
     		var today = new Date();
     		var dd = today.getDate();
     		var mm = today.getMonth()+1; //January is 0!
@@ -76,7 +80,6 @@ app.controller("DogController", function($scope, $routeParams, LoadingService, F
                 t = addMinutes(t, 15);
                 str = t.getHours() + ":" + t.getMinutes();
                 var p = str.slice(str.indexOf(":") + 1, str.length);
-                console.log(p);
                 if(p.length == 1){
                     str = str + "0";
                 }
@@ -87,8 +90,8 @@ app.controller("DogController", function($scope, $routeParams, LoadingService, F
                 i++;
             }
             $scope.optionsWalk = $scope.optionsFood;
-            $scope.dog.food = $scope.optionsFood[0];
-            $scope.dog.walk = $scope.optionsWalk[0];
+            $scope.dog.foodOpt = $scope.optionsFood[0];
+            $scope.dog.walkOpt = $scope.optionsWalk[0];
 
 		}
 		else{
@@ -99,17 +102,21 @@ app.controller("DogController", function($scope, $routeParams, LoadingService, F
 		$scope["showChange" + field] = !$scope["showChange" + field];
 	}
     $scope.browsePhotoTrigger = function(){
-        $('#input-browse-photo').trigger('click');
+        $timeout(function(){
+            $('#input-browse-photo').trigger('click');
+        }, 1);
     }
 	$scope.changeField = function(field){
 		$scope.changeTrigger(field);
         field = field.toLowerCase();
 
-        console.log($scope.dog);
+        //console.log($scope.dog);
 
         if(field == "birthdate") field = "birthDate";
-        if(($scope[field]=="" || $scope[field]==undefined) && field != "profphoto") return;
-        $scope.dog[field] = $scope[field];
+        if(($scope[field]=="" || $scope[field]==undefined) && field != "profphoto" 
+            && field != "walk" && field != "food") return;
+        
+        if(field != "walk" && field != "food") $scope.dog[field] = $scope[field];
 
         if(field == "profphoto"){
             //creating the new profphoto object
@@ -120,7 +127,7 @@ app.controller("DogController", function($scope, $routeParams, LoadingService, F
             console.log("-----"+contentType);
             LoadingService.start();
         }
-
+        console.log($scope.dog);
         //updateing the dog to the datebase
         DogService.updateDog($scope.dog).then(function(res){
             if(res) {
@@ -145,4 +152,22 @@ app.controller("DogController", function($scope, $routeParams, LoadingService, F
               });
           });
     };
+    $scope.removeFW = function(kind, data){
+        if(kind=="f"){
+            var i = $scope.dog.food.indexOf(data);
+            $scope.dog.food.splice(i, 1);
+        }
+        if(kind=="w"){
+            var i = $scope.dog.walk.indexOf(data);
+            $scope.dog.walk.splice(i, 1);
+        }
+    };
+    $scope.addFW = function(kind){
+        if(kind=="f"){
+            $scope.dog.food.push($scope.dog.foodOpt.value);
+        }
+        if(kind=="w"){
+            $scope.dog.walk.push($scope.dog.walkOpt.value);
+        }
+    }
 });

@@ -4,7 +4,7 @@ div.wrapper-dog
 			img#dog-img-change(src="{{dog.url}}")
 		div#change-btn-pic.btn-change-dog-field(ng-click="changeTrigger('ProfPhoto')" ng-hide="showChangeProfPhoto") Change
 		div(ng-show="showChangeProfPhoto")
-			input#input-browse-photo(required ng-file-select="onFileSelect($files)" type="file")
+			input#input-browse-photo(ng-file-select="onFileSelect($files)" type="file")
 			div.btn-change-dog-field(ng-click="browsePhotoTrigger()") Browse Photo
 			div.btn-change-dog-field(ng-show="showChangeProfPhoto" ng-click="changeField('ProfPhoto')") Save Change
 	div.dog-mid
@@ -28,19 +28,21 @@ div.wrapper-dog
 		div.dog-group
 			div.dog-food
 				span foods: 
-				div.dog-field-fw(ng-repeat="f in dog.foods") {{f}}
-					div.delete-field(ng-show="showChangeFood") X
+				div.dog-field-fw(ng-repeat="(indF, f) in dog.food track by $index") {{f}}
+					div.delete-field(ng-show="showChangeFood" ng-click="removeFW('f', f)") X
 				div.add-fw(ng-show="showChangeFood")
-					select.dog-date-selector(ng-model="dog.food" ng-options="opt as opt.label for opt in optionsFood")
-					div.btn-change-dog-field(ng-click="changeField('Food')") Add Food
+					select.dog-date-selector(ng-model="dog.foodOpt" ng-options="opt as opt.label for opt in optionsFood")
+					div.btn-change-dog-field(ng-click="addFW('f')") Add Food
+					div.btn-change-dog-field(ng-click="changeField('Food')") Save changes
 		div.dog-group
 			div.dog-walk
 				span walks: 
-				div.dog-field-fw(ng-repeat="w in dog.walks") {{w}}
-					div.delete-field(ng-show="showChangeWalk") X
+				div.dog-field-fw(ng-repeat="(indW, w) in dog.walk track by $index") {{w}}
+					div.delete-field(ng-show="showChangeWalk" ng-click="removeFW('w', w)") X
 				div.add-fw(ng-show="showChangeWalk")
-					select.dog-date-selector(ng-model="dog.walk" ng-options="opt as opt.label for opt in optionsWalk")
-					div.btn-change-dog-field(ng-click="changeField('Walk')") Add Walk
+					select.dog-date-selector(ng-model="dog.walkOpt" ng-options="opt as opt.label for opt in optionsWalk")
+					div.btn-change-dog-field(ng-click="addFW('w')") Add Walk
+					div.btn-change-dog-field(ng-click="changeField('Walk')") Save changes
 		div.dog-description 
 			div {{dog.description}}
 			div.dog-change-content(ng-show="showChangeDescription")
