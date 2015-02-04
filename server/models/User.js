@@ -39,7 +39,7 @@ userSchema.method({
 });
 var User = mongoose.model('User', userSchema);
 module.exports.seedInitialUsers = function(){
-
+    //User.find({}).remove(function(){});
     User.find({}).exec(function (err, collection) {
     if (err) {
         console.log('Cant find users ' + err)
@@ -58,6 +58,7 @@ module.exports.seedInitialUsers = function(){
         User.create( { username: 'pesho',
          firstName: 'Pesho', 
          lastName: 'Peshev',
+         email: "pesho@gmail.com",
          profPhoto: {
             data: pic,
             contentType: "image/jpg"
@@ -81,12 +82,9 @@ module.exports.seedInitialUsers = function(){
         console.log( 'Users added to database....' );
     }
     else{
-        // for(var i=0;i < collection.length;i++){
-        //     for(var j=0;j<collection[i].dogs.length;j++){
-        //         // console.log(collection[i].dogs[j].profPhoto.contentType);    //removed weird UNDEFINEDs in console
-        //         // console.log(collection[i].dogs[j].profPhoto.data);           //was too confusing
-        //     }
-        // }
+        //console.log(collection);
+
+
     }
     });
 }

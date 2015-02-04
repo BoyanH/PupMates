@@ -1,7 +1,7 @@
 .wrapper-dog{
 	display: block;
 	margin: 0 auto;
-	width: 700px;
+	width: 800px;
 	background: transparent;
 	color: #424345;
 	min-height: 400px;
@@ -49,7 +49,8 @@
 .dog-group{
 	margin: 10px 0;
 	border-bottom: 1px solid #424345;
-	height: 30px;
+	min-height: 30px;
+	height: auto;
 	line-height: 30px;
 	text-align: left;
 }
@@ -84,6 +85,11 @@
 	background-color: #7ccc31;
 	border-color: #7ccc31;
 	color: #181E22;
+}
+.btn-change-dog-field:active{
+	color: #fff;
+	background: #09ADED;
+	border-color: #09ADED;
 }
 .dog-input-field{
 	color: #09ADED;
@@ -131,4 +137,41 @@
 }
 #input-browse-photo{
 	display: none;
+}
+.dog-field-fw{
+	display: inline-block;
+	line-height: 18px;
+	margin-right: 4px;
+}
+.delete-field{
+	display: inline-block;
+	margin-left: 3px;
+	padding: 0;
+	width: 25px;
+	text-align: center;
+	font-size: 1em;
+	font-weight: 700;
+	background: red;
+	border: 1px solid red;
+	border-radius: 5px;
+}
+.delete-field:hover{
+	cursor: pointer;
+	color: #fff;
+}
+.delete-field:active{
+	background: #09ADED;
+	border-color: #09ADED;
+}
+.add-fw{
+	display: block;
+}
+.add-fw select, .add-fw div{
+	display: inline-block;
+}
+.add-fw select{
+	width: 60px;
+}
+.add-fw div{
+	width: 100px;
 }

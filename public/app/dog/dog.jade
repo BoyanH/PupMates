@@ -26,11 +26,21 @@ div.wrapper-dog
 				input.dog-input-field(type="text" placeholder="Change Breed" ng-model="breed")
 				input.btn-change-dog-field(type="submit" value="Change" ng-click="changeField('Breed')")
 		div.dog-group
-			div.dog-food food: 
-				span(ng-repeat="f in dog.food") {{f}} 
+			div.dog-food
+				span foods: 
+				div.dog-field-fw(ng-repeat="f in dog.foods") {{f}}
+					div.delete-field(ng-show="showChangeFood") X
+				div.add-fw(ng-show="showChangeFood")
+					select.dog-date-selector(ng-model="dog.food" ng-options="opt as opt.label for opt in optionsFood")
+					div.btn-change-dog-field(ng-click="changeField('Food')") Add Food
 		div.dog-group
-			div.dog-walk walks: 
-				span(ng-repeat="w in dog.walk") {{w}} 
+			div.dog-walk
+				span walks: 
+				div.dog-field-fw(ng-repeat="w in dog.walks") {{w}}
+					div.delete-field(ng-show="showChangeWalk") X
+				div.add-fw(ng-show="showChangeWalk")
+					select.dog-date-selector(ng-model="dog.walk" ng-options="opt as opt.label for opt in optionsWalk")
+					div.btn-change-dog-field(ng-click="changeField('Walk')") Add Walk
 		div.dog-description 
 			div {{dog.description}}
 			div.dog-change-content(ng-show="showChangeDescription")
