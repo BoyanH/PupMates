@@ -30,7 +30,7 @@ module.exports = {
 			var requestExists = false;
 
 			for (var i = 0, len = user.notifications.length; i < len; i += 1) {
-				
+		
 				if(user.notifications[i].type == 'friendRequest' && user.notifications[i].from.id == notification.from._id) {
 
 					requestExists = true;

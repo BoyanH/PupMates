@@ -6,7 +6,7 @@ div.wrapper-dog
 		div(ng-show="showChangeProfPhoto")
 			input#input-browse-photo(ng-file-select="onFileSelect($files)" type="file")
 			div.btn-change-dog-field(ng-click="browsePhotoTrigger()") Browse Photo
-			div.btn-change-dog-field(ng-show="showChangeProfPhoto" ng-click="changeField('ProfPhoto')") Save Change
+			div.btn-change-dog-field(ng-show="showChangeProfPhoto" ng-click="showChangeProfPhoto = !showChangeProfPhoto;") Save Change
 	div.dog-mid
 		div.dog-group
 			h2.dog-name {{dog.name}}
@@ -50,9 +50,9 @@ div.wrapper-dog
 				button#textarea-btn.btn-change-dog-field(ng-click="changeField('Description')") Change
 
 	div.dog-right()
-		div.btn-change-dog-field(ng-click="changeTrigger('Name')") Change
-		div.btn-change-dog-field(ng-click="changeTrigger('BirthDate')") Change
-		div.btn-change-dog-field(ng-click="changeTrigger('Breed')") Change
-		div.btn-change-dog-field(ng-click="changeTrigger('Food')") Change
-		div.btn-change-dog-field(ng-click="changeTrigger('Walk')") Change
-		div.btn-change-dog-field(ng-click="changeTrigger('Description')") Change
+		div.btn-change-dog-field(ng-click="showChangeName = !showChangeName;") Change
+		div.btn-change-dog-field(ng-click="showChangeBirthDate = !showChangeBirthDate;") Change
+		div.btn-change-dog-field(ng-click="showChangeBreed = !showChangeBreed;") Change
+		div.btn-change-dog-field(ng-click="showChangeFood = !showChangeFood;") Change
+		div.btn-change-dog-field(ng-click="showChangeWalk = !showChangeWalk;") Change
+		div.btn-change-dog-field(ng-click="showChangeDescription = !showChangeDescription;") Change

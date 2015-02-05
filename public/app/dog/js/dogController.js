@@ -17,12 +17,6 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
         });
     }
 
-	$scope.showChangeName = false;
-	$scope.showChangeBreed = false;
-	$scope.showChangeBirthDate = false;
-	$scope.showChangeFood = false;
-	$scope.showChangeWalk = false;
-
 	DogService.getDogById(dogId).then(function(dog){
 		if(dog){
 			$scope.dog = dog;
@@ -98,16 +92,14 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
 			$location.path('/home');
 		}
 	});
-	$scope.changeTrigger = function(field){
-		$scope["showChange" + field] = !$scope["showChange" + field];
-	}
     $scope.browsePhotoTrigger = function(){
         $timeout(function(){
             $('#input-browse-photo').trigger('click');
         }, 1);
     }
 	$scope.changeField = function(field){
-		$scope.changeTrigger(field);
+		$scope["showChange" + field] = !$scope["showChange" + field];
+        
         field = field.toLowerCase();
 
         //console.log($scope.dog);
