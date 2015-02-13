@@ -82,7 +82,6 @@ module.exports = {
 		var userId = req.params.userId,
 			dogId = req.params.dogId;
 		var dog = req.body;
-
 		if(dog.profPhoto) {
         	var b64string = dog.profPhoto.data;
         	var buf = new Buffer(b64string, 'base64');
@@ -92,8 +91,11 @@ module.exports = {
         	profPhoto.contentType = dog.profPhoto.contentType;
         	dog.profPhoto = profPhoto;
     	}
-    	console.log(profPhoto);
+    	delete dog.url;
 		if(userId == req.user._id || req.user.roles.indexOf('admin') > -1){
+
+    		console.log("------Update dog--------");
+    		console.log(dog);
 			Dog.update({_id: dogId}, dog).exec(function(err){
 				if(err){
 					console.log("Failed to update dog:");

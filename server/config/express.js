@@ -10,7 +10,7 @@ module.exports = function ( app, config) {
     app.use( cookieParser('grannysbushes') );
     app.sessionStore = new session.MemoryStore();
     app.use(bodyParser.json({limit: '50mb'}));
-    app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+    app.use(bodyParser.urlencoded({limit: '20mb', extended: true}));
     app.use( session(
         {
             store: app.sessionStore,

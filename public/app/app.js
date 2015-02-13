@@ -28,6 +28,11 @@ app.config(function($routeProvider, $locationProvider){
             controller: 'MainController',
             resolve: routeUserCheck.authenticated
         })
+        .when('/places', {
+            templateUrl: '/partials/places/places',
+            controller: 'PlacesController',
+            resolve: routeUserCheck.authenticated
+        })
         .when('/admin/users', {
             templateUrl: 'partials/admin/users-list',
             controller: 'UserListController',

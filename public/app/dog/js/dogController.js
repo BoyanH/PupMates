@@ -121,6 +121,12 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
         }
         console.log($scope.dog);
         //updateing the dog to the datebase
+
+        delete $scope.dog.foodOpt;
+        delete $scope.dog.walkOpt;
+        delete $scope.dog.day;
+        delete $scope.dog.month;
+        delete $scope.dog.year;
         DogService.updateDog($scope.dog).then(function(res){
             if(res) {
                 $scope[field] = "";

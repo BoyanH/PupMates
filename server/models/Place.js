@@ -6,9 +6,11 @@ var placeSchema = mongoose.Schema({
 	creator: mongoose.Schema.ObjectId,
 	people: [mongoose.Schema.ObjectId],
 	dogs: [mongoose.Schema.ObjectId],
+	name: String,
 	rate: Number,
 	lng: String,
-	lat: String
+	lat: String,
+	private: Boolean,
 });
 
 var Place = mongoose.model("Place", placeSchema)
@@ -35,9 +37,11 @@ module.exports.seedInitialPlaces = function(){
 						creator: users[0]._id,
 						people:[users[0]._id, users[1]._id],
 						dogs: [dog._id],
+						name: 'Probno ime',
 						rate: 5,
 						lng: "39.7391536",
-						lat: "-104.9847034"
+						lat: "-104.9847034",
+						private: false
 					})
 					console.log("Place added to datebase...");
 				});

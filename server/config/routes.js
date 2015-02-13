@@ -17,6 +17,7 @@ module.exports = function (app) {
     app.get('/img/:img', function(req, res){
         res.send('../../public/img/' + req.params.img);
     });
+    app.get('/places/:id', auth.isAuthenticated, controllers.places.getPlacesOfUser)
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.dogs.createDog);
     app.put('/updateDog/:userId/:dogId', auth.isAuthenticated, controllers.dogs.updateDog);
     app.get('/dogs/:userId', controllers.dogs.getDogsOfUser)
