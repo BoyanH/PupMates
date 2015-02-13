@@ -1,5 +1,5 @@
 ﻿var app = angular.module('app', 
-    ['ngResource', 'ngRoute','ngDraggable', 'luegg.directives', 'offClick', 'visualCaptcha'])
+    ['ngResource', 'ngRoute','ngDraggable', 'geolocation', 'luegg.directives', 'offClick', 'visualCaptcha'])
 .value('toastr', toastr);
 
 app.config(function($routeProvider, $locationProvider){
