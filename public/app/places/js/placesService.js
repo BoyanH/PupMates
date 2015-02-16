@@ -1,4 +1,5 @@
-app.factory('PlacesService', function($http, $q, identity){
+app.factory('PlacesService', function($http, $q, identity, geolocation){
+
 	function getPlacesOfUser(id){
 		var deferred = $q.defer();
 
@@ -32,8 +33,18 @@ app.factory('PlacesService', function($http, $q, identity){
 		return deferred.promise;
 
 	}
+	function createPlace(place){
+		var deferred = $q.defer();
+
+		$http.post('/places/create/' + identity.currentUser._id, place).success(function(res){
+			deferred.resolve(res);
+		})
+
+		return deferred.promise;
+	}
 	return{
 		getPlacesOfUser: getPlacesOfUser,
-		getPlacesOfCurUser: getPlacesOfCurUser
+		getPlacesOfCurUser: getPlacesOfCurUser,
+		createPlace: createPlace
 	}
 });

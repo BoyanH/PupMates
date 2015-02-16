@@ -68,7 +68,7 @@
 .dog-change-content{
 	width: 60%;
 }
-.btn-change-dog-field{
+.btn-change-dog-field, button{
 	padding: 1px 3px;
 	font-size: 0.7em;
 	color: #09ADED;
@@ -80,13 +80,13 @@
 	line-height: 20px;
 	text-align: center;
 }
-.btn-change-dog-field:hover{
+.btn-change-dog-field:hover, button:hover{
 	cursor: pointer;
 	background-color: #7ccc31;
 	border-color: #7ccc31;
 	color: #181E22;
 }
-.btn-change-dog-field:active{
+.btn-change-dog-field:active, button:active{
 	color: #fff;
 	background: #09ADED;
 	border-color: #09ADED;

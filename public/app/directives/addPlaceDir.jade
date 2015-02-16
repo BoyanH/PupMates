@@ -1,0 +1,13 @@
+div
+	form
+		div.pl-form-group
+			label Name: 
+			input.input-place(type="text" ng-model="place.name")
+		div.pl-form-group
+			label Private: 
+			input(type="radio" ng-model="place.private" value="true")
+			span Yes
+			input(type="radio" ng-model="place.private" value="false")
+			span No
+		button.pl-button(ng-click="addPlace(place)") Save
+		button.pl-button(ng-click="cancelAddPlace()") Cancel
