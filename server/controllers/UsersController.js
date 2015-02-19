@@ -304,8 +304,8 @@ exportsObj.befriend = function (req, res) {
         var frRequestFromUser;
 
         for (var i = 0, len = user.notifications.length; i < len; i += 1) {
-            
-            if(user.notifications[i].type == 'friendRequest' && x.from.id == req.body.friendID) {
+
+            if(user.notifications[i].notifType == 'friendRequest' && user.notifications[i].from.id == req.body.friendID) {
                 
                 frRequestFromUser = user.notifications[i];
                 break;
@@ -353,7 +353,6 @@ exportsObj.befriend = function (req, res) {
                         }
                     });
 
-
                         req.body.notification = frRequestFromUser;
                         notificationsController.deleteNotification(req, res);
 
@@ -376,7 +375,7 @@ exportsObj.befriend = function (req, res) {
 
                     from: user,
                     to: req.body.friendID,
-                    type: 'friendRequest'
+                    notifType: 'friendRequest'
 
                 };
 

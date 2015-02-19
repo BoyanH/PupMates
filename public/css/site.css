@@ -237,6 +237,89 @@ h1, h2, h3, a{
 .notif > img:hover{
 	cursor: pointer;
 }
+.notif-box ul {
+
+	margin: 0;
+	padding: 0;
+}
+.notif-box li {
+
+	list-style-type: none;
+	margin-left: 0;
+    margin-bottom: 10px;
+}
+.notif-title {
+	font-size: 14px;
+}
+.notif-container {
+	padding: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    min-height: 80px;
+    border-top: 1px solid #36A7E8;
+    border-bottom: 1px solid #36A7E8;
+    border-radius: 5px;
+    background-color:#eeeeee;
+}
+.notif-container:hover {
+    background-color: #D8D8D8;
+}
+img.notif-img {
+
+	width: 80px;
+	float: left;
+	clear: right;
+}
+div.notif-read {
+
+	float: left;
+	margin-left: 10px;
+}
+div.notif-read img {
+
+	width: 20px;
+}
+div.notif-read img:hover {
+	
+	cursor: pointer;
+}
+div.notif-read img:hover + span.mas-helper {
+
+	visibility: visible;
+}
+div.notif-read span {
+
+	visibility: hidden;
+	font-size: 14px;
+	position: relative;
+	bottom: 20px;
+	right: 15px;
+	border: 1px solid #1D1D1D;
+	border-radius: 3px;
+	color: #7CCC31;
+	background-color: #1D1D1D;
+}
+div.notif-date {
+
+	margin-top: -20px;
+	font-size: 14px;
+	font-style: italic;
+	float: right;
+}
+div.notif-story {
+
+	clear: right;
+	padding: 10px;
+	margin-left: 80px;
+}
+div.fr-buttons {
+
+	margin-left: 100px;
+}
+.fr-buttons button {
+	margin-right: 10px;
+	padding: 5px;
+}
 .popup {
     background-color:#fafafa;
     color: #000;
@@ -247,8 +330,9 @@ h1, h2, h3, a{
     padding:10px;
     border:2px solid #09ADED;
     z-index:0;
-    width: 250px;
-    height: 330px;
+    width: 300px;
+    height: 350px;
+    overflow-y: auto;
     border-radius: 5px;
 }
 

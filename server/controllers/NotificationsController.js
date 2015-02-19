@@ -9,12 +9,12 @@ module.exports = {
 		var deferred = Q.defer(),
 			notifObj = {
 
-				type: notification.type,
-				story: notification.story,
+				notifType: notification.notifType,
+				story: notification.story || '',
 				seen: false,
 				createdTime: new Date(),
 				from: {
-					name: notification.from.firstName + " " + notification.from.lastName,
+					name: notification.from.firstName + ' ' + notification.from.lastName,
 					username: notification.from.username,
 					id: notification.from._id
 				}
@@ -30,8 +30,8 @@ module.exports = {
 			var requestExists = false;
 
 			for (var i = 0, len = user.notifications.length; i < len; i += 1) {
-		
-				if(user.notifications[i].type == 'friendRequest' && user.notifications[i].from.id == notification.from._id) {
+																					//calling toString(), because it is mongoose.Schema.ObjectId
+				if(user.notifications[i].notifType == "friendRequest" && user.notifications[i].from.id.toString() == notifObj.from.id) {
 
 					requestExists = true;
 					break;
@@ -41,8 +41,8 @@ module.exports = {
 
 			//If user didn't already recieve a friend request from the same person
 			if( !requestExists ) {
-					
-				user.notifications.push(JSON.stringify(notifObj));
+
+				user.notifications.push(notifObj);
 
 				User.update({_id: notification.to}, user, function(err, data){
 	                
@@ -56,7 +56,7 @@ module.exports = {
 	                if(socketioController.clientsList[notification.to]) {
 		                socketioController.clientsList[notification.to].identity.forEach(function (clientConnection) {
 
-		                	clientConnection.socket.emit('new notifications', data);
+		                	clientConnection.socket.emit('new notifications', user.notifications[user.notifications.length - 1]);
 		                });
 		            }
 

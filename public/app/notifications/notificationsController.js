@@ -2,9 +2,13 @@ app.controller('NotificationsController', function($scope, identity, socket){
     $scope.identity = identity;
     $scope.notifShow = false;
 
+    if (identity.currentUser) {
+
+        $scope.notifications = identity.currentUser.notifications;
+    };
+
     socket.on('new notifications', function (data) {
 
-        console.log(data);
     	$scope.notifications.push(data);
     });
 
@@ -14,5 +18,18 @@ app.controller('NotificationsController', function($scope, identity, socket){
     $scope.hideNotif = function() {
 
     	$scope.notifShow = false;
+    }
+
+    $scope.markAsSeen = function (notification) {
+
+        throw "NotImplementedException!!! :P";
+    }
+    $scope.acceptFriendship = function (notification) {
+
+        throw "NotImplementedException!!! :P";
+    }
+    $scope.deleteNotification = function (notification) {
+
+        throw "NotImplementedException!!! :P";
     }
 });

@@ -14,7 +14,7 @@ var userSchema = mongoose.Schema({
             username: String
         }],
         notifications: [{
-            type: String,
+            notifType: String,
             story: String,
             seen: Boolean,
             createdTime: Date,
