@@ -6,14 +6,14 @@ div(ng-controller="NotificationsController"  off-click="hideNotif()")
 				span.notif-title Notifications
 				hr
 				ul
-					li.notif-container(ng-repeat="notification in notifications")
+					li.notif-container(ng-repeat="notification in notifications", ng-class="{unseen: !notification.seen}")
 						img.notif-img(src="/img/profPhoto/{{notification.from.id}}")
-						div.notif-read(ng-hide="notification.seen", ng-click="markAsSeen(notification)"
+						div.notif-read(ng-hide="notification.seen", ng-click="markAsSeen(notification)")
 							img(src="http://info.catchop.fr/assets/img/glyphicons/glyphicons_051_eye_open.png")
 							span.mas-helper Mark as seen
 						div.notif-date {{notification.createdTime | moment: 'fromNow'}}
 						div.notif-story {{notification.from.name}} 
-							span(ng-show="notification.story.legth > 0"){{notification.story}}
+							span(ng-show="notification.story.legth > 0") {{notification.story}}
 							span(ng-show="notification.notifType == 'friendRequest'") wants to add you as a friend!
 						div.fr-buttons(ng-show="notification.notifType == 'friendRequest'")
 							button.accept-btn(ng-click="acceptFriendship(notification)") Add

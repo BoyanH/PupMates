@@ -23,6 +23,8 @@ module.exports = function (app) {
     app.get('/dogs/:userId', controllers.dogs.getDogsOfUser)
     app.get('/dog/:id', controllers.dogs.getDogById)
     app.post('/befriendMate', auth.isAuthenticated, controllers.users.befriend);
+    app.delete('/notifications', auth.isAuthenticated, controllers.notifications.deleteNotification);
+    app.put('/notifications', auth.isAuthenticated, controllers.notifications.markNotificationAsSeen);
     app.get('/friends', auth.isAuthenticated, controllers.users.getFriends);
     app.get('/discussions', auth.isAuthenticated, controllers.messages.getUsersDiscussions);
     app.get('/img/profPhoto/:id', controllers.users.getProfPhoto);

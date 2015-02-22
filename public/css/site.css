@@ -261,6 +261,14 @@ h1, h2, h3, a{
     border-radius: 5px;
     background-color:#eeeeee;
 }
+.notif-container.unseen {
+
+	background-color: rgba(255, 153, 0, 0.3);
+}
+.notif-container.unseen:hover {
+
+	background-color: rgba(255, 153, 0, 0.5);
+}
 .notif-container:hover {
     background-color: #D8D8D8;
 }
@@ -278,6 +286,7 @@ div.notif-read {
 div.notif-read img {
 
 	width: 20px;
+	position: absolute;
 }
 div.notif-read img:hover {
 	
@@ -301,7 +310,6 @@ div.notif-read span {
 }
 div.notif-date {
 
-	margin-top: -20px;
 	font-size: 14px;
 	font-style: italic;
 	float: right;

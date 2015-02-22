@@ -18,12 +18,12 @@ app.factory('requester', function(identity, $rootScope, $q) {
         return deferred.promise;        
     }
 
-    function postData (dataURL, data) {
+    function postData (dataURL, data, method) {
 
         var deferred = $q.defer();
 
             $.ajax({
-                type: 'POST',
+                type: method,
                 url: dataURL,
                 data: data
             }).done(function(data) {
@@ -49,7 +49,8 @@ app.factory('requester', function(identity, $rootScope, $q) {
                 {
                     friendID: friendID,
                     friendUsername: friendUsername
-                });
+                },
+                'POST');
         },
         getFriends: function() {
 
@@ -58,6 +59,13 @@ app.factory('requester', function(identity, $rootScope, $q) {
         getDiscussions: function () {
 
             return getData('/discussions');
+        },
+        markNotifAsSeen: function (notification) {
+
+            return postData('/notifications', notification, 'PUT');
+        },
+        deleteNotif: function (notification) {
+            return postData('/notifications', notification, 'DELETE');
         }
     };
 });

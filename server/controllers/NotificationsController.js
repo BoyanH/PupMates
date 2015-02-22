@@ -82,7 +82,7 @@ module.exports = {
 			}
 
 			try {
-				user.notifications.splice(user.notifications.indexOf(req.body.notification), 1);
+				user.notifications.splice(user.notifications.indexOf(req.body), 1);
 			}
 			catch(err) {
 
@@ -101,6 +101,24 @@ module.exports = {
 
 		});
 	},
+	markNotificationAsSeen: function (req, res) {
+
+		User.update(
+		    {"_id": req.user._id, "notifications._id": req.body._id}, 
+		    {$set: {
+		        "notifications.$.seen": true
+		    	}
+			}, function (err, data) {
+
+				if(err) {
+
+					res.status(500).end(err);
+				}
+
+				res.status(200).end();
+			}
+	    );
+	},
 	addNewFriendship: function (userOne, userTwo) {
 
 		var deferred = Q.defer();
@@ -116,7 +134,7 @@ module.exports = {
 
 					id: userTwo._id,
 					online: !!socketioController.clientsList[userTwo._id]
-				}
+				};
 
 			if(socketioController.clientsList[userOne._id]) {
 

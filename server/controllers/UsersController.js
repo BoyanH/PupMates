@@ -336,7 +336,7 @@ exportsObj.befriend = function (req, res) {
 
                     friend.friends.push({
                         id: userID,
-                        username: user.username
+                        username: req.user.username
                     });
                     
                     User.update({_id: req.body.friendID}, friend, function (err) {
@@ -353,13 +353,13 @@ exportsObj.befriend = function (req, res) {
                         }
                     });
 
-                        req.body.notification = frRequestFromUser;
+                        req.body = frRequestFromUser;
                         notificationsController.deleteNotification(req, res);
 
                         notificationsController.addNewFriendship(user, friend)
                         .then(function (data) {
 
-                            res.status(200).end();
+                            res.status(200).end('added');
                         }, function (err) {
 
                             console.log('New friendship err: ' + err);
@@ -382,7 +382,7 @@ exportsObj.befriend = function (req, res) {
                 notificationsController.addNotification(newNotification)
                 .then(function (data) {
 
-                    res.status(200).end();
+                    res.status(200).end('requested');
                 }, function (err) {
 
                     console.log(err);
@@ -434,6 +434,7 @@ exportsObj.getFriends = function(req, res) {
         .select("-hashPass")
         .select("-roles")
         .select("-profPhoto")
+        .select("-notifications")
         .exec(function (err, collection) {
 
             if(err) {
