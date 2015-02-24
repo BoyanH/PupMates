@@ -1,0 +1,7 @@
+div#profiler-wrapper
+	input(type="text" ng-model="achievment.achievmentName")
+	input#video-input(ng-file-select="onFileSelect($files)" type="file")
+	progress.progress-photo(value="{{progress}}" ng-show="progress != 1")
+	video#video-preview(controls ng-hide="progress != 1")
+	video(controls src="/achievments/video/54ebca3dc38df2bc2fa80966")
+	button(ng-click="applyForAchievment();") Apply

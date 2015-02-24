@@ -2,7 +2,9 @@
     user = require('../models/User.js'),
     dog = require('../models/Dog.js'),
     place = require('../models/Place.js'),
-    discussion = require('../models/Discussion.js');
+    discussion = require('../models/Discussion.js'),
+    achievment = require('../models/Achievment.js'),
+    pendingAchievment = require('../models/PendingAchievment');
 
 module.exports = function(config){
     mongoose.connect(config.db);

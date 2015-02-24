@@ -5,7 +5,8 @@
 	messagesController = require('../controllers/MessagesController.js'),
 	CaptchaController = require('../controllers/CaptchaController.js'),
 	notificationsController = require('../controllers/NotificationsController.js'),
-    searchController = require('../controllers/SearchController.js');
+    searchController = require('../controllers/SearchController.js'),
+    achievmentsController = require('../controllers/AchievmentsController.js');
 
 module.exports = {
     users: usersController,
@@ -15,5 +16,6 @@ module.exports = {
     captcha: CaptchaController,
     places: placesController,
     dogs: dogsController,
-    search: searchController
+    search: searchController,
+    achievments: achievmentsController
 }

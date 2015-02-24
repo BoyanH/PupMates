@@ -1,5 +1,5 @@
 'use strict';
-app.controller('ProfileRouteController', function($scope, identity, $routeParams, requester, notifier){
+app.controller('ProfileRouteController', function($scope, identity, $routeParams, requester, notifier, FileReaderAng){
 
 	requester.getProfile($routeParams.username)
     .then(function (profile) {
@@ -23,4 +23,5 @@ app.controller('ProfileRouteController', function($scope, identity, $routeParams
             }
         });
     }
+
 });

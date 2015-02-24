@@ -66,6 +66,10 @@ app.factory('requester', function(identity, $rootScope, $q) {
         },
         deleteNotif: function (notification) {
             return postData('/notifications', notification, 'DELETE');
+        },
+        applyForAchievment: function(achievment) {
+
+            return postData('/achievments', achievment, 'POST');
         }
     };
 });
