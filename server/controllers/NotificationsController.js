@@ -152,7 +152,7 @@ module.exports = {
 
 				socketioController.clientsList[userTwo._id].identity.forEach(function (userTwoConnection) {
 
-					userOneConnection.socket.emit('new friends', [userOne]);
+					userTwoConnection.socket.emit('new friends', [userOne]);
 					userTwoConnection.socket.emit('status change', [userOneAsFrined]);
 				});
 			}
