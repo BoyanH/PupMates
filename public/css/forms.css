@@ -7,7 +7,7 @@
 	margin: 0 auto;
 }
 
-form#signup-form {
+form#signup-form, form#achievment-form {
 
 	width: 700px;
 	height: 800px;
@@ -30,12 +30,10 @@ form .form-field .label {
 	text-transform: uppercase;
 	color: #7d7c77;
 	font-size: 1.2em;
-	position: relative;
-	top: 15px;
 	letter-spacing: 0.14em;
 }
 
-form .form-field input {
+form .form-field input:not([type="file"]), form .form-field select {
 	
 	float: left;
 	padding: 10px;
@@ -46,7 +44,6 @@ form .form-field input {
 	-moz-transition: all 0.4s ease-in-out;
 	-o-transition: all 0.4s ease-in-out;
 	transition: all 0.4s ease-in-out;
-	line-height: 1.5em;
 }
 
 form .form-field .error-field, form .form-field .instruct {
@@ -131,4 +128,15 @@ form .form-field input[type="submit"] {
 	margin: 0;
 	vertical-align: middle;
 	text-align: center;
+}
+
+.ach-progress {
+
+	float: left;
+	width: 550px;
+}
+
+#vide-preview {
+
+	display: block;
 }

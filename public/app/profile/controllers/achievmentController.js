@@ -5,6 +5,7 @@ app.controller('AchievmentController', function($scope, identity, requester, not
         contentType = '';
 
     $scope.achievment = {};
+    $scope.existingAchievments = [];
 
 
     $scope.getFile = function () {

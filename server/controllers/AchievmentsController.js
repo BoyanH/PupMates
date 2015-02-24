@@ -64,9 +64,9 @@ module.exports = {
                 res.status(500).end('Err querying video: ' + err);
             }
             
-            res.contentType = approval.video.contentType;
+            res.contentType(approval.video.contentType);
             res.send(approval.video.data);
-        })
+        });
     }
 
 

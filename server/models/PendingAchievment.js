@@ -12,6 +12,7 @@ var mongoose = require('mongoose'),
                 username: String,
                 id: mongoose.Schema.ObjectId
             },
+            dogId: mongoose.Schema.ObjectId,
             createdAt: { type: Date, expires: monthInSecs },
             video: {data: Buffer, contentType: String}
     }),

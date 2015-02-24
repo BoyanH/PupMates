@@ -1,7 +1,18 @@
 div#profiler-wrapper
-	input(type="text" ng-model="achievment.achievmentName")
-	input#video-input(ng-file-select="onFileSelect($files)" type="file")
-	progress.progress-photo(value="{{progress}}" ng-show="progress != 1")
-	video#video-preview(controls ng-hide="progress != 1")
-	video(controls src="/achievments/video/54ebca3dc38df2bc2fa80966")
+	form#achievment-form
+		div.form-field(ng-hide="createNew")
+			label.label(for="achievmentName") Pick Achievment
+			select.field(ng-model="achievment.achievmentName" ng-options="name as achievment.name for achievment in existingAchievments")
+		div.form-field(ng-show="createNew")
+			label.label(for="achievmentName") Name
+			input#achievmentName.field(type="text" ng-model="achievment.achievmentName")
+		div.form-field(ng-show="createNew")
+			label.label(for="achievmentDescription") Description
+			input#achievmentDescription.field(type="text" ng-model="achievment.achievmentDescription")
+		div.form-field
+			label.label(for="video-input") Video Proof
+			input#video-input(ng-file-select="onFileSelect($files)" type="file")
+			div.video-preview
+				progress.progress-photo.ach-progress(value="{{progress}}" ng-show="progress != 1")
+				video#video-preview(controls ng-hide="progress != 1" width="700px")
 	button(ng-click="applyForAchievment();") Apply
