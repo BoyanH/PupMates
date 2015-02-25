@@ -57,6 +57,27 @@ module.exports = {
 			}
 		})
 	},
+	getDogsOfUserByUserName: function(req, res, next){
+		var username = req.params.username;
+
+		User.findOne({username: username}).select("_id")
+		.exec(function(err, user){
+			if(err){
+				console.log("failed to get user by username: " + err);
+				res.end();
+			}else{
+				Dog.find({owner: user._id}).exec(function(err, dogs){
+					if(err){
+						console.log("couldnt find dogs by username func: " + err);
+						res.end();
+					}
+					else{
+						res.send(dogs);
+					}
+				})
+			}
+		})
+	},
 	getDogById: function(req, res, next){
 		var dogId = req.params.id;
 		Dog.findOne({_id:dogId}).select("-profPhoto")

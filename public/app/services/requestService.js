@@ -1,23 +1,44 @@
-app.factory('requester', function(identity, $rootScope, $q) {
+app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
 
-    function getData(dataURl) {
+    function getData(dataURL, username, userCall) {
 
         var deferred = $q.defer();
 
-        $.ajax({
-            type: 'GET',
-            url: dataURl
-        }).done(function(friends) {
-            
-            deferred.resolve(friends);
-        }).fail(function(err) {
-
-            deferred.reject(err);
+        $http.get(dataURL).success(function(data) {
+            if(userCall){
+                DogService.getDogsOfUserByUserName(username).then(function(dogs){
+                    deferred.resolve(dogs);
+                })
+            }
+        }).error(function(err) {
+            deferred.resolve(false);
         });
 
         return deferred.promise;        
     }
+    function getProfileByUserName(username){
+        var deferred = $q.defer();
+        $http.get('/api/users/' + username).success(function(user){
+            if(user){
+                deferred.resolve(user);
+            }
+            else{
+                deferred.resolve(false);
+            }
+        })
+        return deferred.promise;
+    }
+    function getAllDataOfUserByUserName(username){
+        var deferred = $q.defer();
+        
+        $http.get('/api/user-all-data/' + username).success(function(user){
+            deferred.resolve(user);
+        }).error(function(err){
+            deferred.resolve(false);
+        });
 
+        return deferred.promise;
+    }
     function postData (dataURL, data, method) {
 
         var deferred = $q.defer();
@@ -39,10 +60,11 @@ app.factory('requester', function(identity, $rootScope, $q) {
 
     return {
 
-        getProfile: function (username) {
+        getProfile: function (username, userCall) {
 
-            return getData('/api/users/' + username);
+            return getData('/api/users/' + username, username, userCall);
         },
+        getProfileByUserName: getProfileByUserName,
         addFriend: function (friendID, friendUsername) {
 
              return postData('/befriendMate', 
@@ -52,6 +74,7 @@ app.factory('requester', function(identity, $rootScope, $q) {
                 },
                 'POST');
         },
+        getAllDataOfUserByUserName: getAllDataOfUserByUserName,
         getFriends: function() {
 
             return getData('/friends');

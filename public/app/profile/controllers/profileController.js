@@ -1,10 +1,16 @@
 'use strict';
-app.controller('ProfileRouteController', function($scope, identity, $routeParams, requester, notifier, FileReaderAng){
+app.controller('ProfileRouteController', function($scope, identity, DogService, $routeParams, requester, notifier, FileReaderAng){
 
-	requester.getProfile($routeParams.username)
+	requester.getAllDataOfUserByUserName($routeParams.username)
     .then(function (profile) {
-
         $scope.profile = profile;
+        $scope.identity = identity;
+
+        $scope.profPhoto = "/img/profPhoto/" + profile._id;
+        console.log("---profile----");
+        console.log($scope.profile);
+        if($scope.identity.currentUser)
+            console.log($scope.identity.currentUser.dogs);
     });
 
     $scope.befriendMate = function () {

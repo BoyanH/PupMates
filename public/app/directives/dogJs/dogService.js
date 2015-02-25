@@ -40,6 +40,10 @@ app.factory("DogService", function($q, $http, identity){
 
 		$http.get('/dogs/'+id).success(function(dogs){
 			if(dogs){
+				for(var i=0;i<dogs.length;i++){
+                    dogs[i].url = "/"+id+"/imgdog/"+dogs[i]._id,
+                    console.log("url: " + dogs[i].url);
+				}
 				deferred.resolve(dogs);
 			}
 			else deferred.resolve(false);
@@ -75,6 +79,21 @@ app.factory("DogService", function($q, $http, identity){
 
 		return deferred.promise;
 	}
+	function getDogsOfUserByUserName(username){
+		var deferred = $q.defer();
+
+		$http.get('/dogs/username/' + username).success(function(dogs){
+			if(dogs){
+				for(var i=0;i<dogs.length;i++){
+                    dogs[i].url = "/"+identity.currentUser._id+"/imgdog/"+dogs[i]._id,
+                    console.log("url: " + dogs[i].url);
+				}
+				deferred.resolve(true);
+			}
+			else deferred.resolve(false);
+		});
+		return deferred.promise;
+	}
 	function currentUserOwnDog(dogId){
 		console.log("-----identity-------");
 		console.log(identity);
@@ -102,6 +121,7 @@ app.factory("DogService", function($q, $http, identity){
 		updateDogsOfCurrentUser: updateDogsOfCurrentUser,
 		updateDogsOfCurrentUserSync: updateDogsOfCurrentUserSync,
 		currentUserOwnDog: currentUserOwnDog,
-		updateDog: updateDog
+		updateDog: updateDog,
+		getDogsOfUserByUserName: getDogsOfUserByUserName
 	}
 });
