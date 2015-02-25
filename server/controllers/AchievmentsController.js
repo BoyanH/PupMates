@@ -30,7 +30,7 @@ module.exports = {
             };
 
 
-        YoutubeCtrl.postVideo(req.video.data)
+        YoutubeCtrl.postVideo(achievment.video.data)
         .then(function (data) {
 
             console.log(data);
