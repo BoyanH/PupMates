@@ -12,7 +12,7 @@
 
 /* left content */
 .prof-left-content{
-	width: 22%;
+	width: 15%;
 	min-height: 500px;
 	background: #fefefe;
 }
@@ -29,7 +29,7 @@
 
 /*right content */
 .prof-right-content{
-	width: 78%;
+	width: 85%;
 	padding: 15px;
 }
 .prof-notCurrUser h1, .prof-notCurrUser button{
@@ -42,4 +42,32 @@
 }
 .prof-notCurrUser button:first-of-type{
 	margin-left: 10px;
+}
+.prof-dog-container{
+	color: #484848;
+	float: left;
+	display: inline-block;
+	width: 25%;
+	height: 280px;
+	min-height: 150px;
+	margin-right: 1%;
+	margin-left: 1%;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	padding: 10px;
+	background-color: #fcfcfc;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	vertical-align: top;
+	overflow: hidden;
+	-webkit-transition: all 0.5s ease-in-out;
+  	-moz-transition: all 0.5s ease-in-out;
+  	-o-transition: all 0.5s ease-in-out;
+  	transition: all 0.5s ease-in-out;
+}
+.prof-dog-container:hover{
+	cursor: pointer;
+	-webkit-box-shadow: 0px 0px 5px 2px rgba(12,162,255,1);
+	-moz-box-shadow: 0px 0px 5px 2px rgba(12,162,255,1);
+	box-shadow: 0px 0px 5px 2px rgba(12,162,255,1);
 }
