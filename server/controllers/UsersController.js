@@ -120,7 +120,7 @@ exportsObj.getUser = function(req, res){
         userIP = ip.address();
 
     //By Username <-- easier when route is /profile/:userName, such roots look better to users
-    User.findOne({username: req.params.id}, function (err, user) {
+    User.findOne({username: req.params.username}, function (err, user) {
 
             if(err || !user){
                 console.log('User could not be found: ' +  err);

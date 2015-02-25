@@ -5,7 +5,8 @@ var User = require('mongoose').model('User');
 
 module.exports = function (app) {
     app.get('/api/users', auth.isInRole('admin'),controllers.users.getAllUsers );
-    app.get('/api/users/:id', controllers.users.getUser);
+    app.get('/api/users/:username', controllers.users.getUser);
+    app.get('/api/user-all-data/:username', controllers.allData.getAllDataOfUserByUserName)
     app.post('/api/users', controllers.captcha._trySubmission, controllers.users.createUser);
     app.put('/api/users',auth.isAuthenticated, controllers.users.updateUser);
     app.get('/api/dynamicSearch/:searchContent/:limit?', controllers.search.dynamicSearch)
@@ -21,6 +22,7 @@ module.exports = function (app) {
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.dogs.createDog);
     app.put('/updateDog/:userId/:dogId', auth.isAuthenticated, controllers.dogs.updateDog);
     app.get('/dogs/:userId', controllers.dogs.getDogsOfUser)
+    app.get('/dogs/username/:username', controllers.dogs.getDogsOfUserByUserName)
     app.get('/dog/:id', controllers.dogs.getDogById)
     app.post('/befriendMate', auth.isAuthenticated, controllers.users.befriend);
     app.delete('/notifications', auth.isAuthenticated, controllers.notifications.deleteNotification);
@@ -38,7 +40,7 @@ module.exports = function (app) {
 
     app.post('/achievments', auth.isAuthenticated, controllers.achievments.applyForAchievment);
     app.get('/achievments', auth.isInRole('admin'), controllers.achievments.queryAchievmentApplications);
-    app.get('/achievments/video/:id', auth.isInRole('admin'), controllers.achievments.getApprovalVideo);
+    //app.get('/achievments/video/:id', auth.isInRole('admin'), controllers.achievments.getApprovalVideo);
     
 
     // visualCaptcha initialisation routes

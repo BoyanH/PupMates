@@ -1,6 +1,21 @@
-h1 Profile of {{profile.firstName}}
-
-button(ng-click="befriendMate()") +Add to Friends
-button(ng-click="openDiscussion(profile)") Send Message
-
-profile-achievments
+.prof-wrapper
+	.prof-left-content
+		.prof-photo-container
+			img.profPhoto(src="{{profPhoto}}")
+		//profile-achievments
+	.prof-right-content
+		div.prof-notCurrUser(ng-hide="identity.currentUser._id == profile._id")
+			h1 Profile of {{profile.firstName}} {{profile.lastName}}
+			button(ng-click="befriendMate()") +Add Friend
+			button(ng-click="openDiscussion(profile)") Send Message
+		h1(ng-show="identity.currentUser._id == profile._id") Welcome {{identity.currentUser.firstName}}!
+		div.pet-wrapper
+			div.dog-container(ng-click="$location.path('/dog/' + dog._id)" ng-repeat="dog in profile.dogs")
+				div.name-container
+					a.dog-name(href="#/dog/{{dog._id}}") {{dog.name}}
+				div.birthdate Birthdate: {{dog.birthDate}}
+				div.breed Breed: {{dog.breed}}
+				div.description-pic-container
+					div.pic-container
+						img(src="{{dog.url}}")
+					div.description {{dog.description}}
