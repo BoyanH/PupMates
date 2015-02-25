@@ -6,11 +6,12 @@
 	.prof-right-content
 		div.prof-notCurrUser(ng-hide="identity.currentUser._id == profile._id")
 			h1 Profile of {{profile.firstName}} {{profile.lastName}}
-			button(ng-click="befriendMate()") +Add Friend
-			button(ng-click="openDiscussion(profile)") Send Message
+			span(ng-show="identity.currentUser")
+				button(ng-click="befriendMate()") +Add Friend
+				button(ng-click="openDiscussion(profile)") Send Message
 		h1(ng-show="identity.currentUser._id == profile._id") Welcome {{identity.currentUser.firstName}}!
 		div.pet-wrapper
-			div.prof-dog-container(ng-click="goToDogRoute($index)" ng-repeat="dog in profile.dogs track by $index")
+			div(ng-show="view.dogs").prof-dog-container(ng-click="goToDogRoute($index)" ng-repeat="dog in profile.dogs track by $index")
 				div.name-container
 					a.dog-name(href="#/dog/{{dog._id}}") {{dog.name}}
 				div.birthdate Birthdate: {{dog.birthDate}}
@@ -19,3 +20,4 @@
 					div.pic-container
 						img(src="{{dog.url}}")
 					div.description {{dog.description}}
+			profile-achievments(ng-show="view.achievments")

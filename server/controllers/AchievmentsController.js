@@ -37,7 +37,7 @@ module.exports = {
         }, function (err) {
 
             console.log(err);
-        })
+        });
        
         newAchievment.video.data = buf;
         newAchievment.video.contentType = achievment.video.contentType;
