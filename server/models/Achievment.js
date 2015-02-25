@@ -10,7 +10,8 @@ var mongoose = require('mongoose'),
                 username: String,
                 id: mongoose.Schema.ObjectId
             },
-            createdAt: Date
+            createdAt: Date,
+            description: String
     }),
 
     Achievment = mongoose.model('Achievment', achievmentSchema);
