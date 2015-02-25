@@ -26,7 +26,7 @@
 	margin-top: 5px;
 }
 .input-place{
-	width: 50%;
+	width: 40%;
 	height: 28px;
 	font-size: 1.2em;
   	color: #0CA2FF;
@@ -35,10 +35,20 @@
   	margin-bottom: 10px;
   	border: 1px solid #a1a1a1;
 }
+.input-textarea{
+	width:70%;
+	height: 50px;
+	font-size: 1.2em;
+	color: #0CA2FF;
+	outline: none;
+	border: 1px solid #a1a1a1;
+}
 .input-dog-field:focus{
   	border: 1px solid #0CA2FF;
 }
 .pl-form-group label{
+	display: inline-block;
+	min-width: 90px;
 	font-size: 1.2em;
 }
 .pl-button{
@@ -50,4 +60,11 @@
 }
 .dog-container{
 	color: #484848;
+}
+.markerNameInfo{
+	color: #0CA2FF;
+	min-height: 2px;
+	margin-bottom: 3px;
+	text-align: center;
+	border-bottom: 1px solid #0CA2FF;
 }

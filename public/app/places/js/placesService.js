@@ -36,8 +36,10 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 	function createPlace(place){
 		var deferred = $q.defer();
 
-		$http.post('/places/create/' + identity.currentUser._id, place).success(function(res){
-			deferred.resolve(res);
+		$http.post('/places/create/' + identity.currentUser._id, place).success(function(){
+			deferred.resolve(true);
+		}).error(function(){
+			deferred.resolve(false);
 		})
 
 		return deferred.promise;
