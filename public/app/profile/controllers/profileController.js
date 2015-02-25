@@ -1,6 +1,12 @@
 'use strict';
 app.controller('ProfileRouteController', function($scope, $location, identity, DogService, $routeParams, requester, notifier, FileReaderAng){
 
+    $scope.view = {
+
+        achievments: $routeParams.view == 'achievments',
+        dogs: $routeParams.view == 'dogs'
+    }
+
 	requester.getAllDataOfUserByUserName($routeParams.username)
     .then(function (profile) {
         $scope.profile = profile;

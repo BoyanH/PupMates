@@ -5,6 +5,8 @@ var mongoose = require('mongoose'),
     
     Dog = mongoose.model('Dog'),
     User = mongoose.model('User'),
+
+    YoutubeCtrl = require('./YoutubeController.js'),
     
     Q = require('q');
 
@@ -25,9 +27,17 @@ module.exports = {
                     id: req.user._id
                 },
                 video: {}
-            },
-            b64string = achievment.video.data,
-            buf = new Buffer(b64string, 'base64');
+            };
+
+
+        YoutubeCtrl.postVideo(achievment.video.data)
+        .then(function (data) {
+
+            console.log(data);
+        }, function (err) {
+
+            console.log(err);
+        });
        
         newAchievment.video.data = buf;
         newAchievment.video.contentType = achievment.video.contentType;
