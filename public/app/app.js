@@ -33,12 +33,12 @@ app.config(function($routeProvider, $locationProvider){
             controller: 'PlacesController',
             resolve: routeUserCheck.authenticated
         })
-        .when('/admin/users', {
-            templateUrl: 'partials/admin/users-list',
-            controller: 'UserListController',
+        .when('/admin/:view?', {
+            templateUrl: 'partials/admin/adminPanel',
+            controller: 'AdminController',
             resolve: routeUserCheck.adminRole
         })
-        .when('/profile/:username', {
+        .when('/profile/:username/:view?', {
             templateUrl: 'partials/profile/profile',
             controller: 'ProfileRouteController'
         })
