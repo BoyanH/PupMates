@@ -1,5 +1,5 @@
 'use strict';
-app.controller('ProfileRouteController', function($scope, identity, DogService, $routeParams, requester, notifier, FileReaderAng){
+app.controller('ProfileRouteController', function($scope, $location, identity, DogService, $routeParams, requester, notifier, FileReaderAng){
 
 	requester.getAllDataOfUserByUserName($routeParams.username)
     .then(function (profile) {
@@ -12,7 +12,9 @@ app.controller('ProfileRouteController', function($scope, identity, DogService, 
         if($scope.identity.currentUser)
             console.log($scope.identity.currentUser.dogs);
     });
-
+    $scope.goToDogRoute = function(ind){
+        $location.path('/dog/' + $scope.profile.dogs[ind]._id);
+    }
     $scope.befriendMate = function () {
 
        	requester.addFriend($scope.profile._id, $scope.profile.username)

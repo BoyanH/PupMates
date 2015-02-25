@@ -1,4 +1,4 @@
-﻿app.controller('LoginController', function($scope, $route, DogService, $http, notifier, $location, identity, auth, socket){
+﻿app.controller('LoginController', function($scope, $route, requester, $http, notifier, $location, identity, auth, socket){
     $scope.modalShown = false;
     $scope.toggleModal = function() {
         $scope.modalShown = !$scope.modalShown;
@@ -10,13 +10,7 @@
                 notifier.success('Successful login!');
                 $scope.modalShown = !$scope.modalShown;
                 var path = "/profile/" + $scope.identity.currentUser.username;
-
-                DogService.updateDogsOfCurrentUser().then(function(sucecss){
-                    if(!success){
-                        console.log("Smth went wrong :( Couldnt get the dogs!");
-                    }
-                    console.log($scope.identity.currentUser.dogs);
-                });
+                
                 $location.path(path);
             }
             else{

@@ -22,7 +22,7 @@ module.exports = {
 					if(u.hasOwnProperty(propt))
 						userGlobal[propt] = u[propt];
 				}
-				Dog.find({owners: userGlobal._id}).exec(function(err, dogs){
+				Dog.find({owners: userGlobal._id}).exec(function(err, dogs){ //get the Dogs and put them in the userGlobal
 					if(err){
 						console.log("all data err dog: " + err);
 						res.end();
@@ -38,7 +38,7 @@ module.exports = {
 							pushDog.url = "/"+pushDog.owners[0]._id+"/imgdog/"+pushDog._id
 							userGlobal.dogs.push(pushDog);
 						}
-						Place.find({creator: userGlobal._id}).exec(function(err, places){
+						Place.find({creator: userGlobal._id}).exec(function(err, places){ //get the Places and put them in the userGlobal
 							if(err){
 								console.log("all data err places: " + err);
 								res.end();
@@ -52,8 +52,6 @@ module.exports = {
 								}
 								userGlobal.places.push(pushPlace);
 							}
-							console.log("-----ALL DATA --------");
-							console.log(userGlobal);
 							res.send(userGlobal);
 						});
 					}
