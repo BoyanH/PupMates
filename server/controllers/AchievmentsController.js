@@ -34,13 +34,11 @@ module.exports = {
         .then(function (data) {
 
             console.log(data);
+            newAchievment.video = data;
         }, function (err) {
 
             console.log(err);
         });
-       
-        newAchievment.video.data = buf;
-        newAchievment.video.contentType = achievment.video.contentType;
 
         PendingAchievment.create(newAchievment, function(err, user){
             if(err){

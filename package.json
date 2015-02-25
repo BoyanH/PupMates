@@ -31,6 +31,7 @@
   "devDependencies": {
     "nodemon": "^1.0.17",
     "visualcaptcha": "^0.1.0",
-    "googleapis": "^1.1.4"
+    "googleapis": "^1.1.4",
+    "node-youtube-resumable-upload": "0.0.6"
   }
 }

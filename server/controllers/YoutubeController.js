@@ -11,29 +11,51 @@ var Q = require('q');
 
 module.exports = {
 
-	postVideo: function (videoURI) {
+    postVideo: function(videoURI, tokens) {
 
-		var deferred = Q.defer();
+        var deferred = Q.defer();
+        
+        var google = require('googleapis');
 
-		googleapis.discover('youtube', 'v3').execute(function(err, client) {
+        var jwtClient = new google.auth.JWT(
+			'630439673059-n9nm4d057vohm0f57mf8l84fd9jtkr3t@developer.gserviceaccount.com',
+			'./server/googleToken/key.pem',
+			null,
+			['https://www.googleapis.com/auth/youtube', 'https://www.googleapis.com/auth/youtube.upload'],
+			null
+		);
 
-			var metadata = {
-			    snippet: { title:'title', description: 'description'}, 
-			    status: { privacyStatus: 'private' }
-			};
+		jwtClient.authorize(function(err, tokens) {
+			if (err) {
+				console.log(err);
+				return;
+			}
 
-			client
-			    .youtube.videos.insert({ part: 'snippet,status'}, metadata)
-			    .withMedia('video/mp4', fs.readFileSync('user.flv'))
-			    .withAuthClient(auth)
-			    .execute(function(err, result) {
-			        if (err) {
-
-			        	deferred.reject(err);
-			        };
-			        
-			        deferred.resolve(result);
-			    });
+			google.youtube({version: 'v3', auth: jwtClient }).videos.insert({
+				part: 'status,snippet',
+				resource: {
+				    snippet: {
+				        title: 'title',
+				        description: 'description'
+				    },
+				    status: { 
+				        privacyStatus: 'private' //if you want the video to be private
+				    }
+				},
+				media: {
+					mimeType: 'video/mp4',
+				    body: videoURI
+				}
+				}, function(error, data){
+				if(error){
+				    
+				    deferred.reject(error);
+				} else {
+					deferred.resolve(data);
+				}
+			});
 		});
-	}
+
+        return deferred.promise;
+    }
 }
