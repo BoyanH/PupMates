@@ -10,6 +10,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
       $scope.markerAdded = false;
       $scope.displayCurUsPlTrigger = true;
       $scope.displayAllUsPlTrigger = false;
+      $scope.user = identity.currentUser;
       console.log("----data-----");
       console.log(data);
 
@@ -85,7 +86,6 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
         PlacesService.getPlacesOfCurUser().then(function(places){
           if(places){
             console.log(places);
-            $scope.user = identity.currentUser;
             $scope.user.places = places;
 
             var userMarkers = MapService.displayPlaces(map, places, true);
@@ -95,7 +95,18 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             console.log("error when getting places");
           }
         });
+        /*PlacesService.getPlaceExceptUser($scope.user._id).then(function(places){
+          if(places){
+            console.log(places);
+            $scope.allUsersPlaces = places;
 
+            var allUserMarkers = MapService.displayPlaces(map, places, true);
+            MapService.openInfoMarkerArray(map, allUserMarkers, places);
+            $scope.markers = $scope.markers.concat(allUserMarkers);
+          }else{
+            console.log("error when getting places");
+          }
+        })*/
         $scope.displayAllUsPl = function(){
           $scope.displayAllUsPlTrigger = true;
           $scope.displayCurUsPlTrigger = false;

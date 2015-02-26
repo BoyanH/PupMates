@@ -35,5 +35,17 @@ module.exports = {
 	},
 	getPlacesExcepUser: function(req, res, next){
 		var userId = req.params.id;
+		
+		Place.find({})
+		.where('creator').ne(userId)
+		.where("private").equals(false)
+		.exec(function(err, places){
+			if(err){
+				console.log("Couldnt retrieve the users except one: " +err);
+				res.end();
+			}
+			console.log(places);
+			res.send(places);
+		});
 	}
 }

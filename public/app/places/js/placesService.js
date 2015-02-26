@@ -44,10 +44,22 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 
 		return deferred.promise;
 	}
+	function getPlaceExceptUser(id){
+		var deferred = $q.defer();
+
+		$http.get("/places/allexceptofuser/" + id).success(function(places){
+			deferred.resolve(places);
+		}).error(function(){
+			deferred.resolve(false);
+		});
+
+		return deferred.promise;
+	}
 
 	return{
 		getPlacesOfUser: getPlacesOfUser,
 		getPlacesOfCurUser: getPlacesOfCurUser,
 		createPlace: createPlace,
+		getPlaceExceptUser: getPlaceExceptUser
 	}
 });
