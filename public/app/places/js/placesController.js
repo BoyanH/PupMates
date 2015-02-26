@@ -8,6 +8,11 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
       $scope.clickOnMapNewPlace = false;
       $scope.markers = [];
       $scope.markerAdded = false;
+      $scope.displayCurUsPlTrigger = true;
+      $scope.displayAllUsPlTrigger = false;
+      $scope.user = identity.currentUser;
+      console.log("----data-----");
+      console.log(data);
 
       $scope.coords = {lat:data.coords.latitude, lng:data.coords.longitude};
       var loc = new google.maps.LatLng($scope.coords.lat, $scope.coords.lng);
@@ -49,12 +54,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             place.lng = lng.toString();
             PlacesService.createPlace(place).then(function(success){
               if(success){
-                  marker.info = new google.maps.InfoWindow({
-                    content: '<div class="markerNameInfo">' + place.name + '</div>' + place.description
-                  });
-                  google.maps.event.addListener(marker, 'click', function() {
-                    marker.info.open(map, marker);
-                  });
+                MapService.setInfoMarker(map, marker, place);
                 $scope.addPlaceTrigger = false;
                 notifier.success("Place added!");
               }
@@ -83,14 +83,41 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
           var f = field + "Trigger";
           $scope[f] = !$scope[f];
         }
-    });
+        PlacesService.getPlacesOfCurUser().then(function(places){
+          if(places){
+            console.log(places);
+            $scope.user.places = places;
 
-    PlacesService.getPlacesOfCurUser().then(function(places){
-    	if(places){
-    		console.log(places);
-    		identity.places = places;
-    	}else{
-    		console.log("error when getting places");
-    	}
-    })
+            var userMarkers = MapService.displayPlaces(map, places, true);
+            MapService.openInfoMarkerArray(map, userMarkers, places);
+            $scope.markers = $scope.markers.concat(userMarkers);
+          }else{
+            console.log("error when getting places");
+          }
+        });
+        /*PlacesService.getPlaceExceptUser($scope.user._id).then(function(places){
+          if(places){
+            console.log(places);
+            $scope.allUsersPlaces = places;
+
+            var allUserMarkers = MapService.displayPlaces(map, places, true);
+            MapService.openInfoMarkerArray(map, allUserMarkers, places);
+            $scope.markers = $scope.markers.concat(allUserMarkers);
+          }else{
+            console.log("error when getting places");
+          }
+        })*/
+        $scope.displayAllUsPl = function(){
+          $scope.displayAllUsPlTrigger = true;
+          $scope.displayCurUsPlTrigger = false;
+          $('#btn-user-tab').removeClass("pl-btn-clicked").addClass('pl-btn-not-clicked');
+          $('#btn-allusers-tab').removeClass('pl-btn-not-clicked').addClass("pl-btn-clicked");
+        }
+        $scope.displayCurUsPl = function(){
+          $scope.displayAllUsPlTrigger = false;
+          $scope.displayCurUsPlTrigger = true;
+          $('#btn-user-tab').removeClass("pl-btn-not-clicked").addClass('pl-btn-clicked');
+          $('#btn-allusers-tab').removeClass('pl-btn-clicked').addClass("pl-btn-not-clicked");
+        }
+    });
 });

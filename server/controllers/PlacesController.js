@@ -23,7 +23,7 @@ module.exports = {
 	createPlace: function(req, res, next){
 		var userId = req.params.id;
 		place = req.body;
-
+		place.rate = 0;
 		Place.create(place, function(err){
 			if(err){
 				console.log("Couldnt create place");
@@ -32,5 +32,20 @@ module.exports = {
 			console.log("Place added!");
 			res.end();
 		})
+	},
+	getPlacesExcepUser: function(req, res, next){
+		var userId = req.params.id;
+		
+		Place.find({})
+		.where('creator').ne(userId)
+		.where("private").equals(false)
+		.exec(function(err, places){
+			if(err){
+				console.log("Couldnt retrieve the users except one: " +err);
+				res.end();
+			}
+			console.log(places);
+			res.send(places);
+		});
 	}
 }
