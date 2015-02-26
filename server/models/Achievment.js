@@ -5,11 +5,12 @@ var mongoose = require('mongoose'),
             
             name: String,
             points: Number,
-            author: {
+            author: {             //The first user, who aquired it
                 Name: String,
                 username: String,
                 id: mongoose.Schema.ObjectId
             },
+            dogId: mongoose.Schema.ObjectId,  //the first dog, who learned the command
             createdAt: Date,
             description: String
     }),
