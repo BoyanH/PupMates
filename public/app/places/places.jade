@@ -12,4 +12,14 @@ div.pl-wrapper
 			
 	div.pl-right-content
 		div(add-place ng-show="addPlaceTrigger")
-		div No information to display
+		div(ng-show="!user.places.length") No information to display
+		button.pl-btn-users.pl-btn-clicked#btn-user-tab(ng-click="displayCurUsPl()") My Places
+		button.pl-btn-users.pl-btn-not-clicked#btn-allusers-tab(ng-click="displayAllUsPl()") Other Users' Places
+		div.pl-p-users.pl-p-clicked(ng-show="displayCurUsPlTrigger")
+			ul
+				li(ng-repeat="place in user.places")
+					| {{place.name}}
+		div.pl-p-users.pl-p-not-clicked(ng-show="displayAllUsPlTrigger")
+			ul
+				li(ng-repeat="pl in allUsers.places")
+					| {{pl.name}}

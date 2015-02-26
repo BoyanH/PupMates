@@ -9,7 +9,7 @@
             if(success){
                 notifier.success('Successful login!');
                 $scope.modalShown = !$scope.modalShown;
-                var path = "/profile/" + $scope.identity.currentUser.username;
+                var path = "/profile/" + $scope.identity.currentUser.username + "/dogs";
                 
                 $location.path(path);
             }

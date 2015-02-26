@@ -44,9 +44,10 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 
 		return deferred.promise;
 	}
+
 	return{
 		getPlacesOfUser: getPlacesOfUser,
 		getPlacesOfCurUser: getPlacesOfCurUser,
-		createPlace: createPlace
+		createPlace: createPlace,
 	}
 });

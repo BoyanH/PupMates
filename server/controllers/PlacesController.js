@@ -23,7 +23,7 @@ module.exports = {
 	createPlace: function(req, res, next){
 		var userId = req.params.id;
 		place = req.body;
-
+		place.rate = 0;
 		Place.create(place, function(err){
 			if(err){
 				console.log("Couldnt create place");
@@ -32,5 +32,8 @@ module.exports = {
 			console.log("Place added!");
 			res.end();
 		})
+	},
+	getPlacesExcepUser: function(req, res, next){
+		var userId = req.params.id;
 	}
 }
