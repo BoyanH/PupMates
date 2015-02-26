@@ -137,7 +137,7 @@ module.exports = {
 		var searchString =  req.params.searchContent,
             searchArray = searchString.split(' '),
             deferred = Q.defer(),
-            limit = req.params.limit || '';
+            limit = req.params.limit || 5;
 
         for (var i = 0; i < searchArray.length; i++) {
             

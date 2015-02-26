@@ -43,7 +43,18 @@ app.factory("FileReaderAng", function ($q, $log) {
         return deferred.promise;
     };
 
+    var readAsBinaryString = function (file, scope) {
+
+        var deferred = $q.defer();
+         
+        var reader = getReader(deferred, scope);         
+        reader.readAsBinaryString(file);
+         
+        return deferred.promise;
+    }
+
     return {
-        readAsDataUrl: readAsDataURL  
+        readAsDataUrl: readAsDataURL,
+        readAsBinaryString: readAsBinaryString
     };
 });

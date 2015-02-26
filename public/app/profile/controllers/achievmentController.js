@@ -1,8 +1,9 @@
 'use strict';
 app.controller('AchievmentController', function($scope, identity, requester, notifier, FileReaderAng){
 
-    var data = '',
-        contentType = '';
+    var data,
+        contentType,
+        video;
 
     $scope.achievment = {};
     $scope.existingAchievments = [];
@@ -13,6 +14,8 @@ app.controller('AchievmentController', function($scope, identity, requester, not
         
         FileReaderAng.readAsDataUrl($scope.file, $scope)
         .then(function(result) {
+
+            video = result;
             data = result.slice(result.indexOf(",") +1, result.length);
             contentType = result.slice(result.indexOf(":") + 1, result.indexOf(";base64"));
             $("#video-preview").attr({
@@ -23,10 +26,7 @@ app.controller('AchievmentController', function($scope, identity, requester, not
 
     $scope.applyForAchievment = function () {
 
-        $scope.achievment.video = {
-            data: data,
-            contentType: contentType
-        }
+        $scope.achievment.video = data;
         requester.applyForAchievment($scope.achievment)
         .then(function(success) {
 

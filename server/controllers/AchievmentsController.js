@@ -29,24 +29,24 @@ module.exports = {
                 video: {}
             };
 
-
-        YoutubeCtrl.postVideo(achievment.video.data)
+        YoutubeCtrl.postVideo(achievment.video)
         .then(function (data) {
 
-            console.log(data);
             newAchievment.video = data;
+
+            PendingAchievment.create(newAchievment, function(err, user){
+                if(err){
+                    
+                    res.status(500).res.end('Fell to add new achievment application: ' + err);
+                }
+                
+                res.status(200).end();
+            });
+
         }, function (err) {
 
             console.log(err);
-        });
-
-        PendingAchievment.create(newAchievment, function(err, user){
-            if(err){
-                
-                res.status(500).res.end('Fell to add new achievment application: ' + err);
-            }
-            
-            res.status(200).end();
+            res.status(500).res.end('Fell to add new achievment application: ' + err);
         });
     },
     queryAchievmentApplications: function (req, res) {

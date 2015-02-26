@@ -11,7 +11,7 @@ var Q = require('q');
 
 module.exports = {
 
-    postVideo: function(videoURI, tokens) {
+    postVideo: function(video) {
 
         var deferred = Q.defer();
         
@@ -25,32 +25,39 @@ module.exports = {
 			null
 		);
 
+        google.options({auth: jwtClient});
+
 		jwtClient.authorize(function(err, tokens) {
 			if (err) {
 				console.log(err);
 				return;
 			}
 
+			jwtClient.setCredentials(tokens);
+
+			var b64string = video;
+        	var buf = new Buffer(b64string, 'base64');
+
 			google.youtube({version: 'v3', auth: jwtClient }).videos.insert({
-				part: 'status,snippet',
-				resource: {
-				    snippet: {
-				        title: 'title',
-				        description: 'description'
-				    },
-				    status: { 
-				        privacyStatus: 'private' //if you want the video to be private
-				    }
-				},
-				media: {
-					mimeType: 'video/mp4',
-				    body: videoURI
-				}
+					part: 'status,snippet',
+					resource: {
+					    snippet: {
+					        title: 'title',
+					        description: 'description'
+					    },
+					    status: { 
+					        privacyStatus: 'private' //if you want the video to be private
+					    }
+					},
+					media: {
+					    body: buf
+					}
 				}, function(error, data){
 				if(error){
-				    
 				    deferred.reject(error);
 				} else {
+					console.log('succes');
+
 					deferred.resolve(data);
 				}
 			});
