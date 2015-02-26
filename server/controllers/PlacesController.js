@@ -19,5 +19,18 @@ module.exports = {
 				res.send(collection)
 			}
 		});
+	},
+	createPlace: function(req, res, next){
+		var userId = req.params.id;
+		place = req.body;
+
+		Place.create(place, function(err){
+			if(err){
+				console.log("Couldnt create place");
+				res.end();
+			}
+			console.log("Place added!");
+			res.end();
+		})
 	}
 }

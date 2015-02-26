@@ -15,7 +15,6 @@ module.exports = {
 			dog.description = data.description;
 			dog.breed = data.breed;
 			dog.birthDate = data.birthDate;
-			console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
 			console.log(data.birthDate);
 			dog.owners = owners;
 			dog.profPhoto = data.profPhoto;

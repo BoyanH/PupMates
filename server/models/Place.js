@@ -7,6 +7,7 @@ var placeSchema = mongoose.Schema({
 	people: [mongoose.Schema.ObjectId],
 	dogs: [mongoose.Schema.ObjectId],
 	name: String,
+	description: String,
 	rate: Number,
 	lng: String,
 	lat: String,
