@@ -187,7 +187,11 @@ module.exports = {
 
                 deferred.resolve(collection);
 
-        }).sort( { seenFrom: -1 } ).limit(limit);
+        })
+        .select('_id')
+        .select('owners')
+        .select('name')
+        .sort( { seenFrom: -1 } ).limit(limit);
 
         return deferred.promise;
 	}
