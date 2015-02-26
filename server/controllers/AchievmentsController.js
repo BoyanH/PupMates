@@ -49,6 +49,26 @@ var mongoose = require('mongoose'),
                     if(err) {
 
                         res.status(500).end('Error adding achievment to UserAchievments: ' + err);
+
+                        var newUserAchievmentsDoc = {
+
+                            userId: savedAch.author.id,
+                            achievments: [{
+                                achievmentId: savedAch._id,
+                                dogId: savedAch.dogId,
+                                createdAt: savedAch.createdAt
+                            }]
+                        };
+
+                        UserAchievments.create(newUserAchievmentsDoc, function (err, success) {
+
+                            if(err) {
+
+                                res.status(500).end('Error creating new UserAchievments: ' + err);
+                            }
+
+                            res.status(200).end();
+                        });
                     }
 
                     res.status(200).end();

@@ -7,4 +7,6 @@ div(ng-controller="MenuController")
 			div.new-dog-btn(ng-click="showDialog($event)" name="new-dog") Add Dog
 		li
 			a.fav-places(href="#/places") Places
+		li(ng-show="isAdmin")
+			a.fav-places.admin-panel(href="#/admin") ADMIN
 		

@@ -2,7 +2,8 @@
 app.controller('AchievmentController', function($scope, identity, requester, notifier, FileReaderAng){
 
     var data,
-        contentType;
+        contentType,
+        tenMBInBytes = 10000000;
 
     $scope.achievment = {};
     $scope.existingAchievments = [];
@@ -11,6 +12,13 @@ app.controller('AchievmentController', function($scope, identity, requester, not
     $scope.getFile = function () {
         $scope.progress = 0;
         
+        if($scope.file.size > tenMBInBytes) {
+
+            $scope.file = '';
+            notifier.error('Video must be smaller than 10MB!');
+            return;
+        }
+
         FileReaderAng.readAsDataUrl($scope.file, $scope)
         .then(function(result) {
 

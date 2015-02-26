@@ -112,12 +112,16 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
 
         if(field == "profphoto"){
             //creating the new profphoto object
-            var profPhoto = {};
-            profPhoto.data = data;
-            profPhoto.contentType = contentType;
-            $scope.dog.profPhoto = profPhoto;
+            if(data) {
+                var profPhoto = {};
+
+                profPhoto.data = data;
+                profPhoto.contentType = contentType;
+                $scope.dog.profPhoto = profPhoto;
+                LoadingService.start();
+            }
+
             console.log("-----"+contentType);
-            LoadingService.start();
         }
         console.log($scope.dog);
         //updateing the dog to the datebase

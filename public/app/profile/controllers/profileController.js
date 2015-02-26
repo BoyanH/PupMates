@@ -1,5 +1,6 @@
 'use strict';
-app.controller('ProfileRouteController', function($scope, $location, identity, DogService, $routeParams, requester, notifier, FileReaderAng){
+app.controller('ProfileRouteController', function($scope, $location, identity, 
+    DogService, $routeParams, requester, notifier, FileReaderAng, $anchorScroll){
 
     $scope.view = {
 
@@ -20,6 +21,16 @@ app.controller('ProfileRouteController', function($scope, $location, identity, D
     });
     $scope.goToDogRoute = function(ind){
         $location.path('/dog/' + $scope.profile.dogs[ind]._id);
+    }
+    $scope.changeView = function(view) {
+        $location.path('/profile/' + $scope.profile.username + '/' + view, false);
+
+        for(var prop in $scope.view) {
+
+            $scope.view[prop] = false;
+        }
+        
+        $scope.view[view] = true;
     }
     $scope.befriendMate = function () {
 
