@@ -1,4 +1,11 @@
 div.pl-wrapper
+	div.pl-ask-window
+		h3.pl-window-title Do you really want
+			br
+			| to delete the place?
+		div
+			button.pl-window-delete(ng-click="confirmDeletePlace()") Delete
+			button.pl-window-cancel(ng-click="cancelDeltePlace()") Cancel
 	div.pl-left-content
 		h1 Your places:
 		div#map-canvas
