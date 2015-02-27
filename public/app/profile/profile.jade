@@ -1,5 +1,5 @@
 .view-wrapper
-	.prof-left-content
+	.view-left-content
 		.prof-photo-container
 			img.profPhoto(src="{{profPhoto}}")
 		.sidebar-nav
@@ -7,7 +7,7 @@
 				h3 Achievments
 			.sidebar-nav-item(ng-click="changeView('dogs')") 
 				h3 Dogs
-	.prof-right-content
+	.view-right-content
 		div.prof-notCurrUser(ng-hide="identity.currentUser._id == profile._id")
 			h1 Profile of {{profile.firstName}} {{profile.lastName}}
 			span(ng-show="identity.currentUser")

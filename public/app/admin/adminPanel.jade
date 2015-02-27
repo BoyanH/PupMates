@@ -1,2 +1,10 @@
 div.view-wrapper
-	achievment-review(ng-show="view.achievments")
+	.view-left-content
+		div aslpls
+		.sidebar-nav
+			.sidebar-nav-item(ng-click="changeView('achievments')") 
+				h3 Review Achievments
+			.sidebar-nav-item(ng-click="changeView('users')") 
+				h3 Manage Users
+	.view-right-content
+		achievment-review(ng-show="view.achievments")

@@ -1,4 +1,4 @@
-app.controller('AdminController', function($scope, $routeParams){
+app.controller('AdminController', function($scope, $routeParams, $location, $routeParams){
 
     $scope.view = {
 
@@ -7,7 +7,7 @@ app.controller('AdminController', function($scope, $routeParams){
     }
 
     $scope.changeView = function(view) {
-        $location.path('/profile/' + $scope.profile.username + '/' + view, false);
+        $location.path('/admin/' + view, false);
 
         for(var prop in $scope.view) {
 
