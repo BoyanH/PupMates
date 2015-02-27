@@ -9,7 +9,8 @@ app.factory('MapService', function(identity){
 	}
 	function addPlace(map, location){
 		var marker = new google.maps.Marker({
-          position: location, 
+          position: location,
+          icon: '/img/marker-blue.png',
           draggable: true,
           map: map
       	});

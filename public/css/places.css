@@ -16,7 +16,7 @@
 	width: 70%;
 }
 .pl-right-content{
-	width: 29%;
+	width: 30%;
 }
 #map-canvas{
 	width: 95%;
@@ -24,6 +24,14 @@
 	border: 1px solid #484848;
 	border-radius: 3px;
 	margin-top: 5px;
+}
+.pl-explanation{
+	margin-bottom: 5px;
+}
+.pl-explanation img{
+	width: 12px;
+	height: 18px;
+	line-height: 20px;
 }
 .input-place{
 	width: 40%;
@@ -100,7 +108,7 @@
 }
 .pl-p-users{
 	display: block;
-	width: 80%;
+	width: 85%;
 	background: #fafafa;
 	min-height: 300px;
 	max-height: 300px;
@@ -109,4 +117,90 @@
   	-moz-transition: all 0.2s ease-in-out;
   	-o-transition: all 0.2s ease-in-out;
   	transition: all 0.2s ease-in-out;
+}
+.pl-place-ul{
+	list-style-type: none;
+}
+.pl-place-li{
+	line-height: 25px;
+	text-align: left;
+	vertical-align: middle;
+	margin-left: -25px;
+	margin-bottom: 2px;
+	border-bottom: 1px solid #eaeaea;
+}
+.pl-place-li img, .pl-place-li span, .pl-place-li button{
+	display: inline-block;
+	vertical-align: top;
+}
+.pl-place-li .pl-name-span{
+	width: 125px;
+	overflow-x: hidden;
+}
+.pl-place-li img{
+	width: 15px;
+	height: 20px;
+	margin-right: 8px;
+}
+.pl-user-places button{
+	float: right;
+	width: auto;
+	vertical-align: top;
+	margin-right: 4px;
+	padding: 1px 5px;
+	background: #e3e3e3;
+  	border: 1px solid #bbb;
+  	border-radius: 3px;
+  	-webkit-box-shadow: inset 0 0 1px 1px #f6f6f6;
+  	box-shadow: inset 0 0 1px 1px #f6f6f6;
+  	color: #333;
+  	font-size: 10px;
+  	opacity: 0.5;
+  	text-align: center;
+  	text-shadow: 0 1px 0 #fff;
+  	
+}
+.pl-user-places button:hover {
+    background: #d9d9d9;
+    -webkit-box-shadow: inset 0 0 1px 1px #eaeaea;
+    box-shadow: inset 0 0 1px 1px #eaeaea;
+    color: #222;
+    cursor: pointer;
+    opacity: 1;
+}
+.pl-user-places button:active {
+    background: #d0d0d0;
+    -webkit-box-shadow: inset 0 0 1px 1px #e3e3e3;
+    box-shadow: inset 0 0 1px 1px #e3e3e3;
+    color: #000;
+}
+.pl-description{
+	font-size: 12px;
+}
+.pl-name-span:hover{
+	cursor: pointer;
+	font-weight: 700;
+	
+}
+.pl-span-description{
+	margin-right: 10px;
+}
+.pl-rate-btn{
+	background: #96dcf9;
+	float: right;
+	margin-right: 4px;
+	border: none;
+	color: #484848;
+	opacity: 1;
+}
+.pl-rate-span{
+	width: auto;
+	font-size: 12px;
+}
+.pl-rate-img{
+	display: block;
+	margin-left: 5px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	vertical-align: middle;
 }

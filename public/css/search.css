@@ -12,7 +12,7 @@
 	width: 100%;
 	outline: none;
 	border: none;
-	background: url('https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/btnSearchIcon.png') no-repeat 10px 10px;
+	background: url('/img/btnSearchIcon.png') no-repeat 10px 10px;
 	background-size: 18px;
 	letter-spacing: 2px;
 	font-size: 1.1em;
@@ -26,7 +26,7 @@
 }
 .search:focus{
 	border: 1px solid #7ccc31;
-	background: url("https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/btnSearchIcon2.png") no-repeat 10px 10px;
+	background: url("/img/btnSearchIcon2.png") no-repeat 10px 10px;
 	background-size: 18px;
 }
 .search-results{

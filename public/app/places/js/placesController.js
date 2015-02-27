@@ -6,7 +6,11 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
       $scope.removePlaceTrigger = false;
       $scope.removeRouteTrigger = false;
       $scope.clickOnMapNewPlace = false;
-      $scope.markers = [];
+      $scope.userMarkers = [];
+      $scope.peopleMarkers = [];
+      $scope.allMarkers = [];
+      $scope.peoplePlaces = [];
+      $scope.userPlaces = [];
       $scope.markerAdded = false;
       $scope.displayCurUsPlTrigger = true;
       $scope.displayAllUsPlTrigger = false;
@@ -30,7 +34,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
                 if(!$scope.clickOnMapNewPlace){
                   $scope.clickOnMapNewPlace = true;
                   google.maps.event.removeListener(listenerHandle);
-                  $scope.markers.push(MapService.addPlace(map, event.latLng));
+                  $scope.userMarkers.push(MapService.addPlace(map, event.latLng));
                   $scope.markerAdded = true;
                 }
             }, false);
@@ -40,13 +44,13 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
           $scope.addPlaceTrigger = false;
           $scope.clickOnMapNewPlace = false;
           map.addListener('click', function(){}, false);
-          MapService.removePlace($scope.markers[$scope.markers.length-1]);
-          $scope.markers.pop();
+          MapService.removePlace($scope.userMarkers[$scope.userMarkers.length-1]);
+          $scope.userMarkers.pop();
         }
         $scope.savePlace = function(place){
           if($scope.markerAdded){
             place.creator = identity.currentUser._id;
-            var marker = $scope.markers[$scope.markers.length-1];
+            var marker = $scope.userMarkers[$scope.userMarkers.length-1];
             var lat = marker.getPosition().lat();
             var lng = marker.getPosition().lng();
 
@@ -90,23 +94,24 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
 
             var userMarkers = MapService.displayPlaces(map, places, true);
             MapService.openInfoMarkerArray(map, userMarkers, places);
-            $scope.markers = $scope.markers.concat(userMarkers);
+            $scope.userMarkers = $scope.userMarkers.concat(userMarkers);
           }else{
             console.log("error when getting places");
           }
         });
-        /*PlacesService.getPlaceExceptUser($scope.user._id).then(function(places){
+        PlacesService.getPlaceExceptUser($scope.user._id).then(function(places){
           if(places){
             console.log(places);
-            $scope.allUsersPlaces = places;
+            $scope.peoplePlaces = places;
 
-            var allUserMarkers = MapService.displayPlaces(map, places, true);
+            var allUserMarkers = MapService.displayPlaces(map, places, false);
             MapService.openInfoMarkerArray(map, allUserMarkers, places);
-            $scope.markers = $scope.markers.concat(allUserMarkers);
+            $scope.peopleMarkers = allUserMarkers;
+            $scope.allMarkers = $scope.allMarkers.concat(allUserMarkers);
           }else{
             console.log("error when getting places");
           }
-        })*/
+        })
         $scope.displayAllUsPl = function(){
           $scope.displayAllUsPlTrigger = true;
           $scope.displayCurUsPlTrigger = false;
