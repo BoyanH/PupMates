@@ -1,21 +1,43 @@
 app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
 
-    function getData(dataURL, username, userCall) {
+    function getData(dataURL, data) {
 
         var deferred = $q.defer();
 
-        $http.get(dataURL).success(function(data) {
-            if(userCall){
-                DogService.getDogsOfUserByUserName(username).then(function(dogs){
-                    deferred.resolve(dogs);
-                })
-            }
-        }).error(function(err) {
-            deferred.resolve(false);
+        $.ajax({
+            type: 'GET',
+            url: dataURL,
+            data: data
+        }).done(function(data) {
+
+            deferred.resolve(data);
+        }).fail(function(err) {
+
+            deferred.reject(err);
         });
 
         return deferred.promise;        
     }
+    function postData (dataURL, data, method) {
+
+        var deferred = $q.defer();
+
+            $.ajax({
+                type: method,
+                url: dataURL,
+                data: data
+            }).done(function(data) {
+
+                deferred.resolve(data);
+            }).fail(function(err) {
+
+                deferred.reject(err);
+            });
+
+            return deferred.promise;
+    }
+
+
     function getProfileByUserName(username){
         var deferred = $q.defer();
         $http.get('/api/users/' + username).success(function(user){
@@ -38,24 +60,6 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
         });
 
         return deferred.promise;
-    }
-    function postData (dataURL, data, method) {
-
-        var deferred = $q.defer();
-
-            $.ajax({
-                type: method,
-                url: dataURL,
-                data: data
-            }).done(function(data) {
-
-                deferred.resolve(data);
-            }).fail(function(err) {
-
-                deferred.reject(err);
-            });
-
-            return deferred.promise;
     }
 
     return {
@@ -90,9 +94,17 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
         deleteNotif: function (notification) {
             return postData('/notifications', notification, 'DELETE');
         },
+        queryAchievmentApplications: function () {
+
+            return getData('/admin/achievments');
+        },
         applyForAchievment: function(achievment) {
 
             return postData('/achievments', achievment, 'POST');
+        },
+        getAvailableAchievments: function () {
+
+            return getData('/achievments/available');
         }
     };
 });

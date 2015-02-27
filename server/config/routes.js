@@ -42,8 +42,9 @@ module.exports = function (app) {
     });
 
     app.post('/achievments', auth.isAuthenticated, controllers.achievments.applyForAchievment);
-    app.get('/achievments', auth.isInRole('admin'), controllers.achievments.queryAchievmentApplications);
-    app.get('/achievments/video/:id', auth.isInRole('admin'), controllers.achievments.getApprovalVideo);
+    app.get('/achievments/available', auth.isAuthenticated, controllers.achievments.getAvailableAchievments);
+    app.get('/admin/achievments', auth.isInRole('admin'), controllers.achievments.queryAchievmentApplications);
+    app.get('/admin/achievments/video/:id', auth.isInRole('admin'), controllers.achievments.getApprovalVideo);
     
 
     // visualCaptcha initialisation routes

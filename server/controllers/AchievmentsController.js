@@ -169,6 +169,7 @@ module.exports = {
 
             res.status(200).send(collection);
         })
+        .select('-video')
         .skip(req.body.skipTo || 0)
         .limit(req.body.limitTo || 10);
     },
@@ -241,6 +242,18 @@ module.exports = {
             })
         }
 
+    },
+    getAvailableAchievments: function (req, res) {
+
+        Achievment.find({}, function (err, data) {
+
+            if(err) {
+
+                res.status(500).end(err);
+            }
+
+            res.status(200).send(data);
+        });
     }
 
 

@@ -19,7 +19,17 @@ module.exports = function(config){
         console.log( 'Database error ' + err );
     });
 
-    user.seedInitialUsers();
-    dog.seedInitialDogs();
-    place.seedInitialPlaces();
+    user.seedInitialUsers()
+    .then(function () {
+
+        dog.seedInitialDogs()
+        .then(function (data) {
+
+            place.seedInitialPlaces()
+            .then(function(data) {
+
+                achievment.seedInitialAchievments();
+            });
+        })
+    });
 }

@@ -167,8 +167,6 @@ h1, h2, h3, a{
 		width: 15%;
 		min-height: 500px;
 		background: #fefefe;
-		overflow: hidden;
-		word-wrap: break-word;
 	}
 
 		.view-left-content .sidebar-nav .sidebar-nav-item {
@@ -179,6 +177,13 @@ h1, h2, h3, a{
 
 			padding: 5px;
 			cursor: pointer;
+
+			-webkit-touch-callout: none;
+		    -webkit-user-select: none;
+		    -khtml-user-select: none;
+		    -moz-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
 		}
 			.view-left-content .sidebar-nav .sidebar-nav-item h3:hover {
 
