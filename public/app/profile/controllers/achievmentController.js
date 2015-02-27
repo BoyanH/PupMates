@@ -3,7 +3,7 @@ app.controller('AchievmentController', function($scope, identity, requester, not
 
     var data,
         contentType,
-        video;
+        tenMBInBytes = 10000000;
 
     $scope.achievment = {};
     $scope.existingAchievments = [];
@@ -12,10 +12,16 @@ app.controller('AchievmentController', function($scope, identity, requester, not
     $scope.getFile = function () {
         $scope.progress = 0;
         
+        if($scope.file.size > tenMBInBytes) {
+
+            $scope.file = '';
+            notifier.error('Video must be smaller than 10MB!');
+            return;
+        }
+
         FileReaderAng.readAsDataUrl($scope.file, $scope)
         .then(function(result) {
 
-            video = result;
             data = result.slice(result.indexOf(",") +1, result.length);
             contentType = result.slice(result.indexOf(":") + 1, result.indexOf(";base64"));
             $("#video-preview").attr({
@@ -26,15 +32,21 @@ app.controller('AchievmentController', function($scope, identity, requester, not
 
     $scope.applyForAchievment = function () {
 
-        $scope.achievment.video = data;
+        $scope.achievment.video = {
+            data: data,
+            contentType: contentType
+        };
+
         requester.applyForAchievment($scope.achievment)
-        .then(function(success) {
+        .then(function (success) {
 
             notifier.success('Successfully applied for a new achievment. Stay tuned!');
+
+            $scope.achievment = {};
+            $scope.addNewAch = false;
         }, function (err) {
 
-            console.log('Error applying for achievment: ' + err);
-            notifier.error('Oops, please try again later! Please, contact support if this happens frequently!');
+            notifier.error(err.responseText);
         });   
     }
 

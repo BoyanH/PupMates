@@ -42,7 +42,7 @@ module.exports = function (app) {
 
     app.post('/achievments', auth.isAuthenticated, controllers.achievments.applyForAchievment);
     app.get('/achievments', auth.isInRole('admin'), controllers.achievments.queryAchievmentApplications);
-    //app.get('/achievments/video/:id', auth.isInRole('admin'), controllers.achievments.getApprovalVideo);
+    app.get('/achievments/video/:id', auth.isInRole('admin'), controllers.achievments.getApprovalVideo);
     
 
     // visualCaptcha initialisation routes

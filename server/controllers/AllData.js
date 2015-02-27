@@ -1,8 +1,9 @@
 var mongoose = require('mongoose'),
 	User = mongoose.model("User"),
 	Dog = mongoose.model('Dog'),
-	Place = mongoose.model("Place");
-	//achievement = mongoose.model("Achievment");
+	Place = mongoose.model("Place"),
+	UserAchievments = mongoose.model("UserAchievments"),
+	Achievment = mongoose.model("Achievment");
 
 module.exports = {
 	getAllDataOfUserByUserName: function(req, res, next){
@@ -38,7 +39,8 @@ module.exports = {
 							pushDog.url = "/"+pushDog.owners[0]._id+"/imgdog/"+pushDog._id
 							userGlobal.dogs.push(pushDog);
 						}
-						Place.find({creator: userGlobal._id}).exec(function(err, places){ //get the Places and put them in the userGlobal
+						//get the Places and put them in the userGlobal
+						Place.find({creator: userGlobal._id}).exec(function(err, places){
 							if(err){
 								console.log("all data err places: " + err);
 								res.end();
@@ -52,7 +54,31 @@ module.exports = {
 								}
 								userGlobal.places.push(pushPlace);
 							}
-							res.send(userGlobal);
+							UserAchievments.findOne({userId: userGlobal._id}, function (err, GlobalUserAchievments) {
+
+								if(err || !GlobalUserAchievments) {
+
+									res.status(200).send(userGlobal);
+									return;
+								}
+
+								Achievment.find({'_id': {
+										'$in' : GlobalUserAchievments.achievments.map(function (x) {
+												return x.achievmentId 
+											} ) 
+									} 
+								}, function (err, collection) {
+
+										if(err) {
+											res.send(userGlobal);
+											return;
+										}
+
+										userGlobal.achievments = collection;
+										res.send(userGlobal);
+									}
+								);
+							})
 						});
 					}
 				});

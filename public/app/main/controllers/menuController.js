@@ -1,4 +1,18 @@
 app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout, identity){
+    
+    $scope.isAdmin = identity.currentUser ? identity.isAuthorizedForRole('admin') : false;
+
+    $scope.$watch(function () {
+
+        return identity;
+     },                       
+      function(newVal, oldVal) {
+        
+            if(newVal.currentUser) {
+                $scope.isAdmin = newVal.isAuthorizedForRole('admin');
+            }
+    }, true);
+
 	$("#left-menu-dialog").height($(document).height()-$(".nav").height());
     //$scope.chatBtnShow = false;
     //$scope.newDogBtn = false;

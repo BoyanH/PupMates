@@ -2,7 +2,11 @@
 	.prof-left-content
 		.prof-photo-container
 			img.profPhoto(src="{{profPhoto}}")
-		//profile-achievments
+		.sidebar-nav
+			.sidebar-nav-item(ng-click="changeView('achievments')") 
+				h3 Achievments
+			.sidebar-nav-item(ng-click="changeView('dogs')") 
+				h3 Dogs
 	.prof-right-content
 		div.prof-notCurrUser(ng-hide="identity.currentUser._id == profile._id")
 			h1 Profile of {{profile.firstName}} {{profile.lastName}}

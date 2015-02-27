@@ -4,7 +4,8 @@
     place = require('../models/Place.js'),
     discussion = require('../models/Discussion.js'),
     achievment = require('../models/Achievment.js'),
-    pendingAchievment = require('../models/PendingAchievment');
+    pendingAchievment = require('../models/PendingAchievment'),
+    usersAchievments = require('../models/UserAchievments.js');
 
 module.exports = function(config){
     mongoose.connect(config.db);

@@ -17,7 +17,8 @@ module.exports = function(){
                     lastName: user.lastName,
                     friends: user.friends,
                     _id: user._id,
-                    notifications: user.notifications
+                    notifications: user.notifications, 
+                    roles: user.roles
                 });
             }
             else {

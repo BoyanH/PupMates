@@ -16,6 +16,25 @@
 	min-height: 500px;
 	background: #fefefe;
 }
+
+	.prof-left-content .sidebar-nav .sidebar-nav-item {
+
+		padding: 5px;
+	}
+	.prof-left-content .sidebar-nav .sidebar-nav-item h3{
+
+		padding: 5px;
+		cursor: pointer;
+	}
+		.prof-left-content .sidebar-nav .sidebar-nav-item h3:hover {
+
+			color: #7ccc31;
+			border-radius: 3px;
+
+			-webkit-box-shadow: 0px 0px 2px 1px rgba(9,172,237,1);
+			-moz-box-shadow: 0px 0px 2px 1px rgba(9,172,237,1);
+			box-shadow: 0px 0px 2px 1px rgba(9,172,237,1);
+		}
 .prof-photo-container{
 	margin: 0 auto;
 	width: 90%;

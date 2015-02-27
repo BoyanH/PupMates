@@ -1,5 +1,6 @@
 div#profiler-wrapper
-	form#achievment-form
+	
+	form#achievment-form(ng-show="true")
 		div.form-field(ng-hide="createNew")
 			label.label(for="achievmentName") Pick Achievment
 			select.field(ng-model="achievment.achievmentName" ng-options="name as achievment.name for achievment in existingAchievments")
@@ -15,4 +16,5 @@ div#profiler-wrapper
 			div.video-preview
 				progress.progress-photo.ach-progress(value="{{progress}}" ng-show="progress != 1")
 				video#video-preview(controls ng-hide="progress != 1" width="700px")
-	button(ng-click="applyForAchievment();") Apply
+		div.form-field
+			button(ng-click="applyForAchievment();") Apply
