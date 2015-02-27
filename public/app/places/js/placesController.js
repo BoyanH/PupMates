@@ -3,8 +3,8 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
     geolocation.getLocation().then(function(data){
       $scope.addPlaceTrigger = false;
       $scope.addRouteTrigger = false;
-      $scope.removePlaceTrigger = false;
-      $scope.removeRouteTrigger = false;
+      $scope.deletePlaceTrigger = false;
+      $scope.deleteRouteTrigger = false;
       $scope.clickOnMapNewPlace = false;
       $scope.userMarkers = [];
       $scope.peopleMarkers = [];
@@ -56,8 +56,11 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
 
             place.lat = lat.toString();
             place.lng = lng.toString();
+            place.rate = 0;
             PlacesService.createPlace(place).then(function(success){
               if(success){
+                $scope.clickOnMapNewPlace = false;
+                $scope.userPlaces.push(place);
                 MapService.setInfoMarker(map, marker, place);
                 $scope.addPlaceTrigger = false;
                 notifier.success("Place added!");
@@ -90,7 +93,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
         PlacesService.getPlacesOfCurUser().then(function(places){
           if(places){
             console.log(places);
-            $scope.user.places = places;
+            $scope.userPlaces = places;
 
             var userMarkers = MapService.displayPlaces(map, places, true);
             MapService.openInfoMarkerArray(map, userMarkers, places);
@@ -123,6 +126,21 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
           $scope.displayCurUsPlTrigger = true;
           $('#btn-user-tab').removeClass("pl-btn-not-clicked").addClass('pl-btn-clicked');
           $('#btn-allusers-tab').removeClass('pl-btn-clicked').addClass("pl-btn-not-clicked");
+        }
+        $scope.deletePlace = function(index){
+          var id = $scope.userPlaces[index]._id;
+          $scope.userPlaces.splice(index, 1);
+          MapService.deletePlace($scope.userMarkers[index]);
+          $scope.userMarkers.splice(index, 1);
+          PlacesService.deletePlace(id).then(function(success){
+            if(success){
+              notifier.success("Place removed successfully.");
+            }
+            else{
+              notifier.error("Couldnt delete place. Please refresh the page.")
+            }
+          })
+
         }
     });
 });

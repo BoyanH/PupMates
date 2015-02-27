@@ -55,11 +55,25 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 
 		return deferred.promise;
 	}
+	function deletePlace(id){
+		var deferred = $q.defer();
+
+		$http.delete("/places/delete/" + id)
+		.success(function(){
+			deferred.resolve(true);
+		})
+		.error(function(){
+			deferred.resolve(false);
+		})
+
+		return deferred.promise;
+	}
 
 	return{
 		getPlacesOfUser: getPlacesOfUser,
 		getPlacesOfCurUser: getPlacesOfCurUser,
 		createPlace: createPlace,
+		deletePlace: deletePlace,
 		getPlaceExceptUser: getPlaceExceptUser
 	}
 });

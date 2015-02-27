@@ -38,7 +38,7 @@ app.factory('MapService', function(identity){
 		}
 		return markers;
 	}
-	function removePlace(marker){
+	function deletePlace(marker){
 		if(marker)
 			marker.setMap(null);
 	}
@@ -67,7 +67,7 @@ app.factory('MapService', function(identity){
 	return{
 		initMap: initMap,
 		addPlace: addPlace,
-		removePlace: removePlace,
+		deletePlace: deletePlace,
 		displayPlaces: displayPlaces,
 		setInfoMarker: setInfoMarker,
 		openInfoMarkerArray: openInfoMarkerArray,

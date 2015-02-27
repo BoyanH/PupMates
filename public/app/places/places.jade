@@ -22,7 +22,7 @@ div.pl-wrapper
 		button.pl-btn-users.pl-btn-not-clicked#btn-allusers-tab(ng-click="displayAllUsPl()") Other People's Places
 		div.pl-p-users.pl-p-clicked(ng-show="displayCurUsPlTrigger")
 			ul.pl-place-ul
-				li.pl-place-li.pl-user-places(ng-repeat="place in user.places track by $index")
+				li.pl-place-li.pl-user-places(ng-repeat="place in userPlaces track by $index")
 					div
 						img(src="/img/marker-blue.png")
 						span.pl-name-span

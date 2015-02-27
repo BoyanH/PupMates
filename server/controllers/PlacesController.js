@@ -33,6 +33,19 @@ module.exports = {
 			res.end();
 		})
 	},
+	deletePlace: function(req, res, next){
+		var placeId = req.params.id;
+
+		Place.remove({_id: placeId}, function(err){
+			if(err){
+				console.log("Couldn't delete place: " + err);
+				res.end();
+			}
+			console.log("Place deleted!");
+			res.status(200);
+			res.end();
+		})
+	},
 	getPlacesExcepUser: function(req, res, next){
 		var userId = req.params.id;
 		

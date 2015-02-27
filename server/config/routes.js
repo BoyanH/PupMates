@@ -20,6 +20,7 @@ module.exports = function (app) {
     });
     app.get('/places/:id', auth.isAuthenticated, controllers.places.getPlacesOfUser);
     app.post('/places/create/:id', auth.isAuthenticated, controllers.places.createPlace);
+    app.delete('/places/delete/:id', auth.isAuthenticated, controllers.places.deletePlace)
     app.get('/places/allexceptofuser/:id', auth.isAuthenticated, controllers.places.getPlacesExcepUser)
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.dogs.createDog);
     app.put('/updateDog/:userId/:dogId', auth.isAuthenticated, controllers.dogs.updateDog);
