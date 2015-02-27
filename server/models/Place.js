@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var Dog = mongoose.model('Dog');
+var Dog = mongoose.model('Dog'),
+	Q = require('q');
 
 var placeSchema = mongoose.Schema({
 	creator: mongoose.Schema.ObjectId,
@@ -17,6 +18,8 @@ var placeSchema = mongoose.Schema({
 var Place = mongoose.model("Place", placeSchema)
 
 module.exports.seedInitialPlaces = function(){
+
+	var deferred = Q.defer();
 	//Place.remove({}).exec(function(){console.log("All places removed...");})
 	Place.find({}).exec(function(err, collection){
 		if(err){
@@ -24,7 +27,7 @@ module.exports.seedInitialPlaces = function(){
 			return;
 		}
 		if(collection.length==0){
-			User.find({}).exec(function(err, users){
+			User.findOne({username: 'AlexanderY'}).exec(function(err, user){
 				if(err){
 					console.log("Smth went wrong with users find in places: " + err);
 					return;
@@ -35,14 +38,22 @@ module.exports.seedInitialPlaces = function(){
 						return;
 					}
 					Place.create({
-						creator: users[0]._id,
-						people:[users[0]._id, users[1]._id],
+						creator: user._id,
+						people:[user._id, user._id],
 						dogs: [dog._id],
 						name: 'Probno ime',
 						rate: 5,
 						lng: "39.7391536",
 						lat: "-104.9847034",
 						private: false
+					}, function (err, data) {
+
+						if(err) {
+
+							console.log(err);
+							deferred.reject(true);
+						}
+						deferred.resolve(true);
 					})
 					console.log("Place added to datebase...");
 				});
@@ -60,4 +71,6 @@ module.exports.seedInitialPlaces = function(){
 		}
 
 	});
+
+	return deferred.promise;
 }

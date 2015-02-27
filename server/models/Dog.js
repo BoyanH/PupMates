@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var fs = require('fs');
+var fs = require('fs'),
+	Q = require('q');
 
 var dogSchema = mongoose.Schema({
 	owners:[mongoose.Schema.ObjectId],
@@ -16,6 +17,8 @@ var dogSchema = mongoose.Schema({
 var Dog = mongoose.model("Dog", dogSchema);
 
 module.exports.seedInitialDogs = function(){
+
+	var deferred = Q.defer();
 	//Dog.remove({}).exec(function(){});
 	Dog.find({}).exec(function(err, collection){
 		if(err){
@@ -23,14 +26,13 @@ module.exports.seedInitialDogs = function(){
 			return;
 		}
 		if(collection.length==0){
-			User.findOne({username: 'gosho'}).select('_id')
-			.exec(function(err, gosho){
-				console.log("-----gosho------");
-				console.log(gosho);
-				User.findOne({username: 'pesho'})
+			User.findOne({username: 'BoyanH'}).select('_id')
+			.exec(function(err, boyan){
+
+				User.findOne({username: 'AlexanderY'})
 				.select("_id")
-				.exec(function(err, users){
-					if(err){console.log("Smth went wrong when searching pesho: " + err);return;}
+				.exec(function(err, alex){
+					if(err){console.log("Smth went wrong when searching for initial user: " + err);return;}
 					function my_curr_date() {      
     					var currentDate = new Date()
     					var day = currentDate.getDate();
@@ -42,11 +44,8 @@ module.exports.seedInitialDogs = function(){
         			var imgPath = "public/husky.jpg";
         			var pic = fs.readFileSync(imgPath);
 
-					var pesho = users;
-					console.log("--------pesho-------");
-					console.log(pesho);
 					Dog.create({
-						owners:[pesho._id, gosho._id],
+						owners:[boyan._id, alex._id],
 						name:'Muncho',
 						breed: 'Husky',
 						profPhoto: {data: pic, contentType: 'image/jpg'},
@@ -54,7 +53,14 @@ module.exports.seedInitialDogs = function(){
 						birthDate: my_curr_date(),
 						food: ['9', "19:30"],
 						walk: ["6:30", "17:45"]
-					})
+					}, function (err, data) {
+
+						if(err) {
+
+							deferred.reject(true);
+						}
+						deferred.resolve(true);
+					});
 					console.log("Dog added to database!");
 				})
 			});
@@ -67,4 +73,6 @@ module.exports.seedInitialDogs = function(){
 			// })
 		}
 	})
+
+	return deferred.promise;
 }

@@ -6,7 +6,17 @@ app.controller('AchievmentController', function($scope, identity, requester, not
         tenMBInBytes = 10000000;
 
     $scope.achievment = {};
-    $scope.existingAchievments = [];
+
+    requester.getAvailableAchievments()
+    .then(function (data) {
+
+        $scope.existingAchievments = data;
+        console.log(data);
+    }, function (err) {
+
+        console.log(err);
+        notifier.error('You can currenty apply for no achievments!');
+    });
 
 
     $scope.getFile = function () {

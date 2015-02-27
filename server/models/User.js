@@ -1,7 +1,8 @@
 ﻿var mongoose = require('mongoose');
 var encryption = require('../utilities/encryption.js'); 
 var fs = require('fs');
-var shortId = require('shortid');
+var shortId = require('shortid'),
+    Q = require('q');
 
 var userSchema = mongoose.Schema({
         username: {type: String, require: '{PATH} is required', unique: true},
@@ -39,46 +40,68 @@ userSchema.method({
 });
 var User = mongoose.model('User', userSchema);
 module.exports.seedInitialUsers = function(){
+
+    var deferred = Q.defer();
     //User.find({}).remove(function(){});
     User.find({}).exec(function (err, collection) {
     if (err) {
+        
         console.log('Cant find users ' + err)
-        return;
+        
+        deferred.resolve(collection[0]);
     }
     if ( collection.length == 0 ) {
         var salt,
             hasedPwd;
         salt = encryption.generateSalt();
         //for testing purposes
-        var imgPath = "public/img1.jpg";
-        var pic = fs.readFileSync(imgPath);
+        var imgPathBoyan = "public/boyan.jpg",
+            imgPathAlex = 'public/alex.jpg';
+        var picBoyan = fs.readFileSync(imgPathBoyan),
+            picAlex = fs.readFileSync(imgPathAlex);
 
-        hasedPwd = encryption.generateHashedPassword( salt, 'pesho' );
+        hasedPwd = encryption.generateHashedPassword( salt, 'notrealpass' );
        
-        User.create( { username: 'pesho',
-         firstName: 'Pesho', 
-         lastName: 'Peshev',
-         email: "pesho@gmail.com",
-         profPhoto: {
-            data: pic,
-            contentType: "image/jpg"
-         },
-         friends: [],
-         salt: salt,
-         hashPass: hasedPwd, 
-         roles: ['admin'] });
+        User.create( 
+            { 
+                username: 'BoyanH',
+                firstName: 'Boyan', 
+                lastName: 'Hristov',
+                email: "bhristov96@gmail.com",
+                profPhoto: {
+                    data: picBoyan,
+                    contentType: "image/jpg"
+                },
+                friends: [],
+                salt: salt,
+                hashPass: hasedPwd, 
+                roles: ['admin'] 
+            }
+        );
 
-        User.create( { username: 'gosho',
-         firstName: 'Gosho', 
-         lastName: 'Goshov',
-         profPhoto: {
-            data: pic,
-            contentType: "image/jpg"
-         },
-         friends: [],
-         salt: salt,
-         hashPass: hasedPwd, 
-         roles: ['admin'] });
+        User.create( 
+            { 
+                username: 'AlexanderY',
+                firstName: 'Alexander', 
+                lastName: 'Yordanov',
+                profPhoto: {
+                data: picAlex,
+                contentType: "image/jpg"
+                },
+                friends: [],
+                salt: salt,
+                hashPass: hasedPwd, 
+                 roles: ['admin'] 
+            }, 
+            function (err, data) {
+
+                if(err) {
+                    deferred.reject(true);
+                }
+                deferred.resolve(true);
+            }
+        );
+       
         console.log( 'Users added to database....' );
     }
     else{
@@ -87,4 +110,6 @@ module.exports.seedInitialUsers = function(){
 
     }
     });
+
+    return deferred.promise;
 }

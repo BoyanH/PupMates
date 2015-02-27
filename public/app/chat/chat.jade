@@ -1,8 +1,0 @@
-h1 CHAT
-a(ng-repeat="friend in friends" class="friend-item" href="/#/chat/{{friend.username}}") {{friend.username}}
-
-div.messages-holder
-	div(ng-repeat="message in messages")
-		span {{message.from}}
-		span {{message.content}}
-	
