@@ -17,6 +17,39 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
       $scope.user = identity.currentUser;
       console.log("----data-----");
       console.log(data);
+      function clone(obj) {
+        if (null == obj || "object" != typeof obj) return obj;
+        var copy = obj.constructor();
+        for (var attr in obj) {
+          if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+        }
+        return copy;
+      }
+      PlacesService.getPlacesOfCurUser().then(function(places){
+          if(places){
+            console.log(places);
+            $scope.userPlaces = places;
+
+            var userMarkers = MapService.displayPlaces(map, places, true);
+            MapService.openInfoMarkerArray(map, userMarkers, places);
+            $scope.userMarkers = $scope.userMarkers.concat(userMarkers);
+          }else{
+            console.log("error when getting places");
+          }
+        });
+        PlacesService.getPlaceExceptUser($scope.user._id).then(function(places){
+          if(places){
+            console.log(places);
+            $scope.peoplePlaces = places;
+
+            var allUserMarkers = MapService.displayPlaces(map, places, false);
+            MapService.openInfoMarkerArray(map, allUserMarkers, places);
+            $scope.peopleMarkers = allUserMarkers;
+            $scope.allMarkers = $scope.allMarkers.concat(allUserMarkers);
+          }else{
+            console.log("error when getting places");
+          }
+        })
 
       $scope.coords = {lat:data.coords.latitude, lng:data.coords.longitude};
       var loc = new google.maps.LatLng($scope.coords.lat, $scope.coords.lng);
@@ -60,8 +93,10 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             PlacesService.createPlace(place).then(function(success){
               if(success){
                 $scope.clickOnMapNewPlace = false;
-                $scope.userPlaces.push(place);
+                $scope.userPlaces.push(clone(place));
                 MapService.setInfoMarker(map, marker, place);
+                place.name = "";
+                place.description = "";
                 $scope.addPlaceTrigger = false;
                 notifier.success("Place added!");
               }
@@ -90,31 +125,6 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
           var f = field + "Trigger";
           $scope[f] = !$scope[f];
         }
-        PlacesService.getPlacesOfCurUser().then(function(places){
-          if(places){
-            console.log(places);
-            $scope.userPlaces = places;
-
-            var userMarkers = MapService.displayPlaces(map, places, true);
-            MapService.openInfoMarkerArray(map, userMarkers, places);
-            $scope.userMarkers = $scope.userMarkers.concat(userMarkers);
-          }else{
-            console.log("error when getting places");
-          }
-        });
-        PlacesService.getPlaceExceptUser($scope.user._id).then(function(places){
-          if(places){
-            console.log(places);
-            $scope.peoplePlaces = places;
-
-            var allUserMarkers = MapService.displayPlaces(map, places, false);
-            MapService.openInfoMarkerArray(map, allUserMarkers, places);
-            $scope.peopleMarkers = allUserMarkers;
-            $scope.allMarkers = $scope.allMarkers.concat(allUserMarkers);
-          }else{
-            console.log("error when getting places");
-          }
-        })
         $scope.displayAllUsPl = function(){
           $scope.displayAllUsPlTrigger = true;
           $scope.displayCurUsPlTrigger = false;
