@@ -3,7 +3,7 @@
 		a.btn-nav-login(ng-click='toggleModal()') Login
 		a.btn-signup(href="#/sign-up") Sign Up
 	div.logged-in-items(ng-hide="!identity.currentUser")
-		span.user-menu( ng-init="useroptions = false" ng-click="useroptions = !useroptions") {{identity.currentUser.username | uppercase}}
+		span.user-menu( ng-init="useroptions = false" ng-click="useroptions = !useroptions") {{identity.currentUser.username}}
 		button.btn-signout(ng-click="signout()") Signout
 	modal-dialog.contentDialog(show='modalShown' width='400px' height='210px')
 		h2.login-h Login

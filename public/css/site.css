@@ -6,6 +6,13 @@ body{
 	background-color: #79d3f7; /*01a3e8*/
 	color: #fff;
 	font-family: Century Gothic, sans-serif;
+
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 ::-webkit-scrollbar {  
     width: 10px;
@@ -177,13 +184,6 @@ h1, h2, h3, a{
 
 			padding: 5px;
 			cursor: pointer;
-
-			-webkit-touch-callout: none;
-		    -webkit-user-select: none;
-		    -khtml-user-select: none;
-		    -moz-user-select: none;
-		    -ms-user-select: none;
-		    user-select: none;
 		}
 			.view-left-content .sidebar-nav .sidebar-nav-item h3:hover {
 
