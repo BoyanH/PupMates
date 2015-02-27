@@ -15,6 +15,9 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
       $scope.displayCurUsPlTrigger = true;
       $scope.displayAllUsPlTrigger = false;
       $scope.user = identity.currentUser;
+      $scope.placeIndexToBeDeleted = -1;
+      $scope.placeIdToBeDeleted = '';
+
       console.log("----data-----");
       console.log(data);
       function clone(obj) {
@@ -137,20 +140,31 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
           $('#btn-user-tab').removeClass("pl-btn-not-clicked").addClass('pl-btn-clicked');
           $('#btn-allusers-tab').removeClass('pl-btn-clicked').addClass("pl-btn-not-clicked");
         }
-        $scope.deletePlace = function(index){
-          var id = $scope.userPlaces[index]._id;
-          $scope.userPlaces.splice(index, 1);
-          MapService.deletePlace($scope.userMarkers[index]);
-          $scope.userMarkers.splice(index, 1);
-          PlacesService.deletePlace(id).then(function(success){
+        $scope.confirmDeletePlace = function(){
+          $(".pl-ask-window").css({display:'none'});
+          $scope.userPlaces.splice($scope.placeIndexToBeDeleted, 1);
+          MapService.deletePlace($scope.userMarkers[$scope.placeIndexToBeDeleted]);
+          $scope.userMarkers.splice($scope.placeIndexToBeDeleted, 1);
+          PlacesService.deletePlace($scope.placeIdToBeDeleted).then(function(success){
             if(success){
+              $scope.placeIndexToBeDeleted = -1;
+              $scope.placeIdToBeDeleted = '';
               notifier.success("Place removed successfully.");
             }
             else{
               notifier.error("Couldnt delete place. Please refresh the page.")
             }
           })
-
+        }
+        $scope.cancelDeletePlace = function(){
+          $(".pl-ask-window").css({display:'none'});
+          $scope.placeIndexToBeDeleted = -1;
+          $scope.placeIdToBeDeleted = '';
+        }
+        $scope.deletePlace = function(index){
+          $scope.placeIndexToBeDeleted = index;
+          $scope.placeIdToBeDeleted = $scope.userPlaces[index]._id;
+          $(".pl-ask-window").css({display:'block'});
         }
     });
 });
