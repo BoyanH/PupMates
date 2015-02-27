@@ -108,8 +108,8 @@ body{
 }
 .date-selector{
   text-align: center;
-   width: 80px;
-   margin-right: 52px;
+   width: 22%;
+   margin-right: 17%;
    padding: 2px;
    font-size: 1.1em;
    line-height: 1.1em;
@@ -122,6 +122,6 @@ body{
 }
 .label-date-selector{
   display: inline-block;
-  width: 80px;
-  margin-right: 52px;
+  width: 22%;
+  margin-right: 15%;
 }
