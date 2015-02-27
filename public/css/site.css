@@ -154,6 +154,14 @@ h1, h2, h3, a{
 	width: 100%;
 	white-space:nowrap;
 }
+.view-wrapper{
+	display: block;
+	width: 90%;
+	min-height: 500px;
+	margin: 0 auto;
+	background: #eaeaea;
+	border-radius: 5px;
+}
 .menu, .right-wrapper{
 	display: inline-block;
 	vertical-align: top;

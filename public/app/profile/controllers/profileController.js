@@ -20,7 +20,7 @@ app.controller('ProfileRouteController', function($scope, $location, identity,
             console.log($scope.identity.currentUser.dogs);
     });
     $scope.goToDogRoute = function(ind){
-        $location.path('/dog/' + $scope.profile.dogs[ind]._id);
+        $location.path('/dog/' + $scope.profile.dogs[ind]._id, true);
     }
     $scope.changeView = function(view) {
         $location.path('/profile/' + $scope.profile.username + '/' + view, false);
