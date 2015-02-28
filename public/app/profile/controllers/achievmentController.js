@@ -57,7 +57,7 @@ app.controller('AchievmentController', function($scope, identity, requester, not
         }, function (err) {
 
             notifier.error(err.responseText);
-        });   
+        });
     }
 
     $scope.cancelAchievment = function () {

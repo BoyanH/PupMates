@@ -7,6 +7,37 @@
 	margin: 0 auto;
 }
 
+.switch-btn{
+	display: inline-block;
+	position: relative;
+	margin-right: 3px;
+	width: auto;
+	padding: 5px;
+	background: #01a3e8;
+	color: #fff;
+	font-size: 15px;
+	border: none;
+	outline: none;
+	-webkit-transition: all 0.2s ease-in-out;
+  	-moz-transition: all 0.2s ease-in-out;
+  	-o-transition: all 0.2s ease-in-out;
+  	transition: all 0.2s ease-in-out;
+}
+.switch-btn-clicked:hover{
+	background: #01a3e8;
+	color: #fff;
+}
+.switch-btn-not-clicked{
+	background: #96dcf9;
+	color:#fff;
+	top:2px;
+}
+.switch-btn-not-clicked:hover{
+	background: #43bdf1;
+	color: #fff;
+	top:0;
+}
+
 form#signup-form, form#achievment-form {
 
 	width: 700px;
@@ -33,7 +64,7 @@ form .form-field .label {
 	letter-spacing: 0.14em;
 }
 
-form .form-field input:not([type="file"]), form .form-field select {
+form .form-field input:not([type="file"]) {
 	
 	float: left;
 	padding: 10px;
@@ -45,6 +76,44 @@ form .form-field input:not([type="file"]), form .form-field select {
 	-o-transition: all 0.4s ease-in-out;
 	transition: all 0.4s ease-in-out;
 }
+
+form .form-field select {
+
+	background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
+	background-color:#7DCC31;
+	background-repeat:no-repeat;
+	background-position: right 10px top 15px;
+	background-size: 16px 16px;
+
+	padding:12px;
+	width:80%;
+	
+	font-family:arial,tahoma;
+	font-size:16px;
+	font-weight:bold;
+	color:#fff;
+	text-align:center;
+	text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
+
+	border-radius:3px;	
+	-webkit-border-radius:3px;
+	-webkit-appearance: none;
+	border:0;
+	outline:0;
+	
+	-webkit-transition:0.3s ease all;
+	-moz-transition:0.3s ease all;
+	-ms-transition:0.3s ease all;
+	-o-transition:0.3s ease all;
+	
+	transition:0.3s ease all;
+}
+
+	form .form-field select:focus, form .form-field select:active, form .form-field select:hover {
+	  border:0;
+	  outline:0;
+	  background-color:#09ADED;
+	}
 
 form .form-field .error-field, form .form-field .instruct {
 

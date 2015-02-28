@@ -25,9 +25,11 @@ div.view-wrapper
 				span - other people's places
 		div(add-place ng-show="addPlaceTrigger")
 		div(ng-show="!user.places.length") No information to display
-		button.pl-btn-users.pl-btn-clicked#btn-user-tab(ng-click="displayCurUsPl()") My Places
-		button.pl-btn-users.pl-btn-not-clicked#btn-allusers-tab(ng-click="displayAllUsPl()") Other People's Places
-		div.pl-p-users.pl-p-clicked(ng-show="displayCurUsPlTrigger")
+		button.switch-btn#btn-user-tab(ng-click="showAllPl = false;" 
+		ng-class="{'switch-btn-clicked': !showAllPl, 'switch-btn-not-clicked': showAllPl}") My Places
+		button.switch-btn#btn-allusers-tab(ng-click="showAllPl = true;" 
+		ng-class="{'switch-btn-clicked': showAllPl, 'switch-btn-not-clicked': !showAllPl}") Other People's Places
+		div.pl-p-users.pl-p-clicked(ng-show="!showAllPl")
 			ul.pl-place-ul
 				li.pl-place-li.pl-user-places(ng-repeat="place in userPlaces track by $index")
 					div
@@ -39,7 +41,7 @@ div.view-wrapper
 					div.pl-description
 						span.pl-span-description Description:
 						| {{place.description}}
-		div.pl-p-users.pl-p-not-clicked(ng-show="displayAllUsPlTrigger")
+		div.pl-p-users.pl-p-not-clicked(ng-show="showAllPl")
 			ul.pl-place-ul
 				li.pl-place-li(ng-repeat="pl in peoplePlaces track by $index")
 					div

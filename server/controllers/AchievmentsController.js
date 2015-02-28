@@ -84,7 +84,7 @@ module.exports = {
     applyForAchievment: function (req, res) {
 
 
-        if(!req.body.achievmentName || !req.body.video) {
+        if(!req.body.name || !req.body.video) {
 
             res.status(401).end('Bad request');
         }
@@ -92,7 +92,7 @@ module.exports = {
         var achievment = req.body,
                 newAchievment = {
 
-                name: achievment.achievmentName,
+                name: achievment.name,
                 createdAt: new Date(),
                 author: {
                     name: req.user.firstName + ' ' + req.user.lastName,

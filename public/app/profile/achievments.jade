@@ -1,12 +1,12 @@
-div#profiler-wrapper
-	
+div
 	form#achievment-form(ng-show="true")
 		div.form-field(ng-hide="createNew")
-			label.label(for="achievmentName") Pick Achievment
-			select.field(ng-model="achievment.achievmentName" ng-options="name as achievment.name for achievment in existingAchievments")
+			label.label(for="ach-name") Pick Achievment
+			select.field#ach-name(ng-model="achievment.name")
+				option(ng-repeat="exisAch in existingAchievments") {{exisAch.name}}
 		div.form-field(ng-show="createNew")
-			label.label(for="achievmentName") Name
-			input#achievmentName.field(type="text" ng-model="achievment.achievmentName")
+			label.label(for="new-ach-name") Name
+			input#new-ach-name.field(type="text" ng-model="achievment.name")
 		div.form-field(ng-show="createNew")
 			label.label(for="achievmentDescription") Description
 			input#achievmentDescription.field(type="text" ng-model="achievment.achievmentDescription")
