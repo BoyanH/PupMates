@@ -18,6 +18,13 @@ app.controller('AchievmentController', function($scope, identity, requester, not
         notifier.error('You can currenty apply for no achievments!');
     });
 
+    requester.getAchApls()
+    .then(function (data) {
+
+        $scope.pendingAchs = data;
+        console.log(data);
+    });
+
 
     $scope.getFile = function () {
         $scope.progress = 0;
@@ -59,7 +66,6 @@ app.controller('AchievmentController', function($scope, identity, requester, not
             notifier.error(err.responseText);
         });
 
-        console.log($scope.achievment);
     }
 
     $scope.cancelAchievment = function () {

@@ -28,7 +28,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             return copy;
         }
         PlacesService.getPlacesOfCurUser().then(function(places) {
-            if (places) {
+            if (places && places.length > 0) {
                 console.log(places);
                 $scope.userPlaces = places;
 
@@ -40,7 +40,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             }
         });
         PlacesService.getPlaceExceptUser($scope.user._id).then(function(places) {
-            if (places) {
+            if (places && places.length > 0) {
                 console.log(places);
                 $scope.peoplePlaces = places;
 
@@ -51,7 +51,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             } else {
                 console.log("error when getting places");
             }
-        })
+        });
 
         $scope.coords = {
             lat: data.coords.latitude,

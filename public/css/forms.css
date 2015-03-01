@@ -223,7 +223,7 @@ form button.wide-btn {
 
 form #new-or-apply.field button {
 
-	width: 125px; /*2 buttons, field is 250px wide*/
+	width: 83px; /*3 buttons, field is 250px wide*/
 }
 
 form .video-preview progress.ach-progress {

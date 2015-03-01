@@ -158,9 +158,37 @@ module.exports = {
        }  
 
     },
+    getOwnAchievments: function(req, res) {
+
+        UserAchievments.findOne({userId: req.user._id}, function (err, userAchievments) {
+
+            if(err || collection.length == 0) {
+
+                res.status(404).send({});
+            }
+                else {
+
+                    res.status(200).send(userAchievments);
+                }
+        });
+    },
+    getOwnAchApls: function (req, res) {
+
+        PendingAchievment.findOne({"author.id": req.user._id}, function (err, pendAchs) {
+
+            if(err || !pendAchs) {
+
+                res.status(200).send({});
+            }
+                else {
+
+                    res.status(200).send(pendAchs);
+                }
+        });
+    },
     queryAchievmentApplications: function (req, res) {
 
-        PendingAchievment.find({}, function (err, collection) {
+        PendingAchievment.find({}, '-video', function (err, collection) {
 
             if(err) {
 
@@ -169,7 +197,6 @@ module.exports = {
 
             res.status(200).send(collection);
         })
-        .select('-video')
         .skip(req.body.skipTo || 0)
         .limit(req.body.limitTo || 10);
     },
@@ -242,6 +269,20 @@ module.exports = {
             })
         }
 
+    },
+    deletePendingAch: function (req, res) {
+
+        var achievment = req.body;
+
+        PendingAchievment.remove({_id: achievment._id}, function (err, successs) {
+
+            if(err) {
+
+                res.status(503).end('Error deleting pending achievment: ' + err);
+            }
+
+            res.status(200).end(success);
+        });
     },
     getAvailableAchievments: function (req, res) {
 

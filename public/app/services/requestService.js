@@ -105,6 +105,14 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
         getAvailableAchievments: function () {
 
             return getData('/achievments/available');
+        },
+        getOwnAchievmentApplications: function () {
+
+            return getData('/admin/achievments')
+        },
+        getAchApls: function () {
+
+            return getData('/achievments/pending');
         }
     };
 });

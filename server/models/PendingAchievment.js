@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
             name: String,
             points: Number,
             author: {
-                Name: String,
+                name: String,
                 username: String,
                 id: {type: mongoose.Schema.ObjectId, require: '{PATH} is required', unique: true}
             },

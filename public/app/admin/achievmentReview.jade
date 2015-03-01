@@ -1,5 +1,6 @@
 div
-	div Hey there achievments
-	div(ng-repeat="achievment in achievments")
+	h1 Review Achievments
+	div.ach-review-box(ng-repeat="achievment in achievmentApplications")
+		h1 {{achievment.name}}
 		video(controls)
-			source(src="/achievments/video/{{achievment._id}}")
+			source(ng-src="{{'/admin/achievments/video/' + achievment._id}}")

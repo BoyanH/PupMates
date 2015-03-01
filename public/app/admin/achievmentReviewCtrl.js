@@ -4,7 +4,6 @@ app.controller('achievmentReviewCtrl', function($scope, notifier, requester){
     .then(function (data) {
 
     	$scope.achievmentApplications = data;
-    	console.log('here');
     }, function (err) {
 
     	console.log(err);
