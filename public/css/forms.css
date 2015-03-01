@@ -64,11 +64,16 @@ form .form-field .label {
 	letter-spacing: 0.14em;
 }
 
+form .form-field .field {
+
+	width: 250px;
+	padding: 10px;
+}
+
 form .form-field input:not([type="file"]) {
 	
+	width: 230px;
 	float: left;
-	padding: 10px;
-	width: 250px;
 	height: 20px;
 	border: 1px solid #d6d7d2;
 	-webkit-transition: all 0.4s ease-in-out;
@@ -86,7 +91,7 @@ form .form-field select {
 	background-size: 16px 16px;
 
 	padding:12px;
-	width:80%;
+	width:275px;
 	
 	font-family:arial,tahoma;
 	font-size:16px;
@@ -157,6 +162,12 @@ form .form-field input[type="submit"] {
 	margin-left: 200px;
 }
 
+form button.wide-btn {
+
+	width: 500px;
+	padding: 10px;
+}
+
 #status-message  {
 
 	text-align: center;
@@ -208,4 +219,14 @@ form .form-field input[type="submit"] {
 #vide-preview {
 
 	display: block;
+}
+
+form #new-or-apply.field button {
+
+	width: 125px; /*2 buttons, field is 250px wide*/
+}
+
+form .video-preview progress.ach-progress {
+
+	width: 500px;
 }

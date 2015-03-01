@@ -182,24 +182,19 @@ exportsObj.getProfPhoto = function(req, res){
     .exec(function (err, user){
        
         if(err){
-            console.log("couldnt get photo: " + err.toString())
             
-            res.status(404);
-            return res.send({reason: err});
+            res.status(404).send({reason: err});
         }
         else if(!user) {
-            res.status(404);
-            res.send({reason: 'no such user'});
+            res.status(404).send({reason: 'no such user'});
         }
         else if(!user.profPhoto) {
 
-            res.status(404);
-            res.send({reason: 'No profile photo'});
+            res.status(404).send({reason: 'No profile photo'});
         }
         else if(!user.profPhoto.contentType) {
 
-            res.status(404);
-            res.send({reason: 'No profile photo'});
+            res.status(404).send({reason: 'No profile photo'});
         }
 
         else {

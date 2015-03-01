@@ -1,6 +1,6 @@
 'use strict';
 app.controller('AchievmentController', function($scope, identity, requester, notifier, FileReaderAng){
-
+    console.log($scope.user);
     var data,
         contentType,
         tenMBInBytes = 10000000;
@@ -58,6 +58,8 @@ app.controller('AchievmentController', function($scope, identity, requester, not
 
             notifier.error(err.responseText);
         });
+
+        console.log($scope.achievment);
     }
 
     $scope.cancelAchievment = function () {

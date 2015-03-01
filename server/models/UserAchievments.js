@@ -3,10 +3,10 @@ var mongoose = require('mongoose'),
 
     userAchievmentsSchema = mongoose.Schema({
             
-            userId: mongoose.Schema.ObjectId,
+            userId: {type: mongoose.Schema.ObjectId, require: '{PATH} is required', unique: true},
             achievments: [{
-                achievmentId: mongoose.Schema.ObjectId,
-                dogId: mongoose.Schema.ObjectId,
+                achievmentId: {type: mongoose.Schema.ObjectId, require: '{PATH} is required', unique: true},
+                dogId: {type: mongoose.Schema.ObjectId, require: '{PATH} is required'},
                 createdAt: Date
             }]
     }),

@@ -3,9 +3,9 @@
 		.prof-photo-container
 			img.profPhoto(src="{{profPhoto}}")
 		.sidebar-nav
-			.sidebar-nav-item(ng-click="changeView('achievments')") 
+			.sidebar-nav-item(ng-click="changeView('achievments')" ng-class="{selected: view.achievments}") 
 				h3 Achievments
-			.sidebar-nav-item(ng-click="changeView('dogs')") 
+			.sidebar-nav-item(ng-click="changeView('dogs')" ng-class="{selected: view.dogs}") 
 				h3 Dogs
 	.view-right-content
 		div.prof-notCurrUser(ng-hide="identity.currentUser._id == profile._id")
@@ -14,7 +14,7 @@
 				button(ng-click="befriendMate()") +Add Friend
 				button(ng-click="openDiscussion(profile)") Send Message
 		h1(ng-show="identity.currentUser._id == profile._id") Welcome {{identity.currentUser.firstName}}!
-		profile-achievments(ng-show="view.achievments")
+		profile-achievments(ng-show="view.achievments" user="profile")
 		div.pet-wrapper
 			div.prof-dog-container(ng-show="view.dogs" ng-click="goToDogRoute($index)" ng-repeat="dog in profile.dogs track by $index")
 				div.name-container
