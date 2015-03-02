@@ -1,6 +1,41 @@
 div
 	h1 Review Achievments
 	div.ach-review-box(ng-repeat="achievment in achievmentApplications")
-		h1 {{achievment.name}}
-		video(controls)
-			source(ng-src="{{'/admin/achievments/video/' + achievment._id}}")
+		table#ach-review
+			tbody#ach-review-body
+				tr
+					td 
+						| Achievment Name
+					td 
+						| {{achievment.name}}
+				tr(ng-show="achievment.description")
+					td
+						| Achievment Description
+					td
+						| {{achievment.description}}
+				tr(ng-show="achievment.points")
+					td
+						| Achievment Points
+					td
+						| {{achievment.points}}
+				tr
+					td 
+						| Video Proof
+					td
+						video(controls)
+							source(ng-src="{{'/admin/achievments/video/' + achievment._id}}")
+				tr
+					td
+						| Author
+					td
+						| {{achievment.author.name}}
+				tr
+					td
+						| Request Type
+					td
+						span(ng-show="achievment.suggestChange") 
+							| Edit Achievment Suggestion
+						span(ng-show="!achievment.points && !achievment.description") 
+							| Achievment Application
+						span(ng-show="achievment.points && achievment.description && achievment.suggestChange")
+							| New Achievment Suggestion

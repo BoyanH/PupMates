@@ -12,10 +12,10 @@ module.exports = {
 		userGlobal.dogs = [];
 		userGlobal.places = [];
 		User.findOne({username: username})
-			.select("-profPhoto -hashpass -salt")
+			.select("-profPhoto -hashpass -salt -seenFrom -roles")
 			.exec(function(err, user){
 				if(err){
-					console.log("uhhh: " + err);
+					console.log("All data err, user not found: " + err);
 				}
 				var u = user.toObject(); // apparently mongoose doesnt return object O.o
 
@@ -25,7 +25,7 @@ module.exports = {
 				}
 				Dog.find({owners: userGlobal._id}).exec(function(err, dogs){ //get the Dogs and put them in the userGlobal
 					if(err){
-						console.log("all data err dog: " + err);
+						console.log("All data err, dog not found: " + err);
 						res.end();
 					}
 					else{
@@ -42,7 +42,7 @@ module.exports = {
 						//get the Places and put them in the userGlobal
 						Place.find({creator: userGlobal._id}).exec(function(err, places){
 							if(err){
-								console.log("all data err places: " + err);
+								console.log("All data err, places not found: " + err);
 								res.end();
 							}
 							for(var i=0;i<places.length;i++){
