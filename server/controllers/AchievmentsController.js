@@ -146,14 +146,16 @@ module.exports = {
             Achievment.findOne({name: newAchievment.name}, function (err, data) {
 
                 //User is suggesting a new achievment
-                if(err) {
+                if(err || !data) {
 
                     createPendingAchievment(req, res, newAchievment);
                 }
+                    else {
 
-                //User is suggesting a change to an achievment
-                newAchievment.suggestChange = true;
-                createPendingAchievment(req, res, newAchievment);
+                        //User is suggesting a change to an achievment
+                        newAchievment.suggestChange = true;
+                        createPendingAchievment(req, res, newAchievment);
+                    }
             });
        }  
 

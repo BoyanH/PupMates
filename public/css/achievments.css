@@ -3,7 +3,59 @@
 	width: 500px;
 }
 
+#ach-review-panel {
+
+	text-align: center;
+}
+
+.ach-review-box {
+
+	color: #424345;
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 20px;
+	padding-bottom: 10px;
+	border-top: 2px solid #7BCB30;
+	border-bottom: 2px solid #7BCB30;
+	border-radius: 10px;
+}
+
+#admin-wolf-logo {
+
+	width: 150px;
+}
+
 #ach-review {
 
-	color: blue;
+	text-align: left;
+	border-spacing: 0;
+	border-collapse: collapse;
 }
+
+	#ach-review a {
+
+		color: inherit;
+		text-decoration: none;
+	}
+
+	#ach-review #ach-review-body tr:not(:last-of-type) td {
+
+		border-bottom: 1px solid gray;
+	}
+
+	#ach-review #ach-review-body tr td
+	{
+		color: ##7BCB30;;
+	    background-color: #EAEAEA;
+		padding: 10px;
+	}
+
+		#ach-review #ach-review-body tr:nth-child(even) td:nth-child(odd)
+		{
+		    background-color: #fff;
+		}
+
+		#ach-review #ach-review-body tr:nth-child(odd) td:nth-child(even)
+		{
+		    background-color: #fff;
+		}

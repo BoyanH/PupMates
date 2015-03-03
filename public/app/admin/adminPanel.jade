@@ -2,12 +2,15 @@ div.view-wrapper
 	.view-left-content
 		div aslpls
 		.sidebar-nav
-			.sidebar-nav-item(ng-click="changeView('achievments')") 
+			.sidebar-nav-item
+				h2 Admin Panel
+				img#admin-wolf-logo(src="/img/wolf-logo.png")
+			.sidebar-nav-item(ng-click="changeView('achievments')" ng-class="{selected: view.achievments}") 
 				h3 
 					| Review New
 					br
 					| Achievments
-			.sidebar-nav-item(ng-click="changeView('users')") 
+			.sidebar-nav-item(ng-click="changeView('users')" ng-class="{selected: view.users}") 
 				h3 Manage Users
 	.view-right-content
 		achievment-review(ng-show="view.achievments")

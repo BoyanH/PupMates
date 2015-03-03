@@ -1,41 +1,45 @@
-div
+div#ach-review-panel
 	h1 Review Achievments
 	div.ach-review-box(ng-repeat="achievment in achievmentApplications")
+		h4
+			i
+				| Requested {{achievment.createdAt | moment: 'fromNow'}}!
 		table#ach-review
 			tbody#ach-review-body
 				tr
 					td 
-						| Achievment Name
+						h3 Achievment Name
 					td 
 						| {{achievment.name}}
 				tr(ng-show="achievment.description")
 					td
-						| Achievment Description
+						h3 Achievment Description
 					td
 						| {{achievment.description}}
 				tr(ng-show="achievment.points")
 					td
-						| Achievment Points
+						h3 Achievment Points
 					td
 						| {{achievment.points}}
 				tr
 					td 
-						| Video Proof
+						h3 Video Proof
 					td
 						video(controls)
 							source(ng-src="{{'/admin/achievments/video/' + achievment._id}}")
+							| Install a more modern browser to view this video!
 				tr
 					td
-						| Author
+						h3 Author
 					td
-						| {{achievment.author.name}}
+						a(href="#/profile/{{achievment.author.username}}") {{achievment.author.name}}
 				tr
 					td
-						| Request Type
+						h3 Request Type
 					td
 						span(ng-show="achievment.suggestChange") 
 							| Edit Achievment Suggestion
 						span(ng-show="!achievment.points && !achievment.description") 
 							| Achievment Application
-						span(ng-show="achievment.points && achievment.description && achievment.suggestChange")
+						span(ng-show="achievment.points && achievment.description && !achievment.suggestChange")
 							| New Achievment Suggestion
