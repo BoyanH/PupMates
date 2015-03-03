@@ -14,10 +14,7 @@ app.controller('ProfileRouteController', function($scope, $location, identity,
         $scope.identity = identity;
 
         $scope.profPhoto = "/img/profPhoto/" + profile._id;
-        console.log("---profile----");
-        console.log($scope.profile);
-        if($scope.identity.currentUser)
-            console.log($scope.identity.currentUser.dogs);
+
         $scope.goToDogRoute = function(ind){
             $location.path('/dog/' + $scope.profile.dogs[ind]._id, true);
         }
