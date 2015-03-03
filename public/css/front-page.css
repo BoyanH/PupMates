@@ -22,17 +22,24 @@ body{
 .frp-title{
 	margin-top: 3%;
 	text-align: center;
+	text-shadow: 0px 1px 1px #4d4d4d;
 	color: #333;
+	font: 50px 'LeagueGothicRegular';
 }
 .frp-title:hover{
 	cursor: pointer;
+	font-size: 51px;
+	color: #7ccc31;
 }
 .frp-title a{
 	color: #333;
 	text-decoration: none;
 }
+.frp-title a:hover{
+	color: #7ccc31;
+}
 .frp-box-wrapper{
-	margin-top: 10%;
+	margin-top: 6%;
 	padding-left: 6%;
 }
 .frp-box-wrapper a { 
@@ -68,8 +75,8 @@ body{
 	font: 18px Georgia, Serif;
 	height: 100px; 
 	padding-top: 25px;
+	background: #10a3e8;
 	padding: 10px;
-	background: #01a3e8; 
 	opacity: 0; 
 	-webkit-transition: all 0.4s linear;
 	-moz-transition: all 0.4s linear; 
@@ -80,4 +87,10 @@ body{
 	-webkit-transform: rotate(0); 
 	-moz-transform: rotate(0); 
 	-o-transform: rotate(0); 
+}
+#frp-box-sec{
+	background: #10a3e8;
+}
+#frp-box-sec div{
+	background: #7ccc31;
 }
