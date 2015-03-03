@@ -57,6 +57,7 @@ body{
 	color: #333; 
 	text-align: center;
 	vertical-align: top;
+	white-space: pre-wrap;
 	font: italic 18px/65px Georgia, Serif;    /* Vertically center text by making line height equal to height */
 	 opacity: 1;
 	 -webkit-transition: all 0.2s linear; 
@@ -75,6 +76,7 @@ body{
 	font: 18px Georgia, Serif;
 	height: 100px; 
 	padding-top: 25px;
+	white-space: pre-wrap;
 	background: #10a3e8;
 	padding: 10px;
 	opacity: 0; 
