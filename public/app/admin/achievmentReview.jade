@@ -43,3 +43,8 @@ div#ach-review-panel
 							| Achievment Application
 						span(ng-show="achievment.points && achievment.description && !achievment.suggestChange")
 							| New Achievment Suggestion
+		div#ach-review-btn-holder
+			button(ng-click="acceptAch(achievment)")
+				| Accept
+			button(ng-click="declineAch(achievment)")
+				| Decline

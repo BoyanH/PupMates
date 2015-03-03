@@ -5,9 +5,9 @@ var mongoose = require('mongoose'),
             
             userId: {type: mongoose.Schema.ObjectId, require: '{PATH} is required', unique: true},
             achievments: [{
-                achievmentId: {type: mongoose.Schema.ObjectId, require: '{PATH} is required', unique: true},
+                achievmentId: {type: mongoose.Schema.ObjectId, require: '{PATH} is required'},
                 dogId: {type: mongoose.Schema.ObjectId, require: '{PATH} is required'},
-                createdAt: Date
+                createdAt: {type: Date, require: '{PATH} is required'}
             }]
     }),
 

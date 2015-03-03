@@ -23,40 +23,36 @@ var mongoose = require('mongoose'),
         });
     }
 
-    function updateUserAchievments (req, res, achievment) {
+    function updateUserAchievments (req, res, achievment, foundAch) {
 
-        Achievment.findOne({name: achievment.name}, function (err, savedAch) {
+        var deferred = Q.defer();
 
-            if(err) {
-
-                res.status(500).end("Error finding save ach: " + err);
-            }
+        function updateUserAchsFromFound (savedAch) {
 
             UserAchievments.update(
-                {_id: savedAch.author.id},
-                {$push: 
+                { userId: achievment.author.id },
+                { $addToSet: 
                     {
                         achievments:
                              {
                                 achievmentId: savedAch._id,
-                                dogId: savedAch.dogId,
-                                createdAt: savedAch.createdAt
+                                dogId: achievment.dogId,
+                                createdAt: achievment.createdAt
                             }
                     }
                 },
+                { upsert: true },
                 function (err, success) {
 
                     if(err) {
 
-                        res.status(500).end('Error adding achievment to UserAchievments: ' + err);
-
                         var newUserAchievmentsDoc = {
 
-                            userId: savedAch.author.id,
+                            userId: achievment.author.id,
                             achievments: [{
                                 achievmentId: savedAch._id,
-                                dogId: savedAch.dogId,
-                                createdAt: savedAch.createdAt
+                                dogId: achievment.dogId,
+                                createdAt: achievment.createdAt
                             }]
                         };
 
@@ -64,18 +60,39 @@ var mongoose = require('mongoose'),
 
                             if(err) {
 
-                                res.status(500).end('Error creating new UserAchievments: ' + err);
+                                deferred.reject({status: 500, msg: 'Error creating new UserAchievments: ' + err});
                             }
 
-                            res.status(200).end();
+                            deferred.resolve(true);
                         });
                     }
-
-                    res.status(200).end();
+                    else {
+                        deferred.resolve(true);
+                    }
                 }
             );
+        }
 
-        });
+
+        if(foundAch) {
+
+            updateUserAchsFromFound(foundAch);
+        }
+        else {
+           
+            Achievment.findOne({name: achievment.name}, function (err, savedAch) {
+
+                if(err) {
+
+                    deferred.reject({status: 503, msg: "Error finding save ach: " + err});
+                }
+
+                updateUserAchsFromFound(savedAch);
+
+            });
+        }
+
+        return deferred.promise;
     }
 
 module.exports = {
@@ -164,7 +181,7 @@ module.exports = {
 
         UserAchievments.findOne({userId: req.user._id}, function (err, userAchievments) {
 
-            if(err || collection.length == 0) {
+            if(err || !userAchievments) {
 
                 res.status(404).send({});
             }
@@ -217,16 +234,13 @@ module.exports = {
             }
             catch(e) {
 
-                console.log(e);
-                res.status(500).end('Something went wrong!');
+                res.status(500).end('Error while sending video: ' + e);
             }
         });
     },
     acceptAchievment: function (req, res) {
 
         var achievment = req.body;
-        delete achievment._id;
-        delete achievment.video;
 
         if(achievment.suggestChange) {
 
@@ -238,27 +252,43 @@ module.exports = {
                         points: achievment.points
                     }
                 }, 
-                function (err, success) {
+                { upsert: true, new: true }, 
+                function (err, ach) {
 
                 if(err || !approval) {
 
                     res.status(500).end('Error updating achievment: ' + err);
                 }
                 
-                updateUserAchievments(req, res, achievment);
+                updateUserAchievments(req, res, achievment, ach)
+                .then(function (success) {
+
+                    module.exports.deletePendingAch(req, res);
+                }, function (err) {
+
+                    res.status(err.status).end(err.msg);
+                });
             });
         }
         //new Achievment
-        else if(achievment.points || !achievment.suggestChange) {
+        else if(achievment.points && !achievment.suggestChange) {
 
-            Achievment.create(achievment, function (err, success) {
+            Achievment.create(achievment, { new: true, upsert: true }, function (err, ach) {
 
                 if(err) {
 
                     res.status(500).end('Error creating new achievment: ' + err);
                 }
 
-                updateUserAchievments(req, res, achievment);
+                updateUserAchievments(req, res, achievment, ach)
+                .then(function (success) {
+
+                    module.exports.deletePendingAch(req, res);
+                }, function (err) {
+
+                    res.status(err.status).end(err.msg);
+                });
+
             });
 
             
@@ -267,7 +297,19 @@ module.exports = {
 
             Achievment.findOne({name: achievment.name}, function (err, ach) {
 
-                updateUserAchievments(req, res, ach);
+                if(err) {
+
+                    res.status(401).end('No such ach to apply for!');
+                }
+
+                updateUserAchievments(req, res, achievment, ach)
+                .then(function (success) {
+
+                    module.exports.deletePendingAch(req, res);
+                }, function (err) {
+
+                    res.status(err.status).end(err.msg);
+                });
             })
         }
 
@@ -276,14 +318,13 @@ module.exports = {
 
         var achievment = req.body;
 
-        PendingAchievment.remove({_id: achievment._id}, function (err, successs) {
+        PendingAchievment.remove({_id: achievment._id}, function (err, success) {
 
             if(err) {
 
                 res.status(503).end('Error deleting pending achievment: ' + err);
             }
-
-            res.status(200).end(success);
+            res.status(200).end();
         });
     },
     getAvailableAchievments: function (req, res) {

@@ -46,6 +46,8 @@ module.exports = function (app) {
     app.get('/achievments/pending', auth.isAuthenticated, controllers.achievments.getOwnAchApls);
     app.get('/achievments/available', auth.isAuthenticated, controllers.achievments.getAvailableAchievments);
     app.get('/admin/achievments', auth.isInRole('admin'), controllers.achievments.queryAchievmentApplications);
+    app.post('/admin/achievments', auth.isInRole('admin'), controllers.achievments.acceptAchievment);
+    app.delete('/admin/achievments', auth.isInRole('admin'), controllers.achievments.deletePendingAch);
     app.get('/admin/achievments/video/:id', auth.isInRole('admin'), controllers.achievments.getApprovalVideo);
     
 

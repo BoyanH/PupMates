@@ -113,6 +113,15 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
         getAchApls: function () {
 
             return getData('/achievments/pending');
+        },
+        acceptAchievment: function (achReq) {
+
+            return postData('/admin/achievments', achReq, 'POST');
+        },
+        declineAchievment: function (achReq) {
+
+            console.log(achReq);
+            return postData('/admin/achievments', achReq, 'DELETE');
         }
     };
 });
