@@ -1,4 +1,15 @@
-html{
+html{/*
+    background: url("/img/cover.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/cover.png',     sizingMethod='scale');
+    -ms-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/cover.png', sizingMethod='scale');*/
+    background: #79d3f7;
+}
+body{
+
     background: url("/img/cover.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -6,4 +17,67 @@ html{
     background-size: cover;
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/cover.png',     sizingMethod='scale');
     -ms-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/cover.png', sizingMethod='scale');
+
+}
+.frp-title{
+	margin-top: 3%;
+	text-align: center;
+	color: #333;
+}
+.frp-title:hover{
+	cursor: pointer;
+}
+.frp-title a{
+	color: #333;
+	text-decoration: none;
+}
+.frp-box-wrapper{
+	margin-top: 10%;
+	padding-left: 6%;
+}
+.frp-box-wrapper a { 
+	display: inline-block; 
+	text-decoration: none;
+	background: #7ccc31; 
+	height: 120px;
+	width: 30%;
+	margin-right: 2%;
+	vertical-align: top;
+	overflow: hidden; 
+}
+
+.frp-box-wrapper h5 { 
+	color: #333; 
+	text-align: center;
+	vertical-align: top;
+	font: italic 18px/65px Georgia, Serif;    /* Vertically center text by making line height equal to height */
+	 opacity: 1;
+	 -webkit-transition: all 0.2s linear; 
+	 -moz-transition: all 0.2s linear; 
+	 -o-transition: all 0.2s linear;
+}
+
+.frp-box-wrapper a:hover h5 { 
+	margin-top: -95px;
+	opacity: 0; 
+}
+
+.frp-box-wrapper div { 
+	position: relative;
+	color: #333; 
+	font: 18px Georgia, Serif;
+	height: 100px; 
+	padding-top: 25px;
+	padding: 10px;
+	background: #01a3e8; 
+	opacity: 0; 
+	-webkit-transition: all 0.4s linear;
+	-moz-transition: all 0.4s linear; 
+	-o-transition: all 0.4s linear; 
+}
+.frp-box-wrapper a:hover div { 
+	opacity: 1; 
+	-webkit-transform: rotate(0); 
+	-moz-transform: rotate(0); 
+	-o-transform: rotate(0); 
 }
