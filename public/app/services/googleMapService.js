@@ -12,7 +12,8 @@ app.factory('MapService', function(identity){
           position: location,
           icon: '/img/marker-blue.png',
           draggable: true,
-          map: map
+          map: map,
+          zIndex: 5
       	});
       	return marker;
 	}
@@ -32,7 +33,8 @@ app.factory('MapService', function(identity){
           		position: location, 
           		draggable: false,
           		icon: img,
-          		map: map
+          		map: map,
+          		zIndex: 5
       		});
       		markers.push(marker);
 		}
