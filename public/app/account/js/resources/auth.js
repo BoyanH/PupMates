@@ -57,6 +57,14 @@
                 return $q.reject('not-authorized');
             }
         },
+        isNotAuthenticated: function(){
+            if(!identity.isAuthenticated()){
+                return true;
+            }
+            else{
+                return $q.reject('already-authorized');
+            }
+        },
         isAuthorizedForRole: function(role){
             if(identity.isAuthorizedForRole(role)){
                 return true;

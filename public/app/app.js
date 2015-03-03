@@ -15,13 +15,20 @@ app.config(function($routeProvider, $locationProvider){
             authenticate: function(auth){
                 return auth.isAuthenticated();
             }
+        },
+        notAuthenticated: {
+
+            authenticate: function(auth){
+                return auth.isNotAuthenticated();
+            }
         }
     }
 
     $routeProvider
         .when('/', {
             templateUrl: 'partials/main/front-page',
-            controller: 'FrontPageController'
+            controller: 'FrontPageController',
+            resolve: routeUserCheck.notAuthenticated
         })
         .when('/home', {
             templateUrl : '/partials/main/home',
@@ -66,6 +73,12 @@ app.run(function($rootScope, $location){
     $rootScope.$on('$routeChangeError', function(event, current, previous, rejection){
         if(rejection === 'not-authorized'){
             $location.path('/');
+        }
+    });
+
+    $rootScope.$on('$routeChangeError', function(event, current, previous, rejection){
+        if(rejection === 'already-authorized'){
+            $location.path('/home');
         }
     });
 });
