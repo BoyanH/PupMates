@@ -1,4 +1,15 @@
-html{
+html{/*
+    background: url("/img/cover.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/cover.png',     sizingMethod='scale');
+    -ms-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/cover.png', sizingMethod='scale');*/
+    background: #79d3f7;
+}
+body{
+
     background: url("/img/cover.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -6,4 +17,82 @@ html{
     background-size: cover;
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/cover.png',     sizingMethod='scale');
     -ms-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/cover.png', sizingMethod='scale');
+
+}
+.frp-title{
+	margin-top: 3%;
+	text-align: center;
+	text-shadow: 0px 1px 1px #4d4d4d;
+	color: #333;
+	font: 50px 'LeagueGothicRegular';
+}
+.frp-title:hover{
+	cursor: pointer;
+	font-size: 51px;
+	color: #7ccc31;
+}
+.frp-title a{
+	color: #333;
+	text-decoration: none;
+}
+.frp-title a:hover{
+	color: #7ccc31;
+}
+.frp-box-wrapper{
+	margin-top: 6%;
+	padding-left: 6%;
+}
+.frp-box-wrapper a { 
+	display: inline-block; 
+	text-decoration: none;
+	background: #7ccc31; 
+	height: 120px;
+	width: 30%;
+	margin-right: 2%;
+	vertical-align: top;
+	overflow: hidden; 
+}
+
+.frp-box-wrapper h5 { 
+	color: #333; 
+	text-align: center;
+	vertical-align: top;
+	white-space: pre-wrap;
+	font: italic 18px/65px Georgia, Serif;    /* Vertically center text by making line height equal to height */
+	 opacity: 1;
+	 -webkit-transition: all 0.2s linear; 
+	 -moz-transition: all 0.2s linear; 
+	 -o-transition: all 0.2s linear;
+}
+
+.frp-box-wrapper a:hover h5 { 
+	margin-top: -95px;
+	opacity: 0; 
+}
+
+.frp-box-wrapper div { 
+	position: relative;
+	color: #333; 
+	font: 18px Georgia, Serif;
+	height: 100px; 
+	padding-top: 25px;
+	white-space: pre-wrap;
+	background: #10a3e8;
+	padding: 10px;
+	opacity: 0; 
+	-webkit-transition: all 0.4s linear;
+	-moz-transition: all 0.4s linear; 
+	-o-transition: all 0.4s linear; 
+}
+.frp-box-wrapper a:hover div { 
+	opacity: 1; 
+	-webkit-transform: rotate(0); 
+	-moz-transform: rotate(0); 
+	-o-transform: rotate(0); 
+}
+#frp-box-sec{
+	background: #10a3e8;
+}
+#frp-box-sec div{
+	background: #7ccc31;
 }

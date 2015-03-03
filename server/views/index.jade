@@ -3,9 +3,7 @@ block main-content
     div.nav
         div.left-nav
             ul.nav-bar-ul
-                li
-                    a.title(href="#/home")
-                         img(src="/img/dog-logo.png" alt="Doggy World")
+                li(ng-include="'partials/main/logo'")
         div.mid-nav
             div(ng-include="'partials/account/search'")
         div.right-nav
