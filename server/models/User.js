@@ -1,15 +1,14 @@
-﻿var mongoose = require('mongoose');
-var encryption = require('../utilities/encryption.js'); 
-var fs = require('fs');
-var shortId = require('shortid'),
-    Q = require('q');
+﻿var mongoose = require('mongoose');                         //takes the module mongoose from nodejs
+var encryption = require('../utilities/encryption.js');     //takes functions from encryption
+var fs = require('fs');                                     //takes module fs from nodejs which can read and write files
+var Q = require('q');                                       //takes the library for promises from nodejs called Q
 
-var userSchema = mongoose.Schema({
-        username: {type: String, require: '{PATH} is required', unique: true},
-        firstName: {type: String, require: '{PATH} is required'},
+var userSchema = mongoose.Schema({                          //creaging the user schema
+        username: {type: String, require: '{PATH} is required', unique: true},  //each user has na unique username and is required to have one
+        firstName: {type: String, require: '{PATH} is required'},               //each user is required to have a first name and last name
         lastName: {type: String, require: '{PATH} is required'},
         profPhoto: {data: Buffer, contentType: String},
-        email: {type: String, require: '{PATH} is required', unique: true},
+        email: {type: String, require: '{PATH} is required', unique: true},     //each user must have an unique e-mail
         friends: [{
             id: mongoose.Schema.ObjectId,
             username: String
@@ -30,7 +29,7 @@ var userSchema = mongoose.Schema({
         roles: [String],
         seenFrom: [String] //Ip adresses of users (one String per ip => not too many per user)
 });
-userSchema.method({
+userSchema.method({         //an authentication function which checks if the the processed password equals the hashPass
     authenticate: function(password){
         if(encryption.generateHashedPassword(this.salt, password) === this.hashPass){
             return true;
@@ -38,8 +37,8 @@ userSchema.method({
         return false
     }
 });
-var User = mongoose.model('User', userSchema);
-module.exports.seedInitialUsers = function(){
+var User = mongoose.model('User', userSchema);  //creating the model for a user
+module.exports.seedInitialUsers = function(){   //doing the initial commit of users
 
     var deferred = Q.defer();
     //User.find({}).remove(function(){});
@@ -50,7 +49,7 @@ module.exports.seedInitialUsers = function(){
         
         deferred.resolve(collection[0]);
     }
-    if ( collection.length == 0 ) {
+    if ( collection.length == 0 ) {     //if the records return from the database are zero then do the initial commit of users
         var salt,
             hasedPwd;
         salt = encryption.generateSalt();
@@ -62,7 +61,7 @@ module.exports.seedInitialUsers = function(){
 
         hasedPwd = encryption.generateHashedPassword( salt, 'notrealpass' );
        
-        User.create( 
+        User.create(        //creating User 1
             { 
                 username: 'BoyanH',
                 firstName: 'Boyan', 
@@ -79,7 +78,7 @@ module.exports.seedInitialUsers = function(){
             }
         );
 
-        User.create( 
+        User.create(    //creating User 2
             { 
                 username: 'AlexanderY',
                 firstName: 'Alexander', 
