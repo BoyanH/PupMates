@@ -16,7 +16,8 @@ var mongoose = require('mongoose'),
             createdAt: { type: Date, expires: monthInSecs },
             video: {data: Buffer, contentType: String},
             description: String,
-            suggestChange: Boolean
+            suggestChange: Boolean  //If the pendingAchievment suggests a change to an existing Achievment
+                                    //            e.g. change in 'points' or 'description' fields
     }),
 
     PendingAchievment = mongoose.model('PendingAchievment', pendingAchievmentSchema);

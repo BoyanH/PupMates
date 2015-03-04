@@ -51,6 +51,19 @@ app.controller('AchievmentController', function($scope, identity, requester, not
     });
 
 
+    $scope.toggleApply = function () {
+
+        //If there are no pending achievments already from this user
+        if(!jQuery.isEmptyObject($scope.pendingAchs) ) {
+
+            notifier.error('You can apply for only one achievment at a time!');
+        }
+            else {
+
+                $scope.applying = !$scope.applying;
+            }
+    }
+
     $scope.getFile = function () {
         
         $scope.progress = 0; //FilereaderAng automatically updates this value on given $scope
@@ -86,8 +99,9 @@ app.controller('AchievmentController', function($scope, identity, requester, not
 
             notifier.success('Successfully applied for a new achievment. Stay tuned!');
 
+            $scope.applying = false;
+            $scope.pendingAchs = $scope.achievment;
             $scope.achievment = {};
-            $scope.addNewAch = false;
         }, function (err) {
 
             notifier.error(err.responseText);

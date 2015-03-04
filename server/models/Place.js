@@ -20,14 +20,17 @@ var Place = mongoose.model("Place", placeSchema) //creaing the model Place with 
 module.exports.seedInitialPlaces = function(){	//doing the intial commit of data to the database
 
 	var deferred = Q.defer();
-	//Place.remove({}).exec(function(){console.log("All places removed...");})
+
 	Place.find({}).exec(function(err, collection){	//gets all the records of the database
+
 		if(err){
 			console.log("Smth went wrong with places: " + err);
 			return;
 		}
+
 		if(collection.length==0){	//if the records are zero then do the initial commit of data
 			User.findOne({username: 'AlexanderY'}).select("_id").exec(function(err, user){ //gets the id of user with username AlexanderY
+
 				if(err){
 					console.log("Smth went wrong with users find in places: " + err);
 					return;
@@ -61,6 +64,7 @@ module.exports.seedInitialPlaces = function(){	//doing the intial commit of data
 
 			});
 		}
+
 	});
 
 	return deferred.promise;		//returns the promise

@@ -1,12 +1,17 @@
 var clientsList = {},
-	messages = require('./MessagesController.js'),
-	users = require('./UsersController.js'),
-	auth = require('../config/auth.js');
+	messages = require('./MessagesController.js'), //We will work with users and messages on the socket.io connection
+	users = require('./UsersController.js'),	  //so we require those
+	auth = require('../config/auth.js');		 //Only admins/authenticated users can perform some actions, we need the
+												//auth system to verify users	
 
+	//Check if socket(user)._id is same as request.from._id
+	//(If the request only registers actions for the logged user) 
 	function isAuthorised (socket, request) {
 
 		var authorised = false;
 
+		//If data is somewhere lost
+		//A not registered user should theoretically never get to this controller
 		if(clientsList[request.from] && request.from == socket.request.session.passport.user) {
 
 			//FIND THE AUTH-TOKEN IN ALL USER CONNECTIONS
@@ -16,15 +21,17 @@ var clientsList = {},
 			//CHECK IF THE AUTH-TOKEN IS GIVEN TO THE REQUESTER'S SOCKET
 			if(objectFound) {
 
+				//if the found saved sessionID is the one on the request
+				//double-safety, similar check is performed in the socketio.config
 				if(objectFound.sessionID == socket.request.sessionID) {
 
-					authorised = objectFound;
+					authorised = objectFound; //define the auhtorisation object
 				}
 			}
 
 		}
 
-		return authorised;
+		return authorised; //return the authorisation object defined above or null (acts as false too)
 	}
 
 	function sendOnLoginData(socket, userId) {

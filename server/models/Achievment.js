@@ -1,6 +1,6 @@
-var mongoose = require('mongoose'),
-    fs = require('fs'),
-    basicCommandList = [
+var mongoose = require('mongoose'), //takes the module mongoose from nodejs
+    fs = require('fs'),             //takes the module fs from node.js
+    basicCommandList = [            //defining the basic commands/achievment, available on 1 app launch
         {
             name: 'Come Here',
             points: 10,
@@ -17,8 +17,8 @@ var mongoose = require('mongoose'),
             description: 'Command the dog to lay down'
         }
     ],
-    User = mongoose.model('User'),
-    Dog = mongoose.model('Dog');
+    User = mongoose.model('User'),  //takes the User model from mongoose, can be found in this folder as User.js
+    Dog = mongoose.model('Dog');    //same for Dog model
 
     achievmentSchema = mongoose.Schema({
             
@@ -34,6 +34,9 @@ var mongoose = require('mongoose'),
             description: String
     }),
 
+    //Important to define this, as all Models are required in the mongoose config 
+    //file to later be accessible via require mongoose.model('...')
+    //this line basically defines the 'Achievment' model
     Achievment = mongoose.model('Achievment', achievmentSchema);
 
     function addNewCommand(user, dog, command) {
@@ -63,12 +66,17 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
+    //The seed method fills the database with basic data when empty
+
+    //A pipeline is created with each seed method, if one fails, the following will abort
+    //so it's sure that we have the following User and Dog
     seedInitialAchievments: function () {
 
         Achievment.find({}, function (err, collection) {
 
             if(collection.length == 0) {
 
+                    //This user is seeded on empty DB, should always exist
                     User.findOne({username: 'BoyanH'}, function (err, user) {
 
                         if(err) {
@@ -76,6 +84,7 @@ module.exports = {
                             console.log(err);
                         }
 
+                        //seeded dog, always exists
                         Dog.findOne({name: 'Muncho'}, function (err, dog) {
 
                             if(err) {
