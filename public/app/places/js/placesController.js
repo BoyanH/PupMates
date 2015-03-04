@@ -1,25 +1,43 @@
+//module which controls the places route
+'use strict'
 app.controller('PlacesController', function($scope, MapService, PlacesService, identity, geolocation, notifier) {
-
+    //if the user wants to user this route he should accept to use his geolocation
     geolocation.getLocation().then(function(data) {
-        $scope.addPlaceTrigger = false;
-        $scope.addRouteTrigger = false;
-        $scope.deletePlaceTrigger = false;
-        $scope.deleteRouteTrigger = false;
-        $scope.clickOnMapNewPlace = false;
-        $scope.userMarkers = [];
-        $scope.peopleMarkers = [];
-        $scope.allMarkers = [];
-        $scope.peoplePlaces = [];
-        $scope.userPlaces = [];
-        $scope.markerAdded = false;
+        $scope.addPlaceTrigger = false;     //trigger if its clicked to be added place
+        $scope.addRouteTrigger = false;     //to be added route
+        $scope.deletePlaceTrigger = false;  //to delete a place
+        $scope.deleteRouteTrigger = false;  //to delete a route
+        $scope.clickOnMapNewPlace = false;  //if it is clicked on the map when adding a new place
+        $scope.userMarkers = [];            //all the markers of the user (refer to google api v3 for more info)
+        $scope.peopleMarkers = [];          //all other users' markers
+        $scope.allMarkers = [];             //both makers
+        $scope.peoplePlaces = [];           //all the places of other users
+        $scope.userPlaces = [];             //all the places of the current user
+        $scope.markerAdded = false;         //if a marker is added when adding
         $scope.user = identity.currentUser;
-        $scope.placeIndexToBeDeleted = -1;
-        $scope.placeIdToBeDeleted = '';
+        $scope.placeIndexToBeDeleted = -1;  //when deleting a place which should be deleted from the array with places
+        $scope.placeIdToBeDeleted = '';     //when deleting a place which should be deleted from the db
 
         console.log("----data-----");
         console.log(data);
 
-        function clone(obj) {
+        $scope.coords = {
+            lat: data.coords.latitude,
+            lng: data.coords.longitude
+        };
+        var loc = new google.maps.LatLng($scope.coords.lat, $scope.coords.lng);
+        var mapOptions = {      //options of the map
+            center: {
+                lat: $scope.coords.lat || 39.7391536,
+                lng: $scope.coords.lng || -104.9847034
+            },
+            //center: {lat: 47.3690239, lng: 8.5380326},
+            zoom: 15
+        };
+        var map = MapService.initMap(document.getElementById('map-canvas'), mapOptions); //initialize the map
+        var listenerHandle;
+
+        function clone(obj) {   //function which clones a object
             if (null == obj || "object" != typeof obj) return obj;
             var copy = obj.constructor();
             for (var attr in obj) {
@@ -27,7 +45,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             }
             return copy;
         }
-        PlacesService.getPlacesOfCurUser().then(function(places) {
+        PlacesService.getPlacesOfCurUser().then(function(places) {  //gets from the db the places of the current user
             if (places && places.length > 0) {
                 console.log(places);
                 $scope.userPlaces = places;
@@ -39,7 +57,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
                 console.log("error when getting places");
             }
         });
-        PlacesService.getPlaceExceptUser($scope.user._id).then(function(places) {
+        PlacesService.getPlaceExceptUser($scope.user._id).then(function(places) { //gets the other users' places
             if (places && places.length > 0) {
                 console.log(places);
                 $scope.peoplePlaces = places;
@@ -53,22 +71,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             }
         });
 
-        $scope.coords = {
-            lat: data.coords.latitude,
-            lng: data.coords.longitude
-        };
-        var loc = new google.maps.LatLng($scope.coords.lat, $scope.coords.lng);
-        var mapOptions = {
-            center: {
-                lat: $scope.coords.lat || 39.7391536,
-                lng: $scope.coords.lng || -104.9847034
-            },
-            //center: {lat: 47.3690239, lng: 8.5380326},
-            zoom: 15
-        };
-        var map = MapService.initMap(document.getElementById('map-canvas'), mapOptions);
-        var listenerHandle;
-        $scope.addPlace = function(location, place) {
+        $scope.addPlace = function(location, place) {   //adds a places on the map
             $scope.addPlaceTrigger = true;
             listenerHandle = google.maps.event.addListener(map, 'click', function(event) {
                 console.log("click on map");
@@ -81,14 +84,14 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             }, false);
 
         }
-        $scope.cancelAddPlace = function() {
+        $scope.cancelAddPlace = function() { //cancels the adding of a place
             $scope.addPlaceTrigger = false;
             $scope.clickOnMapNewPlace = false;
             map.addListener('click', function() {}, false);
             MapService.removePlace($scope.userMarkers[$scope.userMarkers.length - 1]);
             $scope.userMarkers.pop();
         }
-        $scope.savePlace = function(place) {
+        $scope.savePlace = function(place) { //saves the new place in the database
             if ($scope.markerAdded) {
                 place.creator = identity.currentUser._id;
                 var marker = $scope.userMarkers[$scope.userMarkers.length - 1];
@@ -114,6 +117,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
                 notifier.error("Please click on the map to add place");
             }
         }
+        /* TO DO ADDING REMOVING ETC OF ROUTES
         var polyline = new google.maps.Polyline({
             path: [
                 new google.maps.LatLng(47.3690239, 8.5380326),
@@ -126,9 +130,9 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             geodesic: true
         });
 
-        polyline.setMap(map);
+        polyline.setMap(map);*/
 
-        $scope.confirmDeletePlace = function() {
+        $scope.confirmDeletePlace = function() { //confirms that the user want to delete that place
             $(".pl-ask-window").css({
                 display: 'none'
             });
@@ -145,14 +149,14 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
                 }
             })
         }
-        $scope.cancelDeletePlace = function() {
+        $scope.cancelDeletePlace = function() { //cancels the deleting of a place
             $(".pl-ask-window").css({
                 display: 'none'
             });
             $scope.placeIndexToBeDeleted = -1;
             $scope.placeIdToBeDeleted = '';
         }
-        $scope.deletePlace = function(index) {
+        $scope.deletePlace = function(index) {  //trigger the window if the user wants a place to be deleted
             $scope.placeIndexToBeDeleted = index;
             $scope.placeIdToBeDeleted = $scope.userPlaces[index]._id;
             $(".pl-ask-window").css({

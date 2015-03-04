@@ -1,5 +1,7 @@
+//dog service which makes requests to the server
+'use strict'
 app.factory("DogService", function($q, $http, identity){
-	function createDog(dog){
+	function createDog(dog){	//creates a dog
 		var deferred = $q.defer();
 
 		$http.post("/" + identity.currentUser._id + "/newdog", dog)
@@ -11,7 +13,7 @@ app.factory("DogService", function($q, $http, identity){
 			});
 		return deferred.promise;
 	}
-	function updateDog(dog){
+	function updateDog(dog){	//updates a dog
 		var deferred = $q.defer();
 
 		$http.put('/updateDog/'+identity.currentUser._id+"/"+dog._id, dog)
@@ -22,7 +24,7 @@ app.factory("DogService", function($q, $http, identity){
 			});
 		return deferred.promise;
 	}
-	function getDog(id){
+	function getDog(id){	//gets a dog with an id
 		var deferred = $q.defer();
 
 		$http.get('/dog/'+id).success(function(dog){
@@ -35,7 +37,7 @@ app.factory("DogService", function($q, $http, identity){
 
 		return deferred.promise;
 	}
-	function getDogsOfUser(id){
+	function getDogsOfUser(id){		//gets the dog of a user with id
 		var deferred = $q.defer();
 
 		$http.get('/dogs/'+id).success(function(dogs){
@@ -51,7 +53,7 @@ app.factory("DogService", function($q, $http, identity){
 
 		return deferred.promise;
 	}
-	function updateDogsOfCurrentUserSync(){
+	function updateDogsOfCurrentUserSync(){	//updates the dogs of the current user not with promise but sync
 		$http.get('/dogs/'+identity.currentUser._id).success(function(dogs){
 			if(dogs){
 				for(var i=0;i<dogs.length;i++){
@@ -62,7 +64,7 @@ app.factory("DogService", function($q, $http, identity){
 			}
 		})
 	}
-	function updateDogsOfCurrentUser(){
+	function updateDogsOfCurrentUser(){	//updates the dogs of the current user with promise
 		var deferred = $q.defer();
 
 		$http.get('/dogs/'+identity.currentUser._id).success(function(dogs){
@@ -79,7 +81,7 @@ app.factory("DogService", function($q, $http, identity){
 
 		return deferred.promise;
 	}
-	function getDogsOfUserByUserName(username){
+	function getDogsOfUserByUserName(username){	//gets the dogs of a user with username
 		var deferred = $q.defer();
 
 		$http.get('/dogs/username/' + username).success(function(dogs){
@@ -94,7 +96,7 @@ app.factory("DogService", function($q, $http, identity){
 		});
 		return deferred.promise;
 	}
-	function currentUserOwnDog(dogId){
+	function currentUserOwnDog(dogId){ //check if the current user owns a dog with an id
 		console.log("-----identity-------");
 		console.log(identity);
 		if(identity.currentUser && identity.currentUser.dogs){

@@ -17,7 +17,7 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
         });
     }
 
-	DogService.getDogById(dogId).then(function(dog){
+	DogService.getDogById(dogId).then(function(dog){ //gets the dog from the server with id in the routeparams
 		if(dog){
 			$scope.dog = dog;
 
@@ -35,6 +35,7 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
         		if (isNaN(timestamp)==false)return true;
         		else return false;
     		}
+
             //fill the dates
     		$scope.optionsYear = [];
     		for(var i=0;i<100;i++){
@@ -67,13 +68,14 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
                 return new Date(date.getTime() + minutes*60000);
             }
             $scope.optionsFood = [];
-            var t=new Date("1000", "1", "1", "00", "00");
+
+            var t=new Date("1000", "1", "1", "00", "00"); //creates a new date
             var str = "";
             var i =0;
-            while(i!=96){
+            while(i!=96){   //add to the options all the hours of days with interval of 15 mins - this is 97 loops
                 t = addMinutes(t, 15);
                 str = t.getHours() + ":" + t.getMinutes();
-                var p = str.slice(str.indexOf(":") + 1, str.length);
+                var p = str.slice(str.indexOf(":") + 1, str.length);    //format the hours hh:mm
                 if(p.length == 1){
                     str = str + "0";
                 }
@@ -92,12 +94,12 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
 			$location.path('/home');
 		}
 	});
-    $scope.browsePhotoTrigger = function(){
+    $scope.browsePhotoTrigger = function(){     //open the window to browse for a new profile picture of the dog
         $timeout(function(){
             $('#input-browse-photo').trigger('click');
         }, 1);
     }
-	$scope.changeField = function(field){
+	$scope.changeField = function(field){  //change field trigger
 		$scope["showChange" + field] = !$scope["showChange" + field];
         
         field = field.toLowerCase();
@@ -143,7 +145,7 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
             else notifier.error("Couldnt update dog, please login or refresh.");
         })
 	}
-    $scope.getFile = function () {
+    $scope.getFile = function () {  //gets the photo and convert it to base64 string
         $scope.progress = 0;
         FileReaderAng.readAsDataUrl($scope.file, $scope)
           .then(function(result) {
@@ -154,7 +156,7 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
               });
           });
     };
-    $scope.removeFW = function(kind, data){
+    $scope.removeFW = function(kind, data){//removes either a food or a walk
         if(kind=="f"){
             var i = $scope.dog.food.indexOf(data);
             $scope.dog.food.splice(i, 1);
@@ -164,7 +166,7 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
             $scope.dog.walk.splice(i, 1);
         }
     };
-    $scope.addFW = function(kind){
+    $scope.addFW = function(kind){  //adds either a food or a walk
         if(kind=="f"){
             $scope.dog.food.push($scope.dog.foodOpt.value);
         }

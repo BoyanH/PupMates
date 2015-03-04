@@ -1,6 +1,7 @@
+//service which makes requests to the server with promises
 app.factory('PlacesService', function($http, $q, identity, geolocation){
 
-	function getPlacesOfUser(id){
+	function getPlacesOfUser(id){	//deletes a place of the current user
 		var deferred = $q.defer();
 
 		$http.get('/places/' + id).success(function(places){
@@ -16,7 +17,7 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 
 		return deferred.promise;
 	}
-	function getPlacesOfCurUser(){
+	function getPlacesOfCurUser(){	//gets all the places of the current user
 		var deferred = $q.defer();
 
 		$http.get('/places/' + identity.currentUser._id).success(function(places){
@@ -33,7 +34,7 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 		return deferred.promise;
 
 	}
-	function createPlace(place){
+	function createPlace(place){	//creates a place 
 		var deferred = $q.defer();
 
 		$http.post('/places/create/' + identity.currentUser._id, place).success(function(){
@@ -44,7 +45,7 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 
 		return deferred.promise;
 	}
-	function getPlaceExceptUser(id){
+	function getPlaceExceptUser(id){	//gets the places of the other users
 		var deferred = $q.defer();
 
 		$http.get("/places/allexceptofuser/" + id).success(function(places){
@@ -55,7 +56,7 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 
 		return deferred.promise;
 	}
-	function deletePlace(id){
+	function deletePlace(id){		//delets a place
 		var deferred = $q.defer();
 
 		$http.delete("/places/delete/" + id)

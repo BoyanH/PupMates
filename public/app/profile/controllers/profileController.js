@@ -2,23 +2,23 @@
 app.controller('ProfileRouteController', function($scope, $location, identity, 
     DogService, $routeParams, requester, notifier, FileReaderAng, $anchorScroll){
 
-    $scope.view = {
+    $scope.view = { //checks if the tab is dogs or achievements in the url
 
         achievments: $routeParams.view == 'achievments',
         dogs: $routeParams.view == 'dogs'
     }
 
-	requester.getAllDataOfUserByUserName($routeParams.username)
+	requester.getAllDataOfUserByUserName($routeParams.username) //gets all the data of a user(places, dogs, achievements, himself)
     .then(function (profile) {
         $scope.profile = profile;
         $scope.identity = identity;
 
         $scope.profPhoto = "/img/profPhoto/" + profile._id;
 
-        $scope.goToDogRoute = function(ind){
+        $scope.goToDogRoute = function(ind){ //when dog is clicked go to the dog route
             $location.path('/dog/' + $scope.profile.dogs[ind]._id, true);
         }
-        $scope.changeView = function(view) {
+        $scope.changeView = function(view) { //change the tab
             $location.path('/profile/' + $scope.profile.username + '/' + view, false);
 
             for(var prop in $scope.view) {
@@ -28,7 +28,7 @@ app.controller('ProfileRouteController', function($scope, $location, identity,
         
             $scope.view[view] = true;
         }
-        $scope.befriendMate = function () {
+        $scope.befriendMate = function () { //add a friend if the current user is not this one
 
             requester.addFriend($scope.profile._id, $scope.profile.username)
             .then(function (data) {

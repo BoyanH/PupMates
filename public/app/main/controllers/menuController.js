@@ -1,3 +1,5 @@
+//module which controls the left fixed menu of the application
+'use strict'
 app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout, identity){
     
     $scope.isAdmin = identity.currentUser ? identity.isAuthorizedForRole('admin') : false;
@@ -13,11 +15,10 @@ app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout
             }
     }, true);
 
-	$("#left-menu-dialog").height($(document).height()-$(".nav").height());
-    //$scope.chatBtnShow = false;
-    //$scope.newDogBtn = false;
+	$("#left-menu-dialog").height($(document).height()-$(".nav").height()); //sets the height of the dialog which opens
+    
     var targetN = "";
-    function close(c){
+    function close(c){  //closes the dialog
         $("#left-menu-dialog").width(0);
         if(!c){
             $("#cover").width($("#cover").width - $(".menu").width);
@@ -34,9 +35,7 @@ app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout
         $(".chat-btn").css("background-color", "#4d4d4f");
     }
     $rootScope.close = close;
-    function open(clName){
-        //console.log("class Name: " + clName);
-        //console.log("root: " + $rootScope);
+    function open(clName){  //opens the dialog according to which should be opened (chat or dogs)
         if(clName == "chat-btn"){
             $rootScope.dirName = "chat";
             $rootScope.reloadDataDialog();
@@ -59,7 +58,7 @@ app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout
         $("#cover").css("display", "inline-block").css("left", p.left.toString()).css("top", p.top.toString()).width("100%").height($(".menu").height());
     }
 
-$scope.showDialog = function(e){
+$scope.showDialog = function(e){    //function which opens the dialog
         if(identity.currentUser){
         var clName = e.target.className;
     	var wd = $("#left-menu-dialog").width();
@@ -99,7 +98,7 @@ $scope.showDialog = function(e){
     	}
 	}
     else{
-        alert("Please login first :)")
+        alert("Please login first :)");
     }
 }
     $("#cover").bind("click", close);

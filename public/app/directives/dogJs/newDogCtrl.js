@@ -1,7 +1,8 @@
+//module which controls the adding of a new dog
 app.controller("NewDogController", function($scope, identity,
  notifier, FileReaderAng, DogService, LoadingService, $rootScope){
-	$( "#date-picker" ).datepicker();
-	var userId = (!!identity.currentUser)? identity.currentUser._id: "no-user";
+
+	var userId = (!!identity.currentUser)? identity.currentUser._id : "no-user";
 	var profPhoto = {};
 	var data;
 	var contentType;
@@ -10,17 +11,18 @@ app.controller("NewDogController", function($scope, identity,
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
 
-    function validDate(strDate) {
+    function validDate(strDate) {   //function that validates a date
         var timestamp=Date.parse(strDate);
         if (isNaN(timestamp)==false)return true;
         else return false;
     }
     $scope.dog = {};
-    $scope.warningName = false;
+    $scope.warningName = false; //warnings if the user has typed correct data
     $scope.warningBreed = false;
     $scope.warningBirthDate = false;
     $scope.warningProfPhoto = false;
 
+    //filling the drop downs for a date
     $scope.optionsYear = [];
     for(var i=0;i<100;i++){
         var obj = {};
@@ -48,7 +50,7 @@ app.controller("NewDogController", function($scope, identity,
     }
     $scope.dog.month = $scope.optionsMonth[0];
 
-	$scope.getFile = function () {
+	$scope.getFile = function () { //getting the profile photo and converting it to base64 string
         $scope.progress = 0;
         FileReaderAng.readAsDataUrl($scope.file, $scope)
                       .then(function(result) {
@@ -61,7 +63,9 @@ app.controller("NewDogController", function($scope, identity,
         $scope.progress = progress.loaded / progress.total;
     });
 
-    $scope.addDog = function(dog){
+    $scope.addDog = function(dog){ //adding a dog
+
+        //checks for a correct data
         if(dog.name == '' || dog.name == undefined) {$scope.warningName = true;return}
         else $scope.warningName = false;
 
@@ -74,7 +78,6 @@ app.controller("NewDogController", function($scope, identity,
         else $scope.warningBirthDate = false;
 
         dog.birthDate = date;
-    	//LoadingService.start();
     	profPhoto.data = data;
     	profPhoto.contentType = contentType;
 
@@ -88,11 +91,13 @@ app.controller("NewDogController", function($scope, identity,
         owners.push(identity.currentUser._id);
         dog.owners = owners;
         console.log(dog);
+
+        LoadingService.start(); // starting the loading cover
     	DogService.createDog(dog).then(function(){
-			LoadingService.stop();
+			LoadingService.stop(); //after the dog is added hide the loading cover
 			
             $('#newDogForm')[0].reset();
-			DogService.updateDogsOfCurrentUser().then(function(success){
+			DogService.updateDogsOfCurrentUser().then(function(success){ //updates the dogs of the current user
                 if(success){
                     notifier.success("Dog added!");
                 }
