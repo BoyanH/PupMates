@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var fs = require('fs'),
-	Q = require('q');
+var mongoose = require('mongoose');		//takes the module mongoose from nodejs
+var User = mongoose.model('User');		//takes the model User from the mongoose
+var fs = require('fs'),					//module from nodejs which can read and write files
+	Q = require('q');					//library for promises
 
-var dogSchema = mongoose.Schema({
+var dogSchema = mongoose.Schema({			//creating the schema for a dog
 	owners:[mongoose.Schema.ObjectId],
 	name: String,
 	breed: String,
@@ -14,37 +14,37 @@ var dogSchema = mongoose.Schema({
 	walk: [String],
 	visitedPlaces: [String]
 })
-var Dog = mongoose.model("Dog", dogSchema);
+var Dog = mongoose.model("Dog", dogSchema);	//give the schema to mongoose to create the model Dog
 
-module.exports.seedInitialDogs = function(){
+module.exports.seedInitialDogs = function(){ //function which will do the initial commit of dato to the database
 
 	var deferred = Q.defer();
 	//Dog.remove({}).exec(function(){});
-	Dog.find({}).exec(function(err, collection){
+	Dog.find({}).exec(function(err, collection){	//takes all the records from the database
 		if(err){
 			console.log("Smth went wrong with dogs: " + err);
 			return;
 		}
-		if(collection.length==0){
-			User.findOne({username: 'BoyanH'}).select('_id')
-			.exec(function(err, boyan){
+		if(collection.length==0){					//if the records in the DB are zero then do the initial commit
+			User.findOne({username: 'BoyanH'}).select('_id')	//takes only the id of the user because the dog has an array of ids for owners
+			.exec(function(err, boyan){				//takes the added user with username BoyanH
 
-				User.findOne({username: 'AlexanderY'})
+				User.findOne({username: 'AlexanderY'}) 	//takes the other added user - alex
 				.select("_id")
 				.exec(function(err, alex){
 					if(err){console.log("Smth went wrong when searching for initial user: " + err);return;}
-					function my_curr_date() {      
+					function my_curr_date() {      //function, which returns the current date in format dd/mm/yyyy
     					var currentDate = new Date()
     					var day = currentDate.getDate();
     					var month = currentDate.getMonth() + 1;
     					var year = currentDate.getFullYear();
-    					var my_date = month+"/"+day+"/"+year;
+    					var my_date = day+"/"+month+"/"+year;
     					return my_date;
 					}
-        			var imgPath = "public/husky.jpg";
+        			var imgPath = "public/husky.jpg";	//reading an image for the profile image of a dog
         			var pic = fs.readFileSync(imgPath);
 
-					Dog.create({
+					Dog.create({						//creating a dog
 						owners:[boyan._id, alex._id],
 						name:'Muncho',
 						breed: 'Husky',
@@ -61,18 +61,11 @@ module.exports.seedInitialDogs = function(){
 						}
 						deferred.resolve(true);
 					});
-					console.log("Dog added to database!");
+					console.log("Dog added to database!");	//output on the console that the dogs are added
 				})
 			});
 		}
-		else{
-			// User.findOne({username:'pesho'})
-			// .select('_id')
-			// .exec(function(err, pesho){
-			// 	Dog.find({}).exec(function(err, d){console.log(d);})
-			// })
-		}
 	})
 
-	return deferred.promise;
+	return deferred.promise;								//this returns the promise
 }

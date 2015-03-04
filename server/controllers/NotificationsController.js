@@ -30,7 +30,7 @@ module.exports = {
 			var requestExists = false;
 
 			for (var i = 0, len = user.notifications.length; i < len; i += 1) {
-																					//calling toString(), because it is mongoose.Schema.ObjectId
+																		// \/calling toString(), because it is mongoose.Schema.ObjectId
 				if(user.notifications[i].notifType == "friendRequest" && user.notifications[i].from.id.toString() == notifObj.from.id) {
 
 					requestExists = true;
@@ -70,7 +70,7 @@ module.exports = {
 
 		});
 
-		return deferred.promise;
+		return deferred.promise; //return an asynchronous promise
 	},
 	deleteNotification: function(req, res) {
 
@@ -81,6 +81,7 @@ module.exports = {
 				res.status(404).end('ERR: User not found!');
 			}
 
+			//If for some reason notifications are not available, catch the err
 			try {
 				user.notifications.splice(user.notifications.indexOf(req.body), 1);
 			}
