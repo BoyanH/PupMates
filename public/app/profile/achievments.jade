@@ -4,11 +4,11 @@ div
 			div.achievment-name {{achievment.name}}
 			div.achievment-description {{achievment.description}}
 			div.achievment-points Gives {{achievment.points}} points
-	div#application-separator
+	div#application-separator(ng-show="identity.currentUser._id == user._id")
 		hr
 		button(ng-click="toggleApply()")
 			| {{applying? 'Cancel Application' : 'Apply for an Achievment'}} 
-	div.application-box(ng-show="applying")
+	div.application-box(ng-show="applying && identity.currentUser._id == user._id")
 		h3.center Apply for an achievment
 		form#achievment-form
 			div.form-field

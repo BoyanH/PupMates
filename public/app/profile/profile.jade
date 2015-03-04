@@ -14,7 +14,7 @@
 				button(ng-click="befriendMate()") +Add Friend
 				button(ng-click="openDiscussion(profile)") Send Message
 		h1(ng-show="identity.currentUser._id == profile._id") Welcome {{identity.currentUser.firstName}}!
-		profile-achievments(ng-show="view.achievments" user="profile")
+		profile-achievments(ng-show="view.achievments" user="profile" identity="identity")
 		div.pet-wrapper
 			div.prof-dog-container(ng-show="view.dogs" ng-click="goToDogRoute($index)" ng-repeat="dog in dogs track by $index")
 				div.name-container

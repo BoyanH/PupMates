@@ -111,9 +111,9 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
 
             return getData('/achievments/pending');
         },
-        getOwnAchievments: function () {
+        getUserAchievments: function (userId) {
 
-            return getData('/achievments');
+            return getData('/achievments/aquired/' + userId);
         },
         acceptAchievment: function (achReq) {
 

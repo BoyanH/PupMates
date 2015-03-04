@@ -1,6 +1,6 @@
 'use strict';
 app.controller('AchievmentController', function($scope, identity, requester, notifier, FileReaderAng){
-    console.log($scope.user);
+
     var data,
         contentType,
         tenMBInBytes = 10000000;
@@ -12,35 +12,27 @@ app.controller('AchievmentController', function($scope, identity, requester, not
 
         $scope.existingAchievments = data;
 
-        //Query the Achievments the user aquired
-        requester.getOwnAchievments()
-        .then(function (ownAchs) {
+        if($scope.user) {
 
-            //Find it's AchievmentModel and mark it as aquired
-            for(var ach in $scope.existingAchievments) {
+            updateAchievments();
+        }
+            else {
 
-                (function() {
+                $scope.$watch(function () {
+                   return $scope.user;
+                 },                       
+                  function(newVal, oldVal) {
                     
-                    for(var ownAch in ownAchs.achievments) {
-                        if($scope.existingAchievments[ach]._id == ownAchs.achievments[ownAch].achievmentId) {
+                    if(newVal) {
 
-                            $scope.existingAchievments[ach].aquired = true;
-                            return; //with this closure only one of the nested loops is broken
-                        }
+                        updateAchievments();
                     }
-
-                })(); //gets self executed on every outer loop
+                }, true);
             }
-
-        }, function (err) {
-
-            //no achievments
-            console.log('Err getting own achievments: ' + err);
-        });
 
     }, function (err) {
 
-        notifier.error('You can currenty apply for no achievments!');
+        console.log(err);
     });
 
     //These are the achievments, that are requested, yet not aquired
@@ -112,6 +104,38 @@ app.controller('AchievmentController', function($scope, identity, requester, not
     $scope.cancelAchievment = function () {
 
         //todo
+    }
+
+    function updateAchievments() {
+            
+        //Query the Achievments the user aquired
+        requester.getUserAchievments($scope.user._id)
+        .then(function (userAchs) {
+
+            //Find it's AchievmentModel and mark it as aquired
+            for(var ach in $scope.existingAchievments) {
+
+                (function() {
+                    
+                    for(var userAch in userAchs.achievments) {
+                        if($scope.existingAchievments[ach]._id == userAchs.achievments[userAch].achievmentId) {
+
+                            $scope.existingAchievments[ach].aquired = true;
+                            return; //with this closure only one of the nested loops is broken
+                        }
+                    }
+
+                })(); //gets self executed on every outer loop
+            }
+
+            console.log($scope.existingAchievments);
+
+        }, function (err) {
+
+            //no achievments
+            console.log('Err getting own achievments: ' + err);
+        });
+
     }
 
     $scope.$on("fileProgress", function(e, progress) {

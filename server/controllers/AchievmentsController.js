@@ -186,11 +186,11 @@ module.exports = {
        }  
 
     },
-    getOwnAchievments: function(req, res) {
+    getAchievmentsOfUser: function(req, res) {
 
         //Find the Achievments of a certain user
 
-        UserAchievments.findOne({userId: req.user._id}, function (err, userAchievments) {
+        UserAchievments.findOne({userId: req.params.userId}, function (err, userAchievments) {
 
             if(err || !userAchievments) {
 

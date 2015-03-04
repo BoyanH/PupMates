@@ -42,7 +42,7 @@ module.exports = function (app) {
     });
 
     app.post('/achievments', auth.isAuthenticated, controllers.achievments.applyForAchievment); //creates an achievement 
-    app.get('/achievments', auth.isAuthenticated, controllers.achievments.getOwnAchievments); //returns the achievements of the current user
+    app.get('/achievments/aquired/:userId', auth.isAuthenticated, controllers.achievments.getAchievmentsOfUser); //returns the achievements of the current user
     app.get('/achievments/pending', auth.isAuthenticated, controllers.achievments.getOwnAchApls);
     app.get('/achievments/available', controllers.achievments.getAvailableAchievments);     //returns the available achievemtns
     app.get('/admin/achievments', auth.isInRole('admin'), controllers.achievments.queryAchievmentApplications);
