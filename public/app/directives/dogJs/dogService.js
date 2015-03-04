@@ -1,6 +1,6 @@
 //dog service which makes requests to the server
 'use strict'
-app.factory("DogService", function($q, $http, identity){
+app.factory("DogService", function($q, $http, identity, $rootScope){
 	function createDog(dog){	//creates a dog
 		var deferred = $q.defer();
 
@@ -74,7 +74,8 @@ app.factory("DogService", function($q, $http, identity){
                     console.log("url: " + dogs[i].url);
 				}
 				identity.currentUser.dogs = dogs;
-				deferred.resolve(true);
+				$rootScope.dogs = dogs;
+				deferred.resolve(dogs);
 			}
 			else deferred.resolve(false);
 		})

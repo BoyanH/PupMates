@@ -1,5 +1,4 @@
 //module which controls the left fixed menu of the application
-'use strict'
 app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout, identity){
     
     $scope.isAdmin = identity.currentUser ? identity.isAuthorizedForRole('admin') : false;

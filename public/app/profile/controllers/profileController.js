@@ -1,17 +1,18 @@
-'use strict';
 app.controller('ProfileRouteController', function($scope, $location, identity, 
-    DogService, $routeParams, requester, notifier, FileReaderAng, $anchorScroll){
+    DogService, $routeParams, requester, notifier, FileReaderAng, $anchorScroll, $rootScope){
 
     $scope.view = { //checks if the tab is dogs or achievements in the url
 
         achievments: $routeParams.view == 'achievments',
         dogs: $routeParams.view == 'dogs'
     }
-
+    $scope.dogs = $rootScope.dogs;
 	requester.getAllDataOfUserByUserName($routeParams.username) //gets all the data of a user(places, dogs, achievements, himself)
     .then(function (profile) {
         $scope.profile = profile;
         $scope.identity = identity;
+        $rootScope.dogs = profile.dogs;
+        $scope.dogs = $rootScope.dogs;
 
         $scope.profPhoto = "/img/profPhoto/" + profile._id;
 

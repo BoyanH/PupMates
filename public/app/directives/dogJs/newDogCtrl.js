@@ -12,9 +12,13 @@ app.controller("NewDogController", function($scope, identity,
     var yyyy = today.getFullYear();
 
     function validDate(strDate) {   //function that validates a date
-        var timestamp=Date.parse(strDate);
-        if (isNaN(timestamp)==false)return true;
-        else return false;
+        var data = strDate.split("/");
+        // using ISO 8601 Date String
+        if (isNaN(Date.parse(data[2] + "-" + data[1] + "-" + data[0]))) {
+            return false;
+        }
+
+        return true;
     }
     $scope.dog = {};
     $scope.warningName = false; //warnings if the user has typed correct data
@@ -97,8 +101,9 @@ app.controller("NewDogController", function($scope, identity,
 			LoadingService.stop(); //after the dog is added hide the loading cover
 			
             $('#newDogForm')[0].reset();
-			DogService.updateDogsOfCurrentUser().then(function(success){ //updates the dogs of the current user
-                if(success){
+			DogService.updateDogsOfCurrentUser().then(function(dogs){ //updates the dogs of the current user
+                if(dogs){
+                    $rootScope.dogs = dogs;
                     notifier.success("Dog added!");
                 }
             })
