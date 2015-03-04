@@ -1,4 +1,6 @@
-﻿var usersController = require('../controllers/UsersController.js'),
+﻿//module which calls all the controllers and returns them as object
+
+var usersController = require('../controllers/UsersController.js'),
 	socketioController = require('../controllers/SocketioController.js'),
 	dogsController = require("../controllers/DogsController.js"),
     placesController = require("../controllers/PlacesController.js"),

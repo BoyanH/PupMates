@@ -1,10 +1,12 @@
+//module which controlles the database of dogs
+
 var mongoose = require('mongoose'),
 	Dog = mongoose.model('Dog'),
 	User = mongoose.model('User'),
 	Q = require('q');
 
 module.exports = {
-	createDog: function(req, res, next){
+	createDog: function(req, res, next){	//creates a dog
 		var user = req.params.userId;
 		User.findOne({_id:user}).select('_id').exec(function(err, us){
 			var data = req.body;
@@ -43,7 +45,7 @@ module.exports = {
 			});
 		}) 
 	},
-	getDogsOfUser: function(req, res, next){
+	getDogsOfUser: function(req, res, next){ //returns the dogs of a user with id parameter
 		var user = req.params.userId;
 		Dog.find({owners: user}).select("-profPhoto")
 		.exec(function(err, dogs){
@@ -56,7 +58,7 @@ module.exports = {
 			}
 		})
 	},
-	getDogsOfUserByUserName: function(req, res, next){
+	getDogsOfUserByUserName: function(req, res, next){ //returns the dogs of a user with username parameter
 		var username = req.params.username;
 
 		User.findOne({username: username}).select("_id")
@@ -77,7 +79,7 @@ module.exports = {
 			}
 		})
 	},
-	getDogById: function(req, res, next){
+	getDogById: function(req, res, next){	//returns a dog with id parameter
 		var dogId = req.params.id;
 		Dog.findOne({_id:dogId}).select("-profPhoto")
 		.exec(function(err, dog){
@@ -90,7 +92,7 @@ module.exports = {
 			}
 		})
 	},
-	getDogProfPhoto: function(req, res, next){
+	getDogProfPhoto: function(req, res, next){	//returns the profile photo of a dog with id parameter
 		var	dogId = req.params.dogId;
 
 		Dog.findOne({_id: dogId}).select("profPhoto").exec(function(err, d){
@@ -98,7 +100,7 @@ module.exports = {
 			res.send(d.profPhoto.data);
 		});
 	},
-	updateDog: function(req, res, next){
+	updateDog: function(req, res, next){		//updates a dog in the database
 		var userId = req.params.userId,
 			dogId = req.params.dogId;
 		var dog = req.body;
@@ -131,7 +133,7 @@ module.exports = {
 			res.end({reason: 'You do not have permissions!'});
 		}
 	},
-	searchDogsDynamically: function (req, res) {
+	searchDogsDynamically: function (req, res) {	//search dogs in the database
 
 		var searchString =  req.params.searchContent,
             searchArray = searchString.split(' '),

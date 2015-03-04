@@ -1,13 +1,13 @@
 ﻿var exportsObj = {};
 
-function validateEmail(email) { 
+function validateEmail(email) { //function with validates an email using a regex
 
     var re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
     return re.test(email);
 }
 
-function userVerification(newUserData) {
+function userVerification(newUserData) {    //function which verify the data of a new user
 
     var failedFields = []; 
 
@@ -48,7 +48,7 @@ var User = require('mongoose').model('User'),
     ip = require('ip'),
     notificationsController = require('./NotificationsController.js');
 
-exportsObj.createUser = function(req, res, next){        
+exportsObj.createUser = function(req, res, next){        //creates ne user
 
     var newUserData = req.body;
 
@@ -61,11 +61,11 @@ exportsObj.createUser = function(req, res, next){
         return res.send({failedFields: failedFields});
     }
 
-    newUserData.salt = encryption.generateSalt();
-    newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
-    User.create(newUserData, function(err, user){
+    newUserData.salt = encryption.generateSalt();   //generates the salt
+    newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password); //hash the password
+    User.create(newUserData, function(err, user){   //creates the user
         if(err){
-            console.log('Fell to register new user: ' + err);
+            console.log('Failed to register new user: ' + err);
             
             res.status(400);
             return res.send({failedFields: ['usernameExists']});
@@ -80,8 +80,8 @@ exportsObj.createUser = function(req, res, next){
     });
 };
 
-exportsObj.updateUser = function(req, res, next){
-    if(req.body._id == req.user._id || req.user.roles.indexOf('admin') > -1){
+exportsObj.updateUser = function(req, res, next){   //updates the user in the database
+    if(req.body._id == req.user._id || req.user.roles.indexOf('admin') > -1){ //checks if the current user is the same user or an admin
         var updatedUserData = req.body;
         if(updatedUserData.password && updatedUserData.password.length > 0){
             updatedUserData.salt = encryption.generateSalt();
@@ -96,14 +96,14 @@ exportsObj.updateUser = function(req, res, next){
     }
 };
 
-exportsObj.getAllUsers = function(req, res){
+exportsObj.getAllUsers = function(req, res){    //returns all the users withoute their albums, dogs, salt, hashpass, roles
     User.find({})
     .select("-albums")
     .select("-dogs")
     .select("-salt")
     .select("-hashPass")
     .select("-roles")
-    .select("_id")
+    .select("_id username firstName lastName email")
     .exec(function(err, collection){
         if(err){
             console.log('Users could not be found: ' +  err);
@@ -113,7 +113,7 @@ exportsObj.getAllUsers = function(req, res){
     });
 };     
 
-exportsObj.getUser = function(req, res){
+exportsObj.getUser = function(req, res){    //returns a user with an username parameter
 
     var sendAllInfo = false,
         collection,
@@ -175,7 +175,7 @@ exportsObj.getUser = function(req, res){
     });
 };
 
-exportsObj.getProfPhoto = function(req, res){
+exportsObj.getProfPhoto = function(req, res){   //returns the profile photo of a user
     
     User.findOne({_id: req.params.id})
     .select('profPhoto')
@@ -206,7 +206,7 @@ exportsObj.getProfPhoto = function(req, res){
     });
 };
 
-exportsObj.searchUsersDynamically = function(req, res) {
+exportsObj.searchUsersDynamically = function(req, res) { //search in the database for user with a part of the name "searchContent"
 
     var searchString =  req.params.searchContent,
         searchArray = searchString.split(' '),
@@ -285,7 +285,7 @@ exportsObj.searchUsersDynamically = function(req, res) {
     return deferred.promise;
 };
 
-exportsObj.befriend = function (req, res) {
+exportsObj.befriend = function (req, res) { //makes a friend request
 
     var userID = req.user._id;
 
@@ -392,7 +392,7 @@ exportsObj.befriend = function (req, res) {
             }
 
     })
-    .select("-albums")
+    .select("-albums")      //exclude this fields
     .select("-dogs")
     .select("-salt")
     .select("-hashPass")
@@ -400,7 +400,7 @@ exportsObj.befriend = function (req, res) {
     .select("-profPhoto");
 };
 
-exportsObj.getFriends = function(req, res) {
+exportsObj.getFriends = function(req, res) {    //returns the friends of a user
 
     var deferred = Q.defer(),
         userId;
@@ -423,7 +423,7 @@ exportsObj.getFriends = function(req, res) {
         }
 
         User.find({'_id': {'$in' : user.friends.map(function (x) { return x.id } ) } })
-        .select("-albums")
+        .select("-albums")  //excludes this fields
         .select("-dogs")
         .select("-salt")
         .select("-hashPass")
@@ -454,7 +454,7 @@ exportsObj.getFriends = function(req, res) {
     return deferred.promise;
 };
 
-exportsObj.getFriendIDs = function (userID) {
+exportsObj.getFriendIDs = function (userID) {   //gets the friends of a user
 
     var deferred = Q.defer();
 

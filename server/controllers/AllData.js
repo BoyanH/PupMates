@@ -1,4 +1,4 @@
-var mongoose = require('mongoose'),
+var mongoose = require('mongoose'),	//gets the mongoose module and all the models from the mongoose - user, dog, places, achievements
 	User = mongoose.model("User"),
 	Dog = mongoose.model('Dog'),
 	Place = mongoose.model("Place"),
@@ -6,18 +6,18 @@ var mongoose = require('mongoose'),
 	Achievment = mongoose.model("Achievment");
 
 module.exports = {
-	getAllDataOfUserByUserName: function(req, res, next){
+	getAllDataOfUserByUserName: function(req, res, next){	//returns all the data of a user - his places dogs achievemetns and himself
 		var username = req.params.username;
-		userGlobal = {};
+		userGlobal = {};	//creates global user which at the end will be returned
 		userGlobal.dogs = [];
 		userGlobal.places = [];
-		User.findOne({username: username})
+		User.findOne({username: username})	//gets the user
 			.select("-profPhoto -hashpass -salt -seenFrom -roles")
 			.exec(function(err, user){
 				if(err){
 					console.log("All data err, user not found: " + err);
 				}
-				var u = user.toObject(); // apparently mongoose doesnt return object O.o
+				var u = user.toObject(); // apparently mongoose doesnt return object
 
 				for(var propt in u){
 					if(u.hasOwnProperty(propt))
@@ -54,6 +54,7 @@ module.exports = {
 								}
 								userGlobal.places.push(pushPlace);
 							}
+							//gets the achievements of the user
 							UserAchievments.findOne({userId: userGlobal._id}, function (err, GlobalUserAchievments) {
 
 								if(err || !GlobalUserAchievments) {
@@ -75,7 +76,7 @@ module.exports = {
 										}
 
 										userGlobal.achievments = collection;
-										res.send(userGlobal);
+										res.send(userGlobal); //returns all the data stored in the global user
 									}
 								);
 							})
