@@ -7,7 +7,7 @@ div
 	div#application-separator
 		hr
 		button(ng-click="toggleApply()")
-			{{applying? 'Cancel Application' : 'Apply for an Achievment'}} 
+			| {{applying? 'Cancel Application' : 'Apply for an Achievment'}} 
 	div.application-box(ng-show="applying")
 		h3.center Apply for an achievment
 		form#achievment-form

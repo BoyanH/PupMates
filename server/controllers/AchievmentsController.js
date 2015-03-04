@@ -11,8 +11,11 @@ var mongoose = require('mongoose'),
     
     Q = require('q');
 
+    //A helper function for creating a new Achievment
+    //not accessible via a normal Request, called from within the functions below
     function createPendingAchievment (req, res, newAchievment) {
 
+        //Pushes a new pendingAchievment to the database by given newAchievment
         PendingAchievment.create(newAchievment, function(err, user){
             if(err){
                 
@@ -23,48 +26,41 @@ var mongoose = require('mongoose'),
         });
     }
 
+
+    //A helper function for adding new achievment to userAchievments document of a user
+    //The function can work with a prefound Achievment and save time or find the achievment in MongoDB if needed
     function updateUserAchievments (req, res, achievment, foundAch) {
 
         var deferred = Q.defer();
 
+        //this pushes a new Achievment to the userAchievments Schema of a user for a given Achievment
         function updateUserAchsFromFound (savedAch) {
 
+            //The Achievment from Achievment.js Model is passed as argument
+            //A user can only aquire those achievments, which exist in the Achievment collection
+
             UserAchievments.update(
+                //search for a userAchievments document with the given userId
                 { userId: achievment.author.id },
+                //push to the array below
                 { $addToSet: 
                     {
+                        //the array
                         achievments:
                              {
                                 achievmentId: savedAch._id,
-                                dogId: achievment.dogId,
+                                dogId: achievment.dogId,        //the Achievment to push
                                 createdAt: achievment.createdAt
                             }
                     }
                 },
-                { upsert: true },
+                { upsert: true }, //create a new document if no match
                 function (err, success) {
 
                     if(err) {
 
-                        var newUserAchievmentsDoc = {
-
-                            userId: achievment.author.id,
-                            achievments: [{
-                                achievmentId: savedAch._id,
-                                dogId: achievment.dogId,
-                                createdAt: achievment.createdAt
-                            }]
-                        };
-
-                        UserAchievments.create(newUserAchievmentsDoc, function (err, success) {
-
-                            if(err) {
-
-                                deferred.reject({status: 500, msg: 'Error creating new UserAchievments: ' + err});
-                            }
-
-                            deferred.resolve(true);
-                        });
+                        //notify user for error
+                        deferred.reject({status: 500, msg: 'Error posting to UserAchievments: ' + err});
                     }
                     else {
                         deferred.resolve(true);
@@ -76,10 +72,12 @@ var mongoose = require('mongoose'),
 
         if(foundAch) {
 
-            updateUserAchsFromFound(foundAch);
+            updateUserAchsFromFound(foundAch); //If the Achievment is already found for a previous check it is passed as argument
+                                              //so one slow request to the database is saved
         }
         else {
            
+            //else, we find the acheivment manually
             Achievment.findOne({name: achievment.name}, function (err, savedAch) {
 
                 if(err) {
@@ -106,6 +104,7 @@ module.exports = {
             res.status(401).end('Bad request');
         }
 
+        //define the achievment the way it should be according to pendingAchievments Model
         var achievment = req.body,
                 newAchievment = {
 
@@ -122,6 +121,7 @@ module.exports = {
 
         try {
 
+            //create a buffer out of the base64 encoded video
             var b64string = achievment.video.data,
                 buf = new Buffer(b64string, 'base64');
           
@@ -133,12 +133,14 @@ module.exports = {
            newAchievment.video.data = buf;
            newAchievment.video.contentType = achievment.video.contentType;
        }
+
+       //If there is an error in the process, the video.data was not base64 encoded => Bad request
        catch(e) {
 
             res.status(401).end('Bad request');
        }
 
-       //User is requesting to get an existing achievment
+       //User is requesting to get an existing achievment (Achievment Application)
        if(!achievment.points && !achievment.description) {
 
             Achievment.findOne({name: newAchievment.name}, function (err, data) {
@@ -155,6 +157,7 @@ module.exports = {
 
             res.status(401).end("Bad request");
        }
+       //Either a New Achievment Suggestion OR an Edit Achievment Suggestion
        else {
 
             newAchievment.points = achievment.points;
@@ -162,14 +165,20 @@ module.exports = {
 
             Achievment.findOne({name: newAchievment.name}, function (err, data) {
 
-                //User is suggesting a new achievment
+                //Achievment not already existing in DB
+                //  => User is suggesting a new achievment
                 if(err || !data) {
 
                     createPendingAchievment(req, res, newAchievment);
                 }
+
+                    //Acheivment exists
                     else {
 
-                        //User is suggesting a change to an achievment
+                        //=> User is suggesting a change to an achievment
+                        
+                        //Mark the pendingAchievment with suggestChange so the admin, who review it knows,
+                        //That accepting this achievment will NOT ONLY give it to the user, but also change it
                         newAchievment.suggestChange = true;
                         createPendingAchievment(req, res, newAchievment);
                     }
@@ -178,6 +187,8 @@ module.exports = {
 
     },
     getOwnAchievments: function(req, res) {
+
+        //Find the Achievments of a certain user
 
         UserAchievments.findOne({userId: req.user._id}, function (err, userAchievments) {
 
@@ -193,6 +204,8 @@ module.exports = {
     },
     getOwnAchApls: function (req, res) {
 
+        //Get the pendingAchievments (only personal ones), later decline them personally, withoud admin review
+
         PendingAchievment.findOne({"author.id": req.user._id}, function (err, pendAchs) {
 
             if(err || !pendAchs) {
@@ -207,6 +220,7 @@ module.exports = {
     },
     queryAchievmentApplications: function (req, res) {
 
+        //Admin only, query the AchievmentApplications for later review
         PendingAchievment.find({}, '-video', function (err, collection) {
 
             if(err) {
@@ -216,11 +230,12 @@ module.exports = {
 
             res.status(200).send(collection);
         })
-        .skip(req.body.skipTo || 0)
+        .skip(req.body.skipTo || 0) //this will allow paging (when admin review 10 requests, he can ask for more)
         .limit(req.body.limitTo || 10);
     },
     getApprovalVideo: function (req, res) {
 
+        //Stream a pendingAchievment's video to the admin for review
         PendingAchievment.findOne({_id: req.params.id}, function (err, approval) {
 
             if(err || !approval) {
@@ -240,8 +255,11 @@ module.exports = {
     },
     acceptAchievment: function (req, res) {
 
+        //Gives the Achievment to the user, who requested it and deletes the pendingAchievment
+
         var achievment = req.body;
 
+        //If the request was to edit the Achievment
         if(achievment.suggestChange) {
 
             Achievment.update(
@@ -273,13 +291,17 @@ module.exports = {
         //new Achievment
         else if(achievment.points && !achievment.suggestChange) {
 
+            //Create the new Achievment
             Achievment.create(achievment, { new: true, upsert: true }, function (err, ach) {
+
+                //the new option allows us to recieve the saved achievment in the callback function
 
                 if(err) {
 
                     res.status(500).end('Error creating new achievment: ' + err);
                 }
 
+                //Give it to the user
                 updateUserAchievments(req, res, achievment, ach)
                 .then(function (success) {
 
@@ -295,6 +317,7 @@ module.exports = {
         }
         else {
 
+            //Find the requested achievment
             Achievment.findOne({name: achievment.name}, function (err, ach) {
 
                 if(err) {
@@ -302,6 +325,7 @@ module.exports = {
                     res.status(401).end('No such ach to apply for!');
                 }
 
+                //give it to the user
                 updateUserAchievments(req, res, achievment, ach)
                 .then(function (success) {
 
@@ -316,6 +340,8 @@ module.exports = {
     },
     deletePendingAch: function (req, res) {
 
+        //Simply deletes the pendingAchievment from the database, the Achievment is not given to the user
+
         var achievment = req.body;
 
         PendingAchievment.remove({_id: achievment._id}, function (err, success) {
@@ -328,6 +354,8 @@ module.exports = {
         });
     },
     getAvailableAchievments: function (req, res) {
+
+        //Queries all Achievment document
 
         Achievment.find({}, function (err, data) {
 

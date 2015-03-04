@@ -83,6 +83,7 @@ module.exports = {
 
 			//If for some reason notifications are not available, catch the err
 			try {
+				//Remove the requested notification from the user's notifications
 				user.notifications.splice(user.notifications.indexOf(req.body), 1);
 			}
 			catch(err) {
@@ -90,6 +91,7 @@ module.exports = {
 				res.status(500).end('ERR: ' + err);
 			}
 
+			//The actual delete request to MongoDB
 			User.update({_id: req.user._id}, user, function(err, data){
                 
                 if(err) {
@@ -105,8 +107,10 @@ module.exports = {
 	markNotificationAsSeen: function (req, res) {
 
 		User.update(
+			//find the notification with the requested _id
 		    {"_id": req.user._id, "notifications._id": req.body._id}, 
 		    {$set: {
+		    	//set its seen property to true ($ is the above found one)
 		        "notifications.$.seen": true
 		    	}
 			}, function (err, data) {
@@ -126,6 +130,7 @@ module.exports = {
 
 		try {
 
+			//define the data the same way as the client expects it on 'status change' emit call on socket.io
 			var userOneAsFrined = {
 
 					id: userOne._id,
@@ -137,17 +142,23 @@ module.exports = {
 					online: !!socketioController.clientsList[userTwo._id]
 				};
 
+			//If there is open Web Socket connection to userOne
 			if(socketioController.clientsList[userOne._id]) {
 
 				socketioController.clientsList[userOne._id].friends.push(userTwoAsFriend);
 
 				socketioController.clientsList[userOne._id].identity.forEach(function (userOneConnection) {
 
+
+					//Emit to user one using the open Web Socket connection the new friend data passed as argument
 					userOneConnection.socket.emit('new friends', [userTwo]);
+
+					//and the 'status change' data defined above
 					userOneConnection.socket.emit('status change', [userTwoAsFriend]);
 				});
 			}
 
+			//Same workflow for the other user
 			if(socketioController.clientsList[userTwo._id]) {
 				socketioController.clientsList[userTwo._id].friends.push(userOneAsFrined);
 
@@ -158,13 +169,15 @@ module.exports = {
 				});
 			}
 
+			//if nothing crashed, return success to the waiting block tied to the promise
 			deferred.resolve(true);
 		}
+			//if something crashed above, catch the error, don't stop server
 			catch(err) {
 
-				deferred.reject(err);
+				deferred.reject(err); //send the error to the waiting block tied to the promise
 			}
 
-		return deferred.promise;
+		return deferred.promise; //return a promise
 	}
 };
