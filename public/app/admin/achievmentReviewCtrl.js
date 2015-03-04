@@ -1,6 +1,6 @@
 app.controller('achievmentReviewCtrl', function($scope, notifier, requester){
     
-    requester.queryAchievmentApplications()
+    requester.getAchievmentApplications()
     .then(function (data) {
 
     	$scope.achievmentApplications = data;
