@@ -6,7 +6,7 @@ div
 			div.achievment-points Gives {{achievment.points}} points
 	div#application-separator
 		hr
-		button(ng-click="applying = !applying")
+		button(ng-click="toggleApply()")
 			{{applying? 'Cancel Application' : 'Apply for an Achievment'}} 
 	div.application-box(ng-show="applying")
 		h3.center Apply for an achievment

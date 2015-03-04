@@ -20,12 +20,13 @@ var Place = mongoose.model("Place", placeSchema)
 module.exports.seedInitialPlaces = function(){
 
 	var deferred = Q.defer();
-	//Place.remove({}).exec(function(){console.log("All places removed...");})
+
 	Place.find({}).exec(function(err, collection){
 		if(err){
 			console.log("Smth went wrong with places: " + err);
 			return;
 		}
+		
 		if(collection.length==0){
 			User.findOne({username: 'AlexanderY'}).exec(function(err, user){
 				if(err){
@@ -59,15 +60,6 @@ module.exports.seedInitialPlaces = function(){
 				});
 
 			});
-		}
-		else{
-			Place.find({}).exec(function(err, places){
-				if(err){
-					console.log("Failed to find places: " + err);
-					return;
-				}
-				//console.log(places);
-			})
 		}
 
 	});
