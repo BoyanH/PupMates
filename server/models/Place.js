@@ -41,10 +41,11 @@ module.exports.seedInitialPlaces = function(){
 						creator: user._id,
 						people:[user._id, user._id],
 						dogs: [dog._id],
-						name: 'Probno ime',
+						name: 'Test Mqsto',
+						description: 'No description',
 						rate: 5,
-						lng: "39.7391536",
-						lat: "-104.9847034",
+						lng: "42.440547",
+						lat: "25.615827",
 						private: false
 					}, function (err, data) {
 

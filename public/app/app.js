@@ -30,11 +30,6 @@ app.config(function($routeProvider, $locationProvider){
             controller: 'FrontPageController',
             resolve: routeUserCheck.notAuthenticated
         })
-        .when('/home', {
-            templateUrl : '/partials/main/home',
-            controller: 'MainController',
-            resolve: routeUserCheck.authenticated
-        })
         .when('/places', {
             templateUrl: '/partials/places/places',
             controller: 'PlacesController',
