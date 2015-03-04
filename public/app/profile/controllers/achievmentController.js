@@ -11,24 +11,51 @@ app.controller('AchievmentController', function($scope, identity, requester, not
     .then(function (data) {
 
         $scope.existingAchievments = data;
-        console.log(data);
+
+        //Query the Achievments the user aquired
+        requester.getOwnAchievments()
+        .then(function (ownAchs) {
+
+            //Find it's AchievmentModel and mark it as aquired
+            for(var ach in $scope.existingAchievments) {
+
+                (function() {
+                    
+                    for(var ownAch in ownAchs.achievments) {
+                        if($scope.existingAchievments[ach]._id == ownAchs.achievments[ownAch].achievmentId) {
+
+                            $scope.existingAchievments[ach].aquired = true;
+                            return; //with this closure only one of the nested loops is broken
+                        }
+                    }
+
+                })(); //gets self executed on every outer loop
+            }
+
+        }, function (err) {
+
+            //no achievments
+            console.log('Err getting own achievments: ' + err);
+        });
+
     }, function (err) {
 
-        console.log(err);
         notifier.error('You can currenty apply for no achievments!');
     });
 
-    requester.getAchApls()
-    .then(function (data) {
+    //These are the achievments, that are requested, yet not aquired
+    requester.getOwnAchievmentApplications()
+    .then(function (pendingAchs) {
 
-        $scope.pendingAchs = data;
-        console.log(data);
+        $scope.pendingAchs = pendingAchs;
     });
 
 
     $scope.getFile = function () {
-        $scope.progress = 0;
         
+        $scope.progress = 0; //FilereaderAng automatically updates this value on given $scope
+        
+        //Make sure the DB won't get overflooded
         if($scope.file.size > tenMBInBytes) {
 
             $scope.file = '';

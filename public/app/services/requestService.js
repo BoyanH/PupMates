@@ -94,7 +94,7 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
         deleteNotif: function (notification) {
             return postData('/notifications', notification, 'DELETE');
         },
-        queryAchievmentApplications: function () {
+        getAchievmentApplications: function () {
 
             return getData('/admin/achievments');
         },
@@ -108,11 +108,11 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
         },
         getOwnAchievmentApplications: function () {
 
-            return getData('/admin/achievments')
-        },
-        getAchApls: function () {
-
             return getData('/achievments/pending');
+        },
+        getOwnAchievments: function () {
+
+            return getData('/achievments');
         },
         acceptAchievment: function (achReq) {
 

@@ -1,7 +1,16 @@
 div
-	div.application-box(ng-show="!pendingAchs.name")
+	div#achievment-grid
+		div.achievment-item(ng-repeat="achievment in existingAchievments" ng-class="{'achievment-aquired': achievment.aquired}") 
+			div.achievment-name {{achievment.name}}
+			div.achievment-description {{achievment.description}}
+			div.achievment-points Gives {{achievment.points}} points
+	div#application-separator
+		hr
+		button(ng-click="applying = !applying")
+			{{applying? 'Cancel Application' : 'Apply for an Achievment'}} 
+	div.application-box(ng-show="applying")
 		h3.center Apply for an achievment
-		form#achievment-form(ng-show="true")
+		form#achievment-form
 			div.form-field
 				label.label(for="new-or-apply") Pick Action
 				div#new-or-apply.field
@@ -17,7 +26,7 @@ div
 			div.form-field(ng-show="!createNew || edit")
 				label.label(for="ach-name") Pick Achievment
 				select.field#ach-name(ng-model="achievment.name" ng-required="!createNew")
-					option(ng-repeat="exisAch in existingAchievments") {{exisAch.name}}
+					option(ng-repeat="exisAch in existingAchievments" ng-show="!exisAch.aquired") {{exisAch.name}}
 			div.form-field(ng-show="createNew")
 				label.label(for="new-ach-name") Name
 				input#new-ach-name.field(type="text" ng-required="createNew" ng-model="achievment.name")

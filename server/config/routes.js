@@ -44,7 +44,7 @@ module.exports = function (app) {
     app.post('/achievments', auth.isAuthenticated, controllers.achievments.applyForAchievment);
     app.get('/achievments', auth.isAuthenticated, controllers.achievments.getOwnAchievments);
     app.get('/achievments/pending', auth.isAuthenticated, controllers.achievments.getOwnAchApls);
-    app.get('/achievments/available', auth.isAuthenticated, controllers.achievments.getAvailableAchievments);
+    app.get('/achievments/available', controllers.achievments.getAvailableAchievments);
     app.get('/admin/achievments', auth.isInRole('admin'), controllers.achievments.queryAchievmentApplications);
     app.post('/admin/achievments', auth.isInRole('admin'), controllers.achievments.acceptAchievment);
     app.delete('/admin/achievments', auth.isInRole('admin'), controllers.achievments.deletePendingAch);
