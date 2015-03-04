@@ -1,17 +1,17 @@
-﻿var User = require('mongoose').model('User'),
-    LocalPassport = require('passport-local');
-    passport = require('passport');
+﻿var User = require('mongoose').model('User'),       //takes the model user from the module mongoose
+    LocalPassport = require('passport-local');      //takes the local passport module
+    passport = require('passport');                 //takes passport module from nodejs
 
 module.exports = function(){
-    passport.use(new LocalPassport(function (username, password, done) {
-        User.findOne({ username: username }).select("username firstName lastName profPhoto salt hashPass _id roles friends notifications").exec(function (err, user) {
+    passport.use(new LocalPassport(function (username, password, done) {    //sets the passport configuration
+        User.findOne({ username: username }).select("username firstName lastName salt hashPass _id roles friends notifications").exec(function (err, user) {
 
             if (err) {
                 console.log('Error loading user: ' + err);
                 return;
             }
-            if (user && user.authenticate(password)) {
-                return done(null, {
+            if (user && user.authenticate(password)) {  //checks if the user is authenticated
+                return done(null, {                     //returns only the information that the client should know
                     username: user.username,
                     firstName: user.firstName,
                     lastName: user.lastName,
@@ -28,12 +28,12 @@ module.exports = function(){
         });
     }));
 
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser(function (user, done) {  //serialize the user
         if (user) {
             return done(null, user._id)
         }
     });
-    passport.deserializeUser(function (id, done) {
+    passport.deserializeUser(function (id, done) {  //deserialize the User
         User.findOne({ _id: id }).exec(function (err, user) {
             if (err) {
                 console.log('Error loading user: ' + err);
@@ -41,7 +41,7 @@ module.exports = function(){
             }
             if (user) {
                 
-                return done(null, {
+                return done(null, {     //returns only the information that the client should know
                     username: user.username,
                     firstName: user.firstName,
                     lastName: user.lastName,

@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 	Q = require('q');
 
 module.exports = {
-	getPlacesOfUser: function(req, res, next){
+	getPlacesOfUser: function(req, res, next){	//gets the places of a user with id parameter
 		var userId = req.params.id;
 
 		console.log("----places-----");
@@ -20,7 +20,7 @@ module.exports = {
 			}
 		});
 	},
-	createPlace: function(req, res, next){
+	createPlace: function(req, res, next){	//creates a place
 		var userId = req.params.id;
 		place = req.body;
 		place.rate = 0;
@@ -33,7 +33,7 @@ module.exports = {
 			res.end();
 		})
 	},
-	deletePlace: function(req, res, next){
+	deletePlace: function(req, res, next){	//deletes a place
 		var placeId = req.params.id;
 
 		Place.remove({_id: placeId}, function(err){
@@ -46,7 +46,7 @@ module.exports = {
 			res.end();
 		})
 	},
-	getPlacesExcepUser: function(req, res, next){
+	getPlacesExcepUser: function(req, res, next){	//returns all the places of user except the user with id parameter
 		var userId = req.params.id;
 		
 		Place.find({})
