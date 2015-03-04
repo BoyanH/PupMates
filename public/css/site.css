@@ -243,6 +243,11 @@ ul.menu-list li {
 		border-bottom: 1px solid #1d1d1d;
 	}
 
+	ul.menu-list li:first-of-type {
+
+		margin-top: 80px;
+	}
+
 	ul.menu-list li div, ul.menu-list li a {
 
 		color: #7ccc31;
@@ -260,7 +265,6 @@ ul.menu-list li {
 		background-color: #e1e1e1;
 	}
 	.chat-btn{
-		margin-top:80px;
 		background: url("/img/chat-icon.png") 20px 20px no-repeat;
 	}
 		.chat-btn:hover{
