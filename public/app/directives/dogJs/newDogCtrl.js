@@ -101,13 +101,9 @@ app.controller("NewDogController", function($scope, identity,
 			LoadingService.stop(); //after the dog is added hide the loading cover
 			
             $('#newDogForm')[0].reset();
-			DogService.updateDogsOfCurrentUser().then(function(dogs){ //updates the dogs of the current user
-                if(dogs){
-                    $rootScope.dogs = dogs;
-                    notifier.success("Dog added!");
-                }
-            })
-
+            dog.url = "data:"+dog.profPhoto.contentType+";base64,"+data
+            $rootScope.dogs.push(dog);  //dog added to the dogs of the user
+            notifier.success("Dog added!");
     	});
 
     }
