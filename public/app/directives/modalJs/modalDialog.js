@@ -1,3 +1,4 @@
+//angular directive for the menu dialog
 app.directive('modalDialog', function() {
   return {
     restrict: 'EA',
@@ -16,6 +17,6 @@ app.directive('modalDialog', function() {
         scope.show = false;
       };
     },
-    templateUrl: "partials/directives/modalDialog"
+    templateUrl: "partials/directives/modalDialog" //where to find the conent
   };
 });

@@ -1,11 +1,12 @@
-﻿var app = angular.module('app', 
-    ['ngResource', 'ngRoute','ngDraggable', 'geolocation', 'luegg.directives', 'offClick', 'visualCaptcha'])
+﻿//intializing the angular application
+var app = angular.module('app', 
+    ['ngResource', 'ngRoute','ngDraggable', 'geolocation', 'luegg.directives', 'offClick', 'visualCaptcha']) //angular depencies
 .value('toastr', toastr);
 
 app.config(function($routeProvider, $locationProvider){
     //$locationProvider.html5Mode(true);
 
-    var routeUserCheck = {
+    var routeUserCheck = {      //router check if the user can get to the wanted route
         adminRole: {
             authenticate: function ( auth ) {
                 return auth.isAuthorizedForRole( 'admin' );
@@ -24,11 +25,11 @@ app.config(function($routeProvider, $locationProvider){
         }
     }
 
-    $routeProvider
+    $routeProvider          //sets all the routes of the application
         .when('/', {
             templateUrl: 'partials/main/front-page',
             controller: 'FrontPageController',
-            resolve: routeUserCheck.notAuthenticated
+            //resolve: routeUserCheck.notAuthenticated
         })
         .when('/places', {
             templateUrl: '/partials/places/places',
@@ -64,22 +65,23 @@ app.config(function($routeProvider, $locationProvider){
         .otherwise({ redirectTo: '/' });
 
 });
-app.run(function($rootScope, $location){
+app.run(function($rootScope, $location){    //if occurs an error on the route change the application goes to the front-page
     $rootScope.$on('$routeChangeError', function(event, current, previous, rejection){
         if(rejection === 'not-authorized'){
             $location.path('/');
         }
     });
-
-    $rootScope.$on('$routeChangeError', function(event, current, previous, rejection){
+    //TO DO the opposite of error route change when the user is authenticated
+    /*$rootScope.$on('$routeChangeError', function(event, current, previous, rejection){
         if(rejection === 'already-authorized'){
-            $location.path('/home');
+            $location.path('/places');
         }
-    });
+    });*/
 });
 
 app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $location) {
     var original = $location.path;
+    //redefining the $location.path function of angular
     $location.path = function (path, reload) {
         if (reload === false) {
             var lastRoute = $route.current;

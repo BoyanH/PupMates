@@ -1,3 +1,4 @@
+//angular directive for a new dog
 app.directive("newDog", function(){
 	return{
 		restrict: "AE",

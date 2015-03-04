@@ -1,6 +1,7 @@
+//service which makes requests to the server with parameter url
 app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
 
-    function getData(dataURL, data) {
+    function getData(dataURL, data) {   //get data with url
 
         var deferred = $q.defer();
 
@@ -18,7 +19,7 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
 
         return deferred.promise;        
     }
-    function postData (dataURL, data, method) {
+    function postData (dataURL, data, method) {     //post data with url
 
         var deferred = $q.defer();
 
@@ -38,7 +39,7 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
     }
 
 
-    function getProfileByUserName(username){
+    function getProfileByUserName(username){    //gets the profile of user with username
         var deferred = $q.defer();
         $http.get('/api/users/' + username).success(function(user){
             if(user){
@@ -50,7 +51,7 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
         })
         return deferred.promise;
     }
-    function getAllDataOfUserByUserName(username){
+    function getAllDataOfUserByUserName(username){  //gets all the data of a user with username
         var deferred = $q.defer();
         
         $http.get('/api/user-all-data/' + username).success(function(user){
