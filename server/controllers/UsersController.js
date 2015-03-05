@@ -43,7 +43,6 @@ module.exports = exportsObj;
 
 var User = require('mongoose').model('User'),
     encryption = require('../utilities/encryption.js'),
-    shortId = require('shortid'),
     Q = require('q'),
     ip = require('ip'),
     notificationsController = require('./NotificationsController.js');
