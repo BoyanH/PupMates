@@ -95,6 +95,7 @@ app.controller("NewDogController", function($scope, identity,
         owners.push(identity.currentUser._id);
         dog.owners = owners;
         console.log(dog);
+        
 
         LoadingService.start(); // starting the loading cover
     	DogService.createDog(dog).then(function(){
