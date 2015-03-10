@@ -25,11 +25,13 @@ module.exports = function(config){
         dog.seedInitialDogs()
         .then(function (data) {
 
-            place.seedInitialPlaces()
-            .then(function(data) {
+            // place.seedInitialPlaces()
+            // .then(function(data) {
 
-                achievment.seedInitialAchievments();
-            });
+            //     achievment.seedInitialAchievments();
+            // });
+
+            achievment.seedInitialAchievments();
         })
     });
 }

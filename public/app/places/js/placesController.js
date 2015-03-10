@@ -53,8 +53,6 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
                 var userMarkers = MapService.displayPlaces(map, places, true);
                 MapService.openInfoMarkerArray(map, userMarkers, places);
                 $scope.userMarkers = $scope.userMarkers.concat(userMarkers);
-            } else {
-                console.log("error when getting places");
             }
         });
         PlacesService.getPlaceExceptUser($scope.user._id).then(function(places) { //gets the other users' places
@@ -66,15 +64,13 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
                 MapService.openInfoMarkerArray(map, allUserMarkers, places);
                 $scope.peopleMarkers = allUserMarkers;
                 $scope.allMarkers = $scope.allMarkers.concat(allUserMarkers);
-            } else {
-                console.log("error when getting places");
             }
         });
 
         $scope.addPlace = function(location, place) {   //adds a places on the map
             $scope.addPlaceTrigger = true;
             listenerHandle = google.maps.event.addListener(map, 'click', function(event) {
-                console.log("click on map");
+
                 if (!$scope.clickOnMapNewPlace) {
                     $scope.clickOnMapNewPlace = true;
                     google.maps.event.removeListener(listenerHandle);

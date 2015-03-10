@@ -5,10 +5,9 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 	getPlacesOfUser: function(req, res, next){	//gets the places of a user with id parameter
+		
 		var userId = req.params.id;
 
-		console.log("----places-----");
-		console.log(userId);
 		Place.find({creator: userId}, function(err, collection){
 			if(err){
 				console.log("Smth went wrong when searching for places: " + err);
@@ -21,30 +20,48 @@ module.exports = {
 		});
 	},
 	createPlace: function(req, res, next){	//creates a place
-		var userId = req.params.id;
+		var userId = req.user._id;
+
 		place = req.body;
 		place.rate = 0;
-		Place.create(place, function(err){
+		place.creator = userId;
+		
+		Place.create(place, function (err){
+			
 			if(err){
-				console.log("Couldnt create place");
-				res.end();
+				res.status(401).end('Bad request!');
 			}
-			console.log("Place added!");
-			res.end();
+
+			res.status(200).end();
 		})
 	},
 	deletePlace: function(req, res, next){	//deletes a place
-		var placeId = req.params.id;
+		
+		var placeId = req.body;
 
-		Place.remove({_id: placeId}, function(err){
-			if(err){
-				console.log("Couldn't delete place: " + err);
-				res.end();
+		Place.findOne({_id: req.body}, function (err, place) {
+
+			if(err) {
+
+				res.status(401).send('Bad request!');
 			}
-			console.log("Place deleted!");
-			res.status(200);
-			res.end();
-		})
+			
+			if(place.creator.toString() != req.user._id.toString() || req.user.roles.indexOf('admin') == -1) {
+
+				res.status(403).send('Not authorised!');
+			}
+				else {
+
+					Place.remove({_id: placeId}, function (err){
+						if(err){
+
+							res.status(500).end('Err deleting place: ' + err);
+						}
+
+						res.status(200).end();
+					});			
+				}
+		});
 	},
 	getPlacesExcepUser: function(req, res, next){	//returns all the places of user except the user with id parameter
 		var userId = req.params.id;
@@ -57,7 +74,6 @@ module.exports = {
 				console.log("Couldnt retrieve the users except one: " +err);
 				res.end();
 			}
-			console.log(places);
 			res.send(places);
 		});
 	}
