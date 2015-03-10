@@ -329,8 +329,8 @@ exportsObj.befriend = function (req, res) { //makes a friend request
                 User.findOne({_id: req.body.friendID}, function (err, friend) {
 
                     friend.friends.push({
-                        id: userID,
-                        username: req.user.username
+                        id: user._id,
+                        username: user.username
                     });
                     
                     User.update({_id: req.body.friendID}, friend, function (err) {
