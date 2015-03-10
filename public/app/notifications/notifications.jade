@@ -1,16 +1,17 @@
 div(ng-controller="NotificationsController"  off-click="hideNotif()")
-	div.notif(ng-show="identity.currentUser")
+	div#notif(ng-show="identity.currentUser")
 		img( ng-click="toggleNotif()" src="https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/bell.png")
-		div.notif-box-wrapper(ng-show="notifShow")
-			div.popup.notif-box
-				span.notif-title Notifications
+		span#notif-count.info-box(ng-show="notifications.length > 0") {{notifications.length}}
+		div#notif-box-wrapper(ng-show="notifShow")
+			div.popup#notif-box
+				span#notif-title Notifications
 				hr
 				ul
 					li.notif-container(ng-repeat="notification in notifications", ng-class="{unseen: !notification.seen}")
 						img.notif-img(src="/img/profPhoto/{{notification.from.id}}")
 						div.notif-read(ng-hide="notification.seen", ng-click="markAsSeen(notification)")
 							img(src="http://info.catchop.fr/assets/img/glyphicons/glyphicons_051_eye_open.png")
-							span.mas-helper Mark as seen
+							span.info-box.mas-helper Mark as seen
 						div.notif-date {{notification.createdTime | moment: 'fromNow'}}
 						div.notif-story {{notification.from.name}} 
 							span(ng-show="notification.story.legth > 0") {{notification.story}}

@@ -359,7 +359,13 @@ exportsObj.befriend = function (req, res) { //makes a friend request
                             console.log('New friendship err: ' + err);
                             res.status(500).end('Err: ' + err);
                         });
-                });
+                })
+                .select("-albums")      //exclude this fields
+                .select("-dogs")
+                .select("-salt")
+                .select("-hashPass")
+                .select("-roles")
+                .select("-profPhoto");
             }
 
             //If no request was recieved, send one (notification)

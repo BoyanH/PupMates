@@ -38,6 +38,15 @@ h1, h2, h3, a{
 
 	text-align: center;
 }
+.info-box {
+
+	font-size: 14px;
+	position: relative;
+	border: 1px solid #1D1D1D;
+	border-radius: 3px;
+	color: #7CCC31;
+	background-color: #1D1D1D;
+}
 .nav{
 	position: fixed;
 	background-color: #424345;
@@ -298,30 +307,38 @@ ul.menu-list li {
 	list-style-type: none;
 	margin-left: -20px;
 }
-.notif{
+
+#notif{
 	margin-top: 17px;
 	width: 22px;
 	height: 22px;
 }
-.notif > img{
+
+div#notif #notif-count {
+
+	bottom: 20px;
+	right: -15px;	
+}
+
+#notif > img{
 	width: 100%;
 	margin: 0;
 }
-.notif > img:hover{
+#notif > img:hover{
 	cursor: pointer;
 }
-.notif-box ul {
+#notif-box ul {
 
 	margin: 0;
 	padding: 0;
 }
-.notif-box li {
+#notif-box li {
 
 	list-style-type: none;
 	margin-left: 0;
     margin-bottom: 10px;
 }
-.notif-title {
+#notif-title {
 	font-size: 14px;
 }
 .notif-container {
@@ -372,14 +389,9 @@ div.notif-read img:hover + span.mas-helper {
 div.notif-read span {
 
 	visibility: hidden;
-	font-size: 14px;
 	position: relative;
 	bottom: 20px;
 	right: 15px;
-	border: 1px solid #1D1D1D;
-	border-radius: 3px;
-	color: #7CCC31;
-	background-color: #1D1D1D;
 }
 div.notif-date {
 

@@ -246,6 +246,11 @@
 	color: #7CCC31;
 }
 
+.sidebar-chat .friend-box span.user-names {
+
+	width: 78%;
+}
+
 .sidebar-chat .friend-box:hover span.user-names {
 
 	color: #01A3E8;
@@ -294,5 +299,5 @@ span.online-status.online{
 
 	display: inline-block;
 	height: 100%;
-	float: right;
+	vertical-align: top;
 }
