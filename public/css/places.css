@@ -67,7 +67,7 @@
 	top:1px;
 }
 .pl-window-cancel {
-	float: right;
+	margin-left: 40px;
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -260,8 +260,9 @@
 }
 .pl-rate-btn{
 	background: #96dcf9;
-	float: right;
-	margin-right: 4px;
+	vertical-align: top;
+	margin-right: 0;
+	margin-left: 6px;
 	border: none;
 	color: #484848;
 	opacity: 1;

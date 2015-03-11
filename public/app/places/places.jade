@@ -5,15 +5,15 @@ div.view-wrapper
 			| to delete the place?
 		div
 			button.pl-window-delete(ng-click="confirmDeletePlace()") Delete
-			button.pl-window-cancel(ng-click="cancelDeltePlace()") Cancel
+			button.pl-window-cancel(ng-click="cancelDeletePlace()") Cancel
 	div.pl-left-content
 		h1 Your places:
 		div#map-canvas
 		div
 			button.pl-button(ng-click="addPlace()") Add Place
 			button.pl-button(ng-click="showHidePlaceDir('addRoute')") Add Route
-			button.pl-button(ng-click="showHidePublicPlaces('show')") Show other people's places
-			button.pl-button(ng-click="showHidePublicPlaces('hide')") Hide other people's places
+			button.pl-button(ng-click="showOtherPeoplePlaces()") Show other people's places
+			button.pl-button(ng-click="hideOtherPeoplePlaces()") Hide other people's places
 			
 	div.pl-right-content
 		section.pl-explanation
@@ -31,7 +31,7 @@ div.view-wrapper
 		ng-class="{'switch-btn-clicked': showAllPl, 'switch-btn-not-clicked': !showAllPl}") Other People's Places
 		div.pl-p-users.pl-p-clicked(ng-show="!showAllPl")
 			ul.pl-place-ul
-				li.pl-place-li.pl-user-places(ng-repeat="place in userPlaces track by $index")
+				li.pl-place-li.pl-user-places(ng-repeat="place in userPlaces track by $index" ng-click="clickedPlaceCenter($index, 'current')")
 					div
 						img(src="/img/marker-blue.png")
 						span.pl-name-span
@@ -43,7 +43,7 @@ div.view-wrapper
 						| {{place.description}}
 		div.pl-p-users.pl-p-not-clicked(ng-show="showAllPl")
 			ul.pl-place-ul
-				li.pl-place-li(ng-repeat="pl in peoplePlaces track by $index")
+				li.pl-place-li(ng-repeat="pl in peoplePlaces track by $index" ng-click="clickedPlaceCenter($index, 'other')")
 					div
 						img(src="/img/marker-green.png")
 						span.pl-name-span

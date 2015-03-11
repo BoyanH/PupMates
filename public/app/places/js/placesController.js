@@ -1,6 +1,10 @@
 //module which controls the places route
 'use strict'
 app.controller('PlacesController', function($scope, MapService, PlacesService, identity, geolocation, notifier) {
+    
+    var height = $(document).height() - $(".nav").height(); //sets the height of the menu
+    $(".menu").css("height", height.toString());
+
     //if the user wants to user this route he should accept to use his geolocation
     geolocation.getLocation().then(function(data) {
         $scope.addPlaceTrigger = false;     //trigger if its clicked to be added place
@@ -53,6 +57,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
                 var userMarkers = MapService.displayPlaces(map, places, true);
                 MapService.openInfoMarkerArray(map, userMarkers, places);
                 $scope.userMarkers = $scope.userMarkers.concat(userMarkers);
+                MapService.setMapCenter(map, $scope.coords);
             } else {
                 console.log("error when getting places");
             }
@@ -66,6 +71,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
                 MapService.openInfoMarkerArray(map, allUserMarkers, places);
                 $scope.peopleMarkers = allUserMarkers;
                 $scope.allMarkers = $scope.allMarkers.concat(allUserMarkers);
+                MapService.setMapCenter(map, $scope.coords);
             } else {
                 console.log("error when getting places");
             }
@@ -162,6 +168,21 @@ app.controller('PlacesController', function($scope, MapService, PlacesService, i
             $(".pl-ask-window").css({
                 display: 'block'
             });
+        }
+        $scope.hideOtherPeoplePlaces = function(){
+            MapService.hideMarkersArray($scope.peopleMarkers);
+        }
+        $scope.showOtherPeoplePlaces = function(){
+            MapService.showMarkersArray(map, $scope.peopleMarkers);
+            MapService.setMapCenter(map, $scope.coords);
+        }
+        $scope.clickedPlaceCenter = function(index, whomPlaces){
+            if(whomPlaces == "current"){
+                MapService.setMapCenter(map, $scope.userPlaces[index]);
+            }
+            else if(whomPlaces == "other"){
+                MapService.setMapCenter(map, $scope.peoplePlaces[index]);
+            }
         }
     });
 });
