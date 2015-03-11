@@ -77,8 +77,24 @@ module.exports.seedInitialUsers = function(){   //doing the initial commit of us
                 roles: ['admin'] 
             }
         );
+        User.create(        //creating User 2
+            { 
+                username: 'peshoo',
+                firstName: 'Pesho', 
+                lastName: 'Peshev',
+                email: "peshobe@gmail.com",
+                profPhoto: {
+                    data: picAlex,
+                    contentType: "image/jpg"
+                },
+                friends: [],
+                salt: salt,
+                hashPass: hasedPwd, 
+                roles: ['admin'] 
+            }
+        );
 
-        User.create(    //creating User 2
+        User.create(    //creating User 3
             { 
                 username: 'AlexanderY',
                 firstName: 'Alexander', 

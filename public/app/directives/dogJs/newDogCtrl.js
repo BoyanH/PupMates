@@ -78,8 +78,9 @@ app.controller("NewDogController", function($scope, identity,
 
         var date = dog.day.value + '/' + dog.month.value + '/' + dog.year.value;
 
-        if(validDate(date)==false) {$scope.warningBirthDate = true;return}
-        else $scope.warningBirthDate = false;
+        //TO DO
+        //if(validDate(date)==false) {$scope.warningBirthDate = true;return}
+        //else $scope.warningBirthDate = false;
 
         dog.birthDate = date;
     	profPhoto.data = data;
