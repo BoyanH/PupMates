@@ -278,3 +278,17 @@
 	margin-bottom: 3px;
 	vertical-align: middle;
 }
+
+
+/* responsive design */
+@media screen and (max-width: 768px) {
+	.pl-right-content, .pl-left-content{
+		display: block;
+	}
+	#map-canvas{
+		width: 450px;
+	}
+	.pl-place-ul{
+		width: 450px;
+	}
+}

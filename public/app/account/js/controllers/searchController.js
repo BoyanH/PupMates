@@ -1,5 +1,8 @@
 app.controller("SearchController", function($scope, $location, $timeout, $routeParams){
 	
+	// sets the width of the results because the search box is with procents width
+	$(".search-results").width($(".search-box").width());
+
 	var location = $location.path();
 
 	$scope.results = false;
