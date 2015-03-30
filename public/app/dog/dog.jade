@@ -13,6 +13,7 @@ div.wrapper-dog
 			form.dog-change-content(ng-show="showChangeName")
 				input.dog-input-field(type="text" placeholder="Change Name" ng-model="name")
 				input.btn-change-dog-field(type="submit" value="Change" ng-click="changeField('Name')")
+			div.btn-change-dog-field.btn-mobile-expand(ng-click="showChangeName = !showChangeName;") Change
 		div.dog-group 
 			div.dog-birthdate Birth Date: {{dog.birthDate}}
 			form.dog-change-content(ng-show="showChangeBirthDate")
@@ -20,11 +21,13 @@ div.wrapper-dog
 				select.dog-date-selector(ng-model="dog.month" ng-options="opt as opt.label for opt in optionsMonth")
 				select.dog-date-selector(ng-model="dog.year" ng-options="opt as opt.label for opt in optionsYear")
 				input.btn-change-dog-field(type="submit" value="Change" ng-click="changeField('BirthDate')")
+			div.btn-change-dog-field.btn-mobile-expand(ng-click="showChangeBirthDate = !showChangeBirthDate;") Change
 		div.dog-group
 			div.dog-breed Breed: {{dog.breed}}
 			form.dog-change-content(ng-show="showChangeBreed")
 				input.dog-input-field(type="text" placeholder="Change Breed" ng-model="breed")
 				input.btn-change-dog-field(type="submit" value="Change" ng-click="changeField('Breed')")
+			div.btn-change-dog-field.btn-mobile-expand(ng-click="showChangeBreed = !showChangeBreed;") Change
 		div.dog-group
 			div.dog-food
 				span foods: 
@@ -34,6 +37,7 @@ div.wrapper-dog
 					select.dog-date-selector(ng-model="dog.foodOpt" ng-options="opt as opt.label for opt in optionsFood")
 					div.btn-change-dog-field(ng-click="addFW('f')") Add Food
 					div.btn-change-dog-field(ng-click="changeField('Food')") Save changes
+			div.btn-change-dog-field.btn-mobile-expand(ng-click="showChangeFood = !showChangeFood;") Change
 		div.dog-group
 			div.dog-walk
 				span walks: 
@@ -43,13 +47,15 @@ div.wrapper-dog
 					select.dog-date-selector(ng-model="dog.walkOpt" ng-options="opt as opt.label for opt in optionsWalk")
 					div.btn-change-dog-field(ng-click="addFW('w')") Add Walk
 					div.btn-change-dog-field(ng-click="changeField('Walk')") Save changes
+			div.btn-change-dog-field.btn-mobile-expand(ng-click="showChangeWalk = !showChangeWalk;") Change
 		div.dog-description 
 			div {{dog.description}}
 			div.dog-change-content(ng-show="showChangeDescription")
 				textarea#description-change(ng-model="description")
 				button#textarea-btn.btn-change-dog-field(ng-click="changeField('Description')") Change
+		div.btn-change-dog-field.btn-mobile-expand(ng-click="showChangeDescription = !showChangeDescription;") Change
 
-	div.dog-right()
+	div.dog-right
 		div.btn-change-dog-field(ng-click="showChangeName = !showChangeName;") Change
 		div.btn-change-dog-field(ng-click="showChangeBirthDate = !showChangeBirthDate;") Change
 		div.btn-change-dog-field(ng-click="showChangeBreed = !showChangeBreed;") Change

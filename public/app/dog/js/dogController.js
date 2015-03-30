@@ -13,6 +13,9 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
                 $("#change-btn-pic").css({
                     display: "block"
                 });
+                $(".btn-mobile-expand").css({
+                    display: "block"
+                });
             }
         });
     }

@@ -128,5 +128,9 @@ body{
 	}
 	.front-wrapper{
 		margin-left: -115px;
+		-webkit-transition: all 0.3s ease-in-out;
+  		-moz-transition: all 0.3s ease-in-out;
+  		-o-transition: all 0.3s ease-in-out;
+  		transition: all 0.3s ease-in-out;
 	}
 }

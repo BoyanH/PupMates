@@ -8,6 +8,12 @@ app.controller("MenuExpandController", function($scope){
 			$(".view-wrapper").css({
 				"margin-left": "-45px"
 			})
+			$(".wrapper-dog").css({
+				"margin-left": "-20px"
+			})
+			$(".front-wrapper").css({
+				"margin-left": "-115px"
+			})
 			expand = false;
 		}
 		else{
@@ -16,6 +22,12 @@ app.controller("MenuExpandController", function($scope){
 			});
 			$(".view-wrapper").css({
 				"margin-left": "5px"
+			})
+			$(".wrapper-dog").css({
+				"margin-left": "5px"
+			})
+			$(".front-wrapper").css({
+				"margin-left": "-55px"
 			})
 			expand = true;	
 		}
