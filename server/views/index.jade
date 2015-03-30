@@ -1,6 +1,7 @@
 ﻿extends includes/layout
 block main-content
     div.nav
+        span.menu-expand(ng-include="'partials/main/menu-expand'")
         div.left-nav
             ul.nav-bar-ul
                 li(ng-include="'partials/main/logo'")

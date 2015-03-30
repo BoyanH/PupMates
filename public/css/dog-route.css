@@ -1,7 +1,7 @@
 .wrapper-dog{
 	display: block;
 	margin: 0 auto;
-	width: 800px;
+	width: 80%;
 	background: transparent;
 	color: #424345;
 	min-height: 400px;
@@ -55,7 +55,7 @@
 	text-align: left;
 }
 .dog-change-content{
-	display: inline-block;
+	display: block;
 	vertical-align: top;
 }
 .dog-change-content div{
@@ -117,7 +117,7 @@
 }
 #description-change{
 	padding: 5px;
-	width: 300px;
+	width: 70%;
 	height: 50px;
 	resize:none;
 }
@@ -175,4 +175,7 @@
 .add-fw div{
 	width: 100px;
 	margin-right: 5px;
+}
+@media screen and (max-width: 768px) {
+	
 }

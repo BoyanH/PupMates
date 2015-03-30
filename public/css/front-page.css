@@ -101,6 +101,13 @@ body{
 	.frp-title{
 		font-size: 30px;
 	}
+
+	.frp-title:hover{
+		font-size: 32px;
+	}
+	.front-wrapper{
+		margin-left: -40px;
+	}
 	.frp-box-wrapper a{
 		display: block;
 		margin: 0 auto;
@@ -110,5 +117,16 @@ body{
 	.frp-box-wrapper a:hover h5 { 
 		margin-top: -95px;
 		opacity: 0; 
+	}
+}
+@media screen and (max-width: 480px) {
+	.frp-title{
+		font-size: 22px;
+	}
+	.frp-title:hover{
+		font-size: 23px;
+	}
+	.front-wrapper{
+		margin-left: -115px;
 	}
 }
