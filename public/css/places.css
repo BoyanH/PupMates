@@ -115,10 +115,10 @@
 	color: #484848;
 }
 .pl-left-content{
-	width: 70%;
+	width: 65%;
 }
 .pl-right-content{
-	width: 30%;
+	width: 35%;
 }
 #map-canvas{
 	width: 95%;
@@ -281,14 +281,12 @@
 
 
 /* responsive design */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 850px) {
 	.pl-right-content, .pl-left-content{
 		display: block;
+		width: 100%;
 	}
-	#map-canvas{
-		width: 450px;
-	}
-	.pl-place-ul{
-		width: 450px;
+	.pl-button{
+		padding: 10px;
 	}
 }

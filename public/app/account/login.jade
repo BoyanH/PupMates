@@ -4,8 +4,11 @@
 		a.btn-signup(href="#/sign-up") Sign Up
 	div.logged-in-items(ng-hide="!identity.currentUser")
 		span.user-menu( ng-init="useroptions = false" ng-click="useroptions = !useroptions") 
-			a(ng-href="{{'#/profile/' + identity.currentUser.username}}") {{identity.currentUser.username}}
-		button.btn-signout(ng-click="signout()") Signout
+			span(ng-click="showUserMenu = (!showUserMenu)") {{identity.currentUser.username}}
+			ul.user-menu-ul(ng-show="showUserMenu")
+				li(ng-click="signout()") signout
+				li(ng-click="showUserMenu = (!showUserMenu)")
+					a(ng-href="{{'#/profile/' + identity.currentUser.username + '/dogs'}}") My profile
 	modal-dialog.contentDialog(show='modalShown' width='400px' height='210px')
 		h2.login-h Login
 		div.line
