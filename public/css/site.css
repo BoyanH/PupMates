@@ -509,6 +509,18 @@ div.fr-buttons {
 	.popup{
 		margin-left: -150px;
 	}
+	.form-field label{
+		display: block;
+		width: 600px;
+	}
+	form#signup-form{
+		width: 400px !important;
+	}
+	h1.route-header{
+		font-size: 25px;
+		margin-left: 20px;
+		width: 600px
+	}
 }
 
 @media screen and (max-width: 480px) {
@@ -542,4 +554,17 @@ div.fr-buttons {
   		-o-transition: all 0.3s ease-in-out;
   		transition: all 0.3s ease-in-out;
 	}
+	h1.route-header{
+		font-size: 20px;
+		margin-left: -20px;
+		width: 600px
+	}
+	form#signup-form{
+		width: 350px !important;
+		margin-left: -40px !important;
+	}
+	form .form-field input[type="submit"]{
+		margin-left: 20px !important;
+	}
+
 }

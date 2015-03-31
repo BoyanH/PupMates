@@ -40,8 +40,8 @@
 
 form#signup-form, form#achievment-form {
 
-	width: 700px;
-	height: 800px;
+	width: 50%;
+	height: 860px;
 	padding: 20px;
 	margin: 50px auto;
 	background-color: #F0F0F0;
@@ -50,13 +50,14 @@ form#signup-form, form#achievment-form {
 form .form-field {
 	float: left;
 	margin-bottom: 20px;
-	width: 550px;
+	width: 90%;
 }
 
 form .form-field .label {
 	
-	float: left;
-	width: 250px;
+	display: block;
+	margin: 0 auto;
+	width: 20%;
 	font-family: "Source Sans Pro Black";
 	text-transform: uppercase;
 	color: #7d7c77;
@@ -65,16 +66,18 @@ form .form-field .label {
 }
 
 form .form-field .field {
-
-	width: 250px;
+	width: 100%;
 	padding: 10px;
 }
 
 form .form-field input:not([type="file"]) {
 	
-	width: 230px;
+	width: 100%;
 	float: left;
 	height: 20px;
+	text-align: center;
+	color: #09ADED;
+	font-size: 1.1em;
 	border: 1px solid #d6d7d2;
 	-webkit-transition: all 0.4s ease-in-out;
 	-moz-transition: all 0.4s ease-in-out;
@@ -91,7 +94,7 @@ form .form-field select {
 	background-size: 16px 16px;
 
 	padding:12px;
-	width:275px;
+	width:50%;
 	
 	font-family:arial,tahoma;
 	font-size:16px;
@@ -213,7 +216,7 @@ form button.wide-btn {
 .ach-progress {
 
 	float: left;
-	width: 550px;
+	width: 400px;
 }
 
 #vide-preview {
@@ -228,5 +231,5 @@ form #new-or-apply.field button {
 
 form .video-preview progress.ach-progress {
 
-	width: 500px;
+	width: 400px;
 }
