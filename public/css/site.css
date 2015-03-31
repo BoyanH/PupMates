@@ -504,7 +504,7 @@ div.fr-buttons {
 
 /* responsive design */
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
 
 	.popup{
 		margin-left: -150px;
@@ -523,7 +523,7 @@ div.fr-buttons {
 	}
 }
 
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
 	.left-nav{
 		display: none;
 	}

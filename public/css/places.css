@@ -281,7 +281,7 @@
 
 
 /* responsive design */
-@media screen and (max-width: 850px) {
+@media (max-width: 850px) {
 	.pl-right-content, .pl-left-content{
 		display: block;
 		width: 100%;
@@ -290,7 +290,7 @@
 		padding: 10px;
 	}
 }
-@media screen and (max-width: 480px){
+@media (max-width: 480px){
 	.pl-button{
 		display: block;
 		margin: 4px auto;

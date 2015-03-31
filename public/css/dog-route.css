@@ -179,10 +179,10 @@
 .btn-mobile-expand{
 	display: none;
 }
-@media screen and (max-width: 768px) {
+@media(max-width: 768px) {
 	
 }
-@media screen and (max-width: 480px){
+@media(max-width: 480px){
 	.wrapper-dog{
 		margin-left: -20px;
 		-webkit-transition: all 0.3s ease-in-out;
