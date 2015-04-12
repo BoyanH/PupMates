@@ -37,10 +37,8 @@ app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout
         $(".new-dog-btn").css("background-color", "#4d4d4f");
         $(".chat-btn").css("background-color", "#4d4d4f");
 
-        //mobile
-        if($scope.htmlWidth < 480){
-            $(".right-wrapper").css({"margin-left":0});
-        }
+
+        $(".right-wrapper").css({"margin-left":0});
 
     }
     $rootScope.close = close;

@@ -93,7 +93,10 @@
 		width: 100%;
 		margin: 0 !important;
 	}
+	.progress-photo{
+		width: 200px !important;
+	}
 	.wide-btn{
-		width: 100px !important;
+		width: 200px !important;
 	}
 }
