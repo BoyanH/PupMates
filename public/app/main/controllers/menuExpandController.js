@@ -3,7 +3,7 @@ app.controller("MenuExpandController", function($scope){
 	$scope.expandMenu = function(){
 		if(expand){
 			$(".menu").css({
-				"margin-left": "-64px"
+				"margin-left": "-80px"
 			});
 			$(".view-wrapper").css({
 				"margin-left": "-45px"

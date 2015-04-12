@@ -2,7 +2,11 @@
 app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout, identity){
     
     $scope.isAdmin = identity.currentUser ? identity.isAuthorizedForRole('admin') : false;
-
+    $scope.htmlWidth = $(document).width();
+    $scope.dialogWidth = 380;
+    if($scope.htmlWidth < 460){
+        $scope.dialogWidth = $scope.htmlWidth - 80;
+    }
     $scope.$watch(function () {
 
         return identity;
@@ -51,9 +55,9 @@ app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout
         });
         $(".right-wrapper").css("margin-left", "0");
         var p = $(".nav").position();
-        p.left += $(".menu").width() + 380;
+        p.left += $(".menu").width() + $scope.dialogWidth;
         p.top += $(".nav").height();
-        $("#left-menu-dialog").width(380).css("margin-left", "80px");
+        $("#left-menu-dialog").width($scope.dialogWidth).css("margin-left", "80px");
         $("#cover").css("display", "inline-block").css("left", p.left.toString()).css("top", p.top.toString()).width("100%").height($(".menu").height());
     }
 
