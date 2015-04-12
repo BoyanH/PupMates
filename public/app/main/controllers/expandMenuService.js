@@ -1,4 +1,4 @@
-app.factory("ExpandMenuService", function(){
+app.factory("ExpandMenuService", function($rootScope){
 	var expand = false;
 	function expandMenu(){
 		if(expand){
@@ -6,16 +6,14 @@ app.factory("ExpandMenuService", function(){
 				"margin-left": "-80px"
 			});
 			$(".view-wrapper").css({
-				"margin-left": "-20px"
+				"margin-left": "0"
 			})
 			$(".wrapper-dog").css({
-				"margin-left": "-20px"
+				"margin-left": "0"
 			})
 			$(".front-wrapper").css({
-				"margin-left": "-115px"
-			})
-			
-            $(".content").css({"margin-left": "0"});
+				"margin-left": "0"
+			});
 			expand = false;
 		}
 		else{
@@ -23,13 +21,13 @@ app.factory("ExpandMenuService", function(){
 				"margin-left": "0"
 			});
 			$(".view-wrapper").css({
-				"margin-left": "60px"
+				"margin-left": "80px"
 			})
 			$(".wrapper-dog").css({
-				"margin-left": "60px"
+				"margin-left": "80px"
 			})
 			$(".front-wrapper").css({
-				"margin-left": "-35px"
+				"margin-left": "80px"
 			})
 			expand = true;	
 		}

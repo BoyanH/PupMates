@@ -1,9 +1,15 @@
 //module which controls the places route
 'use strict'
-app.controller('PlacesController', function($scope, MapService, PlacesService, identity, geolocation, notifier) {
+app.controller('PlacesController', function($scope, MapService, PlacesService
+    , identity, geolocation, notifier, ExpandMenuService) {
     
     var height = $(document).height() - $(".nav").height(); //sets the height of the menu
     $(".menu").css("height", height.toString());
+
+    var screenWd = $(document).width();
+    if(screenWd<480){
+        ExpandMenuService.expandMenu();
+    }
 
     //if the user wants to user this route he should accept to use his geolocation
     geolocation.getLocation().then(function(data) {

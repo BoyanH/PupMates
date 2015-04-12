@@ -121,16 +121,28 @@ body{
 }
 @media screen and (max-width: 480px) {
 	.frp-title{
-		font-size: 22px;
+		font-size: 18px;
 	}
 	.frp-title:hover{
-		font-size: 23px;
+		font-size: 19px;
 	}
 	.front-wrapper{
-		margin-left: -115px;
+		margin-left: 10px;
+	}
+	.front-wrapper{
 		-webkit-transition: all 0.3s ease-in-out;
   		-moz-transition: all 0.3s ease-in-out;
   		-o-transition: all 0.3s ease-in-out;
   		transition: all 0.3s ease-in-out;
+	}
+	.frp-box-wrapper>a>div>br{
+		display: none;
+	}
+	.frp-box-wrapper{
+		width: 300px;
+		margin-left: -20px;
+	}
+	.frp-box-wrapper>a>h5, .frp-box-wrapper>a>div{
+		font-size: 0.8em;
 	}
 }

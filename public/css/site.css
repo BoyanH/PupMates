@@ -538,8 +538,19 @@ div.fr-buttons {
 }
 
 @media only screen and (max-width: 480px) {
-	.right-wrapper, .content, #signup-form{
-		margin-left: 10px !important;
+	.right-wrapper, .view-wrapper, #signup-form{
+		margin-left: 0;
+		-webkit-transition: all 0.3s ease-in-out;
+  		-moz-transition: all 0.3s ease-in-out;
+  		-o-transition: all 0.3s ease-in-out;
+  		transition: all 0.3s ease-in-out;
+	}
+	.content{
+		margin-left: -80px !important;
+		-webkit-transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
 	}
 	.left-nav{
 		display: none;
@@ -566,16 +577,10 @@ div.fr-buttons {
 	}
 	.view-wrapper{
 		width: 110%;
-		margin-left: -20px !important;
-		-webkit-transition: all 0.3s ease-in-out;
-  		-moz-transition: all 0.3s ease-in-out;
-  		-o-transition: all 0.3s ease-in-out;
-  		transition: all 0.3s ease-in-out;
+		/*margin-left: -20px !important;*/
 	}
 	h1.route-header{
 		font-size: 20px;
-		margin-left: -20px;
-		width: 600px
 	}
 	form#signup-form{
 		width: 350px !important;
@@ -632,4 +637,5 @@ div.fr-buttons {
 	.user-menu-ul{
 		margin-left: -45px;
 	}
+	
 }
