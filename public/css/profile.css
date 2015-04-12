@@ -56,3 +56,26 @@
 		font-size: 20px;
 	}
 }
+@media only screen and (max-width: 480px) {
+	.view-left-content{
+		display: block !important;
+		height: 100px;
+		min-height: 250px !important;
+	}
+	.prof-photo-container{
+		height: auto;
+		min-height: auto;
+		max-height: auto;
+		overflow: hidden;
+	}
+	.prof-photo-container, .sidebar-nav{
+		display: inline-block;
+		vertical-align: top;
+	}
+	.sidebar-nav{
+		margin-left: 5px;
+	}
+	.prof-dog-container{
+		width: 80%;
+	}
+}

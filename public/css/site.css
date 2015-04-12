@@ -565,8 +565,8 @@ div.fr-buttons {
 		margin-left: -5px;
 	}
 	.view-wrapper{
-		width: 100%;
-		margin-left: -45px;
+		width: 110%;
+		margin-left: -20px !important;
 		-webkit-transition: all 0.3s ease-in-out;
   		-moz-transition: all 0.3s ease-in-out;
   		-o-transition: all 0.3s ease-in-out;
