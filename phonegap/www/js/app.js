@@ -24,3 +24,12 @@ function loginForm(){
 function goHome(){
 	$.mobile.changePage("#home-page", {reverse: false, transition: "slide"});
 }
+function goToPage(pageChange){
+	var activePage = $.mobile.activePage.attr('id');
+	if(activePage == pageChange){
+		$( "#main-menu" ).panel( "close");
+	}
+	else{
+		$.mobile.changePage("#" + pageChange, {reverse: false, transition: "pop"});
+	}
+}

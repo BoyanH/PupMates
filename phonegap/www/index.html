@@ -18,10 +18,10 @@
     <!-- Start of login page -->
     <div class="page" data-role="page" id="login-page" data-theme="b">
         <div data-role="content">
-            <form method="POST" onSubmit="return loginForm()" data-ajax="false">
+            <form method="POST">
                 <input name="uname" type="text" placeholder="Username">
                 <input name="password" type="password" placeholder="Password">
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit" onclick="login()">
             </form>
             <button onclick="goHome()">Home</button>
         </div>
@@ -48,15 +48,15 @@
 
     <div data-role="panel" id="main-menu" data-position="left" data-display="reveal" data-theme="b">
         <ul data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
-            <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div"  data-theme="b">
+            <li data-corners="false" data-shadow="false" data-wrapperels="div"  data-theme="b">
                 <div class="ui-btn-inner ui-li">
-                    <a href="#home-page" class="ui-btn ui-icon-arrow-r ui-btn-icon-right">My Profile</a>
+                    <button onclick="goToPage('home-page')" data-transition="pop" class="ui-btn ui-icon-arrow-r ui-btn-icon-right">My Profile</button>
                 </div>
             </li>
-            <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div"  data-theme="b">
+            <li data-corners="false" data-shadow="false" data-wrapperels="div"  data-theme="b">
                 <div class="ui-btn-inner ui-li">
                     <div class="ui-btn-inner ui-li">
-                    <a href="#dogs-page" class="ui-btn ui-icon-arrow-r ui-btn-icon-right">My Dogs</a>
+                    <button onclick="goToPage('dogs-page')" data-transition="pop" class="ui-btn ui-icon-arrow-r ui-btn-icon-right">My Dogs</button>
                 </div>
                 </div>
             </li>
