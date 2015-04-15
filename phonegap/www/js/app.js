@@ -12,6 +12,7 @@ function loginForm(){
 	var uname = $('[name="uname"]').val();
 	var pass = $('[name="password"]').val();
 
+	//testing localStorage for auto login implementation
 	window.localStorage.setItem("username", uname);
 	window.localStorage.setItem("password", pass);
 

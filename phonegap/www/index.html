@@ -33,6 +33,7 @@
         <div data-role="header" class="app-header">
             <a href="#main-menu" class="ui-btn ui-icon-bullets ui-btn-icon-left">Menu</a>
             <h1 id="home-title">Home route</h1>
+            <a href="#friends-menu" class="ui-btn ui-icon-bullets ui-btn-icon-right">Friends</a>
         </div>
         <div data-role="content">
             <div id="output"></div>
@@ -42,7 +43,8 @@
     <div class="page" data-role="page" id="dogs-page" data-theme="b">
         <div data-role="header" class="app-header">
             <a href="#main-menu" class="ui-btn ui-icon-bullets ui-btn-icon-left">Menu</a>
-            <h1 id="dogs-title">Dog route</h1>
+            <h1 id="home-title">Dogs route</h1>
+            <a href="#friends-menu" class="ui-btn ui-icon-bullets ui-btn-icon-right">Friends</a>
         </div>
     </div>
 
@@ -60,6 +62,11 @@
                 </div>
                 </div>
             </li>
+        </ul>
+    </div>
+    <div data-role="panel" id="friends-menu" data-position="right" data-display="reveal" data-theme="b">
+        <ul data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+            <h2>No Friends :D</h2>
         </ul>
     </div>
 </body>
