@@ -1,4 +1,11 @@
+.logo-container {
+    width: 90%;
+    margin-left: 5%;
+}
 
-.app-header{
-	background-color: #424345;
+.logo-container  img {
+    width: 100%;
+}
+.text-center{
+	text-align: center;
 }

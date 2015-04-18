@@ -34,3 +34,9 @@ function goToPage(pageChange){
 		$.mobile.changePage("#" + pageChange, {reverse: false, transition: "pop"});
 	}
 }
+function closeFriendsMenu(){
+	$( "#friends-menu" ).panel( "close");
+}
+function closeMainMenu(){
+	$( "#main-menu" ).panel( "close");
+}

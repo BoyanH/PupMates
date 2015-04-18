@@ -18,6 +18,12 @@
     <!-- Start of login page -->
     <div class="page" data-role="page" id="login-page" data-theme="b">
         <div data-role="content">
+            <h2 class="logo-text">
+                Welcome to Doggy World!
+            </h2>
+            <div class="text-center">
+                <img src="img/dog-logo.png">
+            </div>
             <form method="POST">
                 <input name="uname" type="text" placeholder="Username">
                 <input name="password" type="password" placeholder="Password">
@@ -33,7 +39,7 @@
         <div data-role="header" class="app-header">
             <a href="#main-menu" class="ui-btn ui-icon-bullets ui-btn-icon-left">Menu</a>
             <h1 id="home-title">Home route</h1>
-            <a href="#friends-menu" class="ui-btn ui-icon-bullets ui-btn-icon-right">Friends</a>
+            <a href="#friends-menu" class="ui-btn ui-icon-user ui-btn-icon-right">Friends</a>
         </div>
         <div data-role="content">
             <div id="output"></div>
@@ -44,11 +50,12 @@
         <div data-role="header" class="app-header">
             <a href="#main-menu" class="ui-btn ui-icon-bullets ui-btn-icon-left">Menu</a>
             <h1 id="home-title">Dogs route</h1>
-            <a href="#friends-menu" class="ui-btn ui-icon-bullets ui-btn-icon-right">Friends</a>
+            <a href="#friends-menu" class="ui-btn ui-icon-user ui-btn-icon-right">Friends</a>
         </div>
     </div>
 
     <div data-role="panel" id="main-menu" data-position="left" data-display="reveal" data-theme="b">
+        <h2 class="text-center">Menu</h2>
         <ul data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
             <li data-corners="false" data-shadow="false" data-wrapperels="div"  data-theme="b">
                 <div class="ui-btn-inner ui-li">
@@ -63,11 +70,13 @@
                 </div>
             </li>
         </ul>
+        <button onclick="closeMainMenu()">Close</button>
     </div>
     <div data-role="panel" id="friends-menu" data-position="right" data-display="reveal" data-theme="b">
         <ul data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
             <h2>No Friends :D</h2>
         </ul>
+        <button onclick="closeFriendsMenu()">Close</button>
     </div>
 </body>
 </html>
