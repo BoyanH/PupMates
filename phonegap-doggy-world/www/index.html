@@ -18,16 +18,16 @@
     <!-- Start of login page -->
     <div class="page" data-role="page" id="login-page" data-theme="b">
         <div data-role="content">
-            <h2 class="logo-text">
+            <h2 class="text-center">
                 Welcome to Doggy World!
             </h2>
-            <div class="text-center">
+            <div class="logo-container">
                 <img src="img/dog-logo.png">
             </div>
-            <form method="POST">
+            <form method="POST" data-ajax="false" onSubmit="return loginForm()">
                 <input name="uname" type="text" placeholder="Username">
                 <input name="password" type="password" placeholder="Password">
-                <input type="submit" value="Submit" onclick="login()">
+                <input type="submit" value="Login">
             </form>
             <button onclick="goHome()">Home</button>
         </div>
@@ -35,21 +35,21 @@
     <!-- page -->
     <!-- Start of home page -->
     <div class="page" data-role="page" id="home-page" data-theme="b">
-
         <div data-role="header" class="app-header">
             <a href="#main-menu" class="ui-btn ui-icon-bullets ui-btn-icon-left">Menu</a>
-            <h1 id="home-title">Home route</h1>
+            <h1 id="home-title">Home</h1>
             <a href="#friends-menu" class="ui-btn ui-icon-user ui-btn-icon-right">Friends</a>
         </div>
         <div data-role="content">
-            <div id="output"></div>
+            <div id="output">
+            </div>
         </div>
     </div>
 
     <div class="page" data-role="page" id="dogs-page" data-theme="b">
         <div data-role="header" class="app-header">
             <a href="#main-menu" class="ui-btn ui-icon-bullets ui-btn-icon-left">Menu</a>
-            <h1 id="home-title">Dogs route</h1>
+            <h1 id="home-title">Dogs</h1>
             <a href="#friends-menu" class="ui-btn ui-icon-user ui-btn-icon-right">Friends</a>
         </div>
     </div>
@@ -66,6 +66,13 @@
                 <div class="ui-btn-inner ui-li">
                     <div class="ui-btn-inner ui-li">
                     <button onclick="goToPage('dogs-page')" data-transition="pop" class="ui-btn ui-icon-arrow-r ui-btn-icon-right">My Dogs</button>
+                </div>
+                </div>
+            </li>
+            <li data-corners="false" data-shadow="false" data-wrapperels="div"  data-theme="b">
+                <div class="ui-btn-inner ui-li">
+                    <div class="ui-btn-inner ui-li">
+                    <button onclick="signout()" data-transition="fade" class="ui-btn ui-icon-power ui-btn-icon-right">Sign out</button>
                 </div>
                 </div>
             </li>
