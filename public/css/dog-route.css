@@ -1,7 +1,7 @@
 .wrapper-dog{
 	display: block;
 	margin: 0 auto;
-	width: 800px;
+	width: 80%;
 	background: transparent;
 	color: #424345;
 	min-height: 400px;
@@ -55,7 +55,7 @@
 	text-align: left;
 }
 .dog-change-content{
-	display: inline-block;
+	display: block;
 	vertical-align: top;
 }
 .dog-change-content div{
@@ -117,7 +117,7 @@
 }
 #description-change{
 	padding: 5px;
-	width: 300px;
+	width: 70%;
 	height: 50px;
 	resize:none;
 }
@@ -175,4 +175,47 @@
 .add-fw div{
 	width: 100px;
 	margin-right: 5px;
+}
+.btn-mobile-expand{
+	display: none;
+}
+@media only screen and (max-width: 768px) {
+	
+}
+@media only screen and (max-width: 480px){
+	.wrapper-dog{
+		margin-left: -20px;
+		-webkit-transition: all 0.3s ease-in-out;
+  		-moz-transition: all 0.3s ease-in-out;
+  		-o-transition: all 0.3s ease-in-out;
+  		transition: all 0.3s ease-in-out;
+	}
+	.dog-left, .dog-mid{
+		display: block;
+		min-width: 300px;
+		width: 300px;
+		max-width: 300px;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	.dog-left{
+
+		min-width: 320px;
+		width: 320px;
+		max-width: 320px;
+	}
+	.dog-left{
+		min-height: 240px;
+	}
+	.dog-right{
+		display: none;
+		max-height: 0;
+		max-width: 0;
+		overflow: hidden;
+	}
+	.btn-mobile-expand{
+
+		margin: 2px auto;
+		width: 70%;
+	}
 }

@@ -25,7 +25,9 @@
     "cookies": "^0.5.0",
     "express-params": "0.0.3",
     "ip": "^0.3.2",
-    "visualcaptcha": "^0.1.0"
+    "visualcaptcha": "^0.1.0",
+    "grunt": "^0.4.5",
+    "grunt-angular-gettext": "^2.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.0.17"

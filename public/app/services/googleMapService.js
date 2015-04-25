@@ -66,6 +66,20 @@ app.factory('MapService', function(identity){
 		place.location = location;
 		return place;
 	}
+	function hideMarkersArray(markers){
+		for(var i=0; i<markers.length;i++){
+			markers[i].setMap(null);
+		}
+	}
+	function showMarkersArray(map, markers){
+		for(var i=0; i<markers.length;i++){
+			markers[i].setMap(map);
+		}
+	}
+	function setMapCenter(map, loc){
+		var latLng = new google.maps.LatLng(loc.lat * 1, loc.lng * 1);
+    	map.setCenter(latLng);
+	}
 	return{
 		initMap: initMap,
 		addPlace: addPlace,
@@ -73,6 +87,9 @@ app.factory('MapService', function(identity){
 		displayPlaces: displayPlaces,
 		setInfoMarker: setInfoMarker,
 		openInfoMarkerArray: openInfoMarkerArray,
-		setLatLngObj: setLatLngObj
+		setLatLngObj: setLatLngObj,
+		hideMarkersArray: hideMarkersArray,
+		showMarkersArray: showMarkersArray,
+		setMapCenter: setMapCenter
 	}
 })

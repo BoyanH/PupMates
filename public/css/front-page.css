@@ -24,7 +24,7 @@ body{
 	text-align: center;
 	text-shadow: 0px 1px 1px #4d4d4d;
 	color: #333;
-	font: 50px 'LeagueGothicRegular';
+	font: 45px 'LeagueGothicRegular';
 }
 .frp-title:hover{
 	cursor: pointer;
@@ -60,9 +60,9 @@ body{
 	white-space: pre-wrap;
 	font: italic 18px/65px Georgia, Serif;    /* Vertically center text by making line height equal to height */
 	 opacity: 1;
-	 -webkit-transition: all 0.2s linear; 
-	 -moz-transition: all 0.2s linear; 
-	 -o-transition: all 0.2s linear;
+	 -webkit-transition: all 0.3s linear; 
+	 -moz-transition: all 0.3s linear; 
+	 -o-transition: all 0.3s linear;
 }
 
 .frp-box-wrapper a:hover h5 { 
@@ -95,4 +95,42 @@ body{
 }
 #frp-box-sec div{
 	background: #7ccc31;
+}
+
+@media screen and (max-width: 768px) {
+	.frp-title{
+		font-size: 30px;
+	}
+
+	.frp-title:hover{
+		font-size: 32px;
+	}
+	.front-wrapper{
+		margin-left: -40px;
+	}
+	.frp-box-wrapper a{
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 5px;
+		width: 70%;
+	}
+	.frp-box-wrapper a:hover h5 { 
+		margin-top: -95px;
+		opacity: 0; 
+	}
+}
+@media screen and (max-width: 480px) {
+	.frp-title{
+		font-size: 22px;
+	}
+	.frp-title:hover{
+		font-size: 23px;
+	}
+	.front-wrapper{
+		margin-left: -115px;
+		-webkit-transition: all 0.3s ease-in-out;
+  		-moz-transition: all 0.3s ease-in-out;
+  		-o-transition: all 0.3s ease-in-out;
+  		transition: all 0.3s ease-in-out;
+	}
 }

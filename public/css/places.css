@@ -67,7 +67,7 @@
 	top:1px;
 }
 .pl-window-cancel {
-	float: right;
+	margin-left: 40px;
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -115,10 +115,10 @@
 	color: #484848;
 }
 .pl-left-content{
-	width: 70%;
+	width: 65%;
 }
 .pl-right-content{
-	width: 30%;
+	width: 35%;
 }
 #map-canvas{
 	width: 95%;
@@ -260,8 +260,9 @@
 }
 .pl-rate-btn{
 	background: #96dcf9;
-	float: right;
-	margin-right: 4px;
+	vertical-align: top;
+	margin-right: 0;
+	margin-left: 6px;
 	border: none;
 	color: #484848;
 	opacity: 1;
@@ -276,4 +277,24 @@
 	margin-top: 3px;
 	margin-bottom: 3px;
 	vertical-align: middle;
+}
+
+
+/* responsive design */
+@media only screen and (max-width: 850px) {
+	.pl-right-content, .pl-left-content{
+		display: block;
+		width: 100%;
+	}
+	.pl-button{
+		padding: 10px;
+	}
+}
+@media only screen and (max-width: 480px){
+	.pl-button{
+		display: block;
+		margin: 4px auto;
+		width: 60%;
+		padding: 5px 0;
+	}
 }

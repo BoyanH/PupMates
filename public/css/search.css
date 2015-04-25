@@ -1,5 +1,5 @@
 .search-box{
-	width:400px;
+	width:65%;
 	margin:0 auto;
 }
 .search { 
@@ -34,7 +34,7 @@
 	margin-top: 0;
 	position: fixed;
 	margin-left: 15px;
-	width: 420px;
+	width: 100px; /* changed dynamically according to the screen, this is default value */
 	height: 300px;
 	color: #181E22;
 /*	border: 1px solid #181E22;*/
