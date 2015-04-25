@@ -2,14 +2,16 @@
 	div(ng-show="!identity.currentUser")
 		a.btn-nav-login(ng-click='toggleModal()') Login
 		a.btn-signup(href="#/sign-up") Sign Up
+		a.mobile-btn-login(ng-click='toggleModal()') Join/Login
 	div.logged-in-items(ng-hide="!identity.currentUser")
 		span.user-menu( ng-init="useroptions = false" ng-click="useroptions = !useroptions") 
-			span(ng-click="showUserMenu = (!showUserMenu)") {{identity.currentUser.username}}
+			span.user-menu-username(ng-click="showUserMenu = (!showUserMenu)") {{identity.currentUser.username}}
+			span.mobile-user-menu-username(ng-click="showUserMenu = (!showUserMenu)") Me
 			ul.user-menu-ul(ng-show="showUserMenu")
 				li(ng-click="signout()") signout
 				li(ng-click="showUserMenu = (!showUserMenu)")
 					a(ng-href="{{'#/profile/' + identity.currentUser.username + '/dogs'}}") My profile
-	modal-dialog.contentDialog(show='modalShown' width='400px' height='210px')
+	modal-dialog.contentDialog(show='modalShown' width='400px' height='235px')
 		h2.login-h Login
 		div.line
 		form
@@ -20,3 +22,5 @@
 				label.password-lbl Password:
 				input.login-input(type="password" placeholder="Password" ng-model="user.password")
 			button.login-btn(ng-click="login(user)") Login
+			div.join-us
+				a(href="#/sign-up" ng-click="toggleModal()") JOIN US!

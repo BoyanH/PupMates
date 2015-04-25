@@ -84,3 +84,19 @@
 
 	color: green;
 }
+
+@media only screen and (max-width: 480px) {
+	#achievment-grid .achievment-item {
+		float: none;
+	}
+	form#achievment-form{
+		width: 100%;
+		margin: 0 !important;
+	}
+	.progress-photo{
+		width: 200px !important;
+	}
+	.wide-btn{
+		width: 200px !important;
+	}
+}

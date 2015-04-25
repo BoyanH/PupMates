@@ -4,6 +4,12 @@ var controllers = require('../controllers');    //takes the controllers of the m
     auth = require('./auth.js');                //takes the authentication module
 
 module.exports = function (app) {
+	app.all('*', function(req, res, next) {
+	   res.header('Access-Control-Allow-Origin', "*");
+	   res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
+	   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	   next();
+	});
     app.get('/api/users', auth.isInRole('admin'),controllers.users.getAllUsers ); //returns all users if the current user is admin
     app.get('/api/users/:username', controllers.users.getUser);                   //returns only a user with username parameter
     app.get('/api/user-all-data/:username', controllers.allData.getAllDataOfUserByUserName) //returns all the data of an user with username parameter

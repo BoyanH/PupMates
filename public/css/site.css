@@ -168,6 +168,12 @@ h1, h2, h3, a{
 .user-menu li a:hover{
 	color: #09ADED;
 }
+.mobile-user-menu-username{
+	display: none;
+}
+.user-menu-username{
+	display: block;
+}
 .btn-signup:hover, .btn-signout:hover{
 	cursor: pointer;
 	background-color: #0CA2FF;
@@ -345,7 +351,16 @@ ul.menu-list li {
 
 			background: url("/img/wolf-logo-blue.png") 17px 30px no-repeat;
 		}
-
+.mobile-btn-login{
+	display: none;
+}
+.join-us{
+	text-align: center;
+	margin-top: 4px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background: #424345;
+}
 .styleless-list {
 
 	list-style-type: none;
@@ -511,7 +526,6 @@ div.fr-buttons {
 	}
 	.form-field label{
 		display: block;
-		width: 600px;
 	}
 	form#signup-form{
 		width: 400px !important;
@@ -524,6 +538,20 @@ div.fr-buttons {
 }
 
 @media only screen and (max-width: 480px) {
+	.right-wrapper, .view-wrapper, #signup-form{
+		margin-left: 0;
+		-webkit-transition: all 0.3s ease-in-out;
+  		-moz-transition: all 0.3s ease-in-out;
+  		-o-transition: all 0.3s ease-in-out;
+  		transition: all 0.3s ease-in-out;
+	}
+	.content{
+		margin-left: -80px !important;
+		-webkit-transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+	}
 	.left-nav{
 		display: none;
 	}
@@ -534,10 +562,10 @@ div.fr-buttons {
 		width: 40%;
 	}
 	.popup{
-		margin-left: -250px;
+		margin-left: -210px;
 	}
 	.menu{
-		margin-left: -64px;
+		margin-left: -80px;
 		-webkit-transition: all 0.3s ease-in-out;
   		-moz-transition: all 0.3s ease-in-out;
   		-o-transition: all 0.3s ease-in-out;
@@ -545,19 +573,14 @@ div.fr-buttons {
 	}
 	.menu-expand{
 		display: block;
+		margin-left: -5px;
 	}
 	.view-wrapper{
-		width: 100%;
-		margin-left: -45px;
-		-webkit-transition: all 0.3s ease-in-out;
-  		-moz-transition: all 0.3s ease-in-out;
-  		-o-transition: all 0.3s ease-in-out;
-  		transition: all 0.3s ease-in-out;
+		width: 110%;
+		/*margin-left: -20px !important;*/
 	}
 	h1.route-header{
 		font-size: 20px;
-		margin-left: -20px;
-		width: 600px
 	}
 	form#signup-form{
 		width: 350px !important;
@@ -566,5 +589,53 @@ div.fr-buttons {
 	form .form-field input[type="submit"]{
 		margin-left: 20px !important;
 	}
-
+	.btn-signup, .btn-nav-login{
+		display: none;
+	}
+	.mobile-btn-login{
+		display: block;
+		padding: 7px;
+		padding-left: 10px;
+		margin-top: 15px;
+		color: #09ADED;
+		border: 1px solid #1D1D1D;
+		border-top-left-radius: 20px;
+		border-bottom-left-radius: 20px;
+		text-decoration: none;
+		text-align: center;
+		background-color: #1D1D1D;
+	}
+	.mobile-btn-login:hover{
+		cursor: pointer;
+	}
+	.ng-modal-dialog{
+		width: 330px !important;
+		height: 260px !important;
+	}
+	.password-lbl{
+		margin-top: 12px;
+		margin-bottom: 2px;
+	}
+	.login-btn{
+		margin-top: 35px !important;
+	}
+	.mobile-user-menu-username{
+		display: inline-block;
+		position: absolute;
+		padding-left: 20px;
+		background: #121315;
+		padding: 2px 8px;
+		margin-top: -5px;
+		border-radius: 5px;
+	}
+	#notif{
+		margin-left: 20px;
+	}
+	.user-menu-username{
+		display: none;
+	}
+	.user-menu-ul{
+		margin-left: -45px;
+	}
+	
 }

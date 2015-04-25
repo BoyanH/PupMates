@@ -177,14 +177,14 @@
 	margin-right: 5px;
 }
 .btn-mobile-expand{
-	display: none;
+	display: none !important;
 }
 @media only screen and (max-width: 768px) {
 	
 }
 @media only screen and (max-width: 480px){
 	.wrapper-dog{
-		margin-left: -20px;
+		margin-left: 0;
 		-webkit-transition: all 0.3s ease-in-out;
   		-moz-transition: all 0.3s ease-in-out;
   		-o-transition: all 0.3s ease-in-out;
@@ -214,8 +214,18 @@
 		overflow: hidden;
 	}
 	.btn-mobile-expand{
-
+		display: block !important;
 		margin: 2px auto;
 		width: 70%;
+		padding: 1px 3px;
+		font-size: 0.7em;
+		color: #09ADED;
+		border: 1px solid #1D1D1D;
+		text-decoration: none;
+		background-color: #1D1D1D;
+		border-radius: 3px;
+		margin-bottom: 2px;
+		line-height: 20px;
+		text-align: center;
 	}
 }
