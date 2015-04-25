@@ -1,0 +1,2 @@
+select#lang-bar(ng-controller="LanguageBarController" ng-model="crntLanguage" ng-change="changeLanguage(crntLanguage)")
+	option(ng-repeat="language in availableLanguages" ng-selected="language == crntLanguage" ng-class="{{language}}") {{language}}
