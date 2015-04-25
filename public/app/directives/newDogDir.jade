@@ -1,29 +1,29 @@
 div
-	h2.titleNewDog ADD NEW DOGGY
+	h2.titleNewDog(translate) ADD NEW DOGGY
 	form.form-new-dog(name="newdogform" id="newDogForm")
-		div.titleFieldDog NAME
+		div.titleFieldDog(translate) NAME
 		input.input-dog-field(type="text" required ng-change="change()" placeholder="NAME" name="name" ng-model="dog.name")
-		div.warning(ng-show="warningName") please write a name
-		div.titleFieldDog BIRTH DATE
+		div.warning(ng-show="warningName" translate) please write a name
+		div.titleFieldDog(translate) BIRTH DATE
 		div
-			label.label-date-selector.titleFieldDog DAY
-			label.label-date-selector.titleFieldDog Month
-			label.label-date-selector.titleFieldDog Year
+			label.label-date-selector.titleFieldDog(translate) DAY
+			label.label-date-selector.titleFieldDog(translate) Month
+			label.label-date-selector.titleFieldDog(translate) Year
 		div.date-selector-container
 			select.date-selector(ng-model="dog.day" ng-options="opt as opt.label for opt in optionsDay")
 			select.date-selector(ng-model="dog.month" ng-options="opt as opt.label for opt in optionsMonth")
 			select.date-selector(ng-model="dog.year" ng-options="opt as opt.label for opt in optionsYear")
-		div.warning(ng-show="warningBirthDate") incorrect date
-		div.titleFieldDog BREED
+		div.warning(ng-show="warningBirthDate" translate) incorrect date
+		div.titleFieldDog(translate) BREED
 		input.input-dog-field(type="text" required placeholder="BREED" name="breed" ng-model="dog.breed")
-		div.warning(ng-show="warningBreed") please write a breed
-		div.titleFieldDog DESCRIPTION (optional)
+		div.warning(ng-show="warningBreed" translate) please write a breed
+		div.titleFieldDog(translate) DESCRIPTION (optional)
 		input.input-dog-field(type="text" placeholder="DESCRIPTION" name="description" ng-model="dog.description")
-		div.titleFieldDog PHOTO
+		div.titleFieldDog(translate) PHOTO
 		input.input-upload-dog-photo(required ng-file-select="onFileSelect($files)" name="photo" type="file")
-		div.warning(ng-show="warningProfPhoto") please choose a photo
+		div.warning(ng-show="warningProfPhoto" translate) please choose a photo
 		div
 			progress.progress-photo(value="{{progress}}")
 
 		div
-			button.button-new-dog(ng-click="addDog(dog)") ADD DOG
+			button.button-new-dog(ng-click="addDog(dog)" translate) ADD DOG

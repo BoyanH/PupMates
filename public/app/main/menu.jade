@@ -2,11 +2,11 @@ div(ng-controller="MenuController")
 	div.cover
 	ul.menu-list
 		li
-			div.chat-btn(ng-click="showDialog($event)" name="chat" id="left-hand-chat-btn") CHAT
+			div.chat-btn(ng-click="showDialog($event)" name="chat" id="left-hand-chat-btn" translate) CHAT
 		li
-			div.new-dog-btn(ng-click="showDialog($event)" name="new-dog") Add Dog
+			div.new-dog-btn(ng-click="showDialog($event)" name="new-dog" translate) Add Dog
 		li
-			a.fav-places(href="#/places") Places
+			a.fav-places(href="#/places" translate) Places
 		li(ng-show="isAdmin")
-			a.admin-panel-btn(href="#/admin") ADMIN
+			a.admin-panel-btn(href="#/admin" translate) ADMIN
 		

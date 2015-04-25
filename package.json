@@ -30,6 +30,8 @@
     "grunt-angular-gettext": "^2.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.0.17"
+    "nodemon": "^1.0.17",
+    "grunt-contrib-jade": "^0.14.1",
+    "grunt-serve": "^0.1.6"
   }
 }

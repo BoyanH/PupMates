@@ -4,18 +4,18 @@ div(ng-controller="NotificationsController" off-click="hideNotif()")
 		span#notif-count.info-box(ng-show="notifications.length > 0") {{notifications.length}}
 		div#notif-box-wrapper(ng-show="notifShow")
 			div.popup#notif-box
-				span#notif-title Notifications
+				span#notif-title(translate) Notifications
 				hr
 				ul
 					li.notif-container(ng-repeat="notification in notifications", ng-class="{unseen: !notification.seen}")
 						img.notif-img(src="/img/profPhoto/{{notification.from.id}}")
 						div.notif-read(ng-hide="notification.seen", ng-click="markAsSeen(notification)")
 							img(src="http://info.catchop.fr/assets/img/glyphicons/glyphicons_051_eye_open.png")
-							span.info-box.mas-helper Mark as seen
+							span.info-box.mas-helper(translate) Mark as seen
 						div.notif-date {{notification.createdTime | moment: 'fromNow'}}
 						div.notif-story {{notification.from.name}} 
-							span(ng-show="notification.story.legth > 0") {{notification.story}}
-							span(ng-show="notification.notifType == 'friendRequest'") wants to add you as a friend!
+							span(ng-show="notification.story.legth > 0") {{notification.story | translate}}
+							span(ng-show="notification.notifType == 'friendRequest'" translate) wants to add you as a friend!
 						div.fr-buttons(ng-show="notification.notifType == 'friendRequest'")
-							button.accept-btn(ng-click="acceptFriendship(notification)") Add
-							button.decline-btn(ng-click="deleteNotification(notification)") Delete Request
+							button.accept-btn(ng-click="acceptFriendship(notification)" translate) Add
+							button.decline-btn(ng-click="deleteNotification(notification)" translate) Delete Request

@@ -97,6 +97,6 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
 
 app.run(['gettextCatalog', function (gettextCatalog) {
 
-    gettextCatalog.currentLanguage = 'bg';
+    gettextCatalog.currentLanguage = 'bg_BG';
     gettextCatalog.debug = true;
 }]);

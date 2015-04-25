@@ -2,49 +2,49 @@ div#ach-review-panel
 	h1 Review Achievments
 	div.ach-review-box(ng-repeat="achievment in achievmentApplications")
 		h4
-			i
+			i(translate)
 				| Requested {{achievment.createdAt | moment: 'fromNow'}}!
 		table#ach-review
 			tbody#ach-review-body
 				tr
 					td 
-						h3 Achievment Name
+						h3(translate) Achievment Name
 					td 
 						| {{achievment.name}}
 				tr(ng-show="achievment.description")
 					td
-						h3 Achievment Description
+						h3(translate) Achievment Description
 					td
 						| {{achievment.description}}
 				tr(ng-show="achievment.points")
 					td
-						h3 Achievment Points
+						h3(translate) Achievment Points
 					td
 						| {{achievment.points}}
 				tr
 					td 
-						h3 Video Proof
+						h3(translate) Video Proof
 					td
 						video(controls)
 							source(ng-src="{{'/admin/achievments/video/' + achievment._id}}")
 							| Install a more modern browser to view this video!
 				tr
 					td
-						h3 Author
+						h3(translate) Author
 					td
 						a(href="#/profile/{{achievment.author.username}}") {{achievment.author.name}}
 				tr
 					td
-						h3 Request Type
+						h3(translate) Request Type
 					td
-						span(ng-show="achievment.suggestChange") 
+						span(ng-show="achievment.suggestChange" translate) 
 							| Edit Achievment Suggestion
-						span(ng-show="!achievment.points && !achievment.description") 
+						span(ng-show="!achievment.points && !achievment.description" translate) 
 							| Achievment Application
-						span(ng-show="achievment.points && achievment.description && !achievment.suggestChange")
+						span(ng-show="achievment.points && achievment.description && !achievment.suggestChange" translate)
 							| New Achievment Suggestion
 		div#ach-review-btn-holder
-			button(ng-click="acceptAch(achievment)")
+			button(ng-click="acceptAch(achievment)" translate)
 				| Accept
-			button(ng-click="declineAch(achievment)")
+			button(ng-click="declineAch(achievment)" translate)
 				| Decline

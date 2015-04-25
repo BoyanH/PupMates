@@ -4,23 +4,23 @@
 			img.profPhoto(src="{{profPhoto}}")
 		.sidebar-nav
 			.sidebar-nav-item(ng-click="changeView('achievments')" ng-class="{selected: view.achievments}") 
-				h3 Achievments
+				h3(translate) Achievments
 			.sidebar-nav-item(ng-click="changeView('dogs')" ng-class="{selected: view.dogs}") 
-				h3 Dogs
+				h3(translate) Dogs
 	.view-right-content
 		div.prof-notCurrUser(ng-hide="identity.currentUser._id == profile._id")
 			h1 Profile of {{profile.firstName}} {{profile.lastName}}
 			span(ng-show="identity.currentUser")
-				button(ng-click="befriendMate()") +Add Friend
-				button(ng-click="openDiscussion(profile)") Send Message
-		h1(ng-show="identity.currentUser._id == profile._id") Welcome {{identity.currentUser.firstName}}!
+				button(ng-click="befriendMate()" translate) +Add Friend
+				button(ng-click="openDiscussion(profile)" translate) Send Message
+		h1(ng-show="identity.currentUser._id == profile._id" translate) Welcome {{identity.currentUser.firstName}}!
 		profile-achievments(ng-show="view.achievments" user="profile" identity="identity")
 		div.pet-wrapper
 			div.prof-dog-container(ng-show="view.dogs" ng-click="goToDogRoute($index)" ng-repeat="dog in dogs track by $index")
 				div.name-container
 					a.dog-name(href="#/dog/{{dog._id}}") {{dog.name}}
-				div.birthdate Birthdate: {{dog.birthDate}}
-				div.breed Breed: {{dog.breed}}
+				div.birthdate(translate) Birthdate: {{dog.birthDate}}
+				div.breed(translate) Breed: {{dog.breed}}
 				div.description-pic-container
 					div.pic-container
 						img(src="{{dog.url}}")

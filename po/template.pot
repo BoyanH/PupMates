@@ -3,3 +3,544 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
+
+#: translations/templates/profile/profile.html:17
+msgid "+Add Friend"
+msgstr ""
+
+#: translations/templates/places/places.html:23
+msgid "- other people's places"
+msgstr ""
+
+#: translations/templates/places/places.html:22
+msgid "- your places"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:60
+msgid "<h2>Apply</h2>"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:32
+msgid "ADD DOG"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:3
+msgid "ADD NEW DOGGY"
+msgstr ""
+
+#: translations/templates/main/menu.html:12
+msgid "ADMIN"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:58
+msgid "Accept"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:51
+msgid "Achievment Application"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:19
+msgid "Achievment Description"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:10
+msgid "Achievment Name"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:25
+msgid "Achievment Points"
+msgstr ""
+
+#: translations/templates/profile/profile.html:7
+msgid "Achievments"
+msgstr ""
+
+#: translations/templates/notifications/notifications.html:13
+msgid "Add"
+msgstr ""
+
+#: translations/templates/main/menu.html:9
+msgid "Add Dog"
+msgstr ""
+
+#: translations/templates/dog/dog.html:46
+msgid "Add Food"
+msgstr ""
+
+#: translations/templates/places/places.html:14
+msgid "Add Place"
+msgstr ""
+
+#: translations/templates/places/places.html:15
+msgid "Add Route"
+msgstr ""
+
+#: translations/templates/dog/dog.html:59
+msgid "Add Walk"
+msgstr ""
+
+#: translations/templates/admin/adminPanel.html:7
+msgid "Admin Panel"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:20
+msgid "Apply"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:15
+msgid "Apply for an achievment"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:41
+msgid "Author"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:8
+msgid "BIRTH DATE"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:20
+msgid "BREED"
+msgstr ""
+
+#: translations/templates/dog/dog.html:22
+msgid "Birth Date: {{dog.birthDate}}"
+msgstr ""
+
+#: translations/templates/profile/profile.html:25
+msgid "Birthdate: {{dog.birthDate}}"
+msgstr ""
+
+#: translations/templates/dog/dog.html:32
+#: translations/templates/profile/profile.html:26
+msgid "Breed: {{dog.breed}}"
+msgstr ""
+
+#: translations/templates/dog/dog.html:8
+msgid "Browse Photo"
+msgstr ""
+
+#: translations/templates/main/menu.html:6
+msgid "CHAT"
+msgstr ""
+
+#: translations/templates/directives/addPlaceDir.html:20
+#: translations/templates/places/places.html:7
+msgid "Cancel"
+msgstr ""
+
+#: translations/templates/dog/dog.html:27
+#: translations/templates/dog/dog.html:29
+#: translations/templates/dog/dog.html:35
+#: translations/templates/dog/dog.html:37
+#: translations/templates/dog/dog.html:5
+#: translations/templates/dog/dog.html:50
+#: translations/templates/dog/dog.html:63
+#: translations/templates/dog/dog.html:69
+#: translations/templates/dog/dog.html:72
+#: translations/templates/dog/dog.html:75
+#: translations/templates/dog/dog.html:76
+#: translations/templates/dog/dog.html:77
+#: translations/templates/dog/dog.html:78
+#: translations/templates/dog/dog.html:79
+#: translations/templates/dog/dog.html:80
+msgid "Change"
+msgstr ""
+
+#: translations/templates/dog/dog.html:34
+msgid "Change Breed"
+msgstr ""
+
+#: translations/templates/dog/dog.html:16
+msgid "Change Name"
+msgstr ""
+
+#: translations/templates/chat/chat.html:2
+msgid "Chat History"
+msgstr ""
+
+#: translations/templates/directives/chatDir.html:4
+msgid "Chat with friends"
+msgstr ""
+
+#: translations/templates/account/signup.html:21
+msgid "Confirm Email"
+msgstr ""
+
+#: translations/templates/account/signup.html:30
+msgid "Confirm Password"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:21
+msgid "Create New"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:10
+msgid "DAY"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:23
+msgid "DESCRIPTION (optional)"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:59
+msgid "Decline"
+msgstr ""
+
+#: translations/templates/places/places.html:6
+msgid "Delete"
+msgstr ""
+
+#: translations/templates/notifications/notifications.html:14
+msgid "Delete Request"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:36
+msgid "Description"
+msgstr ""
+
+#: translations/templates/directives/addPlaceDir.html:10
+#: translations/templates/places/places.html:45
+msgid "Description:"
+msgstr ""
+
+#: translations/templates/places/places.html:4
+msgid "Do you really want<br>to delete the place?"
+msgstr ""
+
+#: translations/templates/account/search.html:7
+msgid "Dog Owners"
+msgstr ""
+
+#: translations/templates/main/front-page.html:11
+msgid "Doggy world will remind you when<br>to give food to your dogs and when<br>to go just for a walk!"
+msgstr ""
+
+#: translations/templates/account/search.html:16
+#: translations/templates/profile/profile.html:10
+msgid "Dogs"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:22
+msgid "Edit"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:49
+msgid "Edit Achievment Suggestion"
+msgstr ""
+
+#: translations/templates/account/signup.html:17
+msgid "Email"
+msgstr ""
+
+#: translations/templates/account/signup.html:22
+msgid "Emails do not match"
+msgstr ""
+
+#: translations/templates/main/front-page.html:6
+msgid "Find the best places for your dog!"
+msgstr ""
+
+#: translations/templates/account/signup.html:5
+msgid "First Name"
+msgstr ""
+
+#: translations/templates/main/front-page.html:10
+msgid "Having problems with your dog?"
+msgstr ""
+
+#: translations/templates/places/places.html:17
+msgid "Hide other people's places"
+msgstr ""
+
+#: translations/templates/account/signup.html:18
+msgid "Invalid Email"
+msgstr ""
+
+#: translations/templates/account/login.html:22
+msgid "JOIN US!"
+msgstr ""
+
+#: translations/templates/main/front-page.html:3
+msgid "Join the Biggest network for dog owners"
+msgstr ""
+
+#: translations/templates/account/login.html:3
+msgid "Join/Login"
+msgstr ""
+
+#: translations/templates/account/signup.html:9
+msgid "Last Name"
+msgstr ""
+
+#: translations/templates/account/login.html:10
+#: translations/templates/account/login.html:3
+msgid "Login"
+msgstr ""
+
+#: translations/templates/admin/adminPanel.html:16
+msgid "Manage Users"
+msgstr ""
+
+#: translations/templates/notifications/notifications.html:9
+msgid "Mark as seen"
+msgstr ""
+
+#: translations/templates/account/login.html:4
+msgid "Me"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:11
+msgid "Month"
+msgstr ""
+
+#: translations/templates/places/places.html:27
+msgid "My Places"
+msgstr ""
+
+#: translations/templates/account/login.html:7
+msgid "My profile"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:5
+msgid "NAME"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:32
+msgid "Name"
+msgstr ""
+
+#: translations/templates/directives/addPlaceDir.html:5
+msgid "Name:"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:53
+msgid "New Achievment Suggestion"
+msgstr ""
+
+#: translations/templates/account/signup.html:2
+msgid "New owner's account"
+msgstr ""
+
+#: translations/templates/directives/addPlaceDir.html:17
+msgid "No"
+msgstr ""
+
+#: translations/templates/places/places.html:26
+msgid "No information to display"
+msgstr ""
+
+#: translations/templates/notifications/notifications.html:5
+msgid "Notifications"
+msgstr ""
+
+#: translations/templates/places/places.html:28
+msgid "Other People's Places"
+msgstr ""
+
+#: translations/templates/account/search.html:11
+msgid "Owner of: <span ng-show=\"$index != 0 &amp;&amp; dog.breed.length\">, </span><span ng-repeat=\"dog in person.dogs\" ng-show=\"dog.breed.length &gt;= 2\">{{dog.breed}} </span>"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:25
+msgid "PHOTO"
+msgstr ""
+
+#: translations/templates/account/signup.html:25
+msgid "Password"
+msgstr ""
+
+#: translations/templates/account/login.html:18
+msgid "Password:"
+msgstr ""
+
+#: translations/templates/account/signup.html:31
+msgid "Passwords do not match"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:26
+msgid "Pick Achievment"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:18
+msgid "Pick Action"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:44
+msgid "Pick Dog"
+msgstr ""
+
+#: translations/templates/main/menu.html:11
+msgid "Places"
+msgstr ""
+
+#: translations/templates/profile/achievments.html:40
+msgid "Points"
+msgstr ""
+
+#: translations/templates/directives/addPlaceDir.html:15
+msgid "Private:"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:47
+msgid "Request Type"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:5
+msgid "Requested {{achievment.createdAt | moment: 'fromNow'}}!"
+msgstr ""
+
+#: translations/templates/admin/adminPanel.html:10
+msgid "Review New<br>Achievments"
+msgstr ""
+
+#: translations/templates/directives/addPlaceDir.html:19
+msgid "Save"
+msgstr ""
+
+#: translations/templates/dog/dog.html:9
+msgid "Save Change"
+msgstr ""
+
+#: translations/templates/dog/dog.html:47
+#: translations/templates/dog/dog.html:60
+msgid "Save changes"
+msgstr ""
+
+#: translations/templates/account/search.html:4
+msgid "Search..."
+msgstr ""
+
+#: translations/templates/directives/draggableChat.html:15
+msgid "Send"
+msgstr ""
+
+#: translations/templates/profile/profile.html:18
+msgid "Send Message"
+msgstr ""
+
+#: translations/templates/places/places.html:16
+msgid "Show other people's places"
+msgstr ""
+
+#: translations/templates/account/login.html:3
+msgid "Sign Up"
+msgstr ""
+
+#: translations/templates/account/signup.html:45
+msgid "Sign up"
+msgstr ""
+
+#: translations/templates/main/front-page.html:8
+msgid "Stay connected with your friends!"
+msgstr ""
+
+#: translations/templates/account/login.html:14
+msgid "User Name:"
+msgstr ""
+
+#: translations/templates/account/signup.html:13
+msgid "Username"
+msgstr ""
+
+#: translations/templates/account/signup.html:14
+msgid "Username exists"
+msgstr ""
+
+#: translations/templates/account/signup.html:14
+msgid "Username is too short"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:31
+#: translations/templates/profile/achievments.html:50
+msgid "Video Proof"
+msgstr ""
+
+#: translations/templates/profile/profile.html:20
+msgid "Welcome {{identity.currentUser.firstName}}!"
+msgstr ""
+
+#: translations/templates/main/front-page.html:9
+msgid "Why not text a message to your buddy for <br>a walk with your dogs? Get in touch<br>with all your friends instantly."
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:12
+msgid "Year"
+msgstr ""
+
+#: translations/templates/directives/addPlaceDir.html:16
+msgid "Yes"
+msgstr ""
+
+#: translations/templates/directives/chatDir.html:7
+msgid "You currently have no friends"
+msgstr ""
+
+#: translations/templates/main/front-page.html:7
+msgid "You will have the chance to<br>exlpore your city for the best places<br>to enjoy a walk with your dog."
+msgstr ""
+
+#: translations/templates/main/front-page.html:4
+msgid "You will..."
+msgstr ""
+
+#: translations/templates/account/signup.html:26
+msgid "Your password is too short."
+msgstr ""
+
+#: translations/templates/places/places.html:11
+msgid "Your places:"
+msgstr ""
+
+#: translations/templates/admin/adminPanel.html:4
+msgid "aslpls"
+msgstr ""
+
+#: translations/templates/places/places.html:33
+msgid "delete"
+msgstr ""
+
+#: translations/templates/dog/dog.html:40
+msgid "foods:"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:19
+msgid "incorrect date"
+msgstr ""
+
+#: translations/templates/directives/loading.html:3
+msgid "loading..."
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:27
+msgid "please choose a photo"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:22
+msgid "please write a breed"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:7
+msgid "please write a name"
+msgstr ""
+
+#: translations/templates/places/places.html:42
+msgid "rate: {{pl.rate}}"
+msgstr ""
+
+#: translations/templates/account/login.html:6
+msgid "signout"
+msgstr ""
+
+#: translations/templates/dog/dog.html:53
+msgid "walks:"
+msgstr ""
+
+#: translations/templates/notifications/notifications.html:11
+msgid "wants to add you as a friend!"
+msgstr ""
+
+#: translations/templates/account/signup.html:38
+msgid "{{captchaErrorType | translate}} was NOT valid!"
+msgstr ""
