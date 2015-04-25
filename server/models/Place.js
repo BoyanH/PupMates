@@ -15,7 +15,7 @@ var placeSchema = mongoose.Schema({		//creating a schema for what a place will b
 	private: Boolean,
 });
 
-var Place = mongoose.model("Place", placeSchema) //creaing the model Place with the schema
+var Place = mongoose.model("Place", placeSchema); //creaing the model Place with the schema
 
 module.exports.seedInitialPlaces = function(){	//doing the intial commit of data to the database
 
@@ -29,22 +29,22 @@ module.exports.seedInitialPlaces = function(){	//doing the intial commit of data
 		}
 
 		if(collection.length==0){	//if the records are zero then do the initial commit of data
-			User.findOne({username: 'AlexanderY'}).select("_id").exec(function(err, user){ //gets the id of user with username AlexanderY
+			User.findOne({username: 'AlexanderY'}).select("_id").exec(function (err, user){ //gets the id of user with username AlexanderY
 
 				if(err){
 					console.log("Smth went wrong with users find in places: " + err);
 					return;
 				}
-				Dog.findOne({}).exec(function(err, dog){	//gets one dog
+				Dog.findOne({name: "Muncho"}).exec(function(err, dog){	//gets one dog
 					if(err){
 						console.log("could find a dog in places: " + err);
 						return;
 					}
 					Place.create({					//creating a place
 						creator: user._id,
-						people:[user._id, user._id],
+						people:[user._id],
 						dogs: [dog._id],
-						name: 'Test Mqsto',
+						name: 'Test Place',
 						description: 'No description',
 						rate: 5,
 						lng: "42.440547",

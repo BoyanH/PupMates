@@ -1,6 +1,6 @@
 ﻿//intializing the angular application
 var app = angular.module('app', 
-    ['ngResource', 'ngRoute','ngDraggable', 'geolocation', 'luegg.directives', 'offClick', 'visualCaptcha']) //angular depencies
+    ['ngResource', 'ngRoute','ngDraggable', 'geolocation', 'luegg.directives', 'offClick', 'visualCaptcha', 'gettext']) //angular depencies
 .value('toastr', toastr);
 
 app.config(function($routeProvider, $locationProvider){
@@ -93,4 +93,10 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
 
         return original.apply($location, [path]);
     };
+}]);
+
+app.run(['gettextCatalog', function (gettextCatalog) {
+
+    gettextCatalog.currentLanguage = 'bg_BG';
+    gettextCatalog.debug = true;
 }]);

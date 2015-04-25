@@ -25,10 +25,10 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 				deferred.resolve(places);
 			}
 			else{
-				deferred.resolve(false);
+				deferred.reject(false);
 			}
-		}).error(function(){
-			deferred.resolve(false);
+		}).error(function(err){
+			deferred.reject(err);
 		})
 
 		return deferred.promise;
@@ -37,7 +37,7 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 	function createPlace(place){	//creates a place 
 		var deferred = $q.defer();
 
-		$http.post('/places/create/' + identity.currentUser._id, place).success(function(){
+		$http.post('/places', place).success(function(){
 			deferred.resolve(true);
 		}).error(function(){
 			deferred.resolve(false);
@@ -59,7 +59,7 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 	function deletePlace(id){		//delets a place
 		var deferred = $q.defer();
 
-		$http.delete("/places/delete/" + id)
+		$http.delete("/places/delete/", id)
 		.success(function(){
 			deferred.resolve(true);
 		})

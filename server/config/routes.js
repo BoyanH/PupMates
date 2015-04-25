@@ -25,8 +25,8 @@ module.exports = function (app) {
         res.send('../../public/img/' + req.params.img);
     });
     app.get('/places/:id', auth.isAuthenticated, controllers.places.getPlacesOfUser);   //returns the places of a user
-    app.post('/places/create/:id', auth.isAuthenticated, controllers.places.createPlace);   //creates a place
-    app.delete('/places/delete/:id', auth.isAuthenticated, controllers.places.deletePlace)  //deletes a place
+    app.post('/places', auth.isAuthenticated, controllers.places.createPlace);   //creates a place
+    app.delete('/places', auth.isAuthenticated, controllers.places.deletePlace)  //deletes a place
     app.get('/places/allexceptofuser/:id', auth.isAuthenticated, controllers.places.getPlacesExcepUser) //get all the places except the places of user with id parameter
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.dogs.createDog);      //creates a dog
     app.put('/updateDog/:userId/:dogId', auth.isAuthenticated, controllers.dogs.updateDog); //updates a dog

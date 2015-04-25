@@ -86,7 +86,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
         $scope.addPlace = function(location, place) {   //adds a places on the map
             $scope.addPlaceTrigger = true;
             listenerHandle = google.maps.event.addListener(map, 'click', function(event) {
-                console.log("click on map");
+
                 if (!$scope.clickOnMapNewPlace) {
                     $scope.clickOnMapNewPlace = true;
                     google.maps.event.removeListener(listenerHandle);

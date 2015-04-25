@@ -1,52 +1,52 @@
 div
 	div#achievment-grid
 		div.achievment-item(ng-repeat="achievment in existingAchievments" ng-class="{'achievment-aquired': achievment.aquired}") 
-			div.achievment-name {{achievment.name}}
-			div.achievment-description {{achievment.description}}
+			div.achievment-name {{achievment.name | translate}}
+			div.achievment-description {{achievment.description | translate}}
 			div.achievment-points Gives {{achievment.points}} points
 	div#application-separator(ng-show="identity.currentUser._id == user._id")
 		hr
 		button(ng-click="toggleApply()")
 			| {{applying? 'Cancel Application' : 'Apply for an Achievment'}} 
 	div.application-box(ng-show="applying && identity.currentUser._id == user._id")
-		h3.center Apply for an achievment
+		h3.center(translate) Apply for an achievment
 		form#achievment-form
 			div.form-field
-				label.label(for="new-or-apply") Pick Action
+				label.label(for="new-or-apply" translate) Pick Action
 				div#new-or-apply.field
 					button.switch-btn(ng-class="{'switch-btn-clicked': !createNew && !edit, 'switch-btn-not-clicked': createNew || edit}"
-					ng-click="createNew = false; edit = false;")
+					ng-click="createNew = false; edit = false;" translate)
 							| Apply
 					button.switch-btn(ng-class="{'switch-btn-clicked': createNew, 'switch-btn-not-clicked': !createNew}"
-					ng-click="createNew = true; edit = false;")
+					ng-click="createNew = true; edit = false;" translate)
 						| Create New
 					button.switch-btn(ng-class="{'switch-btn-clicked': edit, 'switch-btn-not-clicked': !edit}"
-					ng-click="edit = true; createNew = false;")
+					ng-click="edit = true; createNew = false;" translate)
 						| Edit
 			div.form-field(ng-show="!createNew || edit")
-				label.label(for="ach-name") Pick Achievment
+				label.label(for="ach-name" translate) Pick Achievment
 				select.field#ach-name(ng-model="achievment.name" ng-required="!createNew")
 					option(ng-repeat="exisAch in existingAchievments" ng-show="!exisAch.aquired") {{exisAch.name}}
 			div.form-field(ng-show="createNew")
-				label.label(for="new-ach-name") Name
+				label.label(for="new-ach-name" translate) Name
 				input#new-ach-name.field(type="text" ng-required="createNew" ng-model="achievment.name")
 			div.form-field(ng-show="createNew || edit")
-				label.label(for="ach-descript") Description
+				label.label(for="ach-descript" translate) Description
 				input#ach-descript.field(type="text" ng-required="createNew" ng-model="achievment.description")
 			div.form-field(ng-show="createNew || edit")
-				label.label(for="ach-points") Points
+				label.label(for="ach-points" translate) Points
 				input#ach-points.field(type="number" min="0" max="300" ng-required="createNew" ng-model="achievment.points")
 			div.form-field
-				label.label(for="ach-dog") Pick Dog
+				label.label(for="ach-dog" translate) Pick Dog
 				select.field#ach-name(ng-model="achievment.dogId" required)
 					option(ng-repeat="dog in user.dogs" ng-value="dog._id") {{dog.name}}
 			div.form-field
-				label.label(for="video-input") Video Proof
+				label.label(for="video-input" translate) Video Proof
 				button#video-input.field
 					input(ng-file-select="onFileSelect($files)" type="file" required)
 				div.video-preview
 					progress.progress-photo.ach-progress(value="{{progress}}" ng-show="progress != 1")
 					video#video-preview(controls ng-hide="progress != 1" width="700px")
 			div.form-field
-				button.wide-btn(ng-click="applyForAchievment();") 
+				button.wide-btn(ng-click="applyForAchievment();" translate) 
 					h2 Apply

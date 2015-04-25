@@ -47,9 +47,9 @@ app.factory('MapService', function(identity){
 	function setInfoMarker(map, marker, place){		//sets the info window of a marker
 		marker.info = new google.maps.InfoWindow({
             content: '<div class="markerNameInfo">' 
-            + (place.name || "no name of place") + '</div>' 
-            + (place.description || "no description") + "<br />" 
-            + "rate: " + place.rate
+		            + (place.name || "no name of place") + '</div>' 
+		            + (place.description || "no description") + "<br />" 
+		            + "rate: " + place.rate
       	});
           google.maps.event.addListener(marker, 'click', function() {
             marker.info.open(map, marker);

@@ -1,34 +1,34 @@
 div.view-wrapper
 	div.pl-ask-window
-		h3.pl-window-title Do you really want
+		h3.pl-window-title(translate) Do you really want
 			br
 			| to delete the place?
 		div
-			button.pl-window-delete(ng-click="confirmDeletePlace()") Delete
-			button.pl-window-cancel(ng-click="cancelDeletePlace()") Cancel
+			button.pl-window-delete(ng-click="confirmDeletePlace()" translate) Delete
+			button.pl-window-cancel(ng-click="cancelDeletePlace()" translate) Cancel
 	div.pl-left-content
-		h1 Your places:
+		h1(translate) Your places:
 		div#map-canvas
 		div
-			button.pl-button(ng-click="addPlace()") Add Place
-			button.pl-button(ng-click="showHidePlaceDir('addRoute')") Add Route
-			button.pl-button(ng-click="showOtherPeoplePlaces()") Show other people's places
-			button.pl-button(ng-click="hideOtherPeoplePlaces()") Hide other people's places
+			button.pl-button(ng-click="addPlace()" translate) Add Place
+			button.pl-button(ng-click="showHidePlaceDir('addRoute')" translate) Add Route
+			button.pl-button(ng-click="showOtherPeoplePlaces()" translate) Show other people's places
+			button.pl-button(ng-click="hideOtherPeoplePlaces()" translate) Hide other people's places
 			
 	div.pl-right-content
 		section.pl-explanation
 			div
 				img(src="/img/marker-blue.png")
-				span - your places
+				span(translate) - your places
 			div
 				img(src="/img/marker-green.png")
-				span - other people's places
+				span(translate) - other people's places
 		div(add-place ng-show="addPlaceTrigger")
-		div(ng-show="!user.places.length") No information to display
+		div(ng-show="!user.places.length" translate) No information to display
 		button.switch-btn#btn-user-tab(ng-click="showAllPl = false;" 
-		ng-class="{'switch-btn-clicked': !showAllPl, 'switch-btn-not-clicked': showAllPl}") My Places
+		ng-class="{'switch-btn-clicked': !showAllPl, 'switch-btn-not-clicked': showAllPl}" translate) My Places
 		button.switch-btn#btn-allusers-tab(ng-click="showAllPl = true;" 
-		ng-class="{'switch-btn-clicked': showAllPl, 'switch-btn-not-clicked': !showAllPl}") Other People's Places
+		ng-class="{'switch-btn-clicked': showAllPl, 'switch-btn-not-clicked': !showAllPl}" translate) Other People's Places
 		div.pl-p-users.pl-p-clicked(ng-show="!showAllPl")
 			ul.pl-place-ul
 				li.pl-place-li.pl-user-places(ng-repeat="place in userPlaces track by $index" ng-click="clickedPlaceCenter($index, 'current')")
@@ -37,7 +37,7 @@ div.view-wrapper
 						span.pl-name-span
 							a(ng-click="centerMap($index)") {{place.name}}
 						span.pl-rate-span rate: {{place.rate}}
-						button(ng-click="deletePlace($index)") delete
+						button(ng-click="deletePlace($index)" translate) delete
 					div.pl-description
 						span.pl-span-description Description:
 						| {{place.description}}
@@ -48,10 +48,10 @@ div.view-wrapper
 						img(src="/img/marker-green.png")
 						span.pl-name-span
 							a(ng-click="centerMap($index)") {{pl.name}}
-						span.pl-rate-span rate: {{pl.rate}}
+						span.pl-rate-span(translate) rate: {{pl.rate}}
 						button.pl-rate-btn(ng-click="ratePlace($index)") 
 							img.pl-rate-img(src="/img/paw.png")
 							span +1
 					div.pl-description
-						span.pl-span-description Description:
+						span.pl-span-description(translate) Description:
 						| {{pl.description}}

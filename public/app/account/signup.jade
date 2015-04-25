@@ -1,39 +1,39 @@
-﻿h1.route-header New owner's account
+﻿h1.route-header(translate) New owner's account
 form#signup-form(ng-submit="signup()")
 	.form-field
-		label.label(for="fName") First Name
+		label.label(for="fName" translate) First Name
 		input.field(type="text", name="fName", ng-model="user.firstName", required)
 	.form-field
-		label.label(for='l-name') Last Name             
+		label.label(for='l-name' translate) Last Name             
 		input.field(type='text', name='l-name', ng-model="user.lastName", required) 
 	.form-field
-		label.label(for="username") Username
+		label.label(for="username" translate) Username
 		input.field(type='text', name='username', ng-model="user.username", required)
-		span.error-field(ng-class="{'failed': fails.username }") Username too short 
-		span.error-field(ng-class="{'failed': fails.usernameExists }") Username Exists   
+		span.error-field(ng-class="{'failed': fails.username }" translate) Username is too short 
+		span.error-field(ng-class="{'failed': fails.usernameExists }" translate) Username exists   
 	.form-field
-		label.label(for='email') Email
+		label.label(for='email' translate) Email
 		input.field(type='email', name='pEmail', ng-model="user.email", required)
-		span.error-field(ng-class="{'failed': fails.email }") Invalid Email
+		span.error-field(ng-class="{'failed': fails.email }" translate) Invalid Email
 	.form-field
-		label.label(for='confirm_email') Confirm Email
+		label.label(for='confirm_email' translate) Confirm Email
 		input#confirm_email.field(type='email', name='pEmail2', ng-model="user.confirmedEmail", required)
-		span.error-field(ng-class="{'failed': fails.confirmedEmail }") Email Does not Match
+		span.error-field(ng-class="{'failed': fails.confirmedEmail }" translate) Emails do not match
 	.form-field
-		label.label(for='password') Password
+		label.label(for='password' translate) Password
 		input#password.field(type='password', name='pPassword', maxlength='41', ng-model="user.password", required)
-		span.error-field(ng-class="{'failed': fails.password }") Your password is too short.
+		span.error-field(ng-class="{'failed': fails.password }" translate) Your password is too short.
 		.instruct At least 6 characters
 	.form-field
-		label.label(for='confirm_password') Confirm Password
+		label.label(for='confirm_password' translate) Confirm Password
 		input#confirm_password.field(type='password', name='pPassword2', maxlength='41', ng-model="user.confirmedPassword", required)
-		span.error-field(ng-class="{'failed': fails.confirmedPassword }") Password does not match
+		span.error-field(ng-class="{'failed': fails.confirmedPassword }" translate) Passwords do not match
 	.form-field
 		.form-group
 			#status-message(ng-show="captchaErrorType")
 				.status
 					.icon-no
-					p {{captchaErrorType}} was NOT valid!
+					p(translate) {{captchaErrorType | translate}} was NOT valid!
 			div(captcha options="captchaOptions")
 	.form-field
-		input.btn_signup(type='submit', name='create', value='Sign up')
+		input.btn_signup(type='submit', name='create', value="'Sign up' | translate")

@@ -1,17 +1,17 @@
 div
 	form
 		div.pl-form-group
-			label Name: 
+			label(translate) Name: 
 			input.input-place(type="text" require="required" ng-model="place.name")
 		div.pl-form-group
 			div
-				label Description:
+				label(translate) Description:
 			textarea.input-textarea(type="text" ng-model="place.description")
 		div.pl-form-group
-			label Private: 
+			label(translate) Private: 
 			input(type="radio" ng-model="place.private" value="true")
-			span Yes
+			span(translate) Yes
 			input(type="radio" ng-model="place.private" value="false")
-			span No
-		button.pl-button(ng-disabled="saveBtnDisabled" ng-click="savePlace(place)") Save
-		button.pl-button(ng-click="cancelAddPlace()") Cancel
+			span(translate) No
+		button.pl-button(ng-disabled="saveBtnDisabled" ng-click="savePlace(place)" translate) Save
+		button.pl-button(ng-click="cancelAddPlace()" translate) Cancel

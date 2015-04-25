@@ -1,26 +1,26 @@
 ﻿div(ng-controller="LoginController")
 	div(ng-show="!identity.currentUser")
-		a.btn-nav-login(ng-click='toggleModal()') Login
-		a.btn-signup(href="#/sign-up") Sign Up
-		a.mobile-btn-login(ng-click='toggleModal()') Join/Login
+		a.btn-nav-login(ng-click='toggleModal()' translate) Login
+		a.btn-signup(href="#/sign-up" translate) Sign Up
+		a.mobile-btn-login(ng-click='toggleModal()' translate) Join/Login
 	div.logged-in-items(ng-hide="!identity.currentUser")
 		span.user-menu( ng-init="useroptions = false" ng-click="useroptions = !useroptions") 
 			span.user-menu-username(ng-click="showUserMenu = (!showUserMenu)") {{identity.currentUser.username}}
-			span.mobile-user-menu-username(ng-click="showUserMenu = (!showUserMenu)") Me
+			span.mobile-user-menu-username(ng-click="showUserMenu = (!showUserMenu)" translate) Me
 			ul.user-menu-ul(ng-show="showUserMenu")
-				li(ng-click="signout()") signout
+				li(ng-click="signout()" translate) signout
 				li(ng-click="showUserMenu = (!showUserMenu)")
-					a(ng-href="{{'#/profile/' + identity.currentUser.username + '/dogs'}}") My profile
+					a(ng-href="{{'#/profile/' + identity.currentUser.username + '/dogs'}}" translate) My profile
 	modal-dialog.contentDialog(show='modalShown' width='400px' height='235px')
-		h2.login-h Login
+		h2.login-h(translate) Login
 		div.line
 		form
 			div.form-row
-				label.user-name-lbl User Name:
+				label.user-name-lbl(translate) User Name:
 				input.login-input(type="text" ng-change="change()" placeholder="User Name" ng-model="user.username")
 			div.form-row
-				label.password-lbl Password:
+				label.password-lbl(translate) Password:
 				input.login-input(type="password" placeholder="Password" ng-model="user.password")
 			button.login-btn(ng-click="login(user)") Login
 			div.join-us
-				a(href="#/sign-up" ng-click="toggleModal()") JOIN US!
+				a(href="#/sign-up" ng-click="toggleModal()" translate) JOIN US!

@@ -12,4 +12,4 @@ div(ng-controller="DiscussionController")
 		div.chat-footer
 			textarea.chat-text-input(type="text" ng-model="discussion.messageContent"
 			ng-keydown="handleKeyDown(discussion.recipient._id, $event)" ng-keyup="handleKeyUp($event)" ng-focus="seeFutureMessages(discussion)" ng-blur="missFutureMessages(discussion)")
-			button.chat-submit-btn(ng-click="sendMessage(discussion)") Send
+			button.chat-submit-btn(ng-click="sendMessage(discussion)" translate) Send
