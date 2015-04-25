@@ -1,7 +1,8 @@
 ﻿//module for authentication of a user
 var passport = require('passport'),     //takes the passport module from nodejs
     events = require('events'),         //takes the event module from nodejs
-    eventEmitter = new events.EventEmitter();   //creating an event emitter
+    eventEmitter = new events.EventEmitter(),   //creating an event emitter
+    User = require('mongoose').model('User');
 
 module.exports = {
     login: function ( req, res, next ) {    //login function
@@ -32,7 +33,18 @@ module.exports = {
         res.end();
     },
     isAuthenticated: function(req, res, next){  //function which checks if an user is authenticated
-        if(!req.isAuthenticated()){
+        var user_id_access_token = req.query['user_id_access_token'];
+        if(user_id_access_token != "" && user_id_access_token){
+            console.log(user_id_access_token);
+            User.findOne({_id: user_id_access_token}).select("_id").exec(function(err, userId){
+                if(err || !userId){
+                    res.status(403);
+                    res.end();
+                }
+                next();
+            })
+        }
+        else if(!req.isAuthenticated()){
             res.status(403);
             res.end();
         }

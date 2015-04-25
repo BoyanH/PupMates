@@ -1,0 +1,572 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.7.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: bg_BG\n"
+
+#: translations/templates/profile/profile.html:17
+msgid "+Add Friend"
+msgstr "+Добави Приятел"
+
+#: translations/templates/places/places.html:23
+msgid "- other people's places"
+msgstr "- чужди места за разходка"
+
+#: translations/templates/places/places.html:22
+msgid "- your places"
+msgstr "- Вашите места"
+
+#: translations/templates/profile/achievments.html:60
+msgid "<h2>Apply</h2>"
+msgstr "<h2>Кандидатствай</h2>"
+
+#: translations/templates/directives/newDogDir.html:32
+msgid "ADD DOG"
+msgstr "ДОБАВИ КУЧЕ"
+
+#: translations/templates/directives/newDogDir.html:3
+msgid "ADD NEW DOGGY"
+msgstr "ДОБАВИ НОВО КУЧЕНЦЕ"
+
+#: translations/templates/main/menu.html:12
+msgid "ADMIN"
+msgstr "АДМИН"
+
+#: translations/templates/admin/achievmentReview.html:58
+msgid "Accept"
+msgstr "Приеми"
+
+#: translations/templates/admin/achievmentReview.html:51
+msgid "Achievment Application"
+msgstr "Кандидатура за Постижение"
+
+#: translations/templates/admin/achievmentReview.html:19
+msgid "Achievment Description"
+msgstr "Описание на Постижението"
+
+#: translations/templates/admin/achievmentReview.html:10
+msgid "Achievment Name"
+msgstr "Име на Постижението"
+
+#: translations/templates/admin/achievmentReview.html:25
+msgid "Achievment Points"
+msgstr "Точки за Постижението"
+
+#: translations/templates/profile/profile.html:7
+msgid "Achievments"
+msgstr "Постижения"
+
+#: translations/templates/notifications/notifications.html:13
+msgid "Add"
+msgstr "Добави"
+
+#: translations/templates/main/menu.html:9
+msgid "Add Dog"
+msgstr "Добави Куче"
+
+#: translations/templates/dog/dog.html:46
+msgid "Add Food"
+msgstr "Добави Хранене"
+
+#: translations/templates/places/places.html:14
+msgid "Add Place"
+msgstr "Добави Място"
+
+#: translations/templates/places/places.html:15
+msgid "Add Route"
+msgstr "Добави Маршрут"
+
+#: translations/templates/dog/dog.html:59
+msgid "Add Walk"
+msgstr "Добави Разходка"
+
+#: translations/templates/admin/adminPanel.html:7
+msgid "Admin Panel"
+msgstr "Админски Панел"
+
+#: translations/templates/profile/achievments.html:20
+msgid "Apply"
+msgstr "Кандидатствай"
+
+#: translations/templates/profile/achievments.html:15
+msgid "Apply for an achievment"
+msgstr "Кандидатсвай за постижение"
+
+#: translations/templates/admin/achievmentReview.html:41
+msgid "Author"
+msgstr "Автор"
+
+#: translations/templates/directives/newDogDir.html:8
+msgid "BIRTH DATE"
+msgstr "РОЖДЕНА ДАТА"
+
+#: translations/templates/directives/newDogDir.html:20
+msgid "BREED"
+msgstr "ПОРОДА"
+
+#: translations/templates/dog/dog.html:22
+msgid "Birth Date: {{dog.birthDate}}"
+msgstr "Рождена Дата: {{dog.birthDate}}"
+
+#: translations/templates/profile/profile.html:25
+msgid "Birthdate: {{dog.birthDate}}"
+msgstr "Рождена Дата: {{dog.birthDate}}"
+
+#: translations/templates/dog/dog.html:32
+#: translations/templates/profile/profile.html:26
+msgid "Breed: {{dog.breed}}"
+msgstr "Порода: {{dog.breed}}"
+
+#: translations/templates/dog/dog.html:8
+msgid "Browse Photo"
+msgstr "Избери Снимка"
+
+#: translations/templates/main/menu.html:6
+msgid "CHAT"
+msgstr "ЧАТ"
+
+#: translations/templates/directives/addPlaceDir.html:20
+#: translations/templates/places/places.html:7
+msgid "Cancel"
+msgstr "Откажи"
+
+#: translations/templates/dog/dog.html:27
+#: translations/templates/dog/dog.html:29
+#: translations/templates/dog/dog.html:35
+#: translations/templates/dog/dog.html:37
+#: translations/templates/dog/dog.html:5
+#: translations/templates/dog/dog.html:50
+#: translations/templates/dog/dog.html:63
+#: translations/templates/dog/dog.html:69
+#: translations/templates/dog/dog.html:72
+#: translations/templates/dog/dog.html:75
+#: translations/templates/dog/dog.html:76
+#: translations/templates/dog/dog.html:77
+#: translations/templates/dog/dog.html:78
+#: translations/templates/dog/dog.html:79
+#: translations/templates/dog/dog.html:80
+msgid "Change"
+msgstr "Промени"
+
+#: translations/templates/dog/dog.html:34
+msgid "Change Breed"
+msgstr "Смени Породата"
+
+#: translations/templates/dog/dog.html:16
+msgid "Change Name"
+msgstr "Смени Името"
+
+#: translations/templates/chat/chat.html:2
+msgid "Chat History"
+msgstr "История на Чата"
+
+#: translations/templates/directives/chatDir.html:4
+msgid "Chat with friends"
+msgstr "Чати с приятели"
+
+#: translations/templates/account/signup.html:21
+msgid "Confirm Email"
+msgstr "Подтвърди Имейла"
+
+#: translations/templates/account/signup.html:30
+msgid "Confirm Password"
+msgstr "Подтвърди Паролата"
+
+#: translations/templates/profile/achievments.html:21
+msgid "Create New"
+msgstr "Създай Ново"
+
+#: translations/templates/directives/newDogDir.html:10
+msgid "DAY"
+msgstr "ДЕН"
+
+#: translations/templates/directives/newDogDir.html:23
+msgid "DESCRIPTION (optional)"
+msgstr "ОПИСАНИЕ (избирателно)"
+
+#: translations/templates/admin/achievmentReview.html:59
+msgid "Decline"
+msgstr "Откажи"
+
+#: translations/templates/places/places.html:6
+msgid "Delete"
+msgstr "Изтрий"
+
+#: translations/templates/notifications/notifications.html:14
+msgid "Delete Request"
+msgstr "Изтрий Заявката"
+
+#: translations/templates/profile/achievments.html:36
+msgid "Description"
+msgstr "Описание"
+
+#: translations/templates/directives/addPlaceDir.html:10
+#: translations/templates/places/places.html:45
+msgid "Description:"
+msgstr "Описание:"
+
+#: translations/templates/places/places.html:4
+msgid "Do you really want<br>to delete the place?"
+msgstr "Наистина ли искате да <br> изтриете мястото?"
+
+#: translations/templates/account/search.html:7
+msgid "Dog Owners"
+msgstr "Стопани"
+
+#: translations/templates/main/front-page.html:11
+msgid ""
+"Doggy world will remind you when<br>to give food to your dogs and when<br>to "
+"go just for a walk!"
+msgstr ""
+"Pup Mates ще ви напомни, кога <br> да нахраните вашите кучета и кога да ги "
+"разходите!"
+
+#: translations/templates/account/search.html:16
+#: translations/templates/profile/profile.html:10
+msgid "Dogs"
+msgstr "Кучета"
+
+#: translations/templates/profile/achievments.html:22
+msgid "Edit"
+msgstr "Промени"
+
+#: translations/templates/admin/achievmentReview.html:49
+msgid "Edit Achievment Suggestion"
+msgstr "Промени заявката за потижение"
+
+#: translations/templates/account/signup.html:17
+msgid "Email"
+msgstr "Имейл"
+
+#: translations/templates/account/signup.html:22
+msgid "Emails do not match"
+msgstr "Имейлите не съвпадат"
+
+#: translations/templates/main/front-page.html:6
+msgid "Find the best places for your dog!"
+msgstr "Намери най-добрите места за твоето куче!"
+
+#: translations/templates/account/signup.html:5
+msgid "First Name"
+msgstr "Първо Име"
+
+#: translations/templates/main/front-page.html:10
+msgid "Having problems with your dog?"
+msgstr "Имате проблеми с кучето?"
+
+#: translations/templates/places/places.html:17
+msgid "Hide other people's places"
+msgstr "Скрий чуждите места"
+
+#: translations/templates/account/signup.html:18
+msgid "Invalid Email"
+msgstr "Невалиден Имейл"
+
+#: translations/templates/account/login.html:22
+msgid "JOIN US!"
+msgstr "Присъедини се"
+
+#: translations/templates/main/front-page.html:3
+msgid "Join the Biggest network for dog owners"
+msgstr "Присъедини се към най-голямата мрежа за стопани"
+
+#: translations/templates/account/login.html:3
+msgid "Join/Login"
+msgstr "Регистрирай се/Влез"
+
+#: translations/templates/account/signup.html:9
+msgid "Last Name"
+msgstr "Фамилия"
+
+#: translations/templates/account/login.html:10
+#: translations/templates/account/login.html:3
+msgid "Login"
+msgstr "Влез"
+
+#: translations/templates/admin/adminPanel.html:16
+msgid "Manage Users"
+msgstr "Контрол на потребители"
+
+#: translations/templates/notifications/notifications.html:9
+msgid "Mark as seen"
+msgstr "Маркирай като видяно"
+
+#: translations/templates/account/login.html:4
+msgid "Me"
+msgstr "Мен"
+
+#: translations/templates/directives/newDogDir.html:11
+msgid "Month"
+msgstr "Месец"
+
+#: translations/templates/places/places.html:27
+msgid "My Places"
+msgstr "Моите Места"
+
+#: translations/templates/account/login.html:7
+msgid "My profile"
+msgstr "Моят Профил"
+
+#: translations/templates/directives/newDogDir.html:5
+msgid "NAME"
+msgstr "ИМЕ"
+
+#: translations/templates/profile/achievments.html:32
+msgid "Name"
+msgstr "Име"
+
+#: translations/templates/directives/addPlaceDir.html:5
+msgid "Name:"
+msgstr "Име:"
+
+#: translations/templates/admin/achievmentReview.html:53
+msgid "New Achievment Suggestion"
+msgstr "Заявка за ново постижение"
+
+#: translations/templates/account/signup.html:2
+msgid "New owner's account"
+msgstr "Нов потребителски акаунт"
+
+#: translations/templates/directives/addPlaceDir.html:17
+msgid "No"
+msgstr "Не"
+
+#: translations/templates/places/places.html:26
+msgid "No information to display"
+msgstr "Няма информация за показване"
+
+#: translations/templates/notifications/notifications.html:5
+msgid "Notifications"
+msgstr "Известия"
+
+#: translations/templates/places/places.html:28
+msgid "Other People's Places"
+msgstr "Чужди места за разходка"
+
+#: translations/templates/account/search.html:11
+msgid ""
+"Owner of: <span ng-show=\"$index != 0 &amp;&amp; dog.breed.length\">, </"
+"span><span ng-repeat=\"dog in person.dogs\" ng-show=\"dog.breed.length &gt;= "
+"2\">{{dog.breed}} </span>"
+msgstr ""
+"Стопанин на: <span ng-show=\"$index != 0 &amp;&amp; dog.breed.length\">, </"
+"span><span ng-repeat=\"dog in person.dogs\" ng-show=\"dog.breed.length &gt;= "
+"2\">{{dog.breed}} </span>"
+
+#: translations/templates/directives/newDogDir.html:25
+msgid "PHOTO"
+msgstr "СНИМКА"
+
+#: translations/templates/account/signup.html:25
+msgid "Password"
+msgstr "Парола"
+
+#: translations/templates/account/login.html:18
+msgid "Password:"
+msgstr "Парола:"
+
+#: translations/templates/account/signup.html:31
+msgid "Passwords do not match"
+msgstr "Паролите не съвпадат"
+
+#: translations/templates/profile/achievments.html:26
+msgid "Pick Achievment"
+msgstr "Избери Постижение"
+
+#: translations/templates/profile/achievments.html:18
+msgid "Pick Action"
+msgstr "Избери Действие"
+
+#: translations/templates/profile/achievments.html:44
+msgid "Pick Dog"
+msgstr "Избери Куче"
+
+#: translations/templates/main/menu.html:11
+msgid "Places"
+msgstr "Места"
+
+#: translations/templates/profile/achievments.html:40
+msgid "Points"
+msgstr "Точки"
+
+#: translations/templates/directives/addPlaceDir.html:15
+msgid "Private:"
+msgstr "Лично:"
+
+#: translations/templates/admin/achievmentReview.html:47
+msgid "Request Type"
+msgstr "Тип на заявката"
+
+#: translations/templates/admin/achievmentReview.html:5
+msgid "Requested {{achievment.createdAt | moment: 'fromNow'}}!"
+msgstr "Заявено {{achievment.createdAt | moment: 'fromNow'}}!"
+
+#: translations/templates/admin/adminPanel.html:10
+msgid "Review New<br>Achievments"
+msgstr "Прегледай новите<br> постижения"
+
+#: translations/templates/directives/addPlaceDir.html:19
+msgid "Save"
+msgstr "Запази"
+
+#: translations/templates/dog/dog.html:9
+msgid "Save Change"
+msgstr "Запази промените"
+
+#: translations/templates/dog/dog.html:47
+#: translations/templates/dog/dog.html:60
+msgid "Save changes"
+msgstr "Запази промените"
+
+#: translations/templates/account/search.html:4
+msgid "Search..."
+msgstr "Търси..."
+
+#: translations/templates/directives/draggableChat.html:15
+msgid "Send"
+msgstr "Изпрати"
+
+#: translations/templates/profile/profile.html:18
+msgid "Send Message"
+msgstr "Изпрати Съобщение"
+
+#: translations/templates/places/places.html:16
+msgid "Show other people's places"
+msgstr "Покажи чуждите места за разходка"
+
+#: translations/templates/account/login.html:3
+msgid "Sign Up"
+msgstr "Регистрирай се"
+
+#: translations/templates/account/signup.html:45
+msgid "Sign up"
+msgstr "Регистрирай се"
+
+#: translations/templates/main/front-page.html:8
+msgid "Stay connected with your friends!"
+msgstr "Поддържай връзка с приятелите си!"
+
+#: translations/templates/account/login.html:14
+msgid "User Name:"
+msgstr "Потребителско име:"
+
+#: translations/templates/account/signup.html:13
+msgid "Username"
+msgstr "Потребителско име"
+
+#: translations/templates/account/signup.html:14
+msgid "Username exists"
+msgstr "Потребителското име съществува"
+
+#: translations/templates/account/signup.html:14
+msgid "Username is too short"
+msgstr "Потребителско име е твърде кратко"
+
+#: translations/templates/admin/achievmentReview.html:31
+#: translations/templates/profile/achievments.html:50
+msgid "Video Proof"
+msgstr "Видео доказателство"
+
+#: translations/templates/profile/profile.html:20
+msgid "Welcome {{identity.currentUser.firstName}}!"
+msgstr "Добре дошъл {{identity.currentUser.firstName}}!"
+
+#: translations/templates/main/front-page.html:9
+msgid ""
+"Why not text a message to your buddy for <br>a walk with your dogs? Get in "
+"touch<br>with all your friends instantly."
+msgstr ""
+"Защо не пишеш на приятелчето си <br>да разходите кучетата си? Поддържай "
+"връзка<br>с всички по всяко време."
+
+#: translations/templates/directives/newDogDir.html:12
+msgid "Year"
+msgstr "Година"
+
+#: translations/templates/directives/addPlaceDir.html:16
+msgid "Yes"
+msgstr "Да"
+
+#: translations/templates/directives/chatDir.html:7
+msgid "You currently have no friends"
+msgstr "Все още нямате приятели"
+
+#: translations/templates/main/front-page.html:7
+msgid ""
+"You will have the chance to<br>exlpore your city for the best places<br>to "
+"enjoy a walk with your dog."
+msgstr ""
+"Вие ще имате шанса да<br>посетите най-удобните и близки места<br>за разходка "
+"на домашния ви любимец."
+
+#: translations/templates/main/front-page.html:4
+msgid "You will..."
+msgstr "Вие ще..."
+
+#: translations/templates/account/signup.html:26
+msgid "Your password is too short."
+msgstr "Паролата е твърде кратка"
+
+#: translations/templates/places/places.html:11
+msgid "Your places:"
+msgstr "Вашоте места:"
+
+#: translations/templates/admin/adminPanel.html:4
+msgid "aslpls"
+msgstr "КУР!"
+
+#: translations/templates/places/places.html:33
+msgid "delete"
+msgstr "Изтрий"
+
+#: translations/templates/dog/dog.html:40
+msgid "foods:"
+msgstr "Хранения:"
+
+#: translations/templates/directives/newDogDir.html:19
+msgid "incorrect date"
+msgstr "невалидна дата"
+
+#: translations/templates/directives/loading.html:3
+msgid "loading..."
+msgstr "зарежда се..."
+
+#: translations/templates/directives/newDogDir.html:27
+msgid "please choose a photo"
+msgstr "моля изберете снимка"
+
+#: translations/templates/directives/newDogDir.html:22
+msgid "please write a breed"
+msgstr "моля въвдете породата"
+
+#: translations/templates/directives/newDogDir.html:7
+msgid "please write a name"
+msgstr "моля въведете име"
+
+#: translations/templates/places/places.html:42
+msgid "rate: {{pl.rate}}"
+msgstr "райтин: {{pl.rate}}"
+
+#: translations/templates/account/login.html:6
+msgid "signout"
+msgstr "изход"
+
+#: translations/templates/dog/dog.html:53
+msgid "walks:"
+msgstr "разходки:"
+
+#: translations/templates/notifications/notifications.html:11
+msgid "wants to add you as a friend!"
+msgstr "иска да ви добави като приятел!"
+
+#: translations/templates/account/signup.html:38
+msgid "{{captchaErrorType | translate}} was NOT valid!"
+msgstr "Полето {{captchaErrorType | translate}} не е валидно!"
