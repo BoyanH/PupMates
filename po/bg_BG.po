@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: bg_BG\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.7.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: bg_BG\n"
 
 #: translations/templates/profile/profile.html:17
 msgid "+Add Friend"
@@ -72,10 +72,6 @@ msgstr "Добави"
 msgid "Add Dog"
 msgstr "Добави Куче"
 
-#: translations/templates/dog/dog.html:46
-msgid "Add Food"
-msgstr "Добави Хранене"
-
 #: translations/templates/places/places.html:14
 msgid "Add Place"
 msgstr "Добави Място"
@@ -87,6 +83,10 @@ msgstr "Добави Маршрут"
 #: translations/templates/dog/dog.html:59
 msgid "Add Walk"
 msgstr "Добави Разходка"
+
+#: translations/templates/dog/dog.html:46
+msgid "Add a Meal"
+msgstr "Добави Хранене"
 
 #: translations/templates/admin/adminPanel.html:7
 msgid "Admin Panel"
@@ -109,6 +109,7 @@ msgid "BIRTH DATE"
 msgstr "РОЖДЕНА ДАТА"
 
 #: translations/templates/directives/newDogDir.html:20
+#: translations/templates/directives/newDogDir.html:21
 msgid "BREED"
 msgstr "ПОРОДА"
 
@@ -187,6 +188,10 @@ msgstr "Създай Ново"
 #: translations/templates/directives/newDogDir.html:10
 msgid "DAY"
 msgstr "ДЕН"
+
+#: translations/templates/directives/newDogDir.html:24
+msgid "DESCRIPTION"
+msgstr "ОПИСАНИЕ"
 
 #: translations/templates/directives/newDogDir.html:23
 msgid "DESCRIPTION (optional)"
@@ -287,6 +292,7 @@ msgid "Last Name"
 msgstr "Фамилия"
 
 #: translations/templates/account/login.html:10
+#: translations/templates/account/login.html:21
 #: translations/templates/account/login.html:3
 msgid "Login"
 msgstr "Влез"
@@ -303,6 +309,10 @@ msgstr "Маркирай като видяно"
 msgid "Me"
 msgstr "Мен"
 
+#: translations/templates/dog/dog.html:40
+msgid "Meals:"
+msgstr "Хранения:"
+
 #: translations/templates/directives/newDogDir.html:11
 msgid "Month"
 msgstr "Месец"
@@ -316,6 +326,7 @@ msgid "My profile"
 msgstr "Моят Профил"
 
 #: translations/templates/directives/newDogDir.html:5
+#: translations/templates/directives/newDogDir.html:6
 msgid "NAME"
 msgstr "ИМЕ"
 
@@ -365,6 +376,7 @@ msgstr ""
 msgid "PHOTO"
 msgstr "СНИМКА"
 
+#: translations/templates/account/login.html:19
 #: translations/templates/account/signup.html:25
 msgid "Password"
 msgstr "Парола"
@@ -393,6 +405,10 @@ msgstr "Избери Куче"
 msgid "Places"
 msgstr "Места"
 
+#: translations/templates/places/places.html:11
+msgid "Places to go to on a lovely walk:"
+msgstr "Добри места за чудесна разходка"
+
 #: translations/templates/profile/achievments.html:40
 msgid "Points"
 msgstr "Точки"
@@ -401,6 +417,10 @@ msgstr "Точки"
 msgid "Private:"
 msgstr "Лично:"
 
+#: translations/templates/profile/profile.html:16
+msgid "Profile of"
+msgstr "Профилът на"
+
 #: translations/templates/admin/achievmentReview.html:47
 msgid "Request Type"
 msgstr "Тип на заявката"
@@ -408,6 +428,10 @@ msgstr "Тип на заявката"
 #: translations/templates/admin/achievmentReview.html:5
 msgid "Requested {{achievment.createdAt | moment: 'fromNow'}}!"
 msgstr "Заявено {{achievment.createdAt | moment: 'fromNow'}}!"
+
+#: translations/templates/admin/achievmentReview.html:3
+msgid "Review Achievments"
+msgstr "Прегледай постижения"
 
 #: translations/templates/admin/adminPanel.html:10
 msgid "Review New<br>Achievments"
@@ -453,6 +477,10 @@ msgstr "Регистрирай се"
 #: translations/templates/main/front-page.html:8
 msgid "Stay connected with your friends!"
 msgstr "Поддържай връзка с приятелите си!"
+
+#: translations/templates/account/login.html:15
+msgid "User Name"
+msgstr "Потребителско Име"
 
 #: translations/templates/account/login.html:14
 msgid "User Name:"
@@ -515,10 +543,6 @@ msgstr "Вие ще..."
 msgid "Your password is too short."
 msgstr "Паролата е твърде кратка"
 
-#: translations/templates/places/places.html:11
-msgid "Your places:"
-msgstr "Вашоте места:"
-
 #: translations/templates/admin/adminPanel.html:4
 msgid "aslpls"
 msgstr "КУР!"
@@ -526,10 +550,6 @@ msgstr "КУР!"
 #: translations/templates/places/places.html:33
 msgid "delete"
 msgstr "Изтрий"
-
-#: translations/templates/dog/dog.html:40
-msgid "foods:"
-msgstr "Хранения:"
 
 #: translations/templates/directives/newDogDir.html:19
 msgid "incorrect date"
@@ -570,3 +590,12 @@ msgstr "иска да ви добави като приятел!"
 #: translations/templates/account/signup.html:38
 msgid "{{captchaErrorType | translate}} was NOT valid!"
 msgstr "Полето {{captchaErrorType | translate}} не е валидно!"
+
+#~ msgid "Add Food"
+#~ msgstr "Добави Хранене"
+
+#~ msgid "Your places:"
+#~ msgstr "Вашоте места:"
+
+#~ msgid "foods:"
+#~ msgstr "Хранения:"

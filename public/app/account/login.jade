@@ -1,7 +1,7 @@
 ﻿div(ng-controller="LoginController")
 	div(ng-show="!identity.currentUser")
 		a.btn-nav-login(ng-click='toggleModal()' translate) Login
-		a.btn-signup(href="#/sign-up" translate) Sign Up
+		a.btn-signup(href="#/sign-up" translate ng-class="crntLanguage") Sign Up
 		a.mobile-btn-login(ng-click='toggleModal()' translate) Join/Login
 	div.logged-in-items(ng-hide="!identity.currentUser")
 		span.user-menu( ng-init="useroptions = false" ng-click="useroptions = !useroptions") 
@@ -13,14 +13,14 @@
 					a(ng-href="{{'#/profile/' + identity.currentUser.username + '/dogs'}}" translate) My profile
 	modal-dialog.contentDialog(show='modalShown' width='400px' height='235px')
 		h2.login-h(translate) Login
-		div.line
+		div.line(ng-class="crntLanguage")
 		form
 			div.form-row
 				label.user-name-lbl(translate) User Name:
-				input.login-input(type="text" ng-change="change()" placeholder="User Name" ng-model="user.username")
+				input.login-input(type="text" ng-change="change()" placeholder="{{'User Name' | translate }}" ng-model="user.username")
 			div.form-row
-				label.password-lbl(translate) Password:
-				input.login-input(type="password" placeholder="Password" ng-model="user.password")
-			button.login-btn(ng-click="login(user)") Login
+				label.password-lbl(translate ng-class="crntLanguage") Password:
+				input.login-input(type="password" placeholder="{{'Password' | translate }}" ng-model="user.password")
+			button.login-btn(ng-click="login(user)" translate ng-class="crntLanguage") Login
 			div.join-us
 				a(href="#/sign-up" ng-click="toggleModal()" translate) JOIN US!

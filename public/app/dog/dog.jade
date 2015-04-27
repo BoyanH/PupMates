@@ -26,16 +26,16 @@ div.wrapper-dog
 			div.dog-breed(translate) Breed: {{dog.breed}}
 			form.dog-change-content(ng-show="showChangeBreed")
 				input.dog-input-field(type="text" placeholder="'Change Breed' | translate" ng-model="breed")
-				input.btn-change-dog-field(type="submit" value="'Change' | translate" ng-click="changeField('Breed')")
+				input.btn-change-dog-field(type="submit" value="{{'Change' | translate}}" ng-click="changeField('Breed')")
 			div.btn-mobile-expand(ng-click="showChangeBreed = !showChangeBreed;" translate) Change
 		div.dog-group
 			div.dog-food
-				span(translate) foods: 
+				span(translate) Meals: 
 				div.dog-field-fw(ng-repeat="(indF, f) in dog.food track by $index") {{f}}
 					div.delete-field(ng-show="showChangeFood" ng-click="removeFW('f', f)") X
 				div.add-fw(ng-show="showChangeFood")
 					select.dog-date-selector(ng-model="dog.foodOpt" ng-options="opt as opt.label for opt in optionsFood")
-					div.btn-change-dog-field(ng-click="addFW('f')" translate) Add Food
+					div.btn-change-dog-field(ng-click="addFW('f')" translate) Add a Meal
 					div.btn-change-dog-field(ng-click="changeField('Food')" translate) Save changes
 			div.btn-mobile-expand(ng-click="showChangeFood = !showChangeFood;" translate) Change
 		div.dog-group

@@ -64,10 +64,6 @@ msgstr ""
 msgid "Add Dog"
 msgstr ""
 
-#: translations/templates/dog/dog.html:46
-msgid "Add Food"
-msgstr ""
-
 #: translations/templates/places/places.html:14
 msgid "Add Place"
 msgstr ""
@@ -78,6 +74,10 @@ msgstr ""
 
 #: translations/templates/dog/dog.html:59
 msgid "Add Walk"
+msgstr ""
+
+#: translations/templates/dog/dog.html:46
+msgid "Add a Meal"
 msgstr ""
 
 #: translations/templates/admin/adminPanel.html:7
@@ -101,6 +101,7 @@ msgid "BIRTH DATE"
 msgstr ""
 
 #: translations/templates/directives/newDogDir.html:20
+#: translations/templates/directives/newDogDir.html:21
 msgid "BREED"
 msgstr ""
 
@@ -178,6 +179,10 @@ msgstr ""
 
 #: translations/templates/directives/newDogDir.html:10
 msgid "DAY"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:24
+msgid "DESCRIPTION"
 msgstr ""
 
 #: translations/templates/directives/newDogDir.html:23
@@ -275,6 +280,7 @@ msgid "Last Name"
 msgstr ""
 
 #: translations/templates/account/login.html:10
+#: translations/templates/account/login.html:21
 #: translations/templates/account/login.html:3
 msgid "Login"
 msgstr ""
@@ -291,6 +297,10 @@ msgstr ""
 msgid "Me"
 msgstr ""
 
+#: translations/templates/dog/dog.html:40
+msgid "Meals:"
+msgstr ""
+
 #: translations/templates/directives/newDogDir.html:11
 msgid "Month"
 msgstr ""
@@ -304,6 +314,7 @@ msgid "My profile"
 msgstr ""
 
 #: translations/templates/directives/newDogDir.html:5
+#: translations/templates/directives/newDogDir.html:6
 msgid "NAME"
 msgstr ""
 
@@ -347,6 +358,7 @@ msgstr ""
 msgid "PHOTO"
 msgstr ""
 
+#: translations/templates/account/login.html:19
 #: translations/templates/account/signup.html:25
 msgid "Password"
 msgstr ""
@@ -375,6 +387,10 @@ msgstr ""
 msgid "Places"
 msgstr ""
 
+#: translations/templates/places/places.html:11
+msgid "Places to go to on a lovely walk:"
+msgstr ""
+
 #: translations/templates/profile/achievments.html:40
 msgid "Points"
 msgstr ""
@@ -383,12 +399,20 @@ msgstr ""
 msgid "Private:"
 msgstr ""
 
+#: translations/templates/profile/profile.html:16
+msgid "Profile of"
+msgstr ""
+
 #: translations/templates/admin/achievmentReview.html:47
 msgid "Request Type"
 msgstr ""
 
 #: translations/templates/admin/achievmentReview.html:5
 msgid "Requested {{achievment.createdAt | moment: 'fromNow'}}!"
+msgstr ""
+
+#: translations/templates/admin/achievmentReview.html:3
+msgid "Review Achievments"
 msgstr ""
 
 #: translations/templates/admin/adminPanel.html:10
@@ -434,6 +458,10 @@ msgstr ""
 
 #: translations/templates/main/front-page.html:8
 msgid "Stay connected with your friends!"
+msgstr ""
+
+#: translations/templates/account/login.html:15
+msgid "User Name"
 msgstr ""
 
 #: translations/templates/account/login.html:14
@@ -489,20 +517,12 @@ msgstr ""
 msgid "Your password is too short."
 msgstr ""
 
-#: translations/templates/places/places.html:11
-msgid "Your places:"
-msgstr ""
-
 #: translations/templates/admin/adminPanel.html:4
 msgid "aslpls"
 msgstr ""
 
 #: translations/templates/places/places.html:33
 msgid "delete"
-msgstr ""
-
-#: translations/templates/dog/dog.html:40
-msgid "foods:"
 msgstr ""
 
 #: translations/templates/directives/newDogDir.html:19

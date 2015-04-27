@@ -9,7 +9,9 @@
 				h3(translate) Dogs
 	.view-right-content
 		div.prof-notCurrUser(ng-hide="identity.currentUser._id == profile._id")
-			h1 Profile of {{profile.firstName}} {{profile.lastName}}
+			h1 
+				span(translate) Profile of
+				span  {{profile.firstName}} {{profile.lastName}}
 			span(ng-show="identity.currentUser")
 				button(ng-click="befriendMate()" translate) +Add Friend
 				button(ng-click="openDiscussion(profile)" translate) Send Message

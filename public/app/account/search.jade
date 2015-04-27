@@ -1,7 +1,7 @@
 div(ng-controller="SearchController")
 	div.search-box(off-click="focus = false")
 		span
-			input.search.rounded(type="text" class="" placeholder="'Search...' | translate" ng-model="srch" ng-change="search(srch)"
+			input.search.rounded(type="text" class="" placeholder="{{'Search...' | translate}}" ng-model="srch" ng-change="search(srch)"
 				ng-focus="focus = true;")
 		div.search-results(ng-show="results && focus")
 			div(ng-show="people")

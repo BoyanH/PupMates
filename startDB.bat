@@ -1,0 +1,1 @@
+start  mongod --dbpath F:\WorkSpace\WEBApps\DoggyWorld\DB

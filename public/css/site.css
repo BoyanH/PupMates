@@ -136,6 +136,9 @@ h1, h2, h3, a{
 	text-decoration: none;
 	background-color: #1D1D1D;
 }
+.btn-signup.bg_BG {
+	width: 150px;
+}
 .user-menu{
 	display: block;
 	margin-top: 25px;
@@ -612,10 +615,6 @@ div.fr-buttons {
 		width: 330px !important;
 		height: 260px !important;
 	}
-	.password-lbl{
-		margin-top: 12px;
-		margin-bottom: 2px;
-	}
 	.login-btn{
 		margin-top: 35px !important;
 	}
@@ -638,4 +637,49 @@ div.fr-buttons {
 		margin-left: -45px;
 	}
 	
+}
+/*#lang-bar {
+
+	font-size: 10px;
+}
+#lang-bar img {
+
+	height: 20px;
+}
+#lang-bar a {
+	width: 50px;
+	height: 20px;
+}
+#lang-bar .dd-select {
+
+	height: 50px;
+}*/
+#lang-bar {
+
+	margin-top: 12px;
+	margin-left: 180px;
+}
+
+#lang-bar .dd-select {
+
+	height: 40px;
+	background-color: #505050!important;
+	border: none!important;
+}
+
+#lang-bar .dd-options, #lang-bar .dd-option {
+
+	background-color: #505050!important;
+	border-color: #424345;
+	color: #7CCC31;
+}
+
+#lang-bar .dd-option:hover {
+
+	color: #01A3E8;
+}
+
+#lang-bar .dd-selected-text {
+
+	line-height: 20px!important;
 }

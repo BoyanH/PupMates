@@ -58,12 +58,17 @@
   font-weight: 900;
   font-size: 1.2em;
 }
-.password-lbl{
+.password-lbl {
   display: inline-block;
   color: #6FF42B;
   padding-right: 21px;
   font-weight: 900;
   font-size: 1.2em;
+}
+.password-lbl.bg_BG {
+
+  display: block;
+  margin-top: 10px;
 }
 .form-row{
   display: block;
@@ -101,4 +106,11 @@
   background-color: #6FF42B;
   border-color: #6FF42B;
   color: #181E22;
+}
+.login-btn.bg_BG {
+  margin-top: 20px;
+}
+.line.bg_BG {
+
+  margin-bottom: 5px;
 }
