@@ -1,0 +1,23 @@
+
+<div class="view-wrapper">
+  <div class="view-left-content">
+    <div translate="translate">aslpls</div>
+    <div class="sidebar-nav">
+      <div class="sidebar-nav-item">
+        <h2 translate="translate">Admin Panel</h2><img id="admin-wolf-logo" src="/img/wolf-logo.png"/>
+      </div>
+      <div ng-click="changeView('achievments')" ng-class="{selected: view.achievments}" class="sidebar-nav-item"> 
+        <h3 translate="translate">
+           
+          Review New<br/>Achievments
+        </h3>
+      </div>
+      <div ng-click="changeView('users')" ng-class="{selected: view.users}" class="sidebar-nav-item"> 
+        <h3 translate="translate">Manage Users</h3>
+      </div>
+    </div>
+  </div>
+  <div class="view-right-content">
+    <achievment-review ng-show="view.achievments"></achievment-review>
+  </div>
+</div>

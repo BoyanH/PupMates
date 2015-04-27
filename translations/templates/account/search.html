@@ -1,0 +1,24 @@
+
+<div ng-controller="SearchController">
+  <div off-click="focus = false" class="search-box"><span>
+      <input type="text" placeholder="{{'Search...' | translate}}" ng-model="srch" ng-change="search(srch)" ng-focus="focus = true;" class="search rounded"/></span>
+    <div ng-show="results &amp;&amp; focus" class="search-results">
+      <div ng-show="people">
+        <h3 translate="translate" class="search-result-title">Dog Owners</h3>
+        <ul ng-click="focus = false" class="styleless-list">
+          <li> <a ng-repeat="person in people" href="#/profile/{{person.username}}/dogs" class="search-result-link">
+              <h2 class="search-result-name">{{person.firstName}} {{person.lastName}}</h2></a>
+            <div ng-show="person.dogs.length" translate="translate" class="search-result dog">Owner of: <span ng-show="$index != 0 &amp;&amp; dog.breed.length">, </span><span ng-repeat="dog in person.dogs" ng-show="dog.breed.length &gt;= 2">{{dog.breed}} </span></div>
+          </li>
+        </ul>
+      </div>
+      <div ng-show="dogs">
+        <h3 translate="translate" class="search-result-title">Dogs</h3>
+        <ul class="styleless-list"><a ng-repeat="dog in dogs" href="#/dog/{{dog._id}}" class="search-result-link">
+            <li> 
+              <h2 class="search-result-name">{{dog.name}}</h2>
+            </li></a></ul>
+      </div>
+    </div>
+  </div>
+</div>

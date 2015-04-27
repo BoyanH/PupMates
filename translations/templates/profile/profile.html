@@ -1,0 +1,34 @@
+
+<div class="view-wrapper">
+  <div class="view-left-content">
+    <div class="prof-photo-container"><img src="{{profPhoto}}" class="profPhoto"/></div>
+    <div class="sidebar-nav">
+      <div ng-click="changeView('achievments')" ng-class="{selected: view.achievments}" class="sidebar-nav-item"> 
+        <h3 translate="translate">Achievments</h3>
+      </div>
+      <div ng-click="changeView('dogs')" ng-class="{selected: view.dogs}" class="sidebar-nav-item"> 
+        <h3 translate="translate">Dogs</h3>
+      </div>
+    </div>
+  </div>
+  <div class="view-right-content">
+    <div ng-hide="identity.currentUser._id == profile._id" class="prof-notCurrUser">
+      <h1> <span translate="translate">Profile of</span><span> {{profile.firstName}} {{profile.lastName}}</span></h1><span ng-show="identity.currentUser">
+        <button ng-click="befriendMate()" translate="translate">+Add Friend</button>
+        <button ng-click="openDiscussion(profile)" translate="translate">Send Message</button></span>
+    </div>
+    <h1 ng-show="identity.currentUser._id == profile._id" translate="translate">Welcome {{identity.currentUser.firstName}}!</h1>
+    <profile-achievments ng-show="view.achievments" user="profile" identity="identity"></profile-achievments>
+    <div class="pet-wrapper">
+      <div ng-show="view.dogs" ng-click="goToDogRoute($index)" ng-repeat="dog in dogs track by $index" class="prof-dog-container">
+        <div class="name-container"><a href="#/dog/{{dog._id}}" class="dog-name">{{dog.name}}</a></div>
+        <div translate="translate" class="birthdate">Birthdate: {{dog.birthDate}}</div>
+        <div translate="translate" class="breed">Breed: {{dog.breed}}</div>
+        <div class="description-pic-container">
+          <div class="pic-container"><img src="{{dog.url}}"/></div>
+          <div class="description">{{dog.description}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

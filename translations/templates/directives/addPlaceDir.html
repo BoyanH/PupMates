@@ -1,0 +1,22 @@
+
+<div>
+  <form>
+    <div class="pl-form-group">
+      <label translate="translate">Name: </label>
+      <input type="text" require="required" ng-model="place.name" class="input-place"/>
+    </div>
+    <div class="pl-form-group">
+      <div>
+        <label translate="translate">Description:</label>
+      </div>
+      <textarea type="text" ng-model="place.description" class="input-textarea"></textarea>
+    </div>
+    <div class="pl-form-group">
+      <label translate="translate">Private: </label>
+      <input type="radio" ng-model="place.private" value="true"/><span translate="translate">Yes</span>
+      <input type="radio" ng-model="place.private" value="false"/><span translate="translate">No</span>
+    </div>
+    <button ng-disabled="saveBtnDisabled" ng-click="savePlace(place)" translate="translate" class="pl-button">Save</button>
+    <button ng-click="cancelAddPlace()" translate="translate" class="pl-button">Cancel</button>
+  </form>
+</div>

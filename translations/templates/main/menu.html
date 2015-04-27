@@ -1,0 +1,14 @@
+
+<div ng-controller="MenuController">
+  <div class="cover"></div>
+  <ul class="menu-list">
+    <li>
+      <div ng-click="showDialog($event)" name="chat" id="left-hand-chat-btn" translate="translate" class="chat-btn">CHAT</div>
+    </li>
+    <li>
+      <div ng-click="showDialog($event)" name="new-dog" translate="translate" class="new-dog-btn">Add Dog</div>
+    </li>
+    <li><a href="#/places" translate="translate" class="fav-places">Places</a></li>
+    <li ng-show="isAdmin"><a href="#/admin" translate="translate" class="admin-panel-btn">ADMIN</a></li>
+  </ul>
+</div>

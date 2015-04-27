@@ -1,0 +1,25 @@
+
+<div ng-controller="LoginController">
+  <div ng-show="!identity.currentUser"><a ng-click="toggleModal()" translate="translate" class="btn-nav-login">Login</a><a href="#/sign-up" translate="translate" ng-class="crntLanguage" class="btn-signup">Sign Up</a><a ng-click="toggleModal()" translate="translate" class="mobile-btn-login">Join/Login</a></div>
+  <div ng-hide="!identity.currentUser" class="logged-in-items"><span ng-init="useroptions = false" ng-click="useroptions = !useroptions" class="user-menu"> <span ng-click="showUserMenu = (!showUserMenu)" class="user-menu-username">{{identity.currentUser.username}}</span><span ng-click="showUserMenu = (!showUserMenu)" translate="translate" class="mobile-user-menu-username">Me</span>
+      <ul ng-show="showUserMenu" class="user-menu-ul">
+        <li ng-click="signout()" translate="translate">signout</li>
+        <li ng-click="showUserMenu = (!showUserMenu)"><a ng-href="{{'#/profile/' + identity.currentUser.username + '/dogs'}}" translate="translate">My profile</a></li>
+      </ul></span></div>
+  <modal-dialog show="modalShown" width="400px" height="235px" class="contentDialog">
+    <h2 translate="translate" class="login-h">Login</h2>
+    <div ng-class="crntLanguage" class="line"></div>
+    <form>
+      <div class="form-row">
+        <label translate="translate" class="user-name-lbl">User Name:</label>
+        <input type="text" ng-change="change()" placeholder="{{'User Name' | translate }}" ng-model="user.username" class="login-input"/>
+      </div>
+      <div class="form-row">
+        <label translate="translate" ng-class="crntLanguage" class="password-lbl">Password:</label>
+        <input type="password" placeholder="{{'Password' | translate }}" ng-model="user.password" class="login-input"/>
+      </div>
+      <button ng-click="login(user)" translate="translate" ng-class="crntLanguage" class="login-btn">Login</button>
+      <div class="join-us"><a href="#/sign-up" ng-click="toggleModal()" translate="translate">JOIN US!</a></div>
+    </form>
+  </modal-dialog>
+</div>

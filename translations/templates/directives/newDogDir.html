@@ -1,0 +1,35 @@
+
+<div>
+  <h2 translate="translate" class="titleNewDog">ADD NEW DOGGY</h2>
+  <form name="newdogform" id="newDogForm" class="form-new-dog">
+    <div translate="translate" class="titleFieldDog">NAME</div>
+    <input type="text" required="required" ng-change="change()" placeholder="{{'NAME' | translate}}" name="name" ng-model="dog.name" class="input-dog-field"/>
+    <div ng-show="warningName" translate="translate" class="warning">please write a name</div>
+    <div translate="translate" class="titleFieldDog">BIRTH DATE</div>
+    <div>
+      <label translate="translate" class="label-date-selector titleFieldDog">DAY</label>
+      <label translate="translate" class="label-date-selector titleFieldDog">Month</label>
+      <label translate="translate" class="label-date-selector titleFieldDog">Year</label>
+    </div>
+    <div class="date-selector-container">
+      <select ng-model="dog.day" ng-options="opt as opt.label for opt in optionsDay" class="date-selector"></select>
+      <select ng-model="dog.month" ng-options="opt as opt.label for opt in optionsMonth" class="date-selector"></select>
+      <select ng-model="dog.year" ng-options="opt as opt.label for opt in optionsYear" class="date-selector"></select>
+    </div>
+    <div ng-show="warningBirthDate" translate="translate" class="warning">incorrect date</div>
+    <div translate="translate" class="titleFieldDog">BREED</div>
+    <input type="text" required="required" placeholder="{{'BREED' | translate}}" name="breed" ng-model="dog.breed" class="input-dog-field"/>
+    <div ng-show="warningBreed" translate="translate" class="warning">please write a breed</div>
+    <div translate="translate" class="titleFieldDog">DESCRIPTION (optional)</div>
+    <input type="text" placeholder="{{'DESCRIPTION' | translate}}" name="description" ng-model="dog.description" class="input-dog-field"/>
+    <div translate="translate" class="titleFieldDog">PHOTO</div>
+    <input required="required" ng-file-select="onFileSelect($files)" name="photo" type="file" class="input-upload-dog-photo"/>
+    <div ng-show="warningProfPhoto" translate="translate" class="warning">please choose a photo</div>
+    <div>
+      <progress value="{{progress}}" class="progress-photo"></progress>
+    </div>
+    <div>
+      <button ng-click="addDog(dog)" translate="translate" class="button-new-dog">ADD DOG</button>
+    </div>
+  </form>
+</div>

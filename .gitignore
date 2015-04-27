@@ -1,5 +1,5 @@
 node_modules
-translations
+/translations
 po
 README.md
 DB

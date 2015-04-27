@@ -1,0 +1,21 @@
+
+<div ng-controller="NotificationsController" off-click="hideNotif()">
+  <div id="notif" ng-show="identity.currentUser"><img ng-click="toggleNotif()" src="https://4fb04472311693ccebc6683fa1e6d537a54a4927.googledrive.com/host/0B_EenlQcPPQvNW1mVEN0eW5DWG8/bell.png"/><span id="notif-count" ng-show="notifications.length &gt; 0" class="info-box">{{notifications.length}}</span>
+    <div id="notif-box-wrapper" ng-show="notifShow">
+      <div id="notif-box" class="popup"><span id="notif-title" translate="translate">Notifications</span>
+        <hr/>
+        <ul>
+          <li ng-repeat="notification in notifications" ng-class="{unseen: !notification.seen}" class="notif-container"><img src="/img/profPhoto/{{notification.from.id}}" class="notif-img"/>
+            <div ng-hide="notification.seen" ng-click="markAsSeen(notification)" class="notif-read"><img src="http://info.catchop.fr/assets/img/glyphicons/glyphicons_051_eye_open.png"/><span translate="translate" class="info-box mas-helper">Mark as seen</span></div>
+            <div class="notif-date">{{notification.createdTime | moment: 'fromNow'}}</div>
+            <div class="notif-story">{{notification.from.name}} <span ng-show="notification.story.legth &gt; 0">{{notification.story | translate}}</span><span ng-show="notification.notifType == 'friendRequest'" translate="translate">wants to add you as a friend!</span></div>
+            <div ng-show="notification.notifType == 'friendRequest'" class="fr-buttons">
+              <button ng-click="acceptFriendship(notification)" translate="translate" class="accept-btn">Add</button>
+              <button ng-click="deleteNotification(notification)" translate="translate" class="decline-btn">Delete Request</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

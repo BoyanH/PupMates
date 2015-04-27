@@ -1,0 +1,8 @@
+
+<div ng-show="show" class="ng-modal">
+  <div ng-click="hideModal()" class="ng-modal-overlay"></div>
+  <div ng-style="dialogStyle" class="ng-modal-dialog">
+    <div ng-click="hideModal()" class="ng-modal-close">X</div>
+    <div ng-transclude="ng-transclude" class="ng-modal-dialog-content"></div>
+  </div>
+</div>

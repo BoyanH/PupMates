@@ -1,0 +1,50 @@
+
+<div class="view-wrapper">
+  <div class="pl-ask-window">
+    <h3 translate="translate" class="pl-window-title">Do you really want<br/>to delete the place?</h3>
+    <div>
+      <button ng-click="confirmDeletePlace()" translate="translate" class="pl-window-delete">Delete</button>
+      <button ng-click="cancelDeletePlace()" translate="translate" class="pl-window-cancel">Cancel</button>
+    </div>
+  </div>
+  <div class="pl-left-content">
+    <h1 translate="translate">Places to go to on a lovely walk:</h1>
+    <div id="map-canvas"></div>
+    <div>
+      <button ng-click="addPlace()" translate="translate" class="pl-button">Add Place</button>
+      <button ng-click="showHidePlaceDir('addRoute')" translate="translate" class="pl-button">Add Route</button>
+      <button ng-click="showOtherPeoplePlaces()" translate="translate" class="pl-button">Show other people's places</button>
+      <button ng-click="hideOtherPeoplePlaces()" translate="translate" class="pl-button">Hide other people's places</button>
+    </div>
+  </div>
+  <div class="pl-right-content">
+    <section class="pl-explanation">
+      <div><img src="/img/marker-blue.png"/><span translate="translate">- your places</span></div>
+      <div><img src="/img/marker-green.png"/><span translate="translate">- other people's places</span></div>
+    </section>
+    <div add-place="add-place" ng-show="addPlaceTrigger"></div>
+    <div ng-show="!user.places.length" translate="translate">No information to display</div>
+    <button id="btn-user-tab" ng-click="showAllPl = false;" ng-class="{'switch-btn-clicked': !showAllPl, 'switch-btn-not-clicked': showAllPl}" translate="translate" class="switch-btn">My Places</button>
+    <button id="btn-allusers-tab" ng-click="showAllPl = true;" ng-class="{'switch-btn-clicked': showAllPl, 'switch-btn-not-clicked': !showAllPl}" translate="translate" class="switch-btn">Other People's Places</button>
+    <div ng-show="!showAllPl" class="pl-p-users pl-p-clicked">
+      <ul class="pl-place-ul">
+        <li ng-repeat="place in userPlaces track by $index" ng-click="clickedPlaceCenter($index, 'current')" class="pl-place-li pl-user-places">
+          <div><img src="/img/marker-blue.png"/><span class="pl-name-span"><a ng-click="centerMap($index)">{{place.name}}</a></span><span class="pl-rate-span">rate: {{place.rate}}</span>
+            <button ng-click="deletePlace($index)" translate="translate">delete</button>
+          </div>
+          <div class="pl-description"><span class="pl-span-description">Description:</span>{{place.description}}</div>
+        </li>
+      </ul>
+    </div>
+    <div ng-show="showAllPl" class="pl-p-users pl-p-not-clicked">
+      <ul class="pl-place-ul">
+        <li ng-repeat="pl in peoplePlaces track by $index" ng-click="clickedPlaceCenter($index, 'other')" class="pl-place-li">
+          <div><img src="/img/marker-green.png"/><span class="pl-name-span"><a ng-click="centerMap($index)">{{pl.name}}</a></span><span translate="translate" class="pl-rate-span">rate: {{pl.rate}}</span>
+            <button ng-click="ratePlace($index)" class="pl-rate-btn"> <img src="/img/paw.png" class="pl-rate-img"/><span>+1</span></button>
+          </div>
+          <div class="pl-description"><span translate="translate" class="pl-span-description">Description:</span>{{pl.description}}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

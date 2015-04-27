@@ -1,0 +1,62 @@
+
+<div id="ach-review-panel">
+  <h1 translate="translate">Review Achievments</h1>
+  <div ng-repeat="achievment in achievmentApplications" class="ach-review-box">
+    <h4><i translate="translate">Requested {{achievment.createdAt | moment: 'fromNow'}}!</i></h4>
+    <table id="ach-review">
+      <tbody id="ach-review-body">
+        <tr>
+          <td> 
+            <h3 translate="translate">Achievment Name</h3>
+          </td>
+          <td>
+             
+            {{achievment.name}}
+          </td>
+        </tr>
+        <tr ng-show="achievment.description">
+          <td>
+            <h3 translate="translate">Achievment Description</h3>
+          </td>
+          <td>{{achievment.description}}</td>
+        </tr>
+        <tr ng-show="achievment.points">
+          <td>
+            <h3 translate="translate">Achievment Points</h3>
+          </td>
+          <td>{{achievment.points}}</td>
+        </tr>
+        <tr>
+          <td> 
+            <h3 translate="translate">Video Proof</h3>
+          </td>
+          <td>
+            <video controls="controls">
+              <source ng-src="{{'/admin/achievments/video/' + achievment._id}}"/>Install a more modern browser to view this video!
+            </video>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3 translate="translate">Author</h3>
+          </td>
+          <td><a href="#/profile/{{achievment.author.username}}">{{achievment.author.name}}</a></td>
+        </tr>
+        <tr>
+          <td>
+            <h3 translate="translate">Request Type</h3>
+          </td>
+          <td><span ng-show="achievment.suggestChange" translate="translate">
+               
+              Edit Achievment Suggestion</span><span ng-show="!achievment.points &amp;&amp; !achievment.description" translate="translate">
+               
+              Achievment Application</span><span ng-show="achievment.points &amp;&amp; achievment.description &amp;&amp; !achievment.suggestChange" translate="translate">New Achievment Suggestion</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="ach-review-btn-holder">
+      <button ng-click="acceptAch(achievment)" translate="translate">Accept</button>
+      <button ng-click="declineAch(achievment)" translate="translate">Decline</button>
+    </div>
+  </div>
+</div>

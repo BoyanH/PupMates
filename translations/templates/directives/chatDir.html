@@ -1,0 +1,10 @@
+
+<div class="sidebar-chat">
+  <div class="chat-heading">
+    <h2 translate="translate">Chat with friends</h2>
+  </div>
+  <div class="chat-friends">
+    <div ng-show="friends.length == 0" class="friend-box"><span translate="translate" class="user-names">You currently have no friends</span></div>
+    <div ng-repeat="friend in friends" ng-click="openDiscussion(friend); hideModal();" class="friend-box"><span ng-class="{online: friend.online}" class="online-status">&bull;</span><span class="online-status-text">{{friend.online == true | iif : "online" : "offline"}}</span><span class="user-names">{{friend.firstName}} {{friend.lastName}}</span><img src="/img/profPhoto/{{friend._id}}"/></div>
+  </div>
+</div>

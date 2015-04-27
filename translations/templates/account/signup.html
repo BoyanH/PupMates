@@ -1,0 +1,47 @@
+
+<h1 translate="translate" class="route-header">New owner's account</h1>
+<form id="signup-form" ng-submit="signup()">
+  <div class="form-field">
+    <label for="fName" translate="translate" class="label">First Name</label>
+    <input type="text" name="fName" ng-model="user.firstName" required="required" class="field"/>
+  </div>
+  <div class="form-field">
+    <label for="l-name" translate="translate" class="label">Last Name             </label>
+    <input type="text" name="l-name" ng-model="user.lastName" required="required" class="field"/>
+  </div>
+  <div class="form-field">
+    <label for="username" translate="translate" class="label">Username</label>
+    <input type="text" name="username" ng-model="user.username" required="required" class="field"/><span ng-class="{'failed': fails.username }" translate="translate" class="error-field">Username is too short </span><span ng-class="{'failed': fails.usernameExists }" translate="translate" class="error-field">Username exists   </span>
+  </div>
+  <div class="form-field">
+    <label for="email" translate="translate" class="label">Email</label>
+    <input type="email" name="pEmail" ng-model="user.email" required="required" class="field"/><span ng-class="{'failed': fails.email }" translate="translate" class="error-field">Invalid Email</span>
+  </div>
+  <div class="form-field">
+    <label for="confirm_email" translate="translate" class="label">Confirm Email</label>
+    <input id="confirm_email" type="email" name="pEmail2" ng-model="user.confirmedEmail" required="required" class="field"/><span ng-class="{'failed': fails.confirmedEmail }" translate="translate" class="error-field">Emails do not match</span>
+  </div>
+  <div class="form-field">
+    <label for="password" translate="translate" class="label">Password</label>
+    <input id="password" type="password" name="pPassword" maxlength="41" ng-model="user.password" required="required" class="field"/><span ng-class="{'failed': fails.password }" translate="translate" class="error-field">Your password is too short.</span>
+    <div class="instruct">At least 6 characters</div>
+  </div>
+  <div class="form-field">
+    <label for="confirm_password" translate="translate" class="label">Confirm Password</label>
+    <input id="confirm_password" type="password" name="pPassword2" maxlength="41" ng-model="user.confirmedPassword" required="required" class="field"/><span ng-class="{'failed': fails.confirmedPassword }" translate="translate" class="error-field">Passwords do not match</span>
+  </div>
+  <div class="form-field">
+    <div class="form-group">
+      <div id="status-message" ng-show="captchaErrorType">
+        <div class="status">
+          <div class="icon-no"></div>
+          <p translate="translate">{{captchaErrorType | translate}} was NOT valid!</p>
+        </div>
+      </div>
+      <div captcha="captcha" options="captchaOptions"></div>
+    </div>
+  </div>
+  <div class="form-field">
+    <input type="submit" name="create" value="'Sign up' | translate" class="btn_signup"/>
+  </div>
+</form>

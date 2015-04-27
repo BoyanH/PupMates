@@ -1,0 +1,66 @@
+
+<div>
+  <div id="achievment-grid">
+    <div ng-repeat="achievment in existingAchievments" ng-class="{'achievment-aquired': achievment.aquired}" class="achievment-item"> 
+      <div class="achievment-name">{{achievment.name | translate}}</div>
+      <div class="achievment-description">{{achievment.description | translate}}</div>
+      <div class="achievment-points">Gives {{achievment.points}} points</div>
+    </div>
+  </div>
+  <div id="application-separator" ng-show="identity.currentUser._id == user._id">
+    <hr/>
+    <button ng-click="toggleApply()">{{applying? 'Cancel Application' : 'Apply for an Achievment' | translate}} </button>
+  </div>
+  <div ng-show="applying &amp;&amp; identity.currentUser._id == user._id" class="application-box">
+    <h3 translate="translate" class="center">Apply for an achievment</h3>
+    <form id="achievment-form">
+      <div class="form-field">
+        <label for="new-or-apply" translate="translate" class="label">Pick Action</label>
+        <div id="new-or-apply" class="field">
+          <button ng-class="{'switch-btn-clicked': !createNew &amp;&amp; !edit, 'switch-btn-not-clicked': createNew || edit}" ng-click="createNew = false; edit = false;" translate="translate" class="switch-btn">Apply</button>
+          <button ng-class="{'switch-btn-clicked': createNew, 'switch-btn-not-clicked': !createNew}" ng-click="createNew = true; edit = false;" translate="translate" class="switch-btn">Create New</button>
+          <button ng-class="{'switch-btn-clicked': edit, 'switch-btn-not-clicked': !edit}" ng-click="edit = true; createNew = false;" translate="translate" class="switch-btn">Edit</button>
+        </div>
+      </div>
+      <div ng-show="!createNew || edit" class="form-field">
+        <label for="ach-name" translate="translate" class="label">Pick Achievment</label>
+        <select id="ach-name" ng-model="achievment.name" ng-required="!createNew" class="field">
+          <option ng-repeat="exisAch in existingAchievments" ng-show="!exisAch.aquired">{{exisAch.name}}</option>
+        </select>
+      </div>
+      <div ng-show="createNew" class="form-field">
+        <label for="new-ach-name" translate="translate" class="label">Name</label>
+        <input id="new-ach-name" type="text" ng-required="createNew" ng-model="achievment.name" class="field"/>
+      </div>
+      <div ng-show="createNew || edit" class="form-field">
+        <label for="ach-descript" translate="translate" class="label">Description</label>
+        <input id="ach-descript" type="text" ng-required="createNew" ng-model="achievment.description" class="field"/>
+      </div>
+      <div ng-show="createNew || edit" class="form-field">
+        <label for="ach-points" translate="translate" class="label">Points</label>
+        <input id="ach-points" type="number" min="0" max="300" ng-required="createNew" ng-model="achievment.points" class="field"/>
+      </div>
+      <div class="form-field">
+        <label for="ach-dog" translate="translate" class="label">Pick Dog</label>
+        <select id="ach-name" ng-model="achievment.dogId" required="required" class="field">
+          <option ng-repeat="dog in user.dogs" ng-value="dog._id">{{dog.name}}</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="video-input" translate="translate" class="label">Video Proof</label>
+        <button id="video-input" class="field">
+          <input ng-file-select="onFileSelect($files)" type="file" required="required"/>
+        </button>
+        <div class="video-preview">
+          <progress value="{{progress}}" ng-show="progress != 1" class="progress-photo ach-progress"></progress>
+          <video id="video-preview" controls="controls" ng-hide="progress != 1" width="700px"></video>
+        </div>
+      </div>
+      <div class="form-field">
+        <button ng-click="applyForAchievment();" translate="translate" class="wide-btn"> 
+          <h2>Apply</h2>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

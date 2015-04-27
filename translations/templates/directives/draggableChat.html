@@ -1,0 +1,18 @@
+
+<div ng-controller="DiscussionController">
+  <div ng-repeat="(Dindex, discussion) in discussions" class="chat-window"> 
+    <div ng-drag="true" no-reset="true" use-parent="true" class="chat-window-header"> <span ng-class="{online: findMatchingFriend(discussion).online }" class="online-status">&bull;</span>{{discussion.recipient.firstName}}</div>
+    <div ng-click="closeDiscussion(discussion)" class="chat-window-close">X</div>
+    <div ng-init="getMessages(discussion.recipient._id)" scroll-glue="true" class="chat-window-content">
+      <div ng-repeat="message in discussion.messages track by $index" class="message">
+        <div ng-show="message.firstOfQuery" class="message-date">{{message.date}} </div>
+        <div ng-class="{'message-alt': message.to == discussion.recipient._id}" class="message-content">{{message.content}}</div>
+        <div ng-show="message.seen &amp;&amp; $last &amp;&amp; message.from != discussion.recipient._id" class="message-seen">Seen</div>
+      </div>
+    </div>
+    <div class="chat-footer">
+      <textarea type="text" ng-model="discussion.messageContent" ng-keydown="handleKeyDown(discussion.recipient._id, $event)" ng-keyup="handleKeyUp($event)" ng-focus="seeFutureMessages(discussion)" ng-blur="missFutureMessages(discussion)" class="chat-text-input"></textarea>
+      <button ng-click="sendMessage(discussion)" translate="translate" class="chat-submit-btn">Send</button>
+    </div>
+  </div>
+</div>

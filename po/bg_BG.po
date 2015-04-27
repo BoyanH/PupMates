@@ -70,7 +70,7 @@ msgstr "Добави"
 
 #: translations/templates/main/menu.html:9
 msgid "Add Dog"
-msgstr "Добави Куче"
+msgstr "Ново Куче"
 
 #: translations/templates/places/places.html:14
 msgid "Add Place"
