@@ -1,5 +1,5 @@
 //module which controls the left fixed menu of the application
-app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout, identity){
+app.controller("MenuController", function($scope, $timeout, $rootScope, $timeout, identity, notifier){
     
     $scope.isAdmin = identity.currentUser ? identity.isAuthorizedForRole('admin') : false;
     $scope.htmlWidth = $(document).width();
@@ -110,7 +110,7 @@ $scope.showDialog = function(e){    //function which opens the dialog
     	}
 	}
     else{
-        alert("Please login first :)");
+        notifier.error("Please login first!");
     }
 }
     $("#cover").bind("click", close);

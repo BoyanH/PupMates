@@ -1,7 +1,8 @@
 ﻿//intializing the angular application
 var app = angular.module('app', 
-    ['ngResource', 'ngRoute','ngDraggable', 'geolocation', 'luegg.directives', 'offClick', 'visualCaptcha', 'gettext']) //angular depencies
-.value('toastr', toastr);
+    ['ngResource', 'ngRoute','ngDraggable', 'geolocation', 'luegg.directives',
+     'offClick', 'visualCaptcha','toaster', 'gettext'
+    ]);
 
 app.config(function($routeProvider, $locationProvider){
     //$locationProvider.html5Mode(true);

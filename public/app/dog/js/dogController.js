@@ -171,10 +171,30 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
     };
     $scope.addFW = function(kind){  //adds either a food or a walk
         if(kind=="f"){
-            $scope.dog.food.push($scope.dog.foodOpt.value);
+
+            var crntValue = $scope.dog.foodOpt.value,
+                valueAsArray = crntValue.split(':'),
+                valueAsDate = new Date();
+
+            valueAsDate.setHours(valueAsArray[0], valueAsArray[1]);
+
+            $scope.dog.food.push({
+                clientTime: $scope.dog.foodOpt.value,
+                fromNow: (valueAsDate - new Date())
+            });
         }
         if(kind=="w"){
-            $scope.dog.walk.push($scope.dog.walkOpt.value);
+
+            var crntValue = $scope.dog.walkOpt.value,
+                valueAsArray = crntValue.split(':'),
+                valueAsDate = new Date();
+
+            valueAsDate.setHours(valueAsArray[0], valueAsArray[1]);
+
+            $scope.dog.walk.push({
+                clientTime: $scope.dog.walkOpt.value,
+                fromNow: (valueAsDate - new Date())
+            });
         }
     }
 });

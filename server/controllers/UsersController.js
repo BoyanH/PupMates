@@ -102,7 +102,6 @@ exportsObj.getAllUsers = function(req, res){    //returns all the users withoute
     .select("-salt")
     .select("-hashPass")
     .select("-roles")
-    .select("_id username firstName lastName email")
     .exec(function(err, collection){
         if(err){
             console.log('Users could not be found: ' +  err);
@@ -114,63 +113,60 @@ exportsObj.getAllUsers = function(req, res){    //returns all the users withoute
 
 exportsObj.getUser = function(req, res){    //returns a user with an username parameter
 
-    var sendAllInfo = false,
-        collection,
+    var sendAllInfo = req.user.roles.indexOf('admin') > -1,
         userIP = ip.address();
 
     //By Username <-- easier when route is /profile/:userName, such roots look better to users
     User.findOne({username: req.params.username}, function (err, user) {
 
-            if(err || !user){
-                console.log('User could not be found: ' +  err);
-                return;
-            }
-                else {
+        if(err || !user){
+            console.log('User could not be found: ' +  err);
+            return;
+        }
+            else {
 
-                    if(user.seenFrom) {
-                        if(user.seenFrom.indexOf(userIP) <= -1) {
+                if(user.seenFrom) {
+                    if(user.seenFrom.indexOf(userIP) <= -1) {
 
-                            user.seenFrom.push(userIP);
-
-                        }
+                        user.seenFrom.push(userIP.toString());
                     }
-                        else {
+                }
+                    else {
 
-                            user.seenFrom = [userIP];
-                        }
+                        user.seenFrom = [userIP.toString()];
+                    }
 
-                    User.update({username: req.params.id}, user, function(err){
-                                
-                            if(err) {
-                                console.error(err);
+                User.update({username: req.params.username}, user, function(err, success){
+                            
+                    if(err) {
+                        console.error(err);
+                    }
+
+                    if(user.friends) {
+                    
+                        for (var i = 0; i < user.friends.length; i++) {
+                            
+                            if(req.session.passport.user) {
+                                if (user.friends[i]._id == req.session.passport.user) {
+
+                                    sendAllInfo = true;
+
+                                    //if user is in profile's frineds, send all info
+                                }
                             }
-                        });
-                }
-
-            for (var i = 0; i < user.friends.length; i++) {
-                
-                if(req.session.passport.user) {
-                    if (user.friends[i]._id == req.session.passport.user) {
-
-                        sendAllInfo = true;
-
-                        //if user is in profile's frineds, send all info
+                        };
                     }
-                }
-            };
 
-            if (sendAllInfo || req.session.passport.user == req.params.id) {
-                res.send(user);
-            }
-                else {
+                    if ( !(sendAllInfo || req.user.username == req.params.username) ) {
 
-                    //TO DO: implement public/private profile
-                    
-                    // collection.album = [];
-                    // collection.lastName = ''; // <-- testing purpose
-                    
+                        //TO DO: implement public/private profile                        
+                        
+                    }
+
                     res.send(user);
-                }
+                    
+                });
+            }
     });
 };
 

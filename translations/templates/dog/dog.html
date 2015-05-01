@@ -50,7 +50,7 @@
       <div ng-click="showChangeFood = !showChangeFood;" translate="translate" class="btn-mobile-expand">Change</div>
     </div>
     <div class="dog-group">
-      <div class="dog-walk"><span translate="translate">walks: </span>
+      <div class="dog-walk"><span translate="translate">Walks: </span>
         <div ng-repeat="(indW, w) in dog.walk track by $index" class="dog-field-fw">{{w}}
           <div ng-show="showChangeWalk" ng-click="removeFW('w', w)" class="delete-field">X</div>
         </div>

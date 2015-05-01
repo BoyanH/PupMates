@@ -4,8 +4,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 
-#: translations/templates/profile/profile.html:17
-msgid "+Add Friend"
+#: public/app/main/controllers/menuController.js:113
+msgid "Please login first!"
 msgstr ""
 
 #: translations/templates/places/places.html:23
@@ -16,20 +16,16 @@ msgstr ""
 msgid "- your places"
 msgstr ""
 
+#: translations/templates/account/signup.html:38
+msgid "{{captchaErrorType | translate}} was NOT valid!"
+msgstr ""
+
+#: translations/templates/profile/profile.html:17
+msgid "+Add Friend"
+msgstr ""
+
 #: translations/templates/profile/achievments.html:60
 msgid "<h2>Apply</h2>"
-msgstr ""
-
-#: translations/templates/directives/newDogDir.html:32
-msgid "ADD DOG"
-msgstr ""
-
-#: translations/templates/directives/newDogDir.html:3
-msgid "ADD NEW DOGGY"
-msgstr ""
-
-#: translations/templates/main/menu.html:12
-msgid "ADMIN"
 msgstr ""
 
 #: translations/templates/admin/achievmentReview.html:58
@@ -60,8 +56,20 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
+#: translations/templates/dog/dog.html:46
+msgid "Add a Meal"
+msgstr ""
+
 #: translations/templates/main/menu.html:9
 msgid "Add Dog"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:32
+msgid "ADD DOG"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:3
+msgid "ADD NEW DOGGY"
 msgstr ""
 
 #: translations/templates/places/places.html:14
@@ -76,8 +84,8 @@ msgstr ""
 msgid "Add Walk"
 msgstr ""
 
-#: translations/templates/dog/dog.html:46
-msgid "Add a Meal"
+#: translations/templates/main/menu.html:12
+msgid "ADMIN"
 msgstr ""
 
 #: translations/templates/admin/adminPanel.html:7
@@ -92,17 +100,16 @@ msgstr ""
 msgid "Apply for an achievment"
 msgstr ""
 
+#: translations/templates/admin/adminPanel.html:4
+msgid "aslpls"
+msgstr ""
+
 #: translations/templates/admin/achievmentReview.html:41
 msgid "Author"
 msgstr ""
 
 #: translations/templates/directives/newDogDir.html:8
 msgid "BIRTH DATE"
-msgstr ""
-
-#: translations/templates/directives/newDogDir.html:20
-#: translations/templates/directives/newDogDir.html:21
-msgid "BREED"
 msgstr ""
 
 #: translations/templates/dog/dog.html:22
@@ -113,6 +120,11 @@ msgstr ""
 msgid "Birthdate: {{dog.birthDate}}"
 msgstr ""
 
+#: translations/templates/directives/newDogDir.html:20
+#: translations/templates/directives/newDogDir.html:21
+msgid "BREED"
+msgstr ""
+
 #: translations/templates/dog/dog.html:32
 #: translations/templates/profile/profile.html:26
 msgid "Breed: {{dog.breed}}"
@@ -120,10 +132,6 @@ msgstr ""
 
 #: translations/templates/dog/dog.html:8
 msgid "Browse Photo"
-msgstr ""
-
-#: translations/templates/main/menu.html:6
-msgid "CHAT"
 msgstr ""
 
 #: translations/templates/directives/addPlaceDir.html:20
@@ -157,6 +165,10 @@ msgstr ""
 msgid "Change Name"
 msgstr ""
 
+#: translations/templates/main/menu.html:6
+msgid "CHAT"
+msgstr ""
+
 #: translations/templates/chat/chat.html:2
 msgid "Chat History"
 msgstr ""
@@ -181,16 +193,12 @@ msgstr ""
 msgid "DAY"
 msgstr ""
 
-#: translations/templates/directives/newDogDir.html:24
-msgid "DESCRIPTION"
-msgstr ""
-
-#: translations/templates/directives/newDogDir.html:23
-msgid "DESCRIPTION (optional)"
-msgstr ""
-
 #: translations/templates/admin/achievmentReview.html:59
 msgid "Decline"
+msgstr ""
+
+#: translations/templates/places/places.html:33
+msgid "delete"
 msgstr ""
 
 #: translations/templates/places/places.html:6
@@ -203,6 +211,14 @@ msgstr ""
 
 #: translations/templates/profile/achievments.html:36
 msgid "Description"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:24
+msgid "DESCRIPTION"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:23
+msgid "DESCRIPTION (optional)"
 msgstr ""
 
 #: translations/templates/directives/addPlaceDir.html:10
@@ -259,16 +275,20 @@ msgstr ""
 msgid "Hide other people's places"
 msgstr ""
 
+#: translations/templates/directives/newDogDir.html:19
+msgid "incorrect date"
+msgstr ""
+
 #: translations/templates/account/signup.html:18
 msgid "Invalid Email"
 msgstr ""
 
-#: translations/templates/account/login.html:22
-msgid "JOIN US!"
-msgstr ""
-
 #: translations/templates/main/front-page.html:3
 msgid "Join the Biggest network for dog owners"
+msgstr ""
+
+#: translations/templates/account/login.html:22
+msgid "JOIN US!"
 msgstr ""
 
 #: translations/templates/account/login.html:3
@@ -277,6 +297,10 @@ msgstr ""
 
 #: translations/templates/account/signup.html:9
 msgid "Last Name"
+msgstr ""
+
+#: translations/templates/directives/loading.html:3
+msgid "loading..."
 msgstr ""
 
 #: translations/templates/account/login.html:10
@@ -313,13 +337,13 @@ msgstr ""
 msgid "My profile"
 msgstr ""
 
+#: translations/templates/profile/achievments.html:32
+msgid "Name"
+msgstr ""
+
 #: translations/templates/directives/newDogDir.html:5
 #: translations/templates/directives/newDogDir.html:6
 msgid "NAME"
-msgstr ""
-
-#: translations/templates/profile/achievments.html:32
-msgid "Name"
 msgstr ""
 
 #: translations/templates/directives/addPlaceDir.html:5
@@ -354,10 +378,6 @@ msgstr ""
 msgid "Owner of: <span ng-show=\"$index != 0 &amp;&amp; dog.breed.length\">, </span><span ng-repeat=\"dog in person.dogs\" ng-show=\"dog.breed.length &gt;= 2\">{{dog.breed}} </span>"
 msgstr ""
 
-#: translations/templates/directives/newDogDir.html:25
-msgid "PHOTO"
-msgstr ""
-
 #: translations/templates/account/login.html:19
 #: translations/templates/account/signup.html:25
 msgid "Password"
@@ -369,6 +389,10 @@ msgstr ""
 
 #: translations/templates/account/signup.html:31
 msgid "Passwords do not match"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:25
+msgid "PHOTO"
 msgstr ""
 
 #: translations/templates/profile/achievments.html:26
@@ -391,6 +415,18 @@ msgstr ""
 msgid "Places to go to on a lovely walk:"
 msgstr ""
 
+#: translations/templates/directives/newDogDir.html:27
+msgid "please choose a photo"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:22
+msgid "please write a breed"
+msgstr ""
+
+#: translations/templates/directives/newDogDir.html:7
+msgid "please write a name"
+msgstr ""
+
 #: translations/templates/profile/achievments.html:40
 msgid "Points"
 msgstr ""
@@ -401,6 +437,10 @@ msgstr ""
 
 #: translations/templates/profile/profile.html:16
 msgid "Profile of"
+msgstr ""
+
+#: translations/templates/places/places.html:42
+msgid "rate: {{pl.rate}}"
 msgstr ""
 
 #: translations/templates/admin/achievmentReview.html:47
@@ -448,12 +488,16 @@ msgstr ""
 msgid "Show other people's places"
 msgstr ""
 
+#: translations/templates/account/signup.html:45
+msgid "Sign up"
+msgstr ""
+
 #: translations/templates/account/login.html:3
 msgid "Sign Up"
 msgstr ""
 
-#: translations/templates/account/signup.html:45
-msgid "Sign up"
+#: translations/templates/account/login.html:6
+msgid "signout"
 msgstr ""
 
 #: translations/templates/main/front-page.html:8
@@ -483,6 +527,14 @@ msgstr ""
 #: translations/templates/admin/achievmentReview.html:31
 #: translations/templates/profile/achievments.html:50
 msgid "Video Proof"
+msgstr ""
+
+#: translations/templates/dog/dog.html:53
+msgid "walks:"
+msgstr ""
+
+#: translations/templates/notifications/notifications.html:11
+msgid "wants to add you as a friend!"
 msgstr ""
 
 #: translations/templates/profile/profile.html:20
@@ -515,52 +567,4 @@ msgstr ""
 
 #: translations/templates/account/signup.html:26
 msgid "Your password is too short."
-msgstr ""
-
-#: translations/templates/admin/adminPanel.html:4
-msgid "aslpls"
-msgstr ""
-
-#: translations/templates/places/places.html:33
-msgid "delete"
-msgstr ""
-
-#: translations/templates/directives/newDogDir.html:19
-msgid "incorrect date"
-msgstr ""
-
-#: translations/templates/directives/loading.html:3
-msgid "loading..."
-msgstr ""
-
-#: translations/templates/directives/newDogDir.html:27
-msgid "please choose a photo"
-msgstr ""
-
-#: translations/templates/directives/newDogDir.html:22
-msgid "please write a breed"
-msgstr ""
-
-#: translations/templates/directives/newDogDir.html:7
-msgid "please write a name"
-msgstr ""
-
-#: translations/templates/places/places.html:42
-msgid "rate: {{pl.rate}}"
-msgstr ""
-
-#: translations/templates/account/login.html:6
-msgid "signout"
-msgstr ""
-
-#: translations/templates/dog/dog.html:53
-msgid "walks:"
-msgstr ""
-
-#: translations/templates/notifications/notifications.html:11
-msgid "wants to add you as a friend!"
-msgstr ""
-
-#: translations/templates/account/signup.html:38
-msgid "{{captchaErrorType | translate}} was NOT valid!"
 msgstr ""

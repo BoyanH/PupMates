@@ -3,7 +3,7 @@ app.controller("DialogController", function($scope, $rootScope){
 	$scope.chat = false;
 	$scope.newDog = false;
 	$rootScope.reloadDataDialog = function(){
-		console.log($rootScope.dirName);
+
 		if($rootScope.dirName == "chat"){
 			$scope.chat = true;
 			$scope.newDog = false;

@@ -3,7 +3,8 @@
 var mongoose = require('mongoose'),
 	Dog = mongoose.model('Dog'),
 	User = mongoose.model('User'),
-	Q = require('q');
+	Q = require('q'),
+	scheduleController = require('./ScheduleController.js');
 
 module.exports = {
 	createDog: function(req, res, next){	//creates a dog
@@ -17,7 +18,6 @@ module.exports = {
 			dog.description = data.description;
 			dog.breed = data.breed;
 			dog.birthDate = data.birthDate;
-			console.log(data.birthDate);
 			dog.owners = owners;
 			dog.profPhoto = data.profPhoto;
         	if(dog.profPhoto) {
@@ -40,7 +40,6 @@ module.exports = {
 				else{
 					//res.end({success: true});
 					res.end();
-					console.log("dog created!");
 				}
 			});
 		}) 
@@ -101,35 +100,110 @@ module.exports = {
 		});
 	},
 	updateDog: function(req, res, next){		//updates a dog in the database
-		var userId = req.params.userId,
-			dogId = req.params.dogId;
-		var dog = req.body;
-		if(dog.profPhoto) {
-        	var b64string = dog.profPhoto.data;
-        	var buf = new Buffer(b64string, 'base64');
 
-        	var profPhoto = {};
-        	profPhoto.data = buf;
-        	profPhoto.contentType = dog.profPhoto.contentType;
-        	dog.profPhoto = profPhoto;
-    	}
-    	delete dog.url;
+		var userId = req.params.userId,
+			dogId = req.params.dogId,
+			
+			dog = req.body,
+
+			lastWalk = dog.walk[dog.walk.length - 1],
+			lastFood = dog.food[dog.food.length - 1],
+
+			scheduleItem;
+
+		//add serverTime property on a new food/walk item
+		function setServerTime(timeObj) {
+
+			differenceAsDate = new Date();
+
+			differenceAsDate.setTime(differenceAsDate.getTime() + timeObj.fromNow);
+
+    		var serverTime = {
+
+    			hour: differenceAsDate.getHours(),
+    			minute: differenceAsDate.getMinutes(),
+    			second: differenceAsDate.getSeconds(),
+    			millisecond: differenceAsDate.getMilliseconds()
+    		};
+
+    		timeObj = {
+
+    			clientTime: timeObj.clientTime,
+    			serverTime: serverTime
+    		};
+
+    		return timeObj;
+		}
+		
 		if(userId == req.user._id || req.user.roles.indexOf('admin') > -1){
 
-    		console.log("------Update dog--------");
-    		console.log(dog);
-			Dog.update({_id: dogId}, dog).exec(function(err){
+			if(dog.profPhoto) {
+	        	var b64string = dog.profPhoto.data;
+	        	var buf = new Buffer(b64string, 'base64');
+
+	        	var profPhoto = {};
+	        	profPhoto.data = buf;
+	        	profPhoto.contentType = dog.profPhoto.contentType;
+	        	dog.profPhoto = profPhoto;
+	    	}
+
+	    	if(lastFood && lastFood.fromNow) {
+
+	    		dog.food[dog.food.length - 1] = setServerTime(lastFood);
+
+	    		scheduleItem = 'food';
+	    	}
+
+	    	if(lastWalk && lastWalk.fromNow) {
+
+	    		dog.walk[dog.walk.length - 1] = setServerTime(lastWalk);
+
+
+	    		console.log(dog.walk[dog.walk.length - 1]);
+	    		scheduleItem = 'walk';
+	    	}
+
+	    	delete dog.url;
+
+			Dog.update({_id: dogId, owners: { $in: [userId] } }, dog, function(err){
+
 				if(err){
 					console.log("Failed to update dog:");
 					console.log(err);
 				}
 				else{
-					res.end();
+
+					Dog.findOne({_id: dogId}, function (err, updatedDog) {
+
+						if(err) {
+
+							res.status(404).end(err);
+						}
+
+						if(scheduleItem) {
+
+							console.log(updatedDog);
+							var itemArr = updatedDog[scheduleItem],
+								lastItem = itemArr[itemArr.length - 1];
+
+							console.log(itemArr);
+
+				    		scheduleController.addDogNotificationSchedule(
+				    			lastItem.serverTime,
+				    			scheduleItem + 'Alarm',
+				    			dog,
+				    			dog._id + '_' + lastItem._id
+			    			);
+				    	}
+
+						res.end();
+
+					});
 				}
-			})
+			});
 		}
 		else{
-			res.status(405);
+			res.status(403);
 			res.end({reason: 'You do not have permissions!'});
 		}
 	},

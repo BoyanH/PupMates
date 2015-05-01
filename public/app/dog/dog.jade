@@ -31,7 +31,7 @@ div.wrapper-dog
 		div.dog-group
 			div.dog-food
 				span(translate) Meals: 
-				div.dog-field-fw(ng-repeat="(indF, f) in dog.food track by $index") {{f}}
+				div.dog-field-fw(ng-repeat="(indF, f) in dog.food track by $index") {{f.clientTime}} 
 					div.delete-field(ng-show="showChangeFood" ng-click="removeFW('f', f)") X
 				div.add-fw(ng-show="showChangeFood")
 					select.dog-date-selector(ng-model="dog.foodOpt" ng-options="opt as opt.label for opt in optionsFood")
@@ -40,8 +40,8 @@ div.wrapper-dog
 			div.btn-mobile-expand(ng-click="showChangeFood = !showChangeFood;" translate) Change
 		div.dog-group
 			div.dog-walk
-				span(translate) walks: 
-				div.dog-field-fw(ng-repeat="(indW, w) in dog.walk track by $index") {{w}}
+				span(translate) Walks: 
+				div.dog-field-fw(ng-repeat="(indW, w) in dog.walk track by $index") {{w.clientTime}} 
 					div.delete-field(ng-show="showChangeWalk" ng-click="removeFW('w', w)") X
 				div.add-fw(ng-show="showChangeWalk")
 					select.dog-date-selector(ng-model="dog.walkOpt" ng-options="opt as opt.label for opt in optionsWalk")

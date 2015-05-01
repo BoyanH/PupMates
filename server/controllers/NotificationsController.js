@@ -9,14 +9,15 @@ module.exports = {
 		var deferred = Q.defer(),
 			notifObj = {
 
-				notifType: notification.notifType,
+				sharedNotifId: notification.sharedNotifId || '', //e.g. dogId_walkTimeId (used for dog alarms, one delete deletes all)
+				notifType: notification.notifType || '',
 				story: notification.story || '',
 				seen: false,
 				createdTime: new Date(),
-				from: {
-					name: notification.from.firstName + ' ' + notification.from.lastName,
-					username: notification.from.username,
-					id: notification.from._id
+				from: { //optimized to work both with user and dog as notification.from
+					name: notification.from.name || notification.from.firstName + ' ' + notification.from.lastName,
+					username: notification.from.name ? '' : notification.from.username,
+					id: notification.from._id || ''
 				}
 			};
 
@@ -44,6 +45,8 @@ module.exports = {
 
 				user.notifications.push(notifObj);
 
+				console.log('Adding notification!');
+
 				User.update({_id: notification.to}, user, function(err, data){
 	                
 	                if(err) {
@@ -56,7 +59,7 @@ module.exports = {
 	                if(socketioController.clientsList[notification.to]) {
 		                socketioController.clientsList[notification.to].identity.forEach(function (clientConnection) {
 
-		                	clientConnection.socket.emit('new notifications', user.notifications[user.notifications.length - 1]);
+		                	clientConnection.socket.emit('new notifications', notifObj);
 		                });
 		            }
 
@@ -179,5 +182,27 @@ module.exports = {
 			}
 
 		return deferred.promise; //return a promise
+	},
+	deleteSharedNotifications: function (sharedNotifId) {
+
+		User.update(
+			//find all users with certain notif
+		    {"notifications._id": sharedNotifId}, 
+		    {$pull: {
+		    	//remove given notification by id
+		        notifications: {
+		        	"notifications._id": req.body._id
+		        	}
+		    	}
+			}, function (err, data) {
+
+				if(err) {
+
+					res.status(500).end(err);
+				}
+
+				res.status(200).end();
+			}
+	    );
 	}
 };

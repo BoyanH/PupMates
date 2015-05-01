@@ -10,8 +10,24 @@ var dogSchema = mongoose.Schema({			//creating the schema for a dog
 	profPhoto: {data: Buffer, contentType: String},
 	description: String,
 	birthDate: String,
-	food: [String],
-	walk: [String],
+	food: [{
+		clientTime: String,
+		serverTime: {
+			hour: Number,
+			minute: Number,
+			second: Number,
+			millisecond: Number
+		}
+	}],
+	walk: [{
+		clientTime: String,
+		serverTime: {
+			hour: Number,
+			minute: Number,
+			second: Number,
+			millisecond: Number
+		}
+	}],
 	visitedPlaces: [String]
 })
 var Dog = mongoose.model("Dog", dogSchema);	//give the schema to mongoose to create the model Dog
@@ -51,8 +67,8 @@ module.exports.seedInitialDogs = function(){ //function which will do the initia
 						profPhoto: {data: pic, contentType: 'image/jpg'},
 						description: "My first dog :)",
 						birthDate: my_curr_date(),
-						food: ['9', "19:30"],
-						walk: ["6:30", "17:45"]
+						food: [],
+						walk: []
 					}, function (err, data) {
 
 						if(err) {
