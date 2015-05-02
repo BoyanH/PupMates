@@ -17,9 +17,9 @@ module.exports = {
 			scheduleName = dog._id + '_' + itemId;
 
 		//we set the rule to the timeObj we get from the client (his food/walk times)
-		// rule.hour   = timeObj.hour;
-		// rule.minute = timeObj.minute;
-		rule.second = new Date().getSeconds() + 5;//timeObj.second;
+		rule.hour   = timeObj.hour;
+		rule.minute = timeObj.minute;
+		rule.second = timeObj.second;
 
 		//The notification object, which will be sent on each notification 
 		var notification = {
