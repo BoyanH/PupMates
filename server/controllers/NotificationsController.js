@@ -30,7 +30,7 @@ module.exports = {
 
 			var requestExists = false;
 
-			if(user.notifications) {
+			if(user && user.notifications) {
 				for (var i = 0, len = user.notifications.length; i < len; i += 1) {
 																			// \/calling toString(), because it is mongoose.Schema.ObjectId
 					if(user.notifications[i].notifType == "friendRequest" && user.notifications[i].from.id.toString() == notifObj.from.id) {

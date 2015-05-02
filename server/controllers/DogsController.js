@@ -6,6 +6,30 @@ var mongoose = require('mongoose'),
 	Q = require('q'),
 	scheduleController = require('./ScheduleController.js');
 
+
+function setServerTime(timeObj) {
+
+	differenceAsDate = new Date();
+
+	differenceAsDate.setTime(differenceAsDate.getTime() + timeObj.fromNow);
+
+	var serverTime = {
+
+		hour: differenceAsDate.getHours(),
+		minute: differenceAsDate.getMinutes(),
+		second: differenceAsDate.getSeconds(),
+		millisecond: differenceAsDate.getMilliseconds()
+	};
+
+	timeObj = {
+
+		clientTime: timeObj.clientTime,
+		serverTime: serverTime
+	};
+
+	return timeObj;
+}
+
 module.exports = {
 	createDog: function(req, res, next){	//creates a dog
 		var user = req.params.userId;
@@ -106,34 +130,9 @@ module.exports = {
 			
 			dog = req.body,
 
-			lastWalk = dog.walk[dog.walk.length - 1],
-			lastFood = dog.food[dog.food.length - 1],
-
-			scheduleItem;
+			scheduleItems = {};
 
 		//add serverTime property on a new food/walk item
-		function setServerTime(timeObj) {
-
-			differenceAsDate = new Date();
-
-			differenceAsDate.setTime(differenceAsDate.getTime() + timeObj.fromNow);
-
-    		var serverTime = {
-
-    			hour: differenceAsDate.getHours(),
-    			minute: differenceAsDate.getMinutes(),
-    			second: differenceAsDate.getSeconds(),
-    			millisecond: differenceAsDate.getMilliseconds()
-    		};
-
-    		timeObj = {
-
-    			clientTime: timeObj.clientTime,
-    			serverTime: serverTime
-    		};
-
-    		return timeObj;
-		}
 		
 		if(userId == req.user._id || req.user.roles.indexOf('admin') > -1){
 
@@ -147,20 +146,32 @@ module.exports = {
 	        	dog.profPhoto = profPhoto;
 	    	}
 
-	    	if(lastFood && lastFood.fromNow) {
+	    	if(dog.food) {
 
-	    		dog.food[dog.food.length - 1] = setServerTime(lastFood);
+	    		scheduleItems.food = [];
 
-	    		scheduleItem = 'food';
+	    		for (var f = 0; f < dog.food.length; f++) {
+	    		
+		    		if(dog.food[f].fromNow) {
+
+		    			dog.food[f] = setServerTime(dog.food[f]);
+		    			scheduleItems.food.push(f);
+		    		}
+		    	};
 	    	}
 
-	    	if(lastWalk && lastWalk.fromNow) {
+	    	if(dog.walk) {
 
-	    		dog.walk[dog.walk.length - 1] = setServerTime(lastWalk);
+	    		scheduleItems.walk = [];
 
+	    		for (var w = 0; w < dog.walk.length; w++) {
+	    		
+		    		if(dog.walk[w].fromNow) {
 
-	    		console.log(dog.walk[dog.walk.length - 1]);
-	    		scheduleItem = 'walk';
+		    			dog.walk[w] = setServerTime(dog.walk[w]);
+		    			scheduleItems.walk.push(w);
+		    		}
+		    	};
 	    	}
 
 	    	delete dog.url;
@@ -180,21 +191,30 @@ module.exports = {
 							res.status(404).end(err);
 						}
 
-						if(scheduleItem) {
+						for(var type in scheduleItems) {
 
-							console.log(updatedDog);
-							var itemArr = updatedDog[scheduleItem],
-								lastItem = itemArr[itemArr.length - 1];
+							if(scheduleItems[type]) {
 
-							console.log(itemArr);
+								var itemArr = updatedDog[type];
 
-				    		scheduleController.addDogNotificationSchedule(
-				    			lastItem.serverTime,
-				    			scheduleItem + 'Alarm',
-				    			dog,
-				    			dog._id + '_' + lastItem._id
-			    			);
-				    	}
+								scheduleItems[type].forEach(function (ofTypeIndex) {
+
+									var	crntItem = itemArr[ofTypeIndex],
+										scheduleItemName = dog._id + '_' + crntItem._id;
+
+									scheduleController.removeDogNotificationSchedule(scheduleItemName);
+
+									scheduleController.addDogNotificationSchedule(
+						    			crntItem.serverTime,
+						    			type + 'Alarm',
+						    			dog,
+						    			scheduleItemName
+					    			);
+								});
+					    	}
+						}
+
+						scheduleController.removeMissingEntities(updatedDog.food, updatedDog.walk, updatedDog._id);
 
 						res.end();
 

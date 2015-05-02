@@ -11,31 +11,30 @@ var schedule = require('node-schedule'),
 
 module.exports = {
 
-	addDogNotificationSchedule: function (timeObj, type, dog, itemId) {
+	addDogNotificationSchedule: function (timeObj, type, dog, scheduleName) {
 
-		var rule = new schedule.RecurrenceRule(),
-			scheduleName = dog._id + '_' + itemId;
+		var rule = new schedule.RecurrenceRule();
 
 		//we set the rule to the timeObj we get from the client (his food/walk times)
-		rule.hour   = timeObj.hour;
-		rule.minute = timeObj.minute;
-		rule.second = timeObj.second;
+		// rule.hour   = timeObj.hour;
+		// rule.minute = timeObj.minute;
+		rule.second = new Date().getSeconds() + 3;//timeObj.second;
 
 		//The notification object, which will be sent on each notification 
 		var notification = {
 
 			sharedNotifId: scheduleName,
 			notifType: type,
-			story: dog.name + stories[type],
+			story: stories[type],
 			from: dog
 		};
 
-		console.log('Registering scheduled task!');
 		//Save schedule in scheduleSet;  start the schedule;			bind it with the notification we created
 		scheduleSet[scheduleName] = schedule.scheduleJob(rule, NotificationSchedule.bind(null, notification, dog.owners) );
 
 		function NotificationSchedule (notification, owners) {
 
+			//Using recursive function instead of loop to make the calls synchronous
 			function addNotificationSync(notification, owners, count) {
 
 				notification.to = owners[count];
@@ -55,6 +54,44 @@ module.exports = {
 	},
 	removeDogNotificationSchedule: function (scheduleName) {
 
-		scheduleSet[scheduleName].cancel();
+		var givenSchedule = scheduleSet[scheduleName];
+
+		if(givenSchedule) {
+
+			givenSchedule.cancel();	
+
+			delete scheduleSet[scheduleName];
+		}
+	},
+	removeMissingEntities: function (food, walk, dogId) {
+
+		var crntScheduleNames = [],
+			self = this;
+
+		fillNames(food, 0, function() {
+
+			fillNames(walk, 0, function () {
+
+				for(var scheduleName in scheduleSet) {
+
+					if(crntScheduleNames.indexOf(scheduleName) <= -1) {
+
+						self.removeDogNotificationSchedule(scheduleName);
+					}
+				}
+			});
+		});
+
+		function fillNames(items, index, callback) {
+
+			if(items.length > index) {
+				crntScheduleNames.push(dogId + '_' + items[index]._id);
+
+				fillNames(items, index+1, callback);
+			}
+				else {
+					callback();
+				}
+		}
 	}
 };
