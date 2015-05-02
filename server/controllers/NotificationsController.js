@@ -2,6 +2,52 @@ var User = require('mongoose').model('User'),
     Q = require('q'),
     socketioController = require('./SocketioController.js');
 
+function deleteSharedNotifications (req, res) {
+
+	var sharedNotifId = req.body.sharedNotifId;
+
+	User.find({'notifications.sharedNotifId': sharedNotifId }, function (err, collection) {
+
+		if(err || !collection) {
+
+			res.status(404).end();
+		}
+
+		collection.forEach(function(user) {
+
+			if(socketioController.clientsList[user._id]) {
+
+				socketioController.clientsList[user._id].identity.forEach(function (userConnection) {
+
+					userConnection.socket.emit('removed shared notification', sharedNotifId);
+				});
+			}
+		});
+
+
+	});
+
+	User.update(
+		//find all users with certain notif
+	    {"notifications.sharedNotifId": sharedNotifId}, 
+	    {$pull: {
+	    	//remove given notification by id
+	        notifications: {
+	        	"notifications.sharedNotifId": sharedNotifId
+	        	}
+	    	}
+		}, function (err, data) {
+
+			if(err) {
+
+				res.status(500).end(err);
+			}
+
+			res.status(200).end();
+		}
+    );
+}
+
 module.exports = {
 
 	addNotification: function (notification) {
@@ -80,6 +126,12 @@ module.exports = {
 	},
 	deleteNotification: function(req, res) {
 
+		if(req.body.sharedNotifId) {
+
+			deleteSharedNotifications(req, res);
+			return;
+		}
+
 		User.findOne({_id: req.user._id}, function (err, user) {
 
 			if(err || !user) {
@@ -92,6 +144,15 @@ module.exports = {
 				//Remove the requested notification from the user's notifications
 				user = user.toObject();
 				user.notifications.splice(user.notifications.indexOf(req.body), 1);
+
+				if(socketioController.clientsList[user._id]) {
+
+					socketioController.clientsList[user._id].identity.forEach(function (userConnection) {
+
+						userConnection.socket.emit('removed notification', req.body._id);
+					});
+				}
+
 			}
 			catch(err) {
 
@@ -187,26 +248,5 @@ module.exports = {
 
 		return deferred.promise; //return a promise
 	},
-	deleteSharedNotifications: function (sharedNotifId) {
-
-		User.update(
-			//find all users with certain notif
-		    {"notifications._id": sharedNotifId}, 
-		    {$pull: {
-		    	//remove given notification by id
-		        notifications: {
-		        	"notifications._id": req.body._id
-		        	}
-		    	}
-			}, function (err, data) {
-
-				if(err) {
-
-					res.status(500).end(err);
-				}
-
-				res.status(200).end();
-			}
-	    );
-	}
+	deleteSharedNotifications: deleteSharedNotifications
 };

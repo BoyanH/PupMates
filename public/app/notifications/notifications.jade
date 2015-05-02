@@ -19,3 +19,5 @@ div(ng-controller="NotificationsController" off-click="hideNotif()")
 						div.fr-buttons(ng-show="notification.notifType == 'friendRequest'")
 							button.accept-btn(ng-click="acceptFriendship(notification)" translate) Add
 							button.decline-btn(ng-click="deleteNotification(notification)" translate) Delete Request
+						div(ng-show="notification.notifType.slice(4) == 'Alarm'")
+							button.decline-btn(ng-click="deleteNotification(notification)" translate) Completed

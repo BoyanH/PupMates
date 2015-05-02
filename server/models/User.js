@@ -14,7 +14,7 @@ var userSchema = mongoose.Schema({                          //creaging the user 
             username: String
         }],
         notifications: [{
-            sharedNotifId: mongoose.Schema.ObjectId,
+            sharedNotifId: String,
             notifType: String,
             story: String,
             seen: Boolean,

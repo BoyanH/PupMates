@@ -9,6 +9,36 @@ app.controller('NotificationsController', function($scope, identity, socket, req
     	$scope.notifications.push(data);
     });
 
+    socket.on('removed shared notification', function (sharedNotifId) {
+
+        var notifications = $scope.notifications,
+            notifLength = notifications.length;
+
+        for (var i = 0; i < notifLength; i++) {
+            
+            if(notifications[i].sharedNotifId == sharedNotifId) {
+
+                $scope.notifications.splice(i, 1);
+                break;
+            }
+        };
+    });
+
+    socket.on('removed notification', function (notifId) {
+
+        var notifications = $scope.notifications,
+            notifLength = notifications.length;
+
+        for (var i = 0; i < notifLength; i++) {
+            
+            if(notifications[i]._id == notifId) {
+
+                $scope.notifications.splice(i, 1);
+                break;
+            }
+        };
+    });
+
     function updateNotifIfAvailable(crntUser) {
 
         if (crntUser && crntUser.notifications) {
@@ -54,7 +84,19 @@ app.controller('NotificationsController', function($scope, identity, socket, req
         requester.deleteNotif(notification)
         .then(function (success) {
 
-            $scope.notifications.splice($scope.notifications.indexOf(notification), 1);
+            var notifications = $scope.notifications,
+                notifLength = notifications.length;
+
+            if(notifLength > 0) {
+                for (var i = 0; i < notifLength; i++) {
+                    
+                    if(notifications[i] == notification) {
+
+                        $scope.notifications.splice(i, 1);
+                        break; 
+                    }
+                };
+            }
         }, function (err) {
 
             notifier.error('Ooops! Please try again later!');
