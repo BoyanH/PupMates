@@ -43,6 +43,7 @@ module.exports = {
 			//If user didn't already recieve a friend request from the same person
 			if( !requestExists ) {
 
+				user = user.toObject();
 				user.notifications.push(notifObj);
 
 				console.log('Adding notification!');
@@ -52,6 +53,7 @@ module.exports = {
 	                if(err) {
 
 	                	deferred.reject({err: err});
+	                	console.log(err);
 	                }
 
 	                //Push new notification to recipient, if such
@@ -87,6 +89,7 @@ module.exports = {
 			//If for some reason notifications are not available, catch the err
 			try {
 				//Remove the requested notification from the user's notifications
+				user = user.toObject();
 				user.notifications.splice(user.notifications.indexOf(req.body), 1);
 			}
 			catch(err) {

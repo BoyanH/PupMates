@@ -125,6 +125,7 @@ exportsObj.getUser = function(req, res){    //returns a user with an username pa
         }
             else {
 
+                user = user.toObject();
                 if(user.seenFrom) {
                     if(user.seenFrom.indexOf(userIP) <= -1) {
 
@@ -320,10 +321,12 @@ exportsObj.befriend = function (req, res) { //makes a friend request
             //If the requester recieved a friend request (notification) from the one he wants to add as friend
             if(frRequestFromUser) {
             
+                user = user.toObject();
                 user.friends.push(newFriend);
 
                 User.findOne({_id: req.body.friendID}, function (err, friend) {
 
+                    friend = friend.toObject();
                     friend.friends.push({
                         id: user._id,
                         username: user.username
