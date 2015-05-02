@@ -8,6 +8,7 @@ require('./server/config/express.js')(app, config); //file which consists of con
 require('./server/config/mongoose.js')(config);		//file which consists of the database (mongoose)
 require('./server/config/passport.js')();			//calling the passport configuration which process the user data
 require('./server/config/routes.js')(app);			//file which consists of all the routes of the application
+require('./server/config/restartables.js')();
 
 var	server = http.createServer(app),				//creating http server
 	socketio = require('socket.io'),				//takes the module socket.io from nodejs

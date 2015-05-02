@@ -119,6 +119,12 @@ module.exports = {
 		var	dogId = req.params.dogId;
 
 		Dog.findOne({_id: dogId}).select("profPhoto").exec(function(err, d){
+
+			if(err || !d) {
+
+				res.status(404).end('Error: ' + err);
+			}
+			
 			res.contentType(d.profPhoto.contentType);
 			res.send(d.profPhoto.data);
 		});

@@ -45,9 +45,6 @@ module.exports = {
 			//If user didn't already recieve a friend request from the same person
 			if( !requestExists ) {
 
-				console.log('Adding notification!');
-				console.log(notification.to);
-
 				User.update(
 					{_id: notification.to},
 					{ $addToSet: {notifications: notifObj } },

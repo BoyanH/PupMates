@@ -7,7 +7,10 @@ var schedule = require('node-schedule'),
 	stories = {
 		walkAlarm: ' wants to go for a walk!',
 		foodAlarm: ' is starving! Why don\'t you feed him?'
-	};
+	},
+
+	mongoose = require('mongoose'),
+	Dog = mongoose.model('Dog');
 
 module.exports = {
 
@@ -16,9 +19,9 @@ module.exports = {
 		var rule = new schedule.RecurrenceRule();
 
 		//we set the rule to the timeObj we get from the client (his food/walk times)
-		// rule.hour   = timeObj.hour;
-		// rule.minute = timeObj.minute;
-		rule.second = new Date().getSeconds() + 3;//timeObj.second;
+		rule.hour   = timeObj.hour;
+		rule.minute = timeObj.minute;
+		rule.second = timeObj.second;
 
 		//The notification object, which will be sent on each notification 
 		var notification = {
@@ -92,6 +95,54 @@ module.exports = {
 				else {
 					callback();
 				}
+		}
+	},
+	startAllSavedSchedules: function () {
+
+		var self = this;
+
+		Dog.find({}, function (err, collection) {
+
+			if(err || !collection) {
+
+				console.log('No dogs to add schedules for!');
+
+				return;
+			}
+
+			addAlarmsForDog(collection, 0, function () {
+
+				console.log('Alert schedules started!');
+			});
+		});
+
+		function addAlarmsForDog(dogCollection, dogIndex, callback) {
+
+			if(dogIndex < dogCollection.length) {
+
+				var dog = dogCollection[dogIndex];
+
+				addAlarmForScheduleItem(dog.food, 0, 'foodAlarm', dog, function () {
+
+					addAlarmForScheduleItem(dog.walk, 0, 'walkAlarm', dog, function () {
+						
+							addAlarmsForDog(dogCollection, dogIndex + 1, callback);
+					});					
+				});
+			}
+			else {
+
+				callback();
+			}
+		}
+
+		function addAlarmForScheduleItem(itemCollection, itemIndex, type, dog, callback) {
+
+			var crntItem = itemCollection[itemIndex],
+				timeObj = crntItem.serverTime,
+				scheduleItemName = dog._id + '_' + crntItem._id;
+
+			self.addDogNotificationSchedule(timeObj, type, dog, scheduleItemName);
 		}
 	}
 };
