@@ -30,25 +30,29 @@ module.exports = {
 
 			var requestExists = false;
 
-			for (var i = 0, len = user.notifications.length; i < len; i += 1) {
-																		// \/calling toString(), because it is mongoose.Schema.ObjectId
-				if(user.notifications[i].notifType == "friendRequest" && user.notifications[i].from.id.toString() == notifObj.from.id) {
+			if(user.notifications) {
+				for (var i = 0, len = user.notifications.length; i < len; i += 1) {
+																			// \/calling toString(), because it is mongoose.Schema.ObjectId
+					if(user.notifications[i].notifType == "friendRequest" && user.notifications[i].from.id.toString() == notifObj.from.id) {
 
-					requestExists = true;
-					break;
-				}
-			};
+						requestExists = true;
+						break;
+					}
+				};
+			}
 
 
 			//If user didn't already recieve a friend request from the same person
 			if( !requestExists ) {
 
-				user = user.toObject();
-				user.notifications.push(notifObj);
-
 				console.log('Adding notification!');
+				console.log(notification.to);
 
-				User.update({_id: notification.to}, user, function(err, data){
+				User.update(
+					{_id: notification.to},
+					{ $addToSet: {notifications: notifObj } },
+
+					function(err, data){
 	                
 	                if(err) {
 

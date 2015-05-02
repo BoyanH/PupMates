@@ -5,8 +5,8 @@ var schedule = require('node-schedule'),
 
     //a story for each notification/alert type
 	stories = {
-		walkAlarm: 'wants to go for a walk!',
-		foodAlarm: 'is starving! Why don\'t you feed him?'
+		walkAlarm: ' wants to go for a walk!',
+		foodAlarm: ' is starving! Why don\'t you feed him?'
 	};
 
 module.exports = {
@@ -17,9 +17,9 @@ module.exports = {
 			scheduleName = dog._id + '_' + itemId;
 
 		//we set the rule to the timeObj we get from the client (his food/walk times)
-		rule.hour   = timeObj.hour;
-		rule.minute = timeObj.minute;
-		rule.second = timeObj.second;
+		// rule.hour   = timeObj.hour;
+		// rule.minute = timeObj.minute;
+		rule.second = new Date().getSeconds() + 5;//timeObj.second;
 
 		//The notification object, which will be sent on each notification 
 		var notification = {
@@ -36,15 +36,21 @@ module.exports = {
 
 		function NotificationSchedule (notification, owners) {
 
-			console.log('Scheduled Job executing!');
-			
-			owners.forEach(function (owner) {
+			function addNotificationSync(notification, owners, count) {
 
-				console.log('Owner to alert: ' + owner);
-				
-				notification.to = owner;
-				notificationsController.addNotification(notification);
-			});
+				notification.to = owners[count];
+				notificationsController.addNotification(notification)
+				.then(function (data) {
+
+					if(count < owners.length) {
+
+						count++;
+						addNotificationSync(notification, owners, count);
+					}
+				});
+			}
+
+			addNotificationSync(notification, owners, 0);
 		}
 	},
 	removeDogNotificationSchedule: function (scheduleName) {
