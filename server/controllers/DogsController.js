@@ -140,7 +140,7 @@ module.exports = {
 
 		//add serverTime property on a new food/walk item
 		
-		if(userId == req.user._id || req.user.roles.indexOf('admin') > -1){
+		if(userId == req.query['user_id_access_token'] || userId == req.user._id || req.user.roles.indexOf('admin') > -1){
 
 			if(dog.profPhoto) {
 	        	var b64string = dog.profPhoto.data;
