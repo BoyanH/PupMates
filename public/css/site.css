@@ -86,7 +86,9 @@ h1, h2, h3, a{
 }
 .title img{
 	margin: 0;
-	height: 45px;
+	margin-top: -10px;
+	margin-left: 20px;
+	height: 60px;
 	vertical-align: center;
 	outline: none;
 }
