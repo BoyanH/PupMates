@@ -10,7 +10,86 @@ var schedule = require('node-schedule'),
 	},
 
 	mongoose = require('mongoose'),
-	Dog = mongoose.model('Dog');
+	Dog = mongoose.model('Dog'),
+	Achievment = mongoose.model('Achievment'),
+    UserAchievments = mongoose.model('UserAchievments'),
+
+	userPoints = {},
+	dogPoints = {},
+    achs = {};
+
+function inspectUser(userCollection, userIndex, userCallback) {
+
+	if(userIndex < userCollection.length) {
+
+		inspectUserAchievment(userCollection[userIndex].userId, 
+			userCollection[userIndex].achievments, 0, function() {
+
+			inspectUser(userCollection, userIndex + 1, userCallback);
+		});
+	}
+	else {
+
+		userCallback();
+	}
+}
+
+function inspectUserAchievment(userId, userAchsCollection, achIndex, achCallback) {
+
+	if(achIndex < userAchsCollection.length) {
+
+		var crntAchievmentId = userAchsCollection[achIndex].achievmentId,
+			crntAchievment = achs[crntAchievmentId];
+
+		if( !crntAchievment) {			
+
+			Achievment.findOne({_id: crntAchievmentId}, function (err, ach) {
+
+				if(err || !ach) {
+
+					inspectUserAchievments(userId, userAchsCollection, achIndex + 1, achCallback);
+				}
+	
+				achs[crntAchievmentId] = ach;
+
+				updatePoints(userId, userAchsCollection[achIndex].dogId,
+					ach.points);
+
+				
+				inspectUserAchievment(userId, userAchsCollection, achIndex + 1, achCallback);
+			});
+		}
+		else {
+
+			updatePoints(userId, userAchsCollection[achIndex].dogId,
+				crntAchievment.points);
+
+
+			inspectUserAchievment(userId, userAchsCollection, achIndex + 1, achCallback);
+		}
+	}
+	else {
+
+		achCallback();
+	}
+}
+
+function updatePoints(userId, dogId, points) {
+
+
+	if(!userPoints[userId]) {
+
+		userPoints[userId] = 0;
+	}
+
+	if(!dogPoints[dogId]) {
+
+		dogPoints[dogId] = 0;
+	}
+
+	userPoints[userId] = points;
+	dogPoints[dogId] = points;
+}
 
 module.exports = {
 
@@ -147,6 +226,33 @@ module.exports = {
 				scheduleItemName = dog._id + '_' + crntItem._id;
 
 			self.addDogNotificationSchedule(timeObj, type, dog, scheduleItemName);
+		}
+	},
+	startFeaturedSchedule: function () {
+
+		var rule = new schedule.RecurrenceRule();
+
+		// rule.hour = 0;
+		// rule.minute = 0;
+		rule.second = new Date().getSeconds() + 2;//0;
+
+		scheduleSet.featuredSchedule = schedule.scheduleJob(rule, updateFeatured );
+
+		function updateFeatured() {
+
+			UserAchievments.find({}, function (err, collection) {
+
+				if(err || !collection) {
+
+					return;
+				}
+
+			    inspectUser(collection, 0, function () {
+
+			    	console.log(userPoints);
+			    	console.log(dogPoints);
+			    });
+			});			
 		}
 	}
 };
