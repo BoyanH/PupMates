@@ -171,6 +171,24 @@ exportsObj.getUser = function(req, res){    //returns a user with an username pa
     });
 };
 
+exportsObj.getUserNames = function (req, res) {
+
+    User.findOne({_id: req.params.id})
+    .select('firstName')
+    .select('lastName')
+    .select('username')
+    .select('_id')
+    .exec(function (err, user) {
+
+        if(err || !user) {
+
+            res.status(404).end('Error :' + err);
+        }
+
+        res.status(200).send(user);
+    });
+};
+
 exportsObj.getProfPhoto = function(req, res){   //returns the profile photo of a user
     
     User.findOne({_id: req.params.id})

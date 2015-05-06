@@ -57,6 +57,8 @@ module.exports = {
 			}
 				else {
 
+					discussion = discussion.toObject();
+
 					//declare the message the way it should be according to the Discussion.js Model
 					var newMessage = {
 
@@ -175,6 +177,11 @@ module.exports = {
 			deffered = Q.defer(),
 			success = false;
 
+			if( isNaN(message.nth) ) {
+
+				res.status(403).end();
+				return;
+			}
 
 			//Find the discussion in a similar manner
 			Discussion.findOne({between: crntBetween}, function (err, discussion) {
@@ -186,7 +193,13 @@ module.exports = {
 						message: message
 					});
 				}
+				else if(discussion.messages.length <= message.nth) {
+
+					res.status(403).end();
+				}
 					else {
+
+						discussion = discussion.toObject();
 
 						//If the requested message exists [messages in the Discussion Schema are indexed (the nth property)]
 						if(discussion.messages[message.nth]) {
@@ -254,6 +267,8 @@ module.exports = {
 					});
 				}
 					else {
+
+						discussion = discussion.toObject();
 
 						if (discussion.messages[message.nth]._id == message._id) {
 

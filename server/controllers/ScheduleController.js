@@ -138,6 +138,10 @@ module.exports = {
 
 		function addAlarmForScheduleItem(itemCollection, itemIndex, type, dog, callback) {
 
+			if(itemIndex >= itemCollection.length) {
+				return;
+			}
+			
 			var crntItem = itemCollection[itemIndex],
 				timeObj = crntItem.serverTime,
 				scheduleItemName = dog._id + '_' + crntItem._id;

@@ -1,5 +1,5 @@
 'use strict';
-app.controller('ChatController', function($scope, identity, $routeParams, socket){
+app.controller('ChatController', function($scope, identity, $routeParams, socket, requester){
 
     //set height of the left menu
     var height = $(document).height() - $(".nav").height();
@@ -118,8 +118,28 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
 
     socket.on('new message', function (message) {
 
-        var discIndx = getDiscussionIndex(message.from, message.to);    
-        $scope.discussions[discIndx].messages.push(message);
+        var discIndx = getDiscussionIndex(message.from, message.to);
+
+        if(discIndx > -1) {   
+            $scope.discussions[discIndx].messages.push(message);
+        }
+            else {
+
+                requester.getUserNames(message.from == identity.currentUser._id ? message.to : message.from)
+                .then(function(newRecipient) {
+
+                    var newDiscussion = {
+                        recipient: newRecipient,
+                        messages: [], //when user opens discussion, all messages are queried
+                        errors: [],
+                        seeNext: false
+                    };
+
+                    $scope.discussions.push(newDiscussion);
+
+                    return;
+                });
+            }
 
         if($scope.discussions[discIndx].seeNext) {
             $scope.seePrivateMessage(message);

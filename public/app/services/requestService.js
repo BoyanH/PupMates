@@ -121,8 +121,11 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
         },
         declineAchievment: function (achReq) {
 
-            console.log(achReq);
             return postData('/admin/achievments', achReq, 'DELETE');
+        },
+        getUserNames: function (id) {
+
+            return getData('/api/users/names/' + id);
         }
     };
 });
