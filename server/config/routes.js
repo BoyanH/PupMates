@@ -13,10 +13,11 @@ module.exports = function (app) {
     app.get('/api/users/:username', controllers.users.getUser);
     app.get('/api/users/names/:id', controllers.users.getUserNames);  
     app.get('/api/users', auth.isInRole('admin'),controllers.users.getAllUsers ); //returns all users if the current user is admin                 //returns only a user with username parameter
-    app.get('/api/user-all-data/:username', controllers.allData.getAllDataOfUserByUserName) //returns all the data of an user with username parameter
+    app.get('/api/user-all-data/:username', controllers.allData.getAllDataOfUserByUserName); //returns all the data of an user with username parameter
     app.post('/api/users', controllers.captcha._trySubmission, controllers.users.createUser);   //creates a new user
     app.put('/api/users',auth.isAuthenticated, controllers.users.updateUser);               //updates an user
-    app.get('/api/dynamicSearch/:searchContent/:limit?', controllers.search.dynamicSearch)  //does a search in the db for users and dogs
+    app.get('/api/dynamicSearch/:searchContent/:limit?', controllers.search.dynamicSearch);  //does a search in the db for users and dogs
+    app.get('/api/featured', controllers.schedule.getFeaturedProfiles);
     app.get('/partials/:partialArea/:partialName', function (req, res) {                    //returns a partial view
         res.render('../../public/app/' + req.params.partialArea + '/' + req.params.partialName, {
                beautify: true,
@@ -28,13 +29,13 @@ module.exports = function (app) {
     app.get('/places/:id', auth.isAuthenticated, controllers.places.getPlacesOfUser);   //returns the places of a user
     app.post('/places', auth.isAuthenticated, controllers.places.createPlace);   //creates a place
     app.put('/rateplace/:placeId', auth.isAuthenticated, controllers.places.ratePlace);
-    app.delete('/places', auth.isAuthenticated, controllers.places.deletePlace)  //deletes a place
+    app.delete('/places', auth.isAuthenticated, controllers.places.deletePlace);  //deletes a place
     app.get('/places/allexceptofuser/:id', auth.isAuthenticated, controllers.places.getPlacesExcepUser) //get all the places except the places of user with id parameter
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.dogs.createDog);      //creates a dog
     app.put('/updateDog/:userId/:dogId', auth.isAuthenticated, controllers.dogs.updateDog); //updates a dog
     app.get('/dogs/:userId', controllers.dogs.getDogsOfUser)            //returns the dogs of a user
-    app.get('/dogs/username/:username', controllers.dogs.getDogsOfUserByUserName)   //returns the dogs of user with username parameter
-    app.get('/dog/:id', controllers.dogs.getDogById)    //returns a dog with id
+    app.get('/dogs/username/:username', controllers.dogs.getDogsOfUserByUserName);   //returns the dogs of user with username parameter
+    app.get('/dog/:id', controllers.dogs.getDogById);    //returns a dog with id
     app.post('/befriendMate', auth.isAuthenticated, controllers.users.befriend);    //makes a friend request
     app.delete('/notifications', auth.isAuthenticated, controllers.notifications.deleteNotification);   //deletes a notification
     app.put('/notifications', auth.isAuthenticated, controllers.notifications.markNotificationAsSeen); //marks a notification as seen

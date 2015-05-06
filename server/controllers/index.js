@@ -9,7 +9,8 @@ var usersController = require('../controllers/UsersController.js'),
 	notificationsController = require('../controllers/NotificationsController.js'),
     searchController = require('../controllers/SearchController.js'),
     achievmentsController = require('../controllers/AchievmentsController.js'),
-    allDataController = require('../controllers/AllData.js');
+    allDataController = require('../controllers/AllData.js'),
+    scheduleController = require('../controllers/ScheduleController.js');
 
 module.exports = {
     users: usersController,
@@ -21,5 +22,6 @@ module.exports = {
     dogs: dogsController,
     search: searchController,
     achievments: achievmentsController,
-    allData: allDataController
+    allData: allDataController,
+    schedule: scheduleController
 }

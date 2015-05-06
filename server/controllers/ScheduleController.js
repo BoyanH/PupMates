@@ -11,12 +11,59 @@ var schedule = require('node-schedule'),
 
 	mongoose = require('mongoose'),
 	Dog = mongoose.model('Dog'),
+	User = mongoose.model('User'),
 	Achievment = mongoose.model('Achievment'),
     UserAchievments = mongoose.model('UserAchievments'),
 
 	userPoints = {},
 	dogPoints = {},
-    achs = {};
+    achs = {},
+
+    topUserProfiles = [],
+    topDogProfiles = [],
+
+    featuredItemsLength = 3;
+
+function getSortedPropsByValueInObject(object) {
+
+	var sortable = [];
+	
+	for (var prop in object) {
+		sortable.push(prop)
+	}
+
+	sortable.sort(function(a, b) {return b - a});
+
+	return sortable;
+}
+
+function returnNPropertiesOfObject(object, atIndex, n) {
+
+	var keysInObj = Object.keys(object),
+		keysLenInObj = keysInObj.length,
+
+		atIndex = atIndex || 0,
+		n = n || 1,
+
+		returnedProperties = [];
+
+	if(atIndex + n > keysLenInObj) {
+
+		n = keysLenInObj - atIndex;
+
+		if(n < 1) {
+
+			return {};
+		}
+	}
+
+	for (var i = atIndex; i < atIndex + n; i++) {
+		
+		returnedProperties.push(object[ keysInObj[i] ]);
+	};
+
+	return returnedProperties;
+}
 
 function inspectUser(userCollection, userIndex, userCallback) {
 
@@ -71,6 +118,72 @@ function inspectUserAchievment(userId, userAchsCollection, achIndex, achCallback
 	else {
 
 		achCallback();
+	}
+}
+
+function queryFeaturedProfiles() {
+
+	var topUsers = getSortedPropsByValueInObject(userPoints),
+		topDogs = getSortedPropsByValueInObject(dogPoints);
+
+	topUsers.length = featuredItemsLength < topUsers.length ? featuredItemsLength : topUsers.length;
+	topDogs.length = featuredItemsLength < topDogs.length ? featuredItemsLength : topDogs.length;
+
+	getUserProfiles(topUsers, 0, function () {
+
+		getDogProfiles(topDogs, 0, function () {
+
+			console.log('Featured users and dogs have been updated successfully!');
+		});
+	});
+
+	function getUserProfiles(userIdArr, index, callback) {
+
+		if(index < userIdArr.length) {
+			
+			User.findOne({_id: userIdArr[index] })
+			.select('firstName')
+		    .select('lastName')
+		    .select('username')
+		    .select('_id')
+		    .exec(function (err, userProfile) {
+
+				if(userProfile) {
+					topUserProfiles.push(userProfile);
+				}
+
+				getUserProfiles(userIdArr, index + 1, callback);
+			});
+		}
+			else {
+
+				callback();
+			}
+	}
+
+	function getDogProfiles(dogIdArr, index, callback) {
+
+		if(index < dogIdArr.length) {
+		
+			Dog.findOne({_id: dogIdArr[index]})
+			.select('owners')
+			.select('name')
+			.select('breed')
+			.select('description')
+			.select('birthDate')
+			.exec(function (err, dogProfile) {
+
+				if(dogProfile) {
+					topDogProfiles.push(dogProfile);
+				}
+
+				getDogProfiles(dogIdArr, index + 1, callback);
+			});
+		}
+			else {
+
+				callback();
+			}
 	}
 }
 
@@ -238,6 +351,11 @@ module.exports = {
 
 		scheduleSet.featuredSchedule = schedule.scheduleJob(rule, updateFeatured );
 
+		if(topUserProfiles != true || topDogProfiles != true) {
+
+			updateFeatured();
+		}
+
 		function updateFeatured() {
 
 			UserAchievments.find({}, function (err, collection) {
@@ -249,10 +367,23 @@ module.exports = {
 
 			    inspectUser(collection, 0, function () {
 
-			    	console.log(userPoints);
-			    	console.log(dogPoints);
+			    	queryFeaturedProfiles();
 			    });
 			});			
 		}
+	},
+	getFeaturedProfiles: function (req, res) {
+
+		if(topDogProfiles.length > 0 && topUserProfiles.length > 0) {
+
+			res.status(200).send({
+				featuredUsers: topUserProfiles,
+				featuredDogs: topDogProfiles
+			});
+		}
+			else {
+
+				res.status(500).end();	
+			}
 	}
 };
