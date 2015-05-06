@@ -1,4 +1,4 @@
-app.controller('NotificationsController', function($scope, identity, socket, requester, notifier){
+app.controller('NotificationsController', function($scope, $rootScope, identity, socket, requester, notifier){
     $scope.identity = identity;
     $scope.notifShow = false;
 
@@ -49,11 +49,12 @@ app.controller('NotificationsController', function($scope, identity, socket, req
 
     $scope.toggleNotif = function(){
     	$scope.notifShow = !$scope.notifShow;
-    }
+    };
+
     $scope.hideNotif = function() {
 
     	$scope.notifShow = false;
-    }
+    };
 
     $scope.markAsSeen = function (notification) {
 
@@ -65,7 +66,8 @@ app.controller('NotificationsController', function($scope, identity, socket, req
 
             notifier.error('Ooops! Please try again later!');
         });
-    }
+    };
+
     $scope.acceptFriendship = function (notification) {
 
         requester.addFriend(notification.from.id, notification.from.username)
@@ -78,7 +80,8 @@ app.controller('NotificationsController', function($scope, identity, socket, req
 
             notifier.error('Unable to accept friendship. Please try again later!');
         });
-    }
+    };
+
     $scope.deleteNotification = function (notification) {
 
         requester.deleteNotif(notification)
@@ -101,7 +104,19 @@ app.controller('NotificationsController', function($scope, identity, socket, req
 
             notifier.error('Ooops! Please try again later!');
         });
-    }
+    };
+
+    $scope.handleNotifClick = function (notification) {
+
+        console.log(notification);
+
+        if(notification.notifType == 'newMsgNotif') {
+
+            $rootScope.handleNewDiscussion({from: identity.currentUser._id, to: notification.from.id});
+
+            $scope.deleteNotification(notification);
+        }
+    };
 
     $scope.$watch(function () {
        return identity.currentUser;

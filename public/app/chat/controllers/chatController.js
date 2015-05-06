@@ -1,5 +1,5 @@
 'use strict';
-app.controller('ChatController', function($scope, identity, $routeParams, socket, requester){
+app.controller('ChatController', function($scope, $rootScope, identity, $routeParams, socket, requester){
 
     //set height of the left menu
     var height = $(document).height() - $(".nav").height();
@@ -13,6 +13,22 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
     }
 
     $scope.allowSend = true;
+
+    $rootScope.handleNewDiscussion = function (message) {
+
+        requester.getUserNames(message.from == identity.currentUser._id ? message.to : message.from)
+        .then(function(newRecipient) {
+
+            var newDiscussion = {
+                recipient: newRecipient,
+                messages: [], //when user opens discussion, all messages are queried
+                errors: [],
+                seeNext: false
+            };
+
+            $scope.discussions.push(newDiscussion);
+        });
+    }
 
     function getDiscussionIndex(messageFrom, messageTo) {
 
@@ -119,30 +135,21 @@ app.controller('ChatController', function($scope, identity, $routeParams, socket
     socket.on('new message', function (message) {
 
         var discIndx = getDiscussionIndex(message.from, message.to);
+        var newDisc = false;
 
         if(discIndx > -1) {   
             $scope.discussions[discIndx].messages.push(message);
         }
             else {
 
-                requester.getUserNames(message.from == identity.currentUser._id ? message.to : message.from)
-                .then(function(newRecipient) {
-
-                    var newDiscussion = {
-                        recipient: newRecipient,
-                        messages: [], //when user opens discussion, all messages are queried
-                        errors: [],
-                        seeNext: false
-                    };
-
-                    $scope.discussions.push(newDiscussion);
-
-                    return;
-                });
+                newDisc = true;
+                $rootScope.handleNewDiscussion(message);
             }
 
-        if($scope.discussions[discIndx].seeNext) {
-            $scope.seePrivateMessage(message);
+        if(!newDisc) {
+            if($scope.discussions[discIndx].seeNext) {
+                $scope.seePrivateMessage(message);
+            }
         }
     });
 

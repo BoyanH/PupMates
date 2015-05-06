@@ -1,8 +1,9 @@
 var clientsList = {},
 	messages = require('./MessagesController.js'), //We will work with users and messages on the socket.io connection
 	users = require('./UsersController.js'),	  //so we require those
-	auth = require('../config/auth.js');		 //Only admins/authenticated users can perform some actions, we need the
-												//auth system to verify users	
+	auth = require('../config/auth.js'),		 //Only admins/authenticated users can perform some actions, we need the
+												//auth system to verify users
+	exportsObj = {};	
 
 	//Check if socket(user)._id is same as request.from._id
 	//(If the request only registers actions for the logged user) 
@@ -58,194 +59,217 @@ var clientsList = {},
 		});			
 	}
 
-module.exports = {
+module.exports = exportsObj;
 
-	clientsList: clientsList,
-	addUserConnection: function (socket) {
+notificationsController = require('./NotificationsController.js');
 
-		var session = socket.request.session,
-			
-			userId = socket.request.session.passport.user,
-			sessionID = socket.request.sessionID,
+exportsObj.clientsList = clientsList;
 
-			friends = [];
+exportsObj.addUserConnection = function (socket) {
 
-			users.getFriendIDs(userId)
-			.then(function (collection) {
+	var session = socket.request.session,
+		
+		userId = socket.request.session.passport.user,
+		sessionID = socket.request.sessionID,
 
-				collection.forEach(function (friend) {
+		friends = [];
 
-					friends.push({
-						id: friend.id,
-						online: !!clientsList[friend.id]
-					});
+		users.getFriendIDs(userId)
+		.then(function (collection) {
+
+			collection.forEach(function (friend) {
+
+				friends.push({
+					id: friend.id,
+					online: !!clientsList[friend.id]
 				});
-
-				//MULTIPLE TOKENS PER USER AVAILABLE
-				if (!clientsList[userId]) {
-
-					clientsList[userId] = {
-						identity: [
-							{
-					        	socket: socket,
-					        	sessionID: sessionID
-					        }
-				        ],
-				        friends: friends
-				    };
-				}
-					else {
-
-						clientsList[userId].identity.push({
-							socket: socket,
-				        	sessionID: sessionID
-						});
-					}
-
-					//Data sent on Login, saves client-side requests
-					sendOnLoginData(socket, userId);
 			});
-	},
-	deleteUserConnection : function (socket) {
 
-		for (var client in clientsList) {
+			//MULTIPLE TOKENS PER USER AVAILABLE
+			if (!clientsList[userId]) {
 
-			for (var i = 0; i < clientsList[client].identity.length; i++) {
-				//client[i] = nth connection of each client
-				
-				if (clientsList[client].identity[i].socket == socket) {
+				clientsList[userId] = {
+					identity: [
+						{
+				        	socket: socket,
+				        	sessionID: sessionID
+				        }
+			        ],
+			        friends: friends
+			    };
+			}
+				else {
 
-
-					if(clientsList[client].identity.length == 1) {
-
-						clientsList[client].friends.forEach(function (friend) {
-
-							if(clientsList[friend.id]) {
-								
-								clientsList[friend.id].identity.forEach(function (clientConnection) {
-
-									clientConnection.socket.emit('status change', [{id: client, online: false}]);
-								});
-							}
-						});
-					}
-
-					clientsList[client].identity.splice(i, 1);
-
-					if (clientsList[client].identity.length == 0) {
-						
-						delete clientsList[client];
-					}
-
-					break;
+					clientsList[userId].identity.push({
+						socket: socket,
+			        	sessionID: sessionID
+					});
 				}
-			};
-		}
-	},
-	sendMessage: function (socket, message) {
 
-		if(isAuthorised(socket, message)) {
+				//Data sent on Login, saves client-side requests
+				sendOnLoginData(socket, userId);
+		});
+};
+
+exportsObj.deleteUserConnection = function (socket) {
+
+	for (var client in clientsList) {
+
+		for (var i = 0; i < clientsList[client].identity.length; i++) {
+			//client[i] = nth connection of each client
+			
+			if (clientsList[client].identity[i].socket == socket) {
 
 
-			messages.updateDiscussion(message)
-				.then(function (data) {
+				if(clientsList[client].identity.length == 1) {
 
-					//IF THE RECIPIENT HAS CONNECTED
-					if (clientsList[data.to]) {
-						
-						//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-						clientsList[data.to].identity.forEach(function (clientConnection) {
+					clientsList[client].friends.forEach(function (friend) {
 
-								clientConnection.socket.emit('new message', data);
-							}
-						);
-					}
-				})
-		}
-			else {
+						if(clientsList[friend.id]) {
+							
+							clientsList[friend.id].identity.forEach(function (clientConnection) {
 
-				socket.emit('send message error', {
+								clientConnection.socket.emit('status change', [{id: client, online: false}]);
+							});
+						}
+					});
+				}
 
-					from: message.from,
-					content: message.content,
-					to: message.to,
-					err: 'NOT AUTHORISED, NOT SENT'
-				});
+				clientsList[client].identity.splice(i, 1);
+
+				if (clientsList[client].identity.length == 0) {
+					
+					delete clientsList[client];
+				}
+
+				break;
 			}
-	},
-	getMessages: function (socket, request) {
-
-		if(isAuthorised(socket, request)) {
-
-			messages.getMessages(request)
-				.then(function (data) {
-
-					socket.emit('messages chunk', data);
-
-				});
-
-		}
-			else {
-
-				socket.emit('messages chunk', {
-
-					messages: [],
-					err: 'NOT AUTHORISED!'
-				});
-			}
-	},
-	seeMessage: function (socket, message) {
-
-		var to = message.to;
-
-		//IF DEVICE OF MESSAGE.TO (RECIPIENT) IS MARKING IT AS SEEN
-		message.to = message.from;
-		message.from = to;
-
-		if(isAuthorised(socket, message)) {
-
-			messages.markMessageAsSeen(message)
-				.then(function (data) {
-
-					if (clientsList[data.message.from] && !data.err) {
-				
-						//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-						clientsList[data.message.from].identity.forEach(function (clientConnection) {
-								
-								clientConnection.socket.emit('see private message done', data.message);
-							}
-						);
-					}
-				});
-
-		}
-			else {
-				socket.emit('see private message error', {message: message ,err: 'NOT AUTHORISED'});
-			}
-	},
-	editMessage: function(socket, message) {
-
-		if(isAuthorised(socket, message)) {
-
-			messages.editMessage(message)
-				.then(function (data) {
-						
-					socket.emit('edit private message done', data);
-
-					if (clientsList[message.to] && !data.err) {
-				
-						//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
-						clientsList[message.to].identity.forEach(function (clientConnection) {
-
-								clientConnection.socket.emit('edit private message done', data.message);
-							}
-						);
-					}
-				});
-
-		}
-			else {
-				socket.emit('edit private message error', {message: message ,err: 'NOT AUTHORISED'});
-			}
+		};
 	}
-}
+};
+
+exportsObj.sendMessage = function (socket, message) {
+
+	if(isAuthorised(socket, message)) {
+
+
+		messages.updateDiscussion(message)
+			.then(function (data) {
+
+				//IF THE RECIPIENT HAS CONNECTED
+				if (clientsList[data.to]) {
+					
+					//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
+					clientsList[data.to].identity.forEach(function (clientConnection) {
+
+							clientConnection.socket.emit('new message', data);
+						}
+					);
+				}
+				else {
+
+					users.getUserNamesHelper(message.from)
+					.then(function (fromUser) {
+
+						var newMsgNotif = {
+							notifType: 'newMsgNotif',
+							story: 'sent you a message!',
+							from: fromUser,
+							to: message.to
+						};
+
+						notificationsController.addNotification(newMsgNotif);
+					});
+				}
+			})
+	}
+		else {
+
+			socket.emit('send message error', {
+
+				from: message.from,
+				content: message.content,
+				to: message.to,
+				err: 'NOT AUTHORISED, NOT SENT'
+			});
+		}
+};
+
+exportsObj.getMessages = function (socket, request) {
+
+	if(isAuthorised(socket, request)) {
+
+		messages.getMessages(request)
+			.then(function (data) {
+
+				socket.emit('messages chunk', data);
+
+			});
+
+	}
+		else {
+
+			socket.emit('messages chunk', {
+
+				messages: [],
+				err: 'NOT AUTHORISED!'
+			});
+		}
+};
+
+
+exportsObj.seeMessage = function (socket, message) {
+
+	var to = message.to;
+
+	//IF DEVICE OF MESSAGE.TO (RECIPIENT) IS MARKING IT AS SEEN
+	message.to = message.from;
+	message.from = to;
+
+	if(isAuthorised(socket, message)) {
+
+		messages.markMessageAsSeen(message)
+			.then(function (data) {
+
+				if (clientsList[data.message.from] && !data.err) {
+			
+					//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
+					clientsList[data.message.from].identity.forEach(function (clientConnection) {
+							
+							clientConnection.socket.emit('see private message done', data.message);
+						}
+					);
+				}
+			});
+
+	}
+		else {
+			socket.emit('see private message error', {message: message ,err: 'NOT AUTHORISED'});
+		}
+};
+
+exportsObj.editMessage = function(socket, message) {
+
+	if(isAuthorised(socket, message)) {
+
+		messages.editMessage(message)
+			.then(function (data) {
+					
+				socket.emit('edit private message done', data);
+
+				if (clientsList[message.to] && !data.err) {
+			
+					//SEND MESSAGE TO ALL CONNECTIONS OF THE CLIENT
+					clientsList[message.to].identity.forEach(function (clientConnection) {
+
+							clientConnection.socket.emit('edit private message done', data.message);
+						}
+					);
+				}
+			});
+
+	}
+		else {
+			socket.emit('edit private message error', {message: message ,err: 'NOT AUTHORISED'});
+		}
+};

@@ -113,7 +113,7 @@ exportsObj.getAllUsers = function(req, res){    //returns all the users withoute
 
 exportsObj.getUser = function(req, res){    //returns a user with an username parameter
 
-    var sendAllInfo = req.user.roles.indexOf('admin') > -1,
+    var sendAllInfo = req.user && req.user.roles.indexOf('admin') > -1,
         userIP = ip.address();
 
     //By Username <-- easier when route is /profile/:userName, such roots look better to users
@@ -158,7 +158,7 @@ exportsObj.getUser = function(req, res){    //returns a user with an username pa
                         };
                     }
 
-                    if ( !(sendAllInfo || req.user.username == req.params.username) ) {
+                    if ( !(sendAllInfo || (req.user && req.user.username == req.params.username)) ) {
 
                         //TO DO: implement public/private profile                        
                         
@@ -171,9 +171,11 @@ exportsObj.getUser = function(req, res){    //returns a user with an username pa
     });
 };
 
-exportsObj.getUserNames = function (req, res) {
+exportsObj.getUserNamesHelper = function(id) {
 
-    User.findOne({_id: req.params.id})
+    var deferred = Q.defer();
+
+    User.findOne({_id: id})
     .select('firstName')
     .select('lastName')
     .select('username')
@@ -182,10 +184,24 @@ exportsObj.getUserNames = function (req, res) {
 
         if(err || !user) {
 
-            res.status(404).end('Error :' + err);
+            deferred.reject(err);
         }
 
+        deferred.resolve(user);
+    });
+
+    return deferred.promise;
+}
+
+exportsObj.getUserNames = function (req, res) {
+
+    exportsObj.getUserNamesHelper(req.params.id)
+    .then(function (user) {
+
         res.status(200).send(user);
+    }, function (err) {
+
+        res.status(400).end('User names not found. Error: ' + err);
     });
 };
 
