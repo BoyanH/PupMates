@@ -27,6 +27,8 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
         $scope.user = identity.currentUser;
         $scope.placeIndexToBeDeleted = -1;  //when deleting a place which should be deleted from the array with places
         $scope.placeIdToBeDeleted = '';     //when deleting a place which should be deleted from the db
+        $scope.addRouteCoords = [];
+        $scope.routeToAdd = null;
 
         console.log("----data-----");
         console.log(data);
@@ -96,12 +98,28 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
             }, false);
 
         }
+        $scope.addRoute = function(){
+            $scope.addRouteTrigger = true;
+            listenerHandle = google.maps.event.addListener(map, 'click', function(event) {
+                if($scope.routeToAdd){
+                    MapService.deleteRoute($scope.routeToAdd);
+                }
+                $scope.addRouteCoords.push(event.latLng);
+                $scope.routeToAdd = MapService.displayRoute(map,$scope.addRouteCoords, true);
+
+            }, false);
+
+        }
         $scope.cancelAddPlace = function() { //cancels the adding of a place
             $scope.addPlaceTrigger = false;
             $scope.clickOnMapNewPlace = false;
             map.addListener('click', function() {}, false);
-            MapService.removePlace($scope.userMarkers[$scope.userMarkers.length - 1]);
+            MapService.deletePlace($scope.userMarkers[$scope.userMarkers.length - 1]);
             $scope.userMarkers.pop();
+        }
+        $scope.cancelRoutePlace = function(){
+            $scope.addRouteTrigger = false;
+            map.addListener('click', function() {}, false);
         }
         $scope.savePlace = function(place) { //saves the new place in the database
             if ($scope.markerAdded) {
@@ -129,20 +147,25 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
                 notifier.error("Please click on the map to add place");
             }
         }
-        /* TO DO ADDING REMOVING ETC OF ROUTES
-        var polyline = new google.maps.Polyline({
-            path: [
-                new google.maps.LatLng(47.3690239, 8.5380326),
-                new google.maps.LatLng(1.352083, 103.819836),
-                new google.maps.LatLng(-33.867139, 151.207114)
-            ],
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.5,
-            strokeWeight: 3,
-            geodesic: true
-        });
+        $scope.saveRoute = function(route){
+            route = route || {};
 
-        polyline.setMap(map);*/
+            route.creator = identity.currentUser._id;
+            console.log($scope.addRouteCoords);
+            var coords = [];
+            for(var i=0;i<$scope.addRouteCoords.length;i++){
+                var coord = {
+                    lat: $scope.addRouteCoords[i].C,
+                    lng: $scope.addRouteCoords[i].j
+                }
+                coords.push(coord);
+            }
+            route.coords = coords;
+
+            PlacesService.createRoute(route).then(function(success){
+                console.log(success);
+            })
+        }
 
         $scope.confirmDeletePlace = function() { //confirms that the user want to delete that place
             $(".pl-ask-window").css({
@@ -192,3 +215,8 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
         }
     });
 });
+
+
+/*
+
+*/

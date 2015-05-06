@@ -69,12 +69,26 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 
 		return deferred.promise;
 	}
+	function createRoute(route){
+		var deferred = $q.defer();
+
+		$http.post("/routes/" + identity.currentUser._id, route)
+		.success(function(){
+			deferred.resolve(true);
+		})
+		.error(function(){
+			deferred.resolve(false);
+		});
+
+		return deferred.promise;
+	}
 
 	return{
 		getPlacesOfUser: getPlacesOfUser,
 		getPlacesOfCurUser: getPlacesOfCurUser,
 		createPlace: createPlace,
 		deletePlace: deletePlace,
-		getPlaceExceptUser: getPlaceExceptUser
+		getPlaceExceptUser: getPlaceExceptUser,
+		createRoute: createRoute
 	}
 });

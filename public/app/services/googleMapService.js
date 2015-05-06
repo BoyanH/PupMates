@@ -80,6 +80,36 @@ app.factory('MapService', function(identity){
 		var latLng = new google.maps.LatLng(loc.lat * 1, loc.lng * 1);
     	map.setCenter(latLng);
 	}
+	function createCoords(coords){
+		var flightPlanCoordinates = [];
+		for(var i=0;i<coords.length;i++){
+			flightPlanCoordinates.push(new google.maps.LatLng(coords[i].lat*1, coords[i].lng*1));
+		}
+		return flightPlanCoordinates;
+	}
+	function displayRoute(map, coordsArray, user){
+		var color;
+		if(user){
+			color = "#0CA2FF"
+		}
+		else{
+			color = "#7ccc31"
+		}
+		  var flightPath = new google.maps.Polyline({
+		    path: coordsArray,
+		    geodesic: true,
+		    strokeColor: color,
+		    strokeOpacity: 1.0,
+		    strokeWeight: 3
+		  });
+
+  		flightPath.setMap(map);
+
+  		return flightPath;
+	}
+	function deleteRoute(route){
+		route.setMap(null);
+	}
 	return{
 		initMap: initMap,
 		addPlace: addPlace,
@@ -90,6 +120,9 @@ app.factory('MapService', function(identity){
 		setLatLngObj: setLatLngObj,
 		hideMarkersArray: hideMarkersArray,
 		showMarkersArray: showMarkersArray,
-		setMapCenter: setMapCenter
+		setMapCenter: setMapCenter,
+		createCoords: createCoords,
+		displayRoute: displayRoute,
+		deleteRoute: deleteRoute
 	}
 })
