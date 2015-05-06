@@ -6,7 +6,7 @@ div.wrapper-dog
 		div(ng-show="showChangeProfPhoto")
 			input#input-browse-photo(ng-file-select="onFileSelect($files)" type="file")
 			div.btn-change-dog-field(ng-click="browsePhotoTrigger()" translate) Browse Photo
-			div(ng-show="showChangeProfPhoto" ng-click="changeField('ProfPhoto')" translate) Save Change
+			div.btn-change-dog-field(ng-show="showChangeProfPhoto" ng-click="changeField('ProfPhoto')" translate) Save Change
 	div.dog-mid
 		div.dog-group
 			h2.dog-name {{dog.name}}

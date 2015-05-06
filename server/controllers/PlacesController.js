@@ -35,32 +35,69 @@ module.exports = {
 			res.status(200).end();
 		})
 	},
+	ratePlace:function(req, res, next){
+		var placeId = req.params.placeId;
+
+		Place.findOne({_id:placeId}, function(err, place){
+			if(err){
+				console.log("place not found: " + errr);
+				res.status(404);
+				res.end();
+			}
+			else{
+				place.rate++;
+				console.log(place.rate);
+				Place.update({_id:place._id}, place, function(err){
+					if(err){
+						console.log("couldnt update place: " + err);
+						res.end();	
+					}
+					res.status(200);
+					res.end();
+				})
+			}
+		})
+	},
 	deletePlace: function(req, res, next){	//deletes a place
 		
 		var placeId = req.body;
+		//console.log(placeId);
 
-		Place.findOne({_id: req.body}, function (err, place) {
-
+		var userId = req.query['user_id_access_token'];
+		if(placeId.placeId){
+			placeId = placeId.placeId;
+		}
+		Place.findOne({_id: placeId}, function (err, place) {
+			
 			if(err) {
 
 				res.status(401).send('Bad request!');
+				res.end();
 			}
-			
-			if(place.creator.toString() != req.user._id.toString() || req.user.roles.indexOf('admin') == -1) {
+			if(userId){
+				if(userId != place.creator.toString()){
+					res.status(403).send('Not authorised!');
+					res.end();
+				}
+
+			}
+			else if(place.creator.toString() != req.user._id.toString() || req.user.roles.indexOf('admin') == -1) {
 
 				res.status(403).send('Not authorised!');
+				res.end();
 			}
-				else {
+				
 
-					Place.remove({_id: placeId}, function (err){
-						if(err){
+			Place.remove({_id: placeId}, function (err){
+				if(err){
 
-							res.status(500).end('Err deleting place: ' + err);
-						}
-
-						res.status(200).end();
-					});			
+					res.status(500).end('Err deleting place: ' + err);
 				}
+				console.log("Place Deleted!");
+				res.status(200);
+				res.end();
+			});			
+				
 		});
 	},
 	getPlacesExcepUser: function(req, res, next){	//returns all the places of user except the user with id parameter
