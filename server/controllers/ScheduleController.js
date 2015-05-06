@@ -55,7 +55,7 @@ function inspectUserAchievment(userId, userAchsCollection, achIndex, achCallback
 				updatePoints(userId, userAchsCollection[achIndex].dogId,
 					ach.points);
 
-				
+
 				inspectUserAchievment(userId, userAchsCollection, achIndex + 1, achCallback);
 			});
 		}
@@ -232,9 +232,9 @@ module.exports = {
 
 		var rule = new schedule.RecurrenceRule();
 
-		// rule.hour = 0;
-		// rule.minute = 0;
-		rule.second = new Date().getSeconds() + 2;//0;
+		rule.hour = 0;
+		rule.minute = 0;
+		rule.second = 0;
 
 		scheduleSet.featuredSchedule = schedule.scheduleJob(rule, updateFeatured );
 

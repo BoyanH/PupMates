@@ -2,7 +2,8 @@
     bodyParser = require( 'body-parser' ),      //takes the module body-parser from nodejs, which parse data send from the client
     cookieParser = require( 'cookie-parser' ),  //takes the module cookie-parser from nodejs
     session = require( 'express-session' ),     //takes the module express-session from nodejs which creates a session on the client
-    passport = require('passport');             //takes the module passport from nodejs
+    passport = require('passport'),             //takes the module passport from nodejs
+    favicon = require('serve-favicon');
 
 module.exports = function ( app, config) { 
     app.set( 'view engine', 'jade' );                       //sets the view engine to be jade. Jade is engine for html
@@ -27,4 +28,5 @@ module.exports = function ( app, config) {
         res.header( 'Access-Control-Allow-Origin', '*' );
         next();
     } );
+    app.use(favicon(config.rootPath + '/public/img/favicon.ico'));
 }

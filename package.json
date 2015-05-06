@@ -27,6 +27,7 @@
     "passport": "^0.2.0",
     "passport-local": "^1.0.0",
     "q": "^1.1.2",
+    "serve-favicon": "^2.2.0",
     "socket.io": "^1.2.1",
     "visualcaptcha": "^0.1.0"
   },
