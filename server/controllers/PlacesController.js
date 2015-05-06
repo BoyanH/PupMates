@@ -35,6 +35,29 @@ module.exports = {
 			res.status(200).end();
 		})
 	},
+	ratePlace:function(req, res, next){
+		var placeId = req.params.placeId;
+
+		Place.findOne({_id:placeId}, function(err, place){
+			if(err){
+				console.log("place not found: " + errr);
+				res.status(404);
+				res.end();
+			}
+			else{
+				place.rate++;
+				console.log(place.rate);
+				Place.update({_id:place._id}, place, function(err){
+					if(err){
+						console.log("couldnt update place: " + err);
+						res.end();	
+					}
+					res.status(200);
+					res.end();
+				})
+			}
+		})
+	},
 	deletePlace: function(req, res, next){	//deletes a place
 		
 		var placeId = req.body;

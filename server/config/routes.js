@@ -26,6 +26,7 @@ module.exports = function (app) {
     });
     app.get('/places/:id', auth.isAuthenticated, controllers.places.getPlacesOfUser);   //returns the places of a user
     app.post('/places', auth.isAuthenticated, controllers.places.createPlace);   //creates a place
+    app.put('/rateplace/:placeId', auth.isAuthenticated, controllers.places.ratePlace);
     app.delete('/places', auth.isAuthenticated, controllers.places.deletePlace)  //deletes a place
     app.get('/places/allexceptofuser/:id', auth.isAuthenticated, controllers.places.getPlacesExcepUser) //get all the places except the places of user with id parameter
     app.post('/:userId/newdog', auth.isAuthenticated, controllers.dogs.createDog);      //creates a dog
