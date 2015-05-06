@@ -1,4 +1,4 @@
-div(ng-controller="LogoController")
+div.logo-container(ng-controller="LogoController")
 	a.title(href="#/" ng-show="!identity.currentUser")
 		img(src="/img/Pupmateslogoblue.png" alt="Doggy World")
 	a.title(href="#/profile/{{identity.currentUser.username}}/dogs" ng-show="identity.currentUser")
