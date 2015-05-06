@@ -148,19 +148,47 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
             }
         }
         $scope.saveRoute = function(route){
-            route = route || {};
+            route = route || {
+                description: "no description",
+                name: "no name",
+                private: false
+            };
 
-            route.creator = identity.currentUser._id;
-            console.log($scope.addRouteCoords);
+            $scope.routeToAdd.creator = identity.currentUser._id;
+            $scope.routeToAdd.description = route.description
+            $scope.routeToAdd.name = route.name;
+            $scope.routeToAdd.rate = 0;
+            $scope.routeToAdd.private = route.private;
             var coords = [];
+
+
             for(var i=0;i<$scope.addRouteCoords.length;i++){
+
                 var coord = {
-                    lat: $scope.addRouteCoords[i].C,
-                    lng: $scope.addRouteCoords[i].j
+                    lat: $scope.addRouteCoords[i].lat(),
+                    lng: $scope.addRouteCoords[i].lng()
                 }
                 coords.push(coord);
             }
-            route.coords = coords;
+            $scope.routeToAdd.coords = coords;
+
+            var distance = 0;
+            console.log(route);
+
+            for(var i=0, j=1;j<$scope.routeToAdd.coords.length;i++,j++){
+                distance += getDistanceFromLatLonInKm($scope.routeToAdd.coords[i].lat,
+                                                    $scope.routeToAdd.coords[i].lng,
+                                                    $scope.routeToAdd.coords[j].lat,
+                                                    $scope.routeToAdd.coords[j].lng)
+            }
+            console.log(distance);
+            $scope.routeToAdd.distance = distance.toFixed(2) * 1;
+
+            MapService.setInfoRoute(map, $scope.routeToAdd);
+
+            route.coords = $scope.routeToAdd.coords;
+            route.distance = $scope.routeToAdd.distance;
+            route.creator = $scope.routeToAdd.creator;
 
             PlacesService.createRoute(route).then(function(success){
                 console.log(success);
@@ -212,6 +240,26 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
             else if(whomPlaces == "other"){
                 MapService.setMapCenter(map, $scope.peoplePlaces[index]);
             }
+        }
+
+
+
+        function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2-lat1);  // deg2rad below
+            var dLon = deg2rad(lon2-lon1); 
+            var a = 
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+            Math.sin(dLon/2) * Math.sin(dLon/2)
+            ; 
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+            var d = R * c; // Distance in km
+            return d;
+        }
+
+        function deg2rad(deg) {
+            return deg * (Math.PI/180);
         }
     });
 });

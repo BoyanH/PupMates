@@ -110,6 +110,31 @@ app.factory('MapService', function(identity){
 	function deleteRoute(route){
 		route.setMap(null);
 	}
+	function setInfoRoute(map, route){
+		var i = route.coords.length / 2;
+		i = parseInt(i);
+		var position = new google.maps.LatLng(route.coords[i].lat, route.coords[i].lng);
+
+		var infowindow = new google.maps.InfoWindow({
+			content: '<div class="markerNameInfo">' 
+		            + (route.name || "no name") + '</div>' 
+		            + (route.description || "no description")  + "<br />" 
+		            + "rate: " + (route.rate || "0") + "<br />"
+		            + "distance: " + route.distance + " kms",
+		    position: position
+		    
+
+		});
+
+		route.info = infowindow;
+
+		google.maps.event.addListener(route, 'click', function(event) {
+		    route.info.position = event.latLng;
+		    route.info.open(map);
+		});
+		route.info.open(map);
+	}
+
 	return{
 		initMap: initMap,
 		addPlace: addPlace,
@@ -123,6 +148,7 @@ app.factory('MapService', function(identity){
 		setMapCenter: setMapCenter,
 		createCoords: createCoords,
 		displayRoute: displayRoute,
-		deleteRoute: deleteRoute
+		deleteRoute: deleteRoute,
+		setInfoRoute: setInfoRoute
 	}
 })

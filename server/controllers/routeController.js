@@ -18,7 +18,7 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 function deg2rad(deg) {
 	return deg * (Math.PI/180);
 }
-
+//Route.remove({}).exec(function(){console.log("alllll removed");});
 module.exports = {
 	getAllRoutes: function(req, res, next){
 		Route.find({}, function(err, routes){
@@ -33,14 +33,23 @@ module.exports = {
 	createRoute: function(req, res, next){
 		var route = req.body;
 		route.rate = 0;
-		console.log("---route---");
+
+		var distance = 0;
 		console.log(route);
-		console.log("---coords---");
-		console.log(route.coords);
-		res.end();
+
+		for(var i=0, j=1;j<route.coords.length;i++,j++){
+			distance += getDistanceFromLatLonInKm(route.coords[i].lat,
+												route.coords[i].lng,
+												route.coords[j].lat,
+												route.coords[j].lng)
+		}
+		console.log(distance);
+		route.distance = distance.toFixed(2) * 1;
+
 		Route.create(route, function(err){
 			if(err){
-				res.status(401).end('Bad request!');
+				console.log("err: " + err);
+				res.status(500).end('Bad request!');
 			}
 
 			res.status(200).end();
