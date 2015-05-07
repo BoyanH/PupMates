@@ -6,7 +6,7 @@
     <div ng-show="showChangeProfPhoto">
       <input id="input-browse-photo" ng-file-select="onFileSelect($files)" type="file"/>
       <div ng-click="browsePhotoTrigger()" translate="translate" class="btn-change-dog-field">Browse Photo</div>
-      <div ng-show="showChangeProfPhoto" ng-click="changeField('ProfPhoto')" translate="translate">Save Change</div>
+      <div ng-show="showChangeProfPhoto" ng-click="changeField('ProfPhoto')" translate="translate" class="btn-change-dog-field">Save Change</div>
     </div>
   </div>
   <div class="dog-mid">
@@ -38,7 +38,7 @@
     </div>
     <div class="dog-group">
       <div class="dog-food"><span translate="translate">Meals: </span>
-        <div ng-repeat="(indF, f) in dog.food track by $index" class="dog-field-fw">{{f}}
+        <div ng-repeat="(indF, f) in dog.food track by $index" class="dog-field-fw">{{f.clientTime}} 
           <div ng-show="showChangeFood" ng-click="removeFW('f', f)" class="delete-field">X</div>
         </div>
         <div ng-show="showChangeFood" class="add-fw">
@@ -51,7 +51,7 @@
     </div>
     <div class="dog-group">
       <div class="dog-walk"><span translate="translate">Walks: </span>
-        <div ng-repeat="(indW, w) in dog.walk track by $index" class="dog-field-fw">{{w}}
+        <div ng-repeat="(indW, w) in dog.walk track by $index" class="dog-field-fw">{{w.clientTime}} 
           <div ng-show="showChangeWalk" ng-click="removeFW('w', w)" class="delete-field">X</div>
         </div>
         <div ng-show="showChangeWalk" class="add-fw">

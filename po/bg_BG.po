@@ -12,10 +12,6 @@ msgstr ""
 "X-Generator: Poedit 1.7.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: public/app/main/controllers/menuController.js:113
-msgid "Please login first!"
-msgstr "Влезте първо, моля!"
-
 #: translations/templates/places/places.html:23
 msgid "- other people's places"
 msgstr "- чужди места за разходка"
@@ -35,6 +31,10 @@ msgstr "+Добави Приятел"
 #: translations/templates/profile/achievments.html:60
 msgid "<h2>Apply</h2>"
 msgstr "<h2>Кандидатствай</h2>"
+
+#: translations/dynamic/dynamic.html:26
+msgid "A friend request was sent!"
+msgstr "Покана за приятелство бе изпратена!"
 
 #: translations/templates/admin/achievmentReview.html:58
 msgid "Accept"
@@ -60,7 +60,7 @@ msgstr "Точки за Постижението"
 msgid "Achievments"
 msgstr "Постижения"
 
-#: translations/templates/notifications/notifications.html:13
+#: translations/templates/notifications/notifications.html:15
 msgid "Add"
 msgstr "Добави"
 
@@ -124,6 +124,7 @@ msgstr "РОЖДЕНА ДАТА"
 msgid "Birth Date: {{dog.birthDate}}"
 msgstr "Рождена Дата: {{dog.birthDate}}"
 
+#: translations/templates/main/home.html:22
 #: translations/templates/profile/profile.html:25
 msgid "Birthdate: {{dog.birthDate}}"
 msgstr "Рождена Дата: {{dog.birthDate}}"
@@ -134,6 +135,7 @@ msgid "BREED"
 msgstr "ПОРОДА"
 
 #: translations/templates/dog/dog.html:32
+#: translations/templates/main/home.html:23
 #: translations/templates/profile/profile.html:26
 msgid "Breed: {{dog.breed}}"
 msgstr "Порода: {{dog.breed}}"
@@ -143,6 +145,7 @@ msgid "Browse Photo"
 msgstr "Избери Снимка"
 
 #: translations/templates/directives/addPlaceDir.html:20
+#: translations/templates/directives/addRouteDir.html:20
 #: translations/templates/places/places.html:7
 msgid "Cancel"
 msgstr "Откажи"
@@ -185,6 +188,10 @@ msgstr "История на Чата"
 msgid "Chat with friends"
 msgstr "Чати с приятели"
 
+#: translations/templates/notifications/notifications.html:19
+msgid "Completed"
+msgstr "Завършено"
+
 #: translations/templates/account/signup.html:21
 msgid "Confirm Email"
 msgstr "Подтвърди Имейла"
@@ -192,6 +199,14 @@ msgstr "Подтвърди Имейла"
 #: translations/templates/account/signup.html:30
 msgid "Confirm Password"
 msgstr "Подтвърди Паролата"
+
+#: translations/dynamic/dynamic.html:22
+msgid "Couldnt delete place. Please refresh the page."
+msgstr "Мястото не бе изтрито. Моля презаредете страницата."
+
+#: translations/dynamic/dynamic.html:10
+msgid "Couldnt update dog, please login or refresh."
+msgstr "Кучето не бе променено, моля презаредете страницата."
 
 #: translations/templates/profile/achievments.html:21
 msgid "Create New"
@@ -205,7 +220,7 @@ msgstr "ДЕН"
 msgid "Decline"
 msgstr "Откажи"
 
-#: translations/templates/places/places.html:33
+#: translations/templates/places/places.html:34
 msgid "delete"
 msgstr "Изтрий"
 
@@ -213,7 +228,7 @@ msgstr "Изтрий"
 msgid "Delete"
 msgstr "Изтрий"
 
-#: translations/templates/notifications/notifications.html:14
+#: translations/templates/notifications/notifications.html:16
 msgid "Delete Request"
 msgstr "Изтрий Заявката"
 
@@ -230,13 +245,18 @@ msgid "DESCRIPTION (optional)"
 msgstr "ОПИСАНИЕ (избирателно)"
 
 #: translations/templates/directives/addPlaceDir.html:10
-#: translations/templates/places/places.html:45
+#: translations/templates/directives/addRouteDir.html:10
+#: translations/templates/places/places.html:46
 msgid "Description:"
 msgstr "Описание:"
 
 #: translations/templates/places/places.html:4
 msgid "Do you really want<br>to delete the place?"
 msgstr "Наистина ли искате да <br> изтриете мястото?"
+
+#: translations/dynamic/dynamic.html:9
+msgid "Dog added!"
+msgstr "Кучето бе добавено!"
 
 #: translations/templates/account/search.html:7
 msgid "Dog Owners"
@@ -247,7 +267,7 @@ msgid ""
 "Doggy world will remind you when<br>to give food to your dogs and when<br>to "
 "go just for a walk!"
 msgstr ""
-"Pup Mates ще ви напомни, кога <br> да нахраните вашите кучета и кога да ги "
+"бъдете известени, кога <br> да нахраните вашите кучета и кога да ги "
 "разходите!"
 
 #: translations/templates/account/search.html:16
@@ -267,9 +287,21 @@ msgstr "Промени заявката за потижение"
 msgid "Email"
 msgstr "Имейл"
 
+#: translations/templates/main/home.html:9
+msgid "Email: {{owner.email}}"
+msgstr "Имейл: {{owner.email}}"
+
 #: translations/templates/account/signup.html:22
 msgid "Emails do not match"
 msgstr "Имейлите не съвпадат"
+
+#: translations/templates/main/home.html:4
+msgid "Featured Dog Owners"
+msgstr "Изявили Се Стопани"
+
+#: translations/templates/main/home.html:17
+msgid "Featured Dogs"
+msgstr "Изявили Се Кучета"
 
 #: translations/templates/main/front-page.html:6
 msgid "Find the best places for your dog!"
@@ -278,6 +310,10 @@ msgstr "Намери най-добрите места за твоето куче
 #: translations/templates/account/signup.html:5
 msgid "First Name"
 msgstr "Първо Име"
+
+#: translations/dynamic/dynamic.html:16
+msgid "Friendship accepted!"
+msgstr "Приятелството бе прието!"
 
 #: translations/templates/main/front-page.html:10
 msgid "Having problems with your dog?"
@@ -291,9 +327,17 @@ msgstr "Скрий чуждите места"
 msgid "incorrect date"
 msgstr "невалидна дата"
 
+#: translations/dynamic/dynamic.html:8
+msgid "Incorrect Username or Password!"
+msgstr "Невалидно потребителско име / парола!"
+
 #: translations/templates/account/signup.html:18
 msgid "Invalid Email"
 msgstr "Невалиден Имейл"
+
+#: translations/dynamic/dynamic.html:5
+msgid "is starving! Why don't you feed him?"
+msgstr " е гладен! Защо не го нахраниш?"
 
 #: translations/templates/main/front-page.html:3
 msgid "Join the Biggest network for dog owners"
@@ -325,7 +369,7 @@ msgstr "Влез"
 msgid "Manage Users"
 msgstr "Контрол на потребители"
 
-#: translations/templates/notifications/notifications.html:9
+#: translations/templates/notifications/notifications.html:11
 msgid "Mark as seen"
 msgstr "Маркирай като видяно"
 
@@ -341,7 +385,7 @@ msgstr "Хранения:"
 msgid "Month"
 msgstr "Месец"
 
-#: translations/templates/places/places.html:27
+#: translations/templates/places/places.html:28
 msgid "My Places"
 msgstr "Моите Места"
 
@@ -359,6 +403,7 @@ msgid "NAME"
 msgstr "ИМЕ"
 
 #: translations/templates/directives/addPlaceDir.html:5
+#: translations/templates/directives/addRouteDir.html:5
 msgid "Name:"
 msgstr "Име:"
 
@@ -371,18 +416,23 @@ msgid "New owner's account"
 msgstr "Нов потребителски акаунт"
 
 #: translations/templates/directives/addPlaceDir.html:17
+#: translations/templates/directives/addRouteDir.html:17
 msgid "No"
 msgstr "Не"
 
-#: translations/templates/places/places.html:26
+#: translations/templates/places/places.html:27
 msgid "No information to display"
 msgstr "Няма информация за показване"
 
-#: translations/templates/notifications/notifications.html:5
+#: translations/templates/notifications/notifications.html:7
 msgid "Notifications"
 msgstr "Известия"
 
-#: translations/templates/places/places.html:28
+#: translations/dynamic/dynamic.html:15 translations/dynamic/dynamic.html:18
+msgid "Ooops! Please try again later!"
+msgstr "Опа! Моля опитайте по-късно!"
+
+#: translations/templates/places/places.html:29
 msgid "Other People's Places"
 msgstr "Чужди места за разходка"
 
@@ -425,6 +475,14 @@ msgstr "Избери Действие"
 msgid "Pick Dog"
 msgstr "Избери Куче"
 
+#: translations/dynamic/dynamic.html:19
+msgid "Place added!"
+msgstr "Мястото бе добавено!"
+
+#: translations/dynamic/dynamic.html:21
+msgid "Place removed successfully."
+msgstr "Мястото бе премахнато!"
+
 #: translations/templates/main/menu.html:11
 msgid "Places"
 msgstr "Места"
@@ -436,6 +494,14 @@ msgstr "Добри места за чудесна разходка"
 #: translations/templates/directives/newDogDir.html:27
 msgid "please choose a photo"
 msgstr "моля изберете снимка"
+
+#: translations/dynamic/dynamic.html:20
+msgid "Please click on the map to add place"
+msgstr "Моля кликнете на картата за да добавите място"
+
+#: translations/dynamic/dynamic.html:3
+msgid "Please login first!"
+msgstr "Влезте първо, моля!"
 
 #: translations/templates/directives/newDogDir.html:22
 msgid "please write a breed"
@@ -450,6 +516,7 @@ msgid "Points"
 msgstr "Точки"
 
 #: translations/templates/directives/addPlaceDir.html:15
+#: translations/templates/directives/addRouteDir.html:15
 msgid "Private:"
 msgstr "Лично:"
 
@@ -457,7 +524,7 @@ msgstr "Лично:"
 msgid "Profile of"
 msgstr "Профилът на"
 
-#: translations/templates/places/places.html:42
+#: translations/templates/places/places.html:43
 msgid "rate: {{pl.rate}}"
 msgstr "райтин: {{pl.rate}}"
 
@@ -478,6 +545,7 @@ msgid "Review New<br>Achievments"
 msgstr "Прегледай новите<br> постижения"
 
 #: translations/templates/directives/addPlaceDir.html:19
+#: translations/templates/directives/addRouteDir.html:19
 msgid "Save"
 msgstr "Запази"
 
@@ -502,6 +570,10 @@ msgstr "Изпрати"
 msgid "Send Message"
 msgstr "Изпрати Съобщение"
 
+#: translations/dynamic/dynamic.html:6
+msgid "sent you a message!"
+msgstr " ви изпрати съобщение!"
+
 #: translations/templates/places/places.html:16
 msgid "Show other people's places"
 msgstr "Покажи чуждите места за разходка"
@@ -521,6 +593,38 @@ msgstr "изход"
 #: translations/templates/main/front-page.html:8
 msgid "Stay connected with your friends!"
 msgstr "Поддържай връзка с приятелите си!"
+
+#: translations/dynamic/dynamic.html:25
+msgid "Successfully applied for a new achievment. Stay tuned!"
+msgstr "Успешно кандидатства за постижение. Успех!"
+
+#: translations/dynamic/dynamic.html:7
+msgid "Successfully logout!"
+msgstr "Успешен изход!"
+
+#: translations/dynamic/dynamic.html:11
+msgid "The birthdate has been changed!"
+msgstr "Рождената дата бе променена!"
+
+#: translations/dynamic/dynamic.html:14
+msgid "The food has been changed!"
+msgstr "Храненията бяха променено!"
+
+#: translations/dynamic/dynamic.html:12
+msgid "The profphoto has been changed!"
+msgstr "Профилната снимка бе променена!"
+
+#: translations/dynamic/dynamic.html:13
+msgid "The walk has been changed!"
+msgstr "Разходките бяха променени!"
+
+#: translations/dynamic/dynamic.html:27
+msgid "This user is already in your friends list!"
+msgstr "Потребителят вече Ви е приятел!"
+
+#: translations/dynamic/dynamic.html:17
+msgid "Unable to accept friendship. Please try again later!"
+msgstr "Приятелството не бе прието. Моля опитайте по-късно!"
 
 #: translations/templates/account/login.html:15
 msgid "User Name"
@@ -542,18 +646,26 @@ msgstr "Потребителското име съществува"
 msgid "Username is too short"
 msgstr "Потребителско име е твърде кратко"
 
+#: translations/dynamic/dynamic.html:24
+msgid "Video must be smaller than 10MB!"
+msgstr "Видеото трябва да бъде по-малко от 10 мегабайта!"
+
 #: translations/templates/admin/achievmentReview.html:31
 #: translations/templates/profile/achievments.html:50
 msgid "Video Proof"
 msgstr "Видео доказателство"
 
 #: translations/templates/dog/dog.html:53
-msgid "walks:"
-msgstr "разходки:"
+msgid "Walks:"
+msgstr "Разходки:"
 
-#: translations/templates/notifications/notifications.html:11
+#: translations/templates/notifications/notifications.html:13
 msgid "wants to add you as a friend!"
 msgstr "иска да ви добави като приятел!"
+
+#: translations/dynamic/dynamic.html:4
+msgid "wants to go for a walk!"
+msgstr " иска да се разходи!"
 
 #: translations/templates/profile/profile.html:20
 msgid "Welcome {{identity.currentUser.firstName}}!"
@@ -563,17 +675,20 @@ msgstr "Добре дошъл {{identity.currentUser.firstName}}!"
 msgid ""
 "Why not text a message to your buddy for <br>a walk with your dogs? Get in "
 "touch<br>with all your friends instantly."
-msgstr ""
-"Защо не пишеш на приятелчето си <br>да разходите кучетата си? Поддържай "
-"връзка<br>с всички по всяко време."
+msgstr "поддържате връзка с приятелите си <br>и да си помагате по всяко време."
 
 #: translations/templates/directives/newDogDir.html:12
 msgid "Year"
 msgstr "Година"
 
 #: translations/templates/directives/addPlaceDir.html:16
+#: translations/templates/directives/addRouteDir.html:16
 msgid "Yes"
 msgstr "Да"
+
+#: translations/dynamic/dynamic.html:23
+msgid "You can apply for only one achievment at a time!"
+msgstr "Предишното постижение още не е обработено!"
 
 #: translations/templates/directives/chatDir.html:7
 msgid "You currently have no friends"
@@ -584,8 +699,8 @@ msgid ""
 "You will have the chance to<br>exlpore your city for the best places<br>to "
 "enjoy a walk with your dog."
 msgstr ""
-"Вие ще имате шанса да<br>посетите най-удобните и близки места<br>за разходка "
-"на домашния ви любимец."
+" имате шанса да<br>посетите най-удобните и близки места<br>за разходка на "
+"домашния ви любимец."
 
 #: translations/templates/main/front-page.html:4
 msgid "You will..."
@@ -594,6 +709,9 @@ msgstr "Вие ще..."
 #: translations/templates/account/signup.html:26
 msgid "Your password is too short."
 msgstr "Паролата е твърде кратка"
+
+#~ msgid "walks:"
+#~ msgstr "разходки:"
 
 #~ msgid "Add Food"
 #~ msgstr "Добави Хранене"

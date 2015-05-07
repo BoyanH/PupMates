@@ -43,6 +43,7 @@ module.exports = function (app) {
     app.get('/discussions', auth.isAuthenticated, controllers.messages.getUsersDiscussions);    //returns the discussions of a user
     app.get('/img/profPhoto/:id', controllers.users.getProfPhoto);  //returns the profile photo of a user
     app.get('/:userId/imgdog/:dogId', controllers.dogs.getDogProfPhoto);    //returns the profile photo of a dog
+    app.get('/imgdog/:dogId', controllers.dogs.getDogProfPhoto);
     app.post('/login',auth.login);  //does a login
     app.post('/logout', auth.logout); //does a logout
     app.get('/api/*', function(req,res){    //if it is called smth from the api/* then returned not found if it is not returned the data till here

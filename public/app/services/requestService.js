@@ -126,6 +126,10 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
         getUserNames: function (id) {
 
             return getData('/api/users/names/' + id);
+        },
+        getFeaturedProfiles: function () {
+
+            return getData('/api/featured');
         }
     };
 });

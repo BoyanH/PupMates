@@ -146,9 +146,14 @@ function queryFeaturedProfiles() {
 		    .select('lastName')
 		    .select('username')
 		    .select('_id')
+		    .select('email')
 		    .exec(function (err, userProfile) {
 
 				if(userProfile) {
+
+					userProfile = userProfile.toObject();
+					userProfile.points = userPoints[userProfile._id];
+
 					topUserProfiles.push(userProfile);
 				}
 
@@ -174,6 +179,10 @@ function queryFeaturedProfiles() {
 			.exec(function (err, dogProfile) {
 
 				if(dogProfile) {
+
+					dogProfile = dogProfile.toObject();
+					dogProfile.points = dogPoints[dogProfile._id];
+
 					topDogProfiles.push(dogProfile);
 				}
 

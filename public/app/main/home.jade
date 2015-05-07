@@ -1,1 +1,23 @@
 div#home-container
+	div.featured-container
+		div.title(translate) Featured Dog Owners
+		div.prof-dog-container(ng-repeat="owner in featuredUsers track by $index" ng-click="goToProfile(owner.username)")
+			div.name-container
+				h3 {{owner.username}}
+			div(translate) Email: {{owner.email}}
+			div.description-pic-container
+				div.pic-container
+					img(src="/img/profPhoto/{{owner._id}}")
+				div.description Score: {{owner.points}}
+	div.featured-container
+		div.title(translate) Featured Dogs
+		div.prof-dog-container(ng-repeat="dog in featuredDogs track by $index" ng-click="goToDogRoute(dog._id)")
+			div.name-container
+				h3 {{dog.name}}
+			div.birthdate(translate) Birthdate: {{dog.birthDate}}
+			div.breed(translate) Breed: {{dog.breed}}
+			div.description-pic-container
+				div.pic-container
+					img(src="/imgdog/{{dog._id}}")
+				div.description {{dog.description}}
+				div.description Score: {{dog.points}}
