@@ -1,0 +1,1 @@
+start  mongod --dbpath E:\Workspace\WebApps\PupMates\DB
