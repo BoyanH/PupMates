@@ -82,6 +82,33 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 
 		return deferred.promise;
 	}
+	function getRoutesOfCurUser(){
+		var deferred = $q.defer();
+
+		$http.get('/routes/' + identity.currentUser._id).success(function(routes){
+			if(routes){
+				deferred.resolve(routes);
+			}
+			else{
+				deferred.reject(false);
+			}
+		}).error(function(err){
+			deferred.reject(err);
+		})
+
+		return deferred.promise;
+	}
+	function getRoutesExceptUser(id){	//gets the routes of the other users
+		var deferred = $q.defer();
+
+		$http.get("/allroutesexceptuser/" + id).success(function(routes){
+			deferred.resolve(routes);
+		}).error(function(){
+			deferred.resolve(false);
+		});
+
+		return deferred.promise;
+	}
 
 	return{
 		getPlacesOfUser: getPlacesOfUser,
@@ -89,6 +116,8 @@ app.factory('PlacesService', function($http, $q, identity, geolocation){
 		createPlace: createPlace,
 		deletePlace: deletePlace,
 		getPlaceExceptUser: getPlaceExceptUser,
-		createRoute: createRoute
+		createRoute: createRoute,
+		getRoutesOfCurUser: getRoutesOfCurUser,
+		getRoutesExceptUser: getRoutesExceptUser
 	}
 });

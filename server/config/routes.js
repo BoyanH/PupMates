@@ -61,7 +61,8 @@ module.exports = function (app) {
     //routes (polylines)
     app.get('/allroutes', auth.isAuthenticated, controllers.route.getAllRoutes);
     app.get('/routes/:userId', auth.isAuthenticated, controllers.route.getRoutesOfUser);
-    app.post('/routes/:userId', auth.isAuthenticated, controllers.route.createRoute)
+    app.post('/routes/:userId', auth.isAuthenticated, controllers.route.createRoute);
+    app.get('/allroutesexceptuser/:userId', auth.isAuthenticated, controllers.route.getRoutesOfAllExceptUser);
 
     // visualCaptcha initialisation routes
     app.get('/captcha/start/:howmany', controllers.captcha._start );

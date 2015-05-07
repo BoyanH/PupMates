@@ -59,7 +59,7 @@ module.exports = {
 	getRoutesOfUser: function(req, res, next){
 		var userId = req.params.userId;
 
-		Routes.find({creator: userId}, function(err, routes){
+		Route.find({creator: userId}, function(err, routes){
 			if(err){
 				res.status(500).end();
 			}
@@ -67,6 +67,21 @@ module.exports = {
 			console.log(routes);
 			res.send(routes);
 		})
+	},
+	getRoutesOfAllExceptUser: function(req, res, next){
+		var userId = req.params.userId;
+
+		Route.find({})
+		.where('creator').ne(userId)
+		.where("private").equals(false)
+		.exec(function(err, routes){
+			if(err){
+				console.log("Couldnt retrieve the users except one: " +err);
+				res.end();
+			}
+			res.send(routes);
+		});
+
 	}
 
 }

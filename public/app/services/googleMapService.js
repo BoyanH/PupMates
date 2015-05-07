@@ -87,6 +87,16 @@ app.factory('MapService', function(identity){
 		}
 		return flightPlanCoordinates;
 	}
+	function displayArrayRoutes(map, routes, user){
+		var lines = [];
+
+		for(var i=0;i<routes.length;i++){
+			lines.push(displayRoute(map, routes[i].coords, user));
+			setInfoRoute(map, routes[i]);
+		}
+
+		return lines;
+	}
 	function displayRoute(map, coordsArray, user){
 		var color;
 		if(user){
@@ -149,6 +159,7 @@ app.factory('MapService', function(identity){
 		createCoords: createCoords,
 		displayRoute: displayRoute,
 		deleteRoute: deleteRoute,
-		setInfoRoute: setInfoRoute
+		setInfoRoute: setInfoRoute,
+		displayArrayRoutes: displayArrayRoutes
 	}
 })

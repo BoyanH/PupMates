@@ -29,6 +29,8 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
         $scope.placeIdToBeDeleted = '';     //when deleting a place which should be deleted from the db
         $scope.addRouteCoords = [];
         $scope.routeToAdd = null;
+        $scope.userRoutes = [];
+        $scope.otherUsersRoutes = [];
 
         console.log("----data-----");
         console.log(data);
@@ -84,6 +86,17 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
                 console.log("error when getting places");
             }
         });
+        PlacesService.getRoutesOfCurUser().then(function(routes){
+            console.log(routes);
+            if(routes && routes.length > 0){
+                $scope.userRoutes = MapService.displayArrayRoutes(map, routes, true);
+            }
+        });
+        PlacesService.getRoutesExceptUser(identity.currentUser._id).then(function(routes){
+            if(routes && routes.length > 0){
+                $scope.otherUsersRoutes = MapService.displayArrayRoutes(map, routes, false);
+            }
+        })
 
         $scope.addPlace = function(location, place) {   //adds a places on the map
             $scope.addPlaceTrigger = true;
@@ -192,6 +205,8 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
 
             PlacesService.createRoute(route).then(function(success){
                 console.log(success);
+                $scope.addRouteTrigger = false;
+                map.addListener('click', function() {}, false);
             })
         }
 
