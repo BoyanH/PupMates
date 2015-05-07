@@ -80,6 +80,71 @@ app.factory('MapService', function(identity){
 		var latLng = new google.maps.LatLng(loc.lat * 1, loc.lng * 1);
     	map.setCenter(latLng);
 	}
+	function createCoords(coords){
+		var flightPlanCoordinates = [];
+		for(var i=0;i<coords.length;i++){
+			flightPlanCoordinates.push(new google.maps.LatLng(coords[i].lat*1, coords[i].lng*1));
+		}
+		return flightPlanCoordinates;
+	}
+	function displayArrayRoutes(map, routes, user){
+		var lines = [];
+
+		for(var i=0;i<routes.length;i++){
+			lines.push(displayRoute(map, routes[i].coords, user));
+			setInfoRoute(map, routes[i]);
+		}
+
+		return lines;
+	}
+	function displayRoute(map, coordsArray, user){
+		var color;
+		if(user){
+			color = "#0CA2FF"
+		}
+		else{
+			color = "#7ccc31"
+		}
+		  var flightPath = new google.maps.Polyline({
+		    path: coordsArray,
+		    geodesic: true,
+		    strokeColor: color,
+		    strokeOpacity: 1.0,
+		    strokeWeight: 3
+		  });
+
+  		flightPath.setMap(map);
+
+  		return flightPath;
+	}
+	function deleteRoute(route){
+		route.setMap(null);
+	}
+	function setInfoRoute(map, route){
+		var i = route.coords.length / 2;
+		i = parseInt(i);
+		var position = new google.maps.LatLng(route.coords[i].lat, route.coords[i].lng);
+
+		var infowindow = new google.maps.InfoWindow({
+			content: '<div class="markerNameInfo">' 
+		            + (route.name || "no name") + '</div>' 
+		            + (route.description || "no description")  + "<br />" 
+		            + "rate: " + (route.rate || "0") + "<br />"
+		            + "distance: " + route.distance + " kms",
+		    position: position
+		    
+
+		});
+
+		route.info = infowindow;
+
+		google.maps.event.addListener(route, 'click', function(event) {
+		    route.info.position = event.latLng;
+		    route.info.open(map);
+		});
+		route.info.open(map);
+	}
+
 	return{
 		initMap: initMap,
 		addPlace: addPlace,
@@ -90,6 +155,11 @@ app.factory('MapService', function(identity){
 		setLatLngObj: setLatLngObj,
 		hideMarkersArray: hideMarkersArray,
 		showMarkersArray: showMarkersArray,
-		setMapCenter: setMapCenter
+		setMapCenter: setMapCenter,
+		createCoords: createCoords,
+		displayRoute: displayRoute,
+		deleteRoute: deleteRoute,
+		setInfoRoute: setInfoRoute,
+		displayArrayRoutes: displayArrayRoutes
 	}
 })

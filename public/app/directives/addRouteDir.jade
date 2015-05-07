@@ -1,0 +1,17 @@
+div
+	form
+		div.pl-form-group
+			label(translate) Name: 
+			input.input-place(type="text" require="required" ng-model="route.name")
+		div.pl-form-group
+			div
+				label(translate) Description:
+			textarea.input-textarea(type="text" ng-model="route.description")
+		div.pl-form-group
+			label(translate) Private: 
+			input(type="radio" ng-model="route.private" value="true")
+			span(translate) Yes
+			input(type="radio" ng-model="route.private" value="false")
+			span(translate) No
+		button.pl-button(ng-disabled="saveBtnDisabled" ng-click="saveRoute(route)" translate) Save
+		button.pl-button(ng-click="cancelRoutePlace()" translate) Cancel

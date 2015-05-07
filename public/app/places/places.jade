@@ -11,7 +11,7 @@ div.view-wrapper
 		div#map-canvas
 		div
 			button.pl-button(ng-click="addPlace()" translate) Add Place
-			button.pl-button(ng-click="showHidePlaceDir('addRoute')" translate) Add Route
+			button.pl-button(ng-click="addRoute()" translate) Add Route
 			button.pl-button(ng-click="showOtherPeoplePlaces()" translate) Show other people's places
 			button.pl-button(ng-click="hideOtherPeoplePlaces()" translate) Hide other people's places
 			
@@ -24,6 +24,8 @@ div.view-wrapper
 				img(src="/img/marker-green.png")
 				span(translate) - other people's places
 		div(add-place ng-show="addPlaceTrigger")
+		div(add-route ng-show="addRouteTrigger")
+
 		div(ng-show="!user.places.length" translate) No information to display
 		button.switch-btn#btn-user-tab(ng-click="showAllPl = false;" 
 		ng-class="{'switch-btn-clicked': !showAllPl, 'switch-btn-not-clicked': showAllPl}" translate) My Places

@@ -11,6 +11,7 @@ var usersController = require('../controllers/UsersController.js'),
     achievmentsController = require('../controllers/AchievmentsController.js'),
     allDataController = require('../controllers/AllData.js'),
     scheduleController = require('../controllers/ScheduleController.js');
+    routeController = require('../controllers/routeController.js'),
 
 module.exports = {
     users: usersController,
@@ -23,5 +24,6 @@ module.exports = {
     search: searchController,
     achievments: achievmentsController,
     allData: allDataController,
-    schedule: scheduleController
+    schedule: scheduleController,
+    route: routeController
 }

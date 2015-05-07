@@ -5,6 +5,7 @@
     discussion = require('../models/Discussion.js'),
     achievment = require('../models/Achievment.js'),
     pendingAchievment = require('../models/PendingAchievment'),
+    route = require('../models/Route.js'),
     usersAchievments = require('../models/UserAchievments.js');
 
 module.exports = function(config){

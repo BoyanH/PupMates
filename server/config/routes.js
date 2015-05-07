@@ -58,7 +58,12 @@ module.exports = function (app) {
     app.post('/admin/achievments', auth.isInRole('admin'), controllers.achievments.acceptAchievment);
     app.delete('/admin/achievments', auth.isInRole('admin'), controllers.achievments.deletePendingAch);
     app.get('/admin/achievments/video/:id', auth.isInRole('admin'), controllers.achievments.getApprovalVideo);
-    
+
+    //routes (polylines)
+    app.get('/allroutes', auth.isAuthenticated, controllers.route.getAllRoutes);
+    app.get('/routes/:userId', auth.isAuthenticated, controllers.route.getRoutesOfUser);
+    app.post('/routes/:userId', auth.isAuthenticated, controllers.route.createRoute);
+    app.get('/allroutesexceptuser/:userId', auth.isAuthenticated, controllers.route.getRoutesOfAllExceptUser);
 
     // visualCaptcha initialisation routes
     app.get('/captcha/start/:howmany', controllers.captcha._start );

@@ -27,6 +27,10 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
         $scope.user = identity.currentUser;
         $scope.placeIndexToBeDeleted = -1;  //when deleting a place which should be deleted from the array with places
         $scope.placeIdToBeDeleted = '';     //when deleting a place which should be deleted from the db
+        $scope.addRouteCoords = [];
+        $scope.routeToAdd = null;
+        $scope.userRoutes = [];
+        $scope.otherUsersRoutes = [];
 
         console.log("----data-----");
         console.log(data);
@@ -82,6 +86,17 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
                 console.log("error when getting places");
             }
         });
+        PlacesService.getRoutesOfCurUser().then(function(routes){
+            console.log(routes);
+            if(routes && routes.length > 0){
+                $scope.userRoutes = MapService.displayArrayRoutes(map, routes, true);
+            }
+        });
+        PlacesService.getRoutesExceptUser(identity.currentUser._id).then(function(routes){
+            if(routes && routes.length > 0){
+                $scope.otherUsersRoutes = MapService.displayArrayRoutes(map, routes, false);
+            }
+        })
 
         $scope.addPlace = function(location, place) {   //adds a places on the map
             $scope.addPlaceTrigger = true;
@@ -96,12 +111,28 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
             }, false);
 
         }
+        $scope.addRoute = function(){
+            $scope.addRouteTrigger = true;
+            listenerHandle = google.maps.event.addListener(map, 'click', function(event) {
+                if($scope.routeToAdd){
+                    MapService.deleteRoute($scope.routeToAdd);
+                }
+                $scope.addRouteCoords.push(event.latLng);
+                $scope.routeToAdd = MapService.displayRoute(map,$scope.addRouteCoords, true);
+
+            }, false);
+
+        }
         $scope.cancelAddPlace = function() { //cancels the adding of a place
             $scope.addPlaceTrigger = false;
             $scope.clickOnMapNewPlace = false;
             map.addListener('click', function() {}, false);
-            MapService.removePlace($scope.userMarkers[$scope.userMarkers.length - 1]);
+            MapService.deletePlace($scope.userMarkers[$scope.userMarkers.length - 1]);
             $scope.userMarkers.pop();
+        }
+        $scope.cancelRoutePlace = function(){
+            $scope.addRouteTrigger = false;
+            map.addListener('click', function() {}, false);
         }
         $scope.savePlace = function(place) { //saves the new place in the database
             if ($scope.markerAdded) {
@@ -129,20 +160,55 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
                 notifier.error("Please click on the map to add place");
             }
         }
-        /* TO DO ADDING REMOVING ETC OF ROUTES
-        var polyline = new google.maps.Polyline({
-            path: [
-                new google.maps.LatLng(47.3690239, 8.5380326),
-                new google.maps.LatLng(1.352083, 103.819836),
-                new google.maps.LatLng(-33.867139, 151.207114)
-            ],
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.5,
-            strokeWeight: 3,
-            geodesic: true
-        });
+        $scope.saveRoute = function(route){
+            route = route || {
+                description: "no description",
+                name: "no name",
+                private: false
+            };
 
-        polyline.setMap(map);*/
+            $scope.routeToAdd.creator = identity.currentUser._id;
+            $scope.routeToAdd.description = route.description
+            $scope.routeToAdd.name = route.name;
+            $scope.routeToAdd.rate = 0;
+            $scope.routeToAdd.private = route.private;
+            var coords = [];
+
+
+            for(var i=0;i<$scope.addRouteCoords.length;i++){
+
+                var coord = {
+                    lat: $scope.addRouteCoords[i].lat(),
+                    lng: $scope.addRouteCoords[i].lng()
+                }
+                coords.push(coord);
+            }
+            $scope.routeToAdd.coords = coords;
+
+            var distance = 0;
+            console.log(route);
+
+            for(var i=0, j=1;j<$scope.routeToAdd.coords.length;i++,j++){
+                distance += getDistanceFromLatLonInKm($scope.routeToAdd.coords[i].lat,
+                                                    $scope.routeToAdd.coords[i].lng,
+                                                    $scope.routeToAdd.coords[j].lat,
+                                                    $scope.routeToAdd.coords[j].lng)
+            }
+            console.log(distance);
+            $scope.routeToAdd.distance = distance.toFixed(2) * 1;
+
+            MapService.setInfoRoute(map, $scope.routeToAdd);
+
+            route.coords = $scope.routeToAdd.coords;
+            route.distance = $scope.routeToAdd.distance;
+            route.creator = $scope.routeToAdd.creator;
+
+            PlacesService.createRoute(route).then(function(success){
+                console.log(success);
+                $scope.addRouteTrigger = false;
+                map.addListener('click', function() {}, false);
+            })
+        }
 
         $scope.confirmDeletePlace = function() { //confirms that the user want to delete that place
             $(".pl-ask-window").css({
@@ -190,5 +256,30 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
                 MapService.setMapCenter(map, $scope.peoplePlaces[index]);
             }
         }
+
+
+
+        function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2-lat1);  // deg2rad below
+            var dLon = deg2rad(lon2-lon1); 
+            var a = 
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+            Math.sin(dLon/2) * Math.sin(dLon/2)
+            ; 
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+            var d = R * c; // Distance in km
+            return d;
+        }
+
+        function deg2rad(deg) {
+            return deg * (Math.PI/180);
+        }
     });
 });
+
+
+/*
+
+*/
