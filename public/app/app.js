@@ -104,5 +104,5 @@ app.run(['$route', '$rootScope', '$location', function ($route, $rootScope, $loc
 app.run(['gettextCatalog', function (gettextCatalog) {
 
     gettextCatalog.currentLanguage = localStorage.getItem('pupmates-language') || 'bg_BG';
-    gettextCatalog.debug = true;
+    gettextCatalog.debug = false;
 }]);
