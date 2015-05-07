@@ -108,6 +108,17 @@ h1, h2, h3, a{
 .float-left{
 	float: left;
 }
+div#home-container {
+
+	width: 80%;
+	height: 200px;
+	margin: 0 auto;
+
+	background-color: #7DCC31;
+	opacity: 0.7;
+	border-top-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+}
 .btn-nav-login{
 	display: inline-block;
 	width: 60px;
@@ -528,6 +539,10 @@ div.fr-buttons {
 
 @media only screen and (max-width: 768px) {
 
+	div#home-container {
+
+		width: 90%;
+	}
 	.popup{
 		margin-left: -150px;
 	}

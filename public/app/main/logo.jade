@@ -1,5 +1,5 @@
 div.logo-container(ng-controller="LogoController")
 	a.title(href="#/" ng-show="!identity.currentUser")
 		img(src="/img/PupmateslogoFINAL.png" alt="Doggy World")
-	a.title(href="#/profile/{{identity.currentUser.username}}/dogs" ng-show="identity.currentUser")
+	a.title(href="#/home" ng-show="identity.currentUser")
 		img(src="/img/PupmateslogoFINAL.png" alt="Doggy World")

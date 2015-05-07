@@ -46,7 +46,6 @@ module.exports = {
 			}
 			else{
 				place.rate++;
-				console.log(place.rate);
 				Place.update({_id:place._id}, place, function(err){
 					if(err){
 						console.log("couldnt update place: " + err);

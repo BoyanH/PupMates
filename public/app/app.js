@@ -30,7 +30,12 @@ app.config(function($routeProvider, $locationProvider){
         .when('/', {
             templateUrl: 'partials/main/front-page',
             controller: 'FrontPageController',
-            //resolve: routeUserCheck.notAuthenticated
+            resolve: routeUserCheck.notAuthenticated
+        })
+        .when('/home', {
+            templateUrl: 'partials/main/home',
+            controller: 'HomeController',
+            resolve: routeUserCheck.isAuthenticated
         })
         .when('/places', {
             templateUrl: '/partials/places/places',
@@ -63,7 +68,7 @@ app.config(function($routeProvider, $locationProvider){
             templateUrl: 'partials/dog/dog',
             controller: 'DogController'
         })
-        .otherwise({ redirectTo: '/' });
+        .otherwise({ redirectTo: '/home' });
 
 });
 app.run(function($rootScope, $location){    //if occurs an error on the route change the application goes to the front-page
