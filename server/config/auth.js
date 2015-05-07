@@ -35,7 +35,6 @@ module.exports = {
     isAuthenticated: function(req, res, next){  //function which checks if an user is authenticated
         var user_id_access_token = req.query['user_id_access_token'];
         if(user_id_access_token != "" && user_id_access_token){
-            console.log(user_id_access_token);
             User.findOne({_id: user_id_access_token}).select("_id").exec(function(err, userId){
                 if(err || !userId){
                     res.status(403);

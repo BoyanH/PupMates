@@ -107,6 +107,7 @@ module.exports = {
 
 			if (err || !discussion) {
 
+				console.log(err);
 				deffered.resolve({
 
 					messages: [],

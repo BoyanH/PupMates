@@ -26,7 +26,6 @@ module.exports = {
 				res.status(500).end();
 			}
 			console.log("---all routes----");
-			console.log(routes);
 			res.send(routes);
 		})
 	},
@@ -35,7 +34,6 @@ module.exports = {
 		route.rate = 0;
 
 		var distance = 0;
-		console.log(route);
 
 		for(var i=0, j=1;j<route.coords.length;i++,j++){
 			distance += getDistanceFromLatLonInKm(route.coords[i].lat,
@@ -43,7 +41,6 @@ module.exports = {
 												route.coords[j].lat,
 												route.coords[j].lng)
 		}
-		console.log(distance);
 		route.distance = distance.toFixed(2) * 1;
 
 		Route.create(route, function(err){
@@ -64,7 +61,6 @@ module.exports = {
 				res.status(500).end();
 			}
 			console.log("---user routes----");
-			console.log(routes);
 			res.send(routes);
 		})
 	},

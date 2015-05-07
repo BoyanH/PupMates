@@ -192,7 +192,6 @@ module.exports = {
 
         UserAchievments.findOne({userId: req.params.userId}, function (err, userAchievments) {
 			console.log("err: " + err);
-			console.log("achievments: " + userAchievments);
             if(err || !userAchievments) {
 
                 res.status(404).send({});
