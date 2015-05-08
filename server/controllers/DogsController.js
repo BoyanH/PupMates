@@ -132,9 +132,11 @@ module.exports = {
 				res.contentType('image/jpg');
 	            res.send(defaultImage);
 			}
-			
-			res.contentType(d.profPhoto.contentType);
-			res.send(d.profPhoto.data);
+			else {
+				
+				res.contentType(d.profPhoto.contentType);
+				res.send(d.profPhoto.data);
+			}
 		});
 	},
 	updateDog: function(req, res, next){		//updates a dog in the database
