@@ -4,7 +4,10 @@ var mongoose = require('mongoose'),
 	Dog = mongoose.model('Dog'),
 	User = mongoose.model('User'),
 	Q = require('q'),
-	scheduleController = require('./ScheduleController.js');
+	scheduleController = require('./ScheduleController.js'),
+	fs = require('fs'),
+    defaultImagePath = "public/img/default-dog.jpg",
+    defaultImage = fs.readFileSync(defaultImagePath);
 
 
 function setServerTime(timeObj) {
@@ -123,6 +126,11 @@ module.exports = {
 			if(err || !d) {
 
 				res.status(404).end('Error: ' + err);
+			}
+			else if(!d.profPhoto || !d.profPhoto.contentType || !d.profPhoto.data) {
+
+				res.contentType('image/jpg');
+	            res.send(defaultImage);
 			}
 			
 			res.contentType(d.profPhoto.contentType);

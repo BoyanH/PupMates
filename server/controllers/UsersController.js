@@ -1,4 +1,7 @@
-﻿var exportsObj = {};
+﻿var fs = require('fs'),
+    exportsObj = {},
+    defaultImagePath = "public/img/default-user.jpg",
+    defaultImage = fs.readFileSync(defaultImagePath);
 
 function validateEmail(email) { //function with validates an email using a regex
 
@@ -218,13 +221,10 @@ exportsObj.getProfPhoto = function(req, res){   //returns the profile photo of a
         else if(!user) {
             res.status(404).send({reason: 'no such user'});
         }
-        else if(!user.profPhoto) {
+        else if(!user.profPhoto || !user.profPhoto.contentType) {
 
-            res.status(404).send({reason: 'No profile photo'});
-        }
-        else if(!user.profPhoto.contentType) {
-
-            res.status(404).send({reason: 'No profile photo'});
+            res.contentType('image/jpg');
+            res.send(defaultImage);
         }
 
         else {
