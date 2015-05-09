@@ -9,7 +9,8 @@ div(ng-controller="NotificationsController" off-click="hideNotif()")
 				hr
 				ul
 					li.notif-container(ng-repeat="notification in notifications", ng-class="{unseen: !notification.seen}" ng-click="handleNotifClick(notification)")
-						img.notif-img(src="/imgdog/{{notification.from.id}}")
+						img.notif-img(ng-show="notification.from.username" ng-src="/img/profPhoto/{{notification.from.id}}")
+						img.notif-img(ng-hide="notification.from.username" ng-src="/imgdog/{{notification.from.id}}")
 						div.notif-read(ng-hide="notification.seen", ng-click="markAsSeen(notification)")
 							img(src="http://info.catchop.fr/assets/img/glyphicons/glyphicons_051_eye_open.png")
 							span.info-box.mas-helper(translate) Mark as seen

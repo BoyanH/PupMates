@@ -461,7 +461,8 @@ div#notif #notif-count {
 }
 img.notif-img {
 
-	width: 80px;
+	max-width: 50px;
+	max-height: 60px;
 	float: left;
 	clear: right;
 }
