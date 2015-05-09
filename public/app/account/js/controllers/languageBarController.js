@@ -1,5 +1,12 @@
 app.controller("LanguageBarController", function($scope, $rootScope, gettextCatalog){
 
+	var defaultLanguage = window.localStorage.getItem('default-language');
+
+	if(defaultLanguage) {
+
+		$rootScope.crntLanguage = defaultLanguage;
+	}
+
 	$scope.languageData = [
 	    {
 	        text: "Български",
@@ -19,6 +26,8 @@ app.controller("LanguageBarController", function($scope, $rootScope, gettextCata
 
 		$rootScope.crntLanguage = language;
 		gettextCatalog.setCurrentLanguage(language);
+
+		window.localStorage.setItem('default-language', language);
 	};
 
 	$('#lang-bar').ddslick({ 
