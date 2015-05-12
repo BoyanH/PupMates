@@ -31,6 +31,7 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
         $scope.routeToAdd = null;
         $scope.userRoutes = [];
         $scope.otherUsersRoutes = [];
+        $scope.AddRouteDraw=false;
 
         console.log("----data-----");
         console.log(data);
@@ -113,12 +114,15 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
         }
         $scope.addRoute = function(){
             $scope.addRouteTrigger = true;
+            $scope.AddRouteDraw = true;
             listenerHandle = google.maps.event.addListener(map, 'click', function(event) {
-                if($scope.routeToAdd){
-                    MapService.deleteRoute($scope.routeToAdd);
+                if($scope.AddRouteDraw){
+                    if($scope.routeToAdd){
+                        MapService.deleteRoute($scope.routeToAdd);
+                    }
+                    $scope.addRouteCoords.push(event.latLng);
+                    $scope.routeToAdd = MapService.displayRoute(map,$scope.addRouteCoords, true);
                 }
-                $scope.addRouteCoords.push(event.latLng);
-                $scope.routeToAdd = MapService.displayRoute(map,$scope.addRouteCoords, true);
 
             }, false);
 
@@ -132,10 +136,14 @@ app.controller('PlacesController', function($scope, MapService, PlacesService
         }
         $scope.cancelRoutePlace = function(){
             $scope.addRouteTrigger = false;
+            $scope.AddRouteDraw = false;
             map.addListener('click', function() {}, false);
         }
         $scope.savePlace = function(place) { //saves the new place in the database
             if ($scope.markerAdded) {
+
+                $scope.AddRouteDraw = false;
+
                 place.creator = identity.currentUser._id;
                 var marker = $scope.userMarkers[$scope.userMarkers.length - 1];
                 var lat = marker.getPosition().lat();
