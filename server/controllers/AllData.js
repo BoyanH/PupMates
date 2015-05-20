@@ -10,9 +10,16 @@ module.exports = {
 	getAllDataOfUserByUserName: function(req, res, next){	//returns all the data of a user - his places dogs achievemetns and himself
 
 		User.update({username: username}, 
-			{
+			{ $addToSet:
 				{
 					seenFrom: ip.address()
+				}
+			},
+			function (err, success) {
+
+				if(err) {
+
+					console.log('Seen list not updated: ' + err);
 				}
 			}
 		);
