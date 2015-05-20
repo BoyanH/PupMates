@@ -3,10 +3,20 @@ var mongoose = require('mongoose'),	//gets the mongoose module and all the model
 	Dog = mongoose.model('Dog'),
 	Place = mongoose.model("Place"),
 	UserAchievments = mongoose.model("UserAchievments"),
-	Achievment = mongoose.model("Achievment");
+	Achievment = mongoose.model("Achievment"),
+	ip = require('ip');
 
 module.exports = {
 	getAllDataOfUserByUserName: function(req, res, next){	//returns all the data of a user - his places dogs achievemetns and himself
+
+		User.update({username: username}, 
+			{
+				{
+					seenFrom: ip.address()
+				}
+			}
+		);
+
 		var username = req.params.username;
 		userGlobal = {};	//creates global user which at the end will be returned
 		userGlobal.dogs = [];
