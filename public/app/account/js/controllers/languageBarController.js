@@ -27,7 +27,7 @@ app.controller("LanguageBarController", function($scope, $rootScope, gettextCata
 		$rootScope.crntLanguage = language;
 		gettextCatalog.setCurrentLanguage(language);
 
-		window.localStorage.setItem('default-language', language);
+		localStorage.setItem('pupmates-language', language);
 	};
 
 	$('#lang-bar').ddslick({ 
