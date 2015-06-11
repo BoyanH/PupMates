@@ -41,7 +41,10 @@ app.controller('ProfileRouteController', function($scope, $location, identity,
                     notifier.success('Friendship accepted!');
                 }
                 else if(data == 'already exists') {
-                notifier.error('This user is already in your friends list!');
+                    notifier.error('This user is already in your friends list!');
+                }
+                else if(data == 'already sent') {
+                    notifier.error('A friend request is already sent!');
                 }
             });
         }

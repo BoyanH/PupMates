@@ -42,6 +42,14 @@ function userVerification(newUserData) {    //function which verify the data of 
     return failedFields;
 }
 
+function handleFriendAddToSet (err, success) {
+
+    if(err) {
+
+        console.log('Error while saving new friend: ' + err);
+    }
+}
+
 module.exports = exportsObj;
 
 var User = require('mongoose').model('User'),
@@ -317,7 +325,11 @@ exportsObj.searchUsersDynamically = function(req, res) { //search in the databas
 
 exportsObj.befriend = function (req, res) { //makes a friend request
 
-    var userID = req.user._id;
+    var userID = req.user._id,
+        newFriend = {
+            id: req.body.friendID,
+            username: req.body.friendUsername
+        };
 
     User.findOne({_id: userID}, function (err, user) {
 
@@ -341,11 +353,6 @@ exportsObj.befriend = function (req, res) { //makes a friend request
         if(user.friends.map(function(x) {return x.id; }).indexOf(req.body.friendID) == -1 &&
             user.friends.map(function(x) {return x.username; }).indexOf(req.body.friendUsername) == -1) {
 
-            var newFriend = {
-                id: req.body.friendID,
-                username: req.body.friendUsername
-            };
-
             if(userID == newFriend.id || req.user.username == newFriend.username) {
 
                 res.end('can\'t befriend yourself');
@@ -354,44 +361,45 @@ exportsObj.befriend = function (req, res) { //makes a friend request
 
             //If the requester recieved a friend request (notification) from the one he wants to add as friend
             if(frRequestFromUser) {
-            
-                user = user.toObject();
-                user.friends.push(newFriend);
 
                 User.findOne({_id: req.body.friendID}, function (err, friend) {
 
-                    friend = friend.toObject();
-                    friend.friends.push({
-                        id: user._id,
-                        username: user.username
+                    User.update(
+                        { _id: newFriend.id },
+                        { $addToSet: 
+                            {
+                                friends: 
+                                    {
+                                        id: user._id,
+                                        username: user.username
+                                    }
+                            } 
+                        },
+                        handleFriendAddToSet
+                    );
+
+                    User.update(
+                        { _id: user._id },
+                        { $addToSet: 
+                            {
+                                friends: newFriend
+                            } 
+                        },
+                        handleFriendAddToSet
+                    );
+
+                    req.body = frRequestFromUser;
+                    notificationsController.deleteNotification(req, res);
+
+                    notificationsController.addNewFriendship(user, friend)
+                    .then(function (data) {
+
+                        res.status(200).end('added');
+                    }, function (err) {
+
+                        console.log('New friendship err: ' + err);
+                        res.status(500).end('Err: ' + err);
                     });
-                    
-                    User.update({_id: req.body.friendID}, friend, function (err) {
-
-                        if(err) {
-
-                            res.end("err: " + err); //If this push fails, user.friends won't be updated too; primitive transaction ;)
-                        }
-                    });
-
-                    User.update({_id: userID}, user, function(err){
-                        if(err){
-                            res.end("err: " + err);
-                        }
-                    });
-
-                        req.body = frRequestFromUser;
-                        notificationsController.deleteNotification(req, res);
-
-                        notificationsController.addNewFriendship(user, friend)
-                        .then(function (data) {
-
-                            res.status(200).end('added');
-                        }, function (err) {
-
-                            console.log('New friendship err: ' + err);
-                            res.status(500).end('Err: ' + err);
-                        });
                 })
                 .select("-albums")      //exclude this fields
                 .select("-dogs")
@@ -418,8 +426,7 @@ exportsObj.befriend = function (req, res) { //makes a friend request
                     res.status(200).end('requested');
                 }, function (err) {
 
-                    console.log(err);
-                    res.status(500).end('err: ' + err);
+                    res.status(200).end('already sent');
                 });
             }
         }
