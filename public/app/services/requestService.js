@@ -130,6 +130,10 @@ app.factory('requester', function(identity, $rootScope, $q, $http, DogService) {
         getFeaturedProfiles: function () {
 
             return getData('/api/featured');
+        },
+        searchUsers: function (input) {
+
+            return getData('/api/userSearch/' + input);
         }
     };
 });

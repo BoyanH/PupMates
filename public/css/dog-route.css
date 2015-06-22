@@ -14,7 +14,7 @@
 }
 .dog-left{
 	width: 25%;
-	min-height: 400px;
+	min-height: 420px;
 	height: auto;
 	background: #fefefe;
 }
@@ -22,19 +22,24 @@
 	width: 55%;
 	padding: 10px;
 	background: #eaeaea;
-	min-height: 380px;
+	min-height: 400px;
 	height: auto;
 }
 .dog-right{
 	width: 20%;
 	background: #505050;
-	min-height: 400px;
+	min-height: 420px;
 	height: auto;
 	display: none;
 }
 /*.dog-birthdate, .dog-breed, .dog-food, .dog-walk, .dog-description, .dog-name{
 	width: 100%;
 }*/
+#owner-search-box {
+	float: none;
+	clear: both;
+	display: block;
+}
 .dog-pic-container{
 	margin: 2px;
 	padding: 5px;
@@ -228,4 +233,8 @@
 		line-height: 20px;
 		text-align: center;
 	}
+}
+.dog-input-field.owner-input {
+
+	width: 280px;
 }

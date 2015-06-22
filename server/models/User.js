@@ -100,10 +100,6 @@ module.exports.seedInitialUsers = function(){   //doing the initial commit of us
                 username: 'AlexanderY',
                 firstName: 'Alexander', 
                 lastName: 'Yordanov',
-                profPhoto: {
-                data: picAlex,
-                contentType: "image/jpg"
-                },
                 friends: [],
                 salt: salt,
                 hashPass: hasedPwd, 

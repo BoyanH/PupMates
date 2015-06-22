@@ -1,4 +1,6 @@
-app.controller("DogController", function($scope, $timeout, $routeParams, LoadingService, FileReaderAng, DogService, $location, identity, notifier){
+app.controller("DogController", function($scope, $timeout, $routeParams, LoadingService, FileReaderAng, 
+    DogService, $location, identity, notifier, requester){
+
 	var dogId = $routeParams.id,
         data = "",
         contentType = "";
@@ -22,12 +24,25 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
 
 	DogService.getDogById(dogId).then(function(dog){ //gets the dog from the server with id in the routeparams
 		if(dog){
-			$scope.dog = dog;
 
+            var ownersAsObjArr = [];
+
+            for(var i = 0; i < dog.owners.length; i++) {
+
+                requester.getUserNames(dog.owners[i])
+                .then(function (data) {
+
+                    ownersAsObjArr.push(data);
+                });
+            }
+
+            dog.owners = ownersAsObjArr;
+
+			$scope.dog = dog;
+            $scope.owners = dog.owners;
             $scope.name = dog.name;
             $scope.breed = dog.breed;
             $scope.description = dog.description;
-
 
     		var today = new Date();
     		var dd = today.getDate();
@@ -103,13 +118,19 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
         }, 1);
     }
 	$scope.changeField = function(field){  //change field trigger
-		$scope["showChange" + field] = !$scope["showChange" + field];
+		
+        var tempOwners = $scope.owners;
+
+        $scope["showChange" + field] = !$scope["showChange" + field];
         
         field = field.toLowerCase();
 
         //console.log($scope.dog);
 
-        if(field == "birthdate") field = "birthDate";
+        if(field == "birthdate") {
+            field = "birthDate";
+            $scope.dog[field] = $scope.dog.day.value + '/' + $scope.dog.month.value + '/' + $scope.dog.year.value;
+        }
         if(($scope[field]=="" || $scope[field]==undefined) && field != "profphoto" 
             && field != "walk" && field != "food") return;
         
@@ -126,9 +147,13 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
                 LoadingService.start();
             }
 
-            console.log("-----"+contentType);
         }
-        console.log($scope.dog);
+
+        $scope.dog.owners = $scope.owners.map(function (x) {
+
+            return x._id;
+        });
+
         //updateing the dog to the datebase
 
         delete $scope.dog.foodOpt;
@@ -138,11 +163,21 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
         delete $scope.dog.year;
         DogService.updateDog($scope.dog).then(function(res){
             if(res) {
+
+                $scope.dog.owners = tempOwners;
+                $scope.owners = tempOwners;
+
                 $scope[field] = "";
                 if(field == "profphoto"){
                     LoadingService.stop();
                     field = "photo";
                 }
+                else if(field == 'owners') {
+
+                    delete $scope.dog.ownerItem;
+                    delete $scope.dog.ownerInput;
+                }
+
                 notifier.success("The " + field + " has been changed!");
             }
             else notifier.error("Couldnt update dog, please login or refresh.");
@@ -159,17 +194,22 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
               });
           });
     };
-    $scope.removeFW = function(kind, data){//removes either a food or a walk
+    $scope.removeArrItem = function(kind, data){//removes either a food or a walk
         if(kind=="f"){
             var i = $scope.dog.food.indexOf(data);
             $scope.dog.food.splice(i, 1);
         }
-        if(kind=="w"){
+        else if(kind=="w"){
             var i = $scope.dog.walk.indexOf(data);
             $scope.dog.walk.splice(i, 1);
         }
+        else if(kind == 'o') {
+            var i = $scope.dog.owners.indexOf(data);
+            $scope.dog.owners.splice(i, 1);
+            $scope.owners = $scope.dog.owners;
+        }
     };
-    $scope.addFW = function(kind){  //adds either a food or a walk
+    $scope.addArrItem = function(kind){  //adds either a food or a walk
         if(kind=="f"){
 
             var crntValue = $scope.dog.foodOpt.value,
@@ -183,7 +223,7 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
                 fromNow: (valueAsDate - new Date())
             });
         }
-        if(kind=="w"){
+        else if(kind=="w"){
 
             var crntValue = $scope.dog.walkOpt.value,
                 valueAsArray = crntValue.split(':'),
@@ -196,5 +236,61 @@ app.controller("DogController", function($scope, $timeout, $routeParams, Loading
                 fromNow: (valueAsDate - new Date())
             });
         }
+        else if(kind == 'o') {
+
+            var crntValue = $scope.dog.ownerItem;
+
+            if(crntValue) {
+
+                $scope.dog.owners.push(crntValue);
+                $scope.dog.ownerInput = '';
+                $scope.newOwnerOpts = [];
+            }
+            else {
+
+                var ownerIDs = $scope.dog.owners.map(function (x) { return x._id });
+
+                requester.searchUsers($scope.dog.ownerInput)
+                .then(function (data) {
+                    
+                    if(data.length == 1 && data[0].firstName + ' ' + data[0].lastName == $scope.dog.ownerInput && 
+                        ownerIDs.indexOf(data[0]._id) < 0) {
+
+                        $scope.dog.owners.push(data[0]);
+                        $scope.dog.ownerInput = '';
+                        $scope.newOwnerOpts = [];
+                    }
+                });
+            }
+        }
+    };
+    $scope.searchOwner = function (ownerInput) {
+
+        var crntOwnersArr = $scope.owners.map(function (x) { return x._id} );
+
+        if(ownerInput.length >= 3) {
+            requester.searchUsers(ownerInput)
+            .then(function (data) {
+
+                $scope.newOwnerOpts = [];
+
+                data.forEach(function (person) {
+
+                    if(crntOwnersArr.indexOf(person._id) < 0) {
+
+                        $scope.newOwnerOpts.push(person);
+                    }
+                });
+            });
+        }
+        else {
+
+            $scope.newOwnerOpts = [];
+        }
+    };
+    $scope.selectNewOwner = function (owner) {
+
+        $scope.dog.ownerItem = owner;
+        $scope.dog.ownerInput = owner.firstName + ' ' + owner.lastName;
     }
 });

@@ -10,6 +10,7 @@ module.exports = function (app) {
 	   next();
 	});
     app.get('/api/users/:username', controllers.users.getUser);
+    app.get('/api/userSearch/:searchContent/:limit?', controllers.users.searchUsers);
     app.get('/api/users/names/:id', controllers.users.getUserNames);  
     app.get('/api/users', auth.isInRole('admin'),controllers.users.getAllUsers ); //returns all users if the current user is admin                 //returns only a user with username parameter
     app.get('/api/user-all-data/:username', controllers.allData.getAllDataOfUserByUserName); //returns all the data of an user with username parameter

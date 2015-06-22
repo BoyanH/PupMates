@@ -244,6 +244,19 @@ exportsObj.getProfPhoto = function(req, res){   //returns the profile photo of a
     });
 };
 
+exportsObj.searchUsers = function (req, res) {
+
+    exportsObj.searchUsersDynamically(req, res)
+    .then(function (data) {
+
+        res.status(200).send(data);
+    }, function (err) {
+
+        console.log(err);
+        res.status(404).end();
+    });
+};
+
 exportsObj.searchUsersDynamically = function(req, res) { //search in the database for user with a part of the name "searchContent"
 
     var searchString =  req.params.searchContent,
@@ -303,8 +316,13 @@ exportsObj.searchUsersDynamically = function(req, res) { //search in the databas
 
     stringifiedWhere = [stringifiedWhere.slice(0, addPos), addElement, stringifiedWhere.slice(addPos)].join('');
 
-    User.find( { $where: stringifiedWhere },  
-        function (err, collection) {
+    User.find( { $where: stringifiedWhere })
+    .select('firstName')
+    .select('lastName')
+    .select('username')
+    .select('_id')
+    .sort( { seenFrom: -1 } ).limit(limit)
+    .exec(function (err, collection) {
 
         if (err) {
 
@@ -313,12 +331,7 @@ exportsObj.searchUsersDynamically = function(req, res) { //search in the databas
 
         deferred.resolve(collection);
 
-    })
-    .select('firstName')
-    .select('lastName')
-    .select('username')
-    .select('_id')
-    .sort( { seenFrom: -1 } ).limit(limit);
+    });
 
     return deferred.promise;
 };
